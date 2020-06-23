@@ -12,13 +12,14 @@ html body {
 
 .page {
   max-width: 1400px;
-  /* padding: 2rem 1rem; */
+  padding: 2rem 1rem;
   margin: auto;
 }
 
 .cont {
   background-color: white;
   margin-bottom: 40px;
+  padding: 20px;
 }
 
 .row {
