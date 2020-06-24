@@ -61,6 +61,24 @@ font-family: 'Roboto', sans-serif; */
   color: #AA6231;
 }
 
+.experience-image {
+  float: left;
+}
 
+.experience-pic {
+  position: absolute;
+  object-fit: cover;
+  width: 100%; 
+  height: 100%;
+}
 
-
+.pic-container-bigger {
+  position: relative;
+  width: 100px;
+  height 
+  padding-bottom: 40%;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+  margin-top: 5%;
+}
