@@ -5,10 +5,6 @@ font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
-html body {
-   background-color: #EFE1CE;
-}
-
 #profileName {
   font-family: Poppins;
   font-weight: 500;
@@ -41,10 +37,6 @@ html body {
   margin: 0;
 }
 
-.row {
- padding-top: 40px;
-}
 
-.col-md-12 {
-  background-color: white;
-}
+
+
