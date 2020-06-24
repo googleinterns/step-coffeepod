@@ -7,7 +7,7 @@ font-family: 'Roboto', sans-serif; */
 
 
 html body {
-   background-color: #EFE1CE;
+  background-color: #EFE1CE;
 }
 
 .page {
@@ -23,11 +23,50 @@ html body {
 }
 
 .row {
- padding-top: 40px;
+  padding-top: 10px;
 }
 
 .make-me-sticky {
   position: -webkit-sticky;
 	position: sticky;
-	top: 0;
+	top: 165px;
+}
+
+.pic-container{
+  position: relative;
+  width: 40%;
+  padding-bottom: 40%;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+  margin-top: 5%;
+}
+
+.profile-pic{
+  position: absolute;
+  object-fit: cover;
+  width: 100%; 
+  height: 100%;
+}
+
+.circular {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.circular img {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
