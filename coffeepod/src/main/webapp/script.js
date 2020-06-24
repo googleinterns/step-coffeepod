@@ -26,7 +26,6 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
-
-$(function(){
-  $("#nav-placeholder").load("navbar.html");
-});
+$.get("navbar.html", function(data){
+    $("#nav-placeholder").replaceWith(data);
+})
