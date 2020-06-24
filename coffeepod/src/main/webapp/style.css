@@ -7,7 +7,7 @@ font-family: 'Roboto', sans-serif; */
 
 
 html body {
-   background-color: #EFE1CE;
+  background-color: #EFE1CE;
 }
 
 .page {
@@ -23,6 +23,11 @@ html body {
 }
 
 .row {
- padding-top: 40px;
+  padding-top: 10px;
 }
 
+.make-me-sticky {
+  position: -webkit-sticky;
+	position: sticky;
+	top: 165px;
+}
