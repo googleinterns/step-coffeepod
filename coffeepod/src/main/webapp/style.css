@@ -26,8 +26,3 @@ html body {
  padding-top: 40px;
 }
 
-.make-me-sticky {
-  position: -webkit-sticky;
-	position: sticky;
-	top: 0;
-}
