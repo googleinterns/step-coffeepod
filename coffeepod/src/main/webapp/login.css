@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200;300&family=Poppins:wght@100;200;300;400;500;600&family=Roboto:wght@300;400&display=swap');
+
+/* 
+font-family: 'Crimson Pro', serif;
+font-family: 'Poppins', sans-serif;
+font-family: 'Roboto', sans-serif; */
+
+html, body {
+   background-color: #EFE1CE;
+   height: 100%;
+   font-size: 3px;
+}
+
+.vertical-center {
+  min-height: 80%;  /* Fallback for browsers do NOT support vh unit */
+
+  display: flex;
+  align-items: center;
+}
+
+.text-center{
+    text-align: center;
+}
+
+@media (min-width: 576px) {
+    body{font-size: 5px;}
+}
+
+@media (min-width: 950px) {
+    body{font-size: 7px;}
+}
+
+@media (min-width: 1200px) {
+    body{font-size: 9px;}
+}
+
+@media (min-width: 1440px) {
+    body{font-size: 11px;}
+}
+
+@media (min-width: 1800px) {
+    body{font-size: 14px;}
+}
+
+.form-control {
+    font-size: 2em;
+}
+
+.poppins {
+    font-family: 'Poppins', sans-serif;
+}
+.roboto {
+    font-family: 'Roboto', sans-serif;
+}
+.crimson {
+    font-family: 'Crimson Pro', serif;
+    color: #AA6231;
+}
+
+.sm {
+    font-size: 1.5em;
+}
+
+.smd {
+    font-size: 2em;
+}
+
+.md {
+    font-size: 3em;
+}
+
+.lg {
+    font-size: 4em;
+}
+
+.xl {
+    font-size: 9.6em;
+}
+
