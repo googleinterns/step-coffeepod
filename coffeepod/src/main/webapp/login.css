@@ -8,11 +8,11 @@ font-family: 'Roboto', sans-serif; */
 html, body {
    background-color: #EFE1CE;
    height: 100%;
-   font-size: 3px;
+   font-size: 8px;
 }
 
 .vertical-center {
-  min-height: 80%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 80%; 
 
   display: flex;
   align-items: center;
@@ -22,12 +22,18 @@ html, body {
     text-align: center;
 }
 
-@media (min-width: 576px) {
-    body{font-size: 5px;}
+@media (max-width:500px) {
+    .vertical-center{
+        min-height:50%;
+    }
+    body{font-size: 9px;}
 }
 
-@media (min-width: 950px) {
-    body{font-size: 7px;}
+@media (max-width:992px) {
+    .vertical-center{
+        min-height:50%;
+    }
+    body{font-size: 10px;}
 }
 
 @media (min-width: 1200px) {
@@ -75,5 +81,13 @@ html, body {
 
 .xl {
     font-size: 9.6em;
+}
+
+.light {
+    font-weight: lighter;
+}
+
+.bold {
+    font-weight: bold;
 }
 
