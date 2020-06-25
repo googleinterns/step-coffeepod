@@ -106,13 +106,21 @@ font-family: 'Roboto', sans-serif; */
     margin-top: 2%;
 }
 
-.num-results{
+.subtitle-poppins{
     font-family: 'Poppins', sans-serif;
     font-style: normal;
-    font-weight: normal;
+    font-weight: 600;
     font-size: 15px;
     line-height: 22px;
     color: #000000;
+}
+
+
+.side-menu-header {
+    display: block;
+    padding:10px;
+    background-color:#EFE1CE;
+    font-size: 15px;
 }
 
 
