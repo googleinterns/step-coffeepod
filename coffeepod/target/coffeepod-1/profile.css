@@ -5,31 +5,6 @@ font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
-html body {
-   background-color: #EFE1CE;
-}
-
-#profileName {
-  font-family: Poppins;
-  font-weight: 500;
-  font-size: 25px;
-  line-height: 37px;
-  padding: 0;
-  padding-bottom: 2px;
-  margin: 0;
-}
-
-#role {
-  font-family: Roboto;
-  font-size: 20px;
-  line-height: 23px;
-  letter-spacing: 0.05em;
-  text-transform: capitalize;
-  padding: 0;
-  padding-bottom: 7px;
-  margin: 0;
-}
-
 #location {
   font-family: Roboto;
   font-size: 16px;
@@ -41,10 +16,24 @@ html body {
   margin: 0;
 }
 
-.row {
- padding-top: 40px;
+#orangeName {
+  color: #AA6231;
 }
 
-.col-md-12 {
-  background-color: white;
+.line {
+  width: 0px;
+  height: 95px;
+  margin: auto;
+  background: #000000;
+  border: 2px solid #AA6231;
+}
+
+.vertical-center {
+  min-height: 50%; 
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  border: none;
 }

@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar_style.css">
+    <link rel="stylesheet" href="css/profile.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -19,104 +21,73 @@
         <div class="row justify-content-center">
           <div id="profileHeader" class="col-md-8">
             <div class="cont shadow-sm">
-              <p id="profileName">Blueberry Pancake</p>
-              <p id="role">Software Engineer | Mentor</p>
-              <p id="location">Mountain View, California</p>
+              <p class="name font25">Blueberry Pancake</p>
+              <p class="role font20">Software Engineer | Mentor</p>
+              <p id="location font17">Mountain View, California</p>
             </div>
             <div class="cont shadow-sm">
-              <p class="header">About</p>
-              <p class="text">Hello, I’m Pancake. I’m passionate about coding and hope I could help others in their coding journeys. 
+              <p class="header font30">About</p>
+              <p class="text font17">Hello, I’m Pancake. I’m passionate about coding and hope I could help others in their coding journeys. 
                 In my free time, I make pancakes and consume them. I’m also intersted in ice-skating and skiing.
                 Feel free to reach out to me if you have any questions. Always happy to help!</p>
             </div>
             <div class="cont shadow-sm">
-              <p class="header">mentorship</p>
-              <p class="text">
+              <p class="header font30">mentorship</p>
+              <p class="text font17">
                 <span id="orangeName">Pancake </span> <span>is currently a mentor of: </span>
               </p>
-              <div id="metors">
+              <div id="mentors">
                 <div class="card-deck">
                   <div class="card">
-                    <img class="card-img-top rounded-circle img-fluid" src="images/syrup.jpg" alt="Card image cap">
+                    <div class="pic-container"><img class="profile-pic" src="images/syrup.jpg" alt="syrup"></div>
                     <div class="card-body">
-                      <h5 class="card-title">Maple Syrup</h5>
-                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      <h5 class="card-title text-center">Maple Syrup</h5>
                     </div>
                   </div>
                   <div class="card">
-                    <img class="card-img-top rounded-circle img-fluid" src="images/milk.jpg" alt="milk">
+                    <div class="pic-container"><img class="profile-pic" src="images/milk.jpg" alt="milk"></div>
                     <div class="card-body">
-                      <h5 class="card-title">Almond Milk</h5>
-                      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      <h5 class="card-title text-center" id="orangeName">Almond Milk</h5>
                     </div>
                   </div>
                   <div class="card">
-                    <img class="card-img-top rounded-circle img-fluid" src="images/cookies.jpg" alt="cookies">
+                    <div class="pic-container"><img class="profile-pic" src="images/cookies.jpg" alt="cookies"></div>
                     <div class="card-body">
-                      <h5 class="card-title">Cookies</h5>
-                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      <h5 class="card-title text-center">Cookies</h5>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="cont shadow-sm">
-              <p class="header">experience</p>
-              <ul class="timeline">
-                <li>
-                  <div class="timeline-image">
-                    <img class="rounded-circle img-fluid" src="http://lorempixel.com/250/250/cats/1" alt="">
-                  </div>
-                  <div class="timeline-panel">
-                    <div class="timeline-heading">
-                      <h4>Step One</h4>
-                      <h4 class="subheading">Subtitle</h4>
-                    </div>
-                    <div class="timeline-body">
-                      <p class="text-muted">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      </p>
-                    </div>
-                  </div>
+              <p class="header font30">experience</p>
+              <div class="row">
+                <div class="col-md-4 image-container">
+                  <div class="pic-container"><img class="profile-pic" src="images/icecream.jpg" alt=""></div>
+                </div>
+                <div class="col-md-8">
+                  <p class="name font25">Chocolatie</p>
+                  <p class="role font20">Software Engineer</p>
+                  <p class ="text font17">Design, develop and build a web application</p>
+                  <p class ="text font17">The app leads to a triple increase in visitors in the first three months since launching</p> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 image-container">
                   <div class="line"></div>
-                </li>
-                <li class="timeline-inverted">
-                  <div class="timeline-image">
-                    <img class="rounded-circle img-fluid" src="http://lorempixel.com/250/250/cats/2" alt="">
-                  </div>
-                  <div class="timeline-panel">
-                    <div class="timeline-heading">
-                      <h4>Step Two</h4>
-                      <h4 class="subheading">Subtitle</h4>
-                    </div>
-                    <div class="timeline-body">
-                      <p class="text-muted">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="line"></div>
-                </li>
-                <li>
-                  <div class="timeline-image">
-                    <img class="rounded-circle img-fluid" src="http://lorempixel.com/250/250/cats/3" alt="">
-                  </div>
-                  <div class="timeline-panel">
-                    <div class="timeline-heading">
-                      <h4>Step Three</h4>
-                      <h4 class="subheading">Subtitle</h4>
-                    </div>
-                    <div class="timeline-body">
-                      <p class="text-muted">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      </p>
-                    </div>
-                  </div>
-                </li>
-              </ul>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 image-container">
+                  <div class="pic-container"><img class="profile-pic" src="images/strawberry.jpg" alt=""></div>
+                </div>
+                <div class="col-md-8">
+                  <p class="name font25">Strawberries</p>
+                  <p class="role font20">Software Engineer Intern</p>
+                  <p class ="text font17">Analyzed and evaluated current web application, renovated existing features and
+                    created new functionality to attract users and improve the navigability of the app</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-md-4">

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar_style.css">
+    <link rel="stylesheet" href="css/profile.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -13,18 +15,89 @@
   </head>
   <body>
     <div id="nav-placeholder"></div>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div id="profileHeader" class="col-md-8">
-          <div class="col-md-12">
-            <p id="profileName">Blueberry Pancake</p>
-            <p id="role">Software Engineer | Metor</p>
-            <p id="location">Mountain View, California</p>
+    <div class="page"</div>
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div id="profileHeader" class="col-md-8">
+            <div class="cont shadow-sm">
+              <p class="name">Blueberry Pancake</p>
+              <p class="role">Software Engineer | Mentor</p>
+              <p id="location">Mountain View, California</p>
+            </div>
+            <div class="cont shadow-sm">
+              <p class="header">About</p>
+              <p class="text">Hello, I’m Pancake. I’m passionate about coding and hope I could help others in their coding journeys. 
+                In my free time, I make pancakes and consume them. I’m also intersted in ice-skating and skiing.
+                Feel free to reach out to me if you have any questions. Always happy to help!</p>
+            </div>
+            <div class="cont shadow-sm">
+              <p class="header">mentorship</p>
+              <p class="text">
+                <span id="orangeName">Pancake </span> <span>is currently a mentor of: </span>
+              </p>
+              <div id="mentors">
+                <div class="card-deck">
+                  <div class="card">
+                    <div class="pic-container"><img class="profile-pic" src="images/syrup.jpg" alt="syrup"></div>
+                    <div class="card-body">
+                      <h5 class="card-title text-center">Maple Syrup</h5>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="pic-container"><img class="profile-pic" src="images/milk.jpg" alt="milk"></div>
+                    <div class="card-body">
+                      <h5 class="card-title text-center" id="orangeName">Almond Milk</h5>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="pic-container"><img class="profile-pic" src="images/cookies.jpg" alt="cookies"></div>
+                    <div class="card-body">
+                      <h5 class="card-title text-center">Cookies</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cont shadow-sm">
+              <p class="header">experience</p>
+              <div class="row">
+                <div class="col-md-4 image-container">
+                  <div class="pic-container"><img class="profile-pic" src="images/icecream.jpg" alt=""></div>
+                </div>
+                <div class="col-md-8">
+                  <p class="name">Chocolatie</p>
+                  <p class="role">Software Engineer</p>
+                  <p class ="text">Design, develop and build a web application</p>
+                  <p class ="text">The app leads to a triple increase in visitors in the first three months since launching</p> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 image-container">
+                  <div class="line"></div>
+                </div>
+                <div class="col-md-8">
+                  </br></br></br></br>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 image-container">
+                  <div class="pic-container"><img class="profile-pic" src="images/strawberry.jpg" alt=""></div>
+                </div>
+                <div class="col-md-8">
+                  <p class="name">Strawberries</p>
+                  <p class="role">Software Engineer Intern</p>
+                  <p class ="text">Analyzed and evaluated current web application, renovated existing features and
+                    created new functionality to attract users and improve the navigability of the app</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="col-md-12">
-            <p id="goal">goal here</p>
+          <div class="col-md-4">
+            <div class="make-me-sticky">
+              <div class="cont shadow-sm">
+                <p id="goal">goal here</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

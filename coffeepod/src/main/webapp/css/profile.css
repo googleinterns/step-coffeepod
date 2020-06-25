@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200;300&family=Poppins:wght@100;200;300;400;500;600&family=Roboto:wght@300;400&display=swap');
+
+/* 
+font-family: 'Crimson Pro', serif;
+font-family: 'Poppins', sans-serif;
+font-family: 'Roboto', sans-serif; */
+
+#location {
+  font-family: Roboto;
+  line-height: 19px;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+#orangeName {
+  color: #AA6231;
+}
+
+.line {
+  width: 0px;
+  height: 95px;
+  margin: auto;
+  background: #000000;
+  border: 2px solid #AA6231;
+}
+
+.vertical-center {
+  min-height: 50%; 
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  border: none;
+}

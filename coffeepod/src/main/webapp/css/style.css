@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200;300&family=Poppins:wght@100;200;300;400;500;600&family=Roboto:wght@300;400&display=swap');
+
+/* 
+font-family: 'Crimson Pro', serif;
+font-family: 'Poppins', sans-serif;
+font-family: 'Roboto', sans-serif; */
+
+
+html body {
+  background-color: #EFE1CE;
+}
+
+.page {
+  max-width: 1400px;
+  padding: 2rem 1rem;
+  margin: auto;
+}
+
+.cont {
+  background-color: white;
+  margin-bottom: 40px;
+  padding: 30px;
+}
+
+.row {
+  padding-top: 10px;
+}
+
+.make-me-sticky {
+  position: -webkit-sticky;
+	position: sticky;
+	top: 165px;
+}
+
+.pic-container {
+  position: relative;
+  width: 40%;
+  padding-bottom: 40%;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+  margin-top: 5%;
+}
+
+.profile-pic {
+  position: absolute;
+  object-fit: cover;
+  width: 100%; 
+  height: 100%;
+}
+
+.font10 {
+  font-size: 10px;
+}
+
+.font17 {
+  font-size: 17px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 21px;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+.font15 {
+  font-size: 15px;
+}
+
+.font20 {
+  font-size: 20px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 23px;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+.font25 {
+  font-size: 25px;
+  font-family: Poppins;
+  font-weight: 500;
+  line-height: 37px;
+  padding: 0;
+  padding-bottom: 2px;
+  margin: 0;
+}
+
+.font30 {
+  font-size: 30px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 45px;
+  text-transform: lowercase;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+.font40 {
+  font-size: 40px;
+}
