@@ -49,50 +49,28 @@ html body {
   height: 100%;
 }
 
-/* this class is for section headers */
-.header {
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 45px;
-  text-transform: lowercase;
+.padNormal {
   padding: 0;
   padding-bottom: 5px;
   margin: 0;
 }
 
-/* this is for body text in a section */
-.text {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 21px;
-  padding: 0;
-  padding-bottom: 5px;
-  margin: 0;
-}
-
-/* this is for the format of a persons role either for an experience or for their bio */
-.role {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 23px;
+.spaceLetters {
   letter-spacing: 0.05em;
-  text-transform: capitalize;
-  padding: 0;
-  padding-bottom: 5px;
-  margin: 0;
 }
 
-/* this is for the users name */
-.name {
-  font-family: Poppins;
-  font-weight: 500;
-  line-height: 37px;
+.padName {
   padding: 0;
   padding-bottom: 2px;
   margin: 0;
+}
+
+.poppins {
+  font-family: Poppins;
+}
+
+.roboto {
+  font-family: Roboto;
 }
 
 .font10 {
@@ -121,4 +99,40 @@ html body {
 
 .font40 {
   font-size: 40px;
+}
+
+.weight600 {
+  font-weight: 600;
+}
+
+.weight500 {
+  font-weight: 500;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.line37 {
+  line-height: 37px;
+}
+
+.line23 {
+  line-height: 23px;
+}
+
+.line21 {
+  line-height: 21px;
+}
+
+.line45 {
+  line-height: 45px;
+}
+
+.line19 {
+  line-height: 19px;
 }
