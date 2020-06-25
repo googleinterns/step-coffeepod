@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200;300&family=Poppins:wght@100;200;300;400;500;600&family=Roboto:wght@300;400&display=swap');
+
+/* 
+font-family: 'Crimson Pro', serif;
+font-family: 'Poppins', sans-serif;
+font-family: 'Roboto', sans-serif; */
+
+#profileName {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 37px;
+  padding: 0;
+  padding-bottom: 2px;
+  margin: 0;
+}
+
+#role {
+  font-family: Roboto;
+  font-size: 20px;
+  line-height: 23px;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+#location {
+  font-family: Roboto;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+.header {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 45px;
+  text-transform: lowercase;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+.text {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+#orangeName {
+  color: #AA6231;
+}
+
+
+
+
