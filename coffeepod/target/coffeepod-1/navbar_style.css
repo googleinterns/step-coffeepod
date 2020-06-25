@@ -9,36 +9,23 @@ font-family: 'Roboto', sans-serif;
 .navbar {
     background-color: white;
     text-align: center;
-<<<<<<< Updated upstream
-}
-
-.navbar .container {
-    justify-content: center;
-=======
-    padding: 2rem 1rem
+    padding: 2rem 1rem;
 }
 
 .navbar .container {
     justify-content: between;
->>>>>>> Stashed changes
 }
 
 .navbar-light .navbar-brand {
     font-family: 'Crimson Pro', serif;
     font-size: 2.2em;
     color: rgb(170,98,49);
-<<<<<<< Updated upstream
-    padding: 1em 2em;
-=======
->>>>>>> Stashed changes
 }
 
 .navbar-light .navbar-nav .nav-link {
     font-family: 'Poppins', sans-serif;
     font-size: 1em;
     color: #5C2C0C;
-<<<<<<< Updated upstream
-=======
 }
 
 .has-search .form-control {
@@ -59,5 +46,4 @@ font-family: 'Roboto', sans-serif;
     text-align: center;
     pointer-events: none;
     color: #aaa;
->>>>>>> Stashed changes
 }
