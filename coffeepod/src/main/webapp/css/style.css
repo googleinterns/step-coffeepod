@@ -49,20 +49,12 @@ html body {
   height: 100%;
 }
 
-/* this class is for section headers */
-.header {
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 45px;
-  text-transform: lowercase;
-  padding: 0;
-  padding-bottom: 5px;
-  margin: 0;
+.font10 {
+  font-size: 10px;
 }
 
-/* this is for body text in a section */
-.text {
+.font17 {
+  font-size: 17px;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
@@ -72,8 +64,12 @@ html body {
   margin: 0;
 }
 
-/* this is for the format of a persons role either for an experience or for their bio */
-.role {
+.font15 {
+  font-size: 15px;
+}
+
+.font20 {
+  font-size: 20px;
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
@@ -85,8 +81,8 @@ html body {
   margin: 0;
 }
 
-/* this is for the users name */
-.name {
+.font25 {
+  font-size: 25px;
   font-family: Poppins;
   font-weight: 500;
   line-height: 37px;
@@ -95,28 +91,16 @@ html body {
   margin: 0;
 }
 
-.font10 {
-  font-size: 10px;
-}
-
-.font17 {
-  font-size: 17px;
-}
-
-.font15 {
-  font-size: 15px;
-}
-
-.font20 {
-  font-size: 20px;
-}
-
-.font25 {
-  font-size: 25px;
-}
-
 .font30 {
   font-size: 30px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 45px;
+  text-transform: lowercase;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
 }
 
 .font40 {
