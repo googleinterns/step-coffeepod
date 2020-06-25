@@ -12,7 +12,7 @@ html, body {
 }
 
 .vertical-center {
-  min-height: 80%; 
+  min-height: 85%; 
 
   display: flex;
   align-items: center;
@@ -22,10 +22,18 @@ html, body {
     text-align: center;
 }
 
+a {
+    color: #AA6231 !important;
+}
+
 input {
     outline: 0;
     border-width: 0 0 2px !important;
     border-color: black;
+}
+
+input:focus {
+    border-color: #AA6231 !important;
 }
 
 .btn-primary,
@@ -106,5 +114,9 @@ input {
 
 .bold {
     font-weight: bold;
+}
+
+.drkbrown {
+    color: #5C2C0C;
 }
 
