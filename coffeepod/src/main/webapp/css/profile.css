@@ -5,16 +5,6 @@ font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
-#location {
-  font-family: Roboto;
-  line-height: 19px;
-  letter-spacing: 0.05em;
-  text-transform: capitalize;
-  padding: 0;
-  padding-bottom: 5px;
-  margin: 0;
-}
-
 #orangeName {
   color: #AA6231;
 }
