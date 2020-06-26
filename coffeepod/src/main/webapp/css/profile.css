@@ -22,6 +22,10 @@ font-family: 'Roboto', sans-serif; */
   border: 5px solid #000000;
 }
 
+.borderOrange {
+  border: 1px solid #AA6231;
+}
+
 .padBig {
   padding: 0;
   padding-top: 7px;
