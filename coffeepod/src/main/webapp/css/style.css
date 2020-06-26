@@ -77,6 +77,10 @@ html body {
   font-size: 10px;
 }
 
+.font12 {
+  font-size: 12px;
+}
+
 .font17 {
   font-size: 17px;
 }
@@ -127,6 +131,10 @@ html body {
 
 .line21 {
   line-height: 21px;
+}
+
+.line15 {
+  line-height: 15px;
 }
 
 .line45 {
