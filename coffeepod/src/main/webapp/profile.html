@@ -16,14 +16,21 @@
   </head>
   <body onload="load('profile')">
     <div id="nav-placeholder"></div>
-    <div class="page"</div>
+    <div class="page">
       <div class="container-fluid">
         <div class="row justify-content-center">
-          <div id="profileHeader" class="col-md-8">
+          <div id="profileHeader" class="col-lg-8">
             <div class="cont shadow-sm">
-              <p class="padName line37 weight500 poppins font25">Blueberry Pancake</p>
-              <p class="padNormal line23 capitalize roboto font20 spaceLetters">Software Engineer | Mentor</p>
-              <p id="padNormal line21 capitalize roboto font17">Mountain View, California</p>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
+                </div>
+                <div class="col-md-8">
+                  <p class="padName line37 weight500 poppins font25">Blueberry Pancake</p>
+                  <p class="padNormal line23 capitalize roboto font20 spaceLetters">Software Engineer | Mentor</p>
+                  <p id="padNormal line21 capitalize roboto font17">Mountain View, California</p>
+                </div>
+              </div>
             </div>
             <div class="cont shadow-sm">
               <p class="weight600 poppins line45 font30 lowercase">About</p>
@@ -114,12 +121,22 @@
             <div class="cont shadow-sm">
               <p class="weight600 poppins line45 font30">questions answered: 1</p>
               <div class="cont border">
-                <p class="font15 poppins line15 padNormal"><span class ="weight500">Pancake  </span><span class="spaceLetters" style="color: #696969">June 16, 2020</span></p>
-                <p class="padNormal line15 capitalize roboto font12 spaceLetters">Software Engineer | Mentor</p>
+                <div class="row">
+                  <div class="col-2 my-auto">
+                    <div class="text-center mb-3"><img class="center-cropped-small rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
+                  </div>
+                  <div class="col-10">
+                    <p class="font15 poppins line15 padNormal"><span class ="weight500">Pancake  </span><span class="spaceLetters" style="color: #696969">June 16, 2020</span></p>
+                    <p class="padNormal line15 capitalize roboto font12 spaceLetters">Software Engineer | Mentor</p>
+                  </div>
+                </div>
+                <p class="poppins weight600 line23 font18 padBig">What’s your favorite ice-cream flavor?</p>
+                <p class="roboto weight300 font15 line15 padNormal">I personally love chocolate ice-cream and sea salt caramel ice-cream. How about you?</p>
+                <button id="orangeName" class="btn btn-link roboto font15 line15 spaceLetters padBig">See Answer(s)</button>
               </div>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-lg-4">
             <div class="make-me-sticky">
               <div class="cont shadow-sm">
                 <p id="goal">goal here</p>

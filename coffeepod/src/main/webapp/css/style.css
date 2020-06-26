@@ -32,6 +32,20 @@ html body {
 	top: 165px;
 }
 
+.center-cropped {
+  object-fit: cover;
+  object-position: center;
+  height: 120px;
+  width: 120px;
+}
+
+.center-cropped-small {
+  object-fit: cover;
+  object-position: center;
+  height: 50px;
+  width: 50px;
+}
+
 .pic-container {
   position: relative;
   width: 40%;
@@ -111,6 +125,10 @@ html body {
 
 .weight500 {
   font-weight: 500;
+}
+
+.weight300 {
+  font-weight: 300;
 }
 
 .lowercase {
