@@ -5,9 +5,6 @@ font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
-#orangeName {
-  color: #AA6231;
-}
 
 .line {
   width: 0px;
@@ -23,4 +20,11 @@ font-family: 'Roboto', sans-serif; */
 
 .border {
   border: 5px solid #000000;
+}
+
+.padBig {
+  padding: 0;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin: 0;
 }

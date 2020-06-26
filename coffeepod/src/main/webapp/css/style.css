@@ -39,6 +39,40 @@ html body {
 	top: 165px;
 }
 
+.center-cropped {
+  object-fit: cover;
+  object-position: center;
+  height: 120px;
+  width: 120px;
+}
+
+.center-cropped-small {
+  object-fit: cover;
+  object-position: center;
+  height: 50px;
+  width: 50px;
+}
+
+.orangeTextLight {
+  color: #AA6231;
+}
+
+.orangeTextDark {
+  color: #5C2C0C;
+}
+
+.blackText {
+  color: black;
+}
+
+.whiteText {
+  color: white;
+}
+
+.greyText {
+  color: #696969;
+}
+
 .pic-container {
   position: relative;
   width: 40%;
@@ -154,4 +188,8 @@ html body {
 
 .line19 {
   line-height: 19px;
+}
+
+.orangeButton {
+  background: #DDA35D;
 }
