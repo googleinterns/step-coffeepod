@@ -120,3 +120,28 @@ input:focus {
     color: #5C2C0C;
 }
 
+/* Style the hover effect for the home navigation bar in login page*/
+a.underline {
+    position: relative;
+    text-decoration: none;
+}
+
+a.underline:before{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0.5px;
+    left: 0.5px;
+    right: 0.5px;
+    background-color:#AA6231;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Effect is the same both when the link is hovered and when the link is active*/
+a.underline:hover:before{
+    visibility: visible;
+    width: 100%;
+}
+
