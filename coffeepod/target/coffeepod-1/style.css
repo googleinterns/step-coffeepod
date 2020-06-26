@@ -6,12 +6,95 @@ font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
 
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+html body {
+  background-color: #EFE1CE;
 }
 
-#greeting-container {
-  margin-top: 20px;
+.page {
+  max-width: 1400px;
+  padding: 2rem 1rem;
+  margin: auto;
+}
+
+.cont {
+  background-color: white;
+  margin-bottom: 40px;
+  padding: 30px;
+}
+
+.row {
+  padding-top: 10px;
+}
+
+.make-me-sticky {
+  position: -webkit-sticky;
+	position: sticky;
+	top: 165px;
+}
+
+.pic-container {
+  position: relative;
+  width: 40%;
+  padding-bottom: 40%;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+  margin-top: 5%;
+}
+
+.profile-pic {
+  position: absolute;
+  object-fit: cover;
+  width: 100%; 
+  height: 100%;
+}
+
+/* this class is for section headers */
+.header {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 45px;
+  text-transform: lowercase;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+/* this is for body text in a section */
+.text {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+/* this is for the format of a persons role either for an experience or for their bio */
+.role {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+/* this is for the users name */
+.name {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 37px;
+  padding: 0;
+  padding-bottom: 2px;
+  margin: 0;
 }
