@@ -15,42 +15,70 @@
     <script src="script.js"></script>
   </head>
   <body onload="load('cafe')">
-    <!-- this is the placeholder for the nav bar -->
     <div id="nav-placeholder"></div>
-    <!-- this is the page holder so that we can line up the margins with the nav bar -->
-    <div class="page"</div>
-    <!-- put it in a container -->
+    <div class="page">
       <div class="container-fluid">
-          <!-- your cols will need a row -->
         <div class="row justify-content-center">
-        <!-- this is the side col -->
-            <div class="col-md-2">
-            <!-- the side col is sticky -->
+        <!-- side cols -->
+            <div class="col-md-3 d-none d-lg-block">
+            <!-- first side col sticky -->
                 <div class="make-me-sticky">
-                    <!-- put all the info in their own cont again -->
                     <div class="cont shadow-sm">
                         <div class="text-center mb-3">
                             <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%>
                         </div>
-                        <p class="font15 poppins line21 weight500 padName text-center">hi, Pancake</p>
+                        <p class="font15 poppins line21 weight500 padNormal text-center">hi, Pancake</p>
                         <p class="font12 poppins line15 padNormal text-center">Software Engineer | Mentor</p>
+                        <br>
+                        <p class="font12 poppins line15 weight300 padNormal text-center"> Update your profile</p>
+                        <p class="font12 poppins line15 weight300 padNormal text-center"> Ask a question</p>
                     </div>
                     <div class="cont shadow-sm ml-1 mt-1">
                         <p class = "font15 poppins line21 weight600 padNormal"> topics </p>
+                        <p class = "font15 poppins line21 weight600 padNormal"> filter </p>
                     </div>
                 </div>
             </div>
-          <!-- this is the main row -->
-          <div id="profileHeader" class="col-md-10">
-            <!-- every section of the page will have its own cont do give it a look of different sections -->
+
+          <!-- main section -->
+          <div id="profileHeader" class="col-md-9">
+            <!-- first main content section -->
             <div class="cont shadow-sm">
-              <!-- you put whatever contect here -->
+              <div class = "row">
+                <div class="col-md-1">
+                    <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
+                </div>
+                <div class="col-md-11 mt-2">
+                    <p class="font12 poppins line15 padNormal">Pancake <span class = "font10 spaceLetters"> June 16, 2020 </span></p>
+                    <p class="font10 poppins padNormal spaceLetters">Software Engineer | Mentor</p>
+                </div>
+              </div>
+              <br>
+              <div class = "row ml-2">
+                <p class = "poppins weight600 font15 line21 padNormal"> Any questions on your mind today? </p>
+              </div>
             </div>
             <div class="cont shadow-sm">
-              <!-- more content -->
+              <div class = "row">
+                <div class="col-md-1">
+                    <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
+                </div>
+                <div class="col-md-11 mt-2">
+                    <p class="font12 poppins line15 padNormal">Pancake <span class = "font10 spaceLetters"> June 16, 2020 </span></p>
+                    <p class="font10 poppins padNormal spaceLetters">Software Engineer | Mentor</p>
+                </div>
+              </div>
             </div>
             <div class="cont shadow-sm">
-              <!-- more content -->
+              <div class = "row">
+                <div class="col-md-1">
+                    <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
+                </div>
+                <div class="col-md-11 mt-2">
+                    <p class="font12 poppins line15 padNormal">Pancake <span class = "font10 spaceLetters"> June 16, 2020 </span></p>
+                    <p class="font10 poppins padNormal spaceLetters">Software Engineer | Mentor</p>
+                </div>
+              </div>
             </div>
           </div>
 
