@@ -54,15 +54,6 @@ html body {
   width: 50px;
 }
 
-ul {
-    list-style-type: none;
-    padding-left: 0px;
-}
-
-ul li {
-    padding: 1rem 0rem !important;
-}
-
 .orangeTextLight {
   color: #AA6231;
 }
