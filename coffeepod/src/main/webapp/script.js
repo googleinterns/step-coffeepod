@@ -21,6 +21,10 @@ $.get("navbar.html", function(data){
     $("#nav-placeholder").replaceWith(data);
 });
 
+$.get("footer.html", function(data){
+    $("#footer-placeholder").replaceWith(data);
+});
+
 // $(document).ready(function() {
 //     console.log($('a[href="' + this.location.pathname + '"]').parent());
 //     $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
