@@ -104,6 +104,7 @@ a:hover{
     font-size: 45px;
     line-height: 67px;
     color: #AA6231;
+    margin-top: 2%;
 }
 
 .subpage-title-under {
@@ -123,9 +124,8 @@ a:hover{
     font-family: 'Poppins', sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 20px;
     line-height: 22px;
-    color: #000000;
 }
 
 
@@ -133,7 +133,6 @@ a:hover{
     display: block;
     padding:10px;
     background-color:#EFE1CE;
-    font-size: 15px;
 }
 
 /*Syle show more button*/
@@ -141,6 +140,31 @@ a:hover{
     padding: 0px;
     padding-top: 3px;
 }
+
+.filter-choice{
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 22px;
+}
+
+
+
+#submit-style{
+  background-color: #EFE1CE;
+  border: none;
+  color: black;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+  color: #000000;
+  text-align: right;
+}
+
 
 
 
