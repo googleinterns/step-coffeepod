@@ -14,7 +14,6 @@ a:hover{
     opacity: 0.5;
 }
 
-
 #profileName {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
@@ -132,6 +131,7 @@ a:hover{
     background-color:#EFE1CE;
 }
 
+
 .side-choice{
     font-family: Poppins;
     font-style: normal;
@@ -167,9 +167,6 @@ a:hover{
 .orangeTextLight {
   color: #AA6231;
 }
-
-
-
 
 
 
