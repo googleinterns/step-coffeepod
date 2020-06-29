@@ -20,10 +20,12 @@ font-family: 'Roboto', sans-serif; */
 
 .border {
   border: 5px solid #000000;
+  padding: 30px;
 }
 
 .borderOrange {
   border: 1px solid #AA6231;
+  padding: 30px;
 }
 
 .padBig {
