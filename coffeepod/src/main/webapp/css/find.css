@@ -136,16 +136,10 @@ a:hover{
     font-size: 15px;
 }
 
-
+/*Syle show more button*/
 .side-choice{
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 18px;
-    text-align: right;
-    letter-spacing: 0.05em;
-    color: #AA6231;
+    padding: 0px;
+    padding-top: 3px;
 }
 
 
