@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200;300&family=Poppins:wght@100;200;300;400;500;600&family=Roboto:wght@300;400&display=swap');
+
+/* 
+font-family: 'Crimson Pro', serif;
+font-family: 'Poppins', sans-serif;
+font-family: 'Roboto', sans-serif; */
+
+a, a:hover {
+    text-decoration: none;
+}
+
+a:hover{
+    color: #AA6231;
+    opacity: 0.5;
+}
+
+#profileName {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 37px;
+  padding: 0;
+  padding-bottom: 2px;
+  margin: 0;
+}
+
+#role {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  line-height: 23px;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+#location {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+.header {
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 45px;
+  text-transform: lowercase;
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+.text {
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+#orangeName {
+  color: #AA6231;
+}
+
+.pic-container-hub{
+  position: relative;
+  width: 10%;
+  padding-bottom: 10%;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+  margin-top: 3%;
+}
+
+.profile-pic{
+  position: absolute;
+  object-fit: cover;
+  width: 100%; 
+  height: 100%;
+}
+
+.card-title {
+  margin: auto;
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 22px;
+  color: #000000;
+ }
+
+.subpage-title{
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 45px;
+    line-height: 67px;
+    color: #AA6231;
+    margin-top: 2%;
+}
+
+.subpage-title-under {
+  margin-top: 2%;
+}
+
+.card-text{
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    margin-top: 1%;
+}
+
+.subtitle-poppins{
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 22px;
+}
+
+
+.side-menu-header {
+    display: block;
+    padding:10px;
+    background-color:#EFE1CE;
+}
+
+/*Syle show more button*/
+.side-choice{
+    padding: 0px;
+    padding-top: 3px;
+}
+
+.filter-choice{
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 22px;
+}
+
+
+
+#submit-style{
+  background-color: #EFE1CE;
+  border: none;
+  color: black;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+  color: #000000;
+  text-align: right;
+}
+
+
+
+
+
+
