@@ -120,7 +120,7 @@ a:hover{
     font-family: 'Poppins', sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 20px;
     line-height: 22px;
     color: #000000;
 }
@@ -130,7 +130,6 @@ a:hover{
     display: block;
     padding:10px;
     background-color:#EFE1CE;
-    font-size: 15px;
 }
 
 .side-choice{
@@ -144,6 +143,30 @@ a:hover{
     color: #AA6231;
 }
 
+.filter-choice{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 22px;
+}
+
+#submit-style {
+    background-color: #EFE1CE;
+    border: none;
+    color: black;
+    padding: 10px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    text-align: right;
+}
+
+.orangeTextLight {
+  color: #AA6231;
+}
 
 
 
