@@ -10,6 +10,13 @@ html body {
   background-color: #EFE1CE;
 }
 
+.center-cropped {
+  object-fit: cover; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  height: 120px;
+  width: 120px;
+}
+
 .page {
   max-width: 1400px;
   padding: 2rem 1rem;
@@ -32,6 +39,40 @@ html body {
 	top: 165px;
 }
 
+.center-cropped {
+  object-fit: cover;
+  object-position: center;
+  height: 120px;
+  width: 120px;
+}
+
+.center-cropped-small {
+  object-fit: cover;
+  object-position: center;
+  height: 50px;
+  width: 50px;
+}
+
+.orangeTextLight {
+  color: #AA6231;
+}
+
+.orangeTextDark {
+  color: #5C2C0C;
+}
+
+.blackText {
+  color: black;
+}
+
+.whiteText {
+  color: white;
+}
+
+.greyText {
+  color: #696969;
+}
+
 .pic-container {
   position: relative;
   width: 40%;
@@ -49,19 +90,40 @@ html body {
   height: 100%;
 }
 
+.padNormal {
+  padding: 0;
+  padding-bottom: 5px;
+  margin: 0;
+}
+
+.spaceLetters {
+  letter-spacing: 0.05em;
+}
+
+.padName {
+  padding: 0;
+  padding-bottom: 2px;
+  margin: 0;
+}
+
+.poppins {
+  font-family: Poppins;
+}
+
+.roboto {
+  font-family: Roboto;
+}
+
 .font10 {
   font-size: 10px;
 }
 
+.font12 {
+  font-size: 12px;
+}
+
 .font17 {
   font-size: 17px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 21px;
-  padding: 0;
-  padding-bottom: 5px;
-  margin: 0;
 }
 
 .font15 {
@@ -70,39 +132,64 @@ html body {
 
 .font20 {
   font-size: 20px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 23px;
-  letter-spacing: 0.05em;
-  text-transform: capitalize;
-  padding: 0;
-  padding-bottom: 5px;
-  margin: 0;
 }
 
 .font25 {
   font-size: 25px;
-  font-family: Poppins;
-  font-weight: 500;
-  line-height: 37px;
-  padding: 0;
-  padding-bottom: 2px;
-  margin: 0;
 }
 
 .font30 {
   font-size: 30px;
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 45px;
-  text-transform: lowercase;
-  padding: 0;
-  padding-bottom: 5px;
-  margin: 0;
 }
 
 .font40 {
   font-size: 40px;
+}
+
+.weight600 {
+  font-weight: 600;
+}
+
+.weight500 {
+  font-weight: 500;
+}
+
+.weight300 {
+  font-weight: 300;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.line37 {
+  line-height: 37px;
+}
+
+.line23 {
+  line-height: 23px;
+}
+
+.line21 {
+  line-height: 21px;
+}
+
+.line15 {
+  line-height: 15px;
+}
+
+.line45 {
+  line-height: 45px;
+}
+
+.line19 {
+  line-height: 19px;
+}
+
+.orangeButton {
+  background: #DDA35D;
 }

@@ -14,7 +14,6 @@ a:hover{
     opacity: 0.5;
 }
 
-
 #profileName {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
@@ -133,6 +132,7 @@ a:hover{
     font-size: 15px;
 }
 
+
 .side-choice{
     font-family: Poppins;
     font-style: normal;
@@ -143,9 +143,6 @@ a:hover{
     letter-spacing: 0.05em;
     color: #AA6231;
 }
-
-
-
 
 
 

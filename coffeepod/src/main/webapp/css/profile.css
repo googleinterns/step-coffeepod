@@ -5,19 +5,6 @@ font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
-#location {
-  font-family: Roboto;
-  line-height: 19px;
-  letter-spacing: 0.05em;
-  text-transform: capitalize;
-  padding: 0;
-  padding-bottom: 5px;
-  margin: 0;
-}
-
-#orangeName {
-  color: #AA6231;
-}
 
 .line {
   width: 0px;
@@ -27,12 +14,21 @@ font-family: 'Roboto', sans-serif; */
   border: 2px solid #AA6231;
 }
 
-.vertical-center {
-  min-height: 50%; 
-  display: flex;
-  align-items: center;
-}
-
 .card {
   border: none;
+}
+
+.border {
+  border: 5px solid #000000;
+}
+
+.borderOrange {
+  border: 1px solid #AA6231;
+}
+
+.padBig {
+  padding: 0;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin: 0;
 }
