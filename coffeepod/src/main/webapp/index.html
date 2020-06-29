@@ -2,11 +2,13 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Forum</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/navbar_style.css">
+    <link rel="stylesheet" href="css/footer.css">
     <!-- if you have a style sheet for your page put it here -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -15,101 +17,104 @@
     <script src="script.js"></script>
   </head>
   <body onload="load('cafe')">
-    <div id="nav-placeholder"></div>
-    <div class="page">
-    <!-- put it in a container -->
-      <div class="container-fluid">
-        <div class="row justify-content-center">
-        <!-- side cols -->
-            <div class="col-lg-3 d-none d-lg-block">
-            <!-- first side col sticky -->
-                <div class="make-me-sticky">
-                    <div class="cont shadow-sm">
-                        <div class="text-center mb-3">
-                            <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%>
-                        </div>
-                        <p class="font20 poppins line21 weight500 padNormal text-center mb-2">hi, Pancake</p>
-                        <p class="font17 poppins line15 padNormal text-center">Software Engineer | Mentor</p>
-                        <br>
-                        <p class="font15 poppins line15 weight300 padNormal text-center orangeTextDark mb-2"> Update your profile</p>
-                        <p class="font15 poppins line15 weight300 padNormal text-center orangeTextDark"> Ask a question</p>
-                    </div>
-                    <div class="cont shadow-sm">
-                        <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> topics </p>
-                        <ul class = "poppins weight300 font17 line21 text-center orangeTextLight">
-                            <li>career</li>
-                            <li>academics</li>
-                            <li>hobbies</li>
-                        </ul>  
-                        <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> filter </p>
-                        <ul class = "poppins weight300 font17 line21 text-center orangeTextLight">
-                            <li>newest</li>
-                            <li>oldest</li>
-                            <li>unanswered</li>
-                        </ul>  
-                    </div>
-                </div>
-            </div>
-
-          <!-- main section -->
-          <div id="profileHeader" class="col-lg-9">
-            <!-- first main content section -->
-            <div class="cont shadow-sm">
-              <div class = "row" style = "opacity: 0.5">
-                <div class="col-md-1">
-                    <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px;">
-                </div>
-                <div class="col-md-11 mt-2">
-                    <p class="font15 poppins line15 padNormal weight500">Pancake <span class = "font12 spaceLetters"> June 16, 2020 </span></p>
-                    <p class="font12 poppins padNormal spaceLetters">Software Engineer | Mentor</p>
-                </div>
-              </div>
-              <br>
-              <div class = "row ml-1" style = "opacity: 0.5">
-                <p class = "poppins weight600 font17 line21 padNormal"> Any questions on your mind today? </p>
-              </div>
-            </div>
-            <div class="cont shadow-sm">
-              <div class = "row">
-                <div class="col-md-1">
-                    <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
-                </div>
-                <div class="col-md-11 mt-2">
-                    <p class="font15 poppins line15 padNormal weight500">Pancake <span class = "font12 spaceLetters greyText"> June 16, 2020 </span></p>
-                    <p class="font12 poppins padNormal spaceLetters">Software Engineer | Mentor</p>
-                </div>
-              </div>
-              <br>
-              <div class = "row ml-1">
-                  <div class = "col">
-                    <h3 class = "poppins weight600 font17 line21 padNormal"> What's your favorite ice-cream flavor? </h3>
-                    <p class = "poppins weight300 font15 line21 padNormal"> I personally love chocolate and sea salt caramel ice cream. How about you? </p>
-                    <a class = "poppins font15 line21 padNormal orangeTextLight" href = "#"> See Answer(s) </a>
+    <div id="page-container">
+      <div id="nav-placeholder"></div>
+      <div class="page">
+      <!-- put it in a container -->
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+          <!-- side cols -->
+              <div class="col-lg-3 d-none d-lg-block">
+              <!-- first side col sticky -->
+                  <div class="make-me-sticky">
+                      <div class="cont shadow-sm">
+                          <div class="text-center mb-3">
+                              <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%>
+                          </div>
+                          <p class="font20 poppins line21 weight500 padNormal text-center mb-2">hi, Pancake</p>
+                          <p class="font17 poppins line15 padNormal text-center">Software Engineer | Mentor</p>
+                          <br>
+                          <p class="font15 poppins line15 weight300 padNormal text-center orangeTextDark mb-2"> Update your profile</p>
+                          <p class="font15 poppins line15 weight300 padNormal text-center orangeTextDark"> Ask a question</p>
+                      </div>
+                      <div class="cont shadow-sm">
+                          <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> topics </p>
+                          <ul class = "poppins weight300 font17 line21 text-center orangeTextLight">
+                              <li>career</li>
+                              <li>academics</li>
+                              <li>hobbies</li>
+                          </ul>  
+                          <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> filter </p>
+                          <ul class = "poppins weight300 font17 line21 text-center orangeTextLight">
+                              <li>newest</li>
+                              <li>oldest</li>
+                              <li>unanswered</li>
+                          </ul>  
+                      </div>
                   </div>
               </div>
-            </div>
-            <div class="cont shadow-sm">
-              <div class = "row">
-                <div class="col-md-1">
-                    <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
+
+            <!-- main section -->
+            <div id="profileHeader" class="col-lg-9">
+              <!-- first main content section -->
+              <div class="cont shadow-sm">
+                <div class = "row" style = "opacity: 0.5">
+                  <div class="col-md-1">
+                      <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px;">
+                  </div>
+                  <div class="col-md-11 mt-2">
+                      <p class="font15 poppins line15 padNormal weight500">Pancake <span class = "font12 spaceLetters"> June 16, 2020 </span></p>
+                      <p class="font12 poppins padNormal spaceLetters">Software Engineer | Mentor</p>
+                  </div>
                 </div>
-                <div class="col-md-11 mt-2">
-                    <p class="font15 poppins line15 padNormal weight500">Pancake <span class = "font12 spaceLetters greyText"> June 16, 2020 </span></p>
-                    <p class="font12 poppins padNormal spaceLetters">Software Engineer | Mentor</p>
+                <br>
+                <div class = "row ml-1" style = "opacity: 0.5">
+                  <p class = "poppins weight600 font17 line21 padNormal"> Any questions on your mind today? </p>
                 </div>
               </div>
-              <br>
-              <div class = "row ml-1">
-                <div class = "col">
-                    <h3 class = "poppins weight600 font17 line21 padNormal"> What's your favorite ice-cream flavor? </h3>
-                    <p class = "poppins weight300 font15 line21 padNormal"> I personally love chocolate and sea salt caramel ice cream. How about you? </p>
-                    <a class = "poppins font15 line21 padNormal orangeTextLight" href = "#"> See Answer(s) </a>
+              <div class="cont shadow-sm">
+                <div class = "row">
+                  <div class="col-md-1">
+                      <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
+                  </div>
+                  <div class="col-md-11 mt-2">
+                      <p class="font15 poppins line15 padNormal weight500">Pancake <span class = "font12 spaceLetters greyText"> June 16, 2020 </span></p>
+                      <p class="font12 poppins padNormal spaceLetters">Software Engineer | Mentor</p>
+                  </div>
+                </div>
+                <br>
+                <div class = "row ml-1">
+                    <div class = "col">
+                      <h3 class = "poppins weight600 font17 line21 padNormal"> What's your favorite ice-cream flavor? </h3>
+                      <p class = "poppins weight300 font15 line21 padNormal"> I personally love chocolate and sea salt caramel ice cream. How about you? </p>
+                      <a class = "poppins font15 line21 padNormal orangeTextLight" href = "#"> See Answer(s) </a>
+                    </div>
+                </div>
+              </div>
+              <div class="cont shadow-sm">
+                <div class = "row">
+                  <div class="col-md-1">
+                      <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
+                  </div>
+                  <div class="col-md-11 mt-2">
+                      <p class="font15 poppins line15 padNormal weight500">Pancake <span class = "font12 spaceLetters greyText"> June 16, 2020 </span></p>
+                      <p class="font12 poppins padNormal spaceLetters">Software Engineer | Mentor</p>
+                  </div>
+                </div>
+                <br>
+                <div class = "row ml-1">
+                  <div class = "col">
+                      <h3 class = "poppins weight600 font17 line21 padNormal"> What's your favorite ice-cream flavor? </h3>
+                      <p class = "poppins weight300 font15 line21 padNormal"> I personally love chocolate and sea salt caramel ice cream. How about you? </p>
+                      <a class = "poppins font15 line21 padNormal orangeTextLight" href = "#"> See Answer(s) </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div id="footer-placeholder"></div>
     </div>
   </body>
 </html>
