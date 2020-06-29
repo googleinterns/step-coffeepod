@@ -106,3 +106,7 @@ html body {
 .font40 {
   font-size: 40px;
 }
+
+.centerText{
+  text-align: center;
+}
