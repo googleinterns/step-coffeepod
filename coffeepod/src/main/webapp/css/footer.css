@@ -12,3 +12,13 @@ font-family: 'Roboto', sans-serif;
     padding: 2rem 1rem;
     margin-top: 50px;
 }
+
+.navbar-light .navbar-nav .footer-link {
+    color: #AA6231;
+    margin: 0rem 1.5rem; 
+}
+
+.container-fluid {
+  margin: auto;
+}
+

@@ -21,7 +21,7 @@ html body {
   max-width: 1400px;
   padding: 2rem 1rem;
   margin: auto;
-  margin-bottom: 100px;
+  margin-bottom: 200px;
 }
 
 .cont {
@@ -52,6 +52,15 @@ html body {
   object-position: center;
   height: 50px;
   width: 50px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+ul li {
+    padding: 1rem 0rem !important;
 }
 
 .orangeTextLight {
