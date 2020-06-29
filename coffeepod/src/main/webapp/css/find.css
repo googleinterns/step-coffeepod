@@ -5,6 +5,15 @@ font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
+a, a:hover {
+    text-decoration: none;
+}
+
+a:hover{
+    color: #AA6231;
+    opacity: 0.5;
+}
+
 #profileName {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
@@ -121,6 +130,18 @@ font-family: 'Roboto', sans-serif; */
     padding:10px;
     background-color:#EFE1CE;
     font-size: 15px;
+}
+
+
+.side-choice{
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: right;
+    letter-spacing: 0.05em;
+    color: #AA6231;
 }
 
 

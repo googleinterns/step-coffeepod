@@ -124,6 +124,7 @@ input:focus {
 a.underline {
     position: relative;
     text-decoration: none;
+    padding: 10px 5px;
 }
 
 a.underline:before{
