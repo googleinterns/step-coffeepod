@@ -156,6 +156,10 @@ html, body {
   font-size: 40px;
 }
 
+.centerText{
+  text-align: center;
+}
+
 .weight600 {
   font-weight: 600;
 }
