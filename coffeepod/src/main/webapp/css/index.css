@@ -3,6 +3,6 @@ ul {
     padding-left: 0px;
 }
 
-ul li{
+ul .list{
     padding: 1rem 0rem !important;
 }
