@@ -6,9 +6,18 @@ font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
 
-html body {
+html, body {
   background-color: #EFE1CE;
+  margin: 0px;
+  height: 100%;
+  width: 100%;
 }
+
+#page-container {
+  min-height: 100%;
+  position: relative;
+}
+
 
 .center-cropped {
   object-fit: cover; /* Do not scale the image */
@@ -21,7 +30,7 @@ html body {
   max-width: 1400px;
   padding: 2rem 1rem;
   margin: auto;
-  margin-bottom: 100px;
+  padding-bottom: 100px;
 }
 
 .cont {
