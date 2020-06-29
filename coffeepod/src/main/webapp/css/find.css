@@ -106,6 +106,10 @@ a:hover{
     color: #AA6231;
 }
 
+.subpage-title-under {
+  margin-top: 2%;
+}
+
 .card-text{
     font-family: 'Roboto', sans-serif;
     font-style: normal;
