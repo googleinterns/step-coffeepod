@@ -160,10 +160,6 @@ html, body {
   font-size: 40px;
 }
 
-.centerText{
-  text-align: center;
-}
-
 .weight600 {
   font-weight: 600;
 }
@@ -214,11 +210,10 @@ html, body {
 
 .orangeButton {
   background: #DDA35D;
-
+}
 
 @media (max-width: 978px) {
     .page {
       padding-bottom: 200px;
     }
 }
-
