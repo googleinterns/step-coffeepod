@@ -215,3 +215,9 @@ html, body {
 .orangeButton {
   background: #DDA35D;
 }
+
+@media (max-width: 978px) {
+    .page {
+      padding-bottom: 200px;
+    }
+}

@@ -12,7 +12,7 @@ font-family: 'Roboto', sans-serif;
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 150px;
+    /* height: 150px; */
 }
 
 .navbar-light .navbar-nav .footer-link {
@@ -24,3 +24,6 @@ font-family: 'Roboto', sans-serif;
   margin: auto;
 }
 
+.copy {
+  background-color: white;
+}
