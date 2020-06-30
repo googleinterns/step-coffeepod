@@ -72,8 +72,8 @@ a:hover{
 
 .pic-container-hub{
   position: relative;
-  width: 10%;
-  padding-bottom: 10%;
+  width: 20%;
+  padding-bottom: 20%;
   border-radius: 50%;
   overflow: hidden;
   margin: auto;
@@ -163,4 +163,39 @@ a:hover{
   line-height: 22px;
   color: #000000;
   text-align: right;
+}
+
+.no-border {
+  border: none;
+}
+
+.deck-middle{
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.badge {
+  border: 2px solid;
+  box-sizing: border-box;
+  border-radius: 25px;
+  padding: 2% 5%;
+}
+
+.badge-text{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.orange-light {
+  color: #DDA35D;
+}
+
+.orange-dark {
+  color: #5C2C0C;
 }

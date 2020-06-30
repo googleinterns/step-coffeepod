@@ -104,6 +104,11 @@ a:hover{
     font-size: 45px;
     line-height: 67px;
     color: #AA6231;
+    margin-top: 2%;
+}
+
+.subpage-title-under {
+  margin-top: 2%;
 }
 
 .card-text{
@@ -119,9 +124,8 @@ a:hover{
     font-family: 'Poppins', sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 20px;
     line-height: 22px;
-    color: #000000;
 }
 
 
@@ -129,20 +133,44 @@ a:hover{
     display: block;
     padding:10px;
     background-color:#EFE1CE;
-    font-size: 15px;
 }
 
 
 .side-choice{
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 18px;
-    text-align: right;
-    letter-spacing: 0.05em;
-    color: #AA6231;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 18px;
+  text-align: right;
+  letter-spacing: 0.05em;
+  color: #AA6231;
+  margin-top: 2px;
 }
+
+.filter-choice{
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 22px;
+}
+
+
+#submit-style{
+  background-color: #EFE1CE;
+  border: none;
+  color: black;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+  color: #000000;
+  text-align: right;
+}
+
 
 
 
