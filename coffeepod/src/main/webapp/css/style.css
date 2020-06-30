@@ -30,19 +30,7 @@ html, body {
   max-width: 1400px;
   padding: 2rem 1rem;
   margin: auto;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   padding-bottom: 150px;
-=======
-  padding-bottom: 100px;
->>>>>>> 6f62970dd3be1ebd43b9b1d0a6f1c20d0a1d4414
-=======
-  padding-bottom: 150px;
->>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
-=======
-  padding-bottom: 150px;
->>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
 }
 
 .cont {
@@ -136,25 +124,10 @@ html, body {
   font-family: Roboto;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
-=======
->>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
 .crimson {
   font-family: 'Crimson Pro', serif;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 6f62970dd3be1ebd43b9b1d0a6f1c20d0a1d4414
-=======
->>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
-=======
->>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
 .font10 {
   font-size: 10px;
 }
@@ -203,25 +176,10 @@ html, body {
   font-weight: 300;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
-=======
->>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
 .weight200 {
   font-weight: 200;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 6f62970dd3be1ebd43b9b1d0a6f1c20d0a1d4414
-=======
->>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
-=======
->>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
 .lowercase {
   text-transform: lowercase;
 }
@@ -256,9 +214,11 @@ html, body {
 
 .orangeButton {
   background: #DDA35D;
-<<<<<<< HEAD
+
+
+@media (max-width: 978px) {
+    .page {
+      padding-bottom: 200px;
+    }
 }
-© 2020 GitHub, Inc.
-=======
-}
->>>>>>> 6f62970dd3be1ebd43b9b1d0a6f1c20d0a1d4414
+
