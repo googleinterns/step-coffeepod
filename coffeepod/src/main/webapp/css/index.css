@@ -1,8 +1,8 @@
-ul {
+.menu {
     list-style-type: none;
     padding-left: 0px;
 }
 
-ul li{
+.menuli {
     padding: 1rem 0rem !important;
 }

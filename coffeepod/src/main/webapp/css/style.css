@@ -31,10 +31,14 @@ html, body {
   padding: 2rem 1rem;
   margin: auto;
 <<<<<<< HEAD
+<<<<<<< HEAD
   padding-bottom: 150px;
 =======
   padding-bottom: 100px;
 >>>>>>> 6f62970dd3be1ebd43b9b1d0a6f1c20d0a1d4414
+=======
+  padding-bottom: 150px;
+>>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
 }
 
 .cont {
@@ -129,12 +133,18 @@ html, body {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
 .crimson {
   font-family: 'Crimson Pro', serif;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> 6f62970dd3be1ebd43b9b1d0a6f1c20d0a1d4414
+=======
+>>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
 .font10 {
   font-size: 10px;
 }
@@ -184,12 +194,18 @@ html, body {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
 .weight200 {
   font-weight: 200;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> 6f62970dd3be1ebd43b9b1d0a6f1c20d0a1d4414
+=======
+>>>>>>> 9580422f39f08aff6c6bd24b122c12842845f9fa
 .lowercase {
   text-transform: lowercase;
 }
