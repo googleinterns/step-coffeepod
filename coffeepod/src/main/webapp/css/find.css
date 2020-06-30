@@ -102,9 +102,8 @@ a:hover{
     font-style: normal;
     font-weight: 600;
     font-size: 45px;
-    line-height: 67px;
+    line-height: 60px;
     color: #AA6231;
-    margin-top: 2%;
 }
 
 .subpage-title-under {
@@ -170,9 +169,3 @@ a:hover{
   color: #000000;
   text-align: right;
 }
-
-
-
-
-
-
