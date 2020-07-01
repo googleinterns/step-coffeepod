@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200;300&family=Poppins:wght@100;200;300;400;500;600&family=Roboto:wght@300;400&display=swap');
+
+/* 
+font-family: 'Crimson Pro', serif;
+font-family: 'Poppins', sans-serif;
+font-family: 'Roboto', sans-serif; */
+
+
+.line {
+  width: 0px;
+  height: 95px;
+  margin: auto;
+  background: #000000;
+  border: 2px solid #AA6231;
+}
+
+.card {
+  border: none;
+}
+
+.border {
+  border: 5px solid #000000;
+  padding: 30px;
+}
+
+.borderOrange {
+  border: 1px solid #AA6231;
+  padding: 30px;
+}
+
+.padBig {
+  padding: 0;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin: 0;
+}
