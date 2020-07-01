@@ -222,4 +222,10 @@ a:hover{
   border: 1px solid #AA6231;
 }
 
+.goal-card{
+  border: 3px solid #DDA35D;
+}
 
+.greyText {
+  color: #c7c7c7; 
+}
