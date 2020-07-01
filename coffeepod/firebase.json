@@ -1,0 +1,26 @@
+{
+  "web": {
+    "client_id": "296440646158-l6a46hia1qo41pb5b8abkqf1af5q7cjo.apps.googleusercontent.com",
+    "project_id": "team-hi-five-step",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "emlxfmksIiytLeHTM24NW7vH",
+    "redirect_uris": [
+      "https://team-hi-five-step.firebaseapp.com/__/auth/handler"
+    ],
+    "javascript_origins": [
+      "http://localhost",
+      "http://localhost:5000",
+      "https://team-hi-five-step.firebaseapp.com"
+    ]
+  },
+  "hosting": {
+    "public": "public/src/main/webapp",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
