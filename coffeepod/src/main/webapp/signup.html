@@ -5,7 +5,7 @@
         <title>Profile</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
         <link rel="stylesheet" href="css/login.css">
         <link rel="stylesheet" href="css/style.css">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -47,27 +47,16 @@
                       <div class = "col-10 text-center">
                         <p class = "crimson xl light"> coffee pod. </p>
                         <br>
-                        <p class = "poppins md bold"> SIGN UP </p>
+                        <p class = "poppins md weight600 spaceLetters"> SIGN UP </p>
                         <br><br>
                         <form action = "index.html" method="POST" role="form" class="form-horizontal">
                             <div class="form-group poppins container mb-0">
                                 <div class = "row">
                                     <div class = "col-md-6">
-                                        <input type="text" class="form-control shadow-none" placeholder="first name">
+                                        <input type="text" class="form-control shadow-none" name="firstName" placeholder="first name">
                                     </div>
                                     <div class = "col-md-6">
-                                        <input type="text" class="form-control shadow-none" placeholder="last name">
-                                    </div>
-                                </div>
-                            </div>
-                            <br><p>&nbsp;</p><br>
-                            <div class="form-group poppins container">
-                                <div class = "row">
-                                    <div class = "col-md-6">
-                                        <input type="text" class="form-control shadow-none" placeholder="username">
-                                    </div>
-                                    <div class = "col-md-6">
-                                        <input type="text" class="form-control shadow-none" placeholder="email">
+                                        <input type="text" class="form-control shadow-none" name = "lastName" placeholder="last name">
                                     </div>
                                 </div>
                             </div>
@@ -75,10 +64,21 @@
                             <div class="form-group poppins container">
                                 <div class = "row">
                                     <div class = "col-md-6">
-                                        <input type="text" class="form-control shadow-none" placeholder="password">
+                                        <input type="text" class="form-control shadow-none" name = "username" placeholder="username">
                                     </div>
                                     <div class = "col-md-6">
-                                        <input type="text" class="form-control shadow-none" placeholder="confirm password">
+                                        <input type="text" class="form-control shadow-none" name = "email" placeholder="email">
+                                    </div>
+                                </div>
+                            </div>
+                            <br><p>&nbsp;</p><br>
+                            <div class="form-group poppins container">
+                                <div class = "row">
+                                    <div class = "col-md-6">
+                                        <input type="text" class="form-control shadow-none" name = "password" placeholder="password">
+                                    </div>
+                                    <div class = "col-md-6">
+                                        <input type="text" class="form-control shadow-none" name = "copassword" placeholder="confirm password">
                                     </div>
                                 </div>
                             </div>
@@ -89,8 +89,8 @@
                                         <p class = "poppins smd" style = "color: #495057"> birthday: </p>
                                     </div>
                                     <div class = "col-md-2">
-                                        <select id="month" class="sm custom-select shadow-none">
-                                            <option class = "disabled">Month</option>
+                                        <select id="month" name = "month" class="sm custom-select">
+                                            <option>Month</option>
                                             <option id = "Jan">Jan</option>
                                             <option id = "Feb">Feb</option>
                                             <option id = "Mar">Mar</option>
@@ -106,22 +106,22 @@
                                         </select>
                                     </div>
                                     <div class = "col-md-2">
-                                        <select id = "day" class = "sm custom-select shadow-none" data-dropup-auto="false">
-                                            <option class = "disabled">Day</option>
+                                        <select id = "day" name = "day" class = "sm custom-select">
+                                            <option>Day</option>
                                         </select>
                                     </div>
                                     <div class = "col-md-2">
-                                        <select id = "year" class = "sm custom-select shadow-none" data-dropup-auto="false">
-                                            <option class = "disabled">Year</option>
+                                        <select id = "year" name = "year" class = "sm custom-select">
+                                            <option>Year</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <br><p>&nbsp;</p><br>
-                            <button type="submit" class="btn btn-primary poppins smd">sign up</button>
+                            <button type="submit" class="btn btn-primary poppins smd spaceLetters">sign up</button>
                         </form>
-                        <br><p>&nbsp;</p><br>
-                        <p class = "poppins sm">Already have an account?<a href = "login.html"> Log in here. </a></p>
+                        <br><p></p><br>
+                        <p class = "poppins sm weight300 spaceLetters">Already have an account?<a href = "login.html"> Log in here. </a></p>
                       </div>
                       <div class = "col-1"><p></p></div>
                   </div>

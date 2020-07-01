@@ -1,3 +1,4 @@
+// create days and years
 function dobSelect(){
     const daySelect = document.getElementById('day');
     const yearSelect = document.getElementById('year');
@@ -9,7 +10,6 @@ function dobSelect(){
         yearSelect.appendChild(createOptionValues("year",i));
     }
 }
-
 
 function createOptionValues(type, num){
     const optionEl = document.createElement('option');
