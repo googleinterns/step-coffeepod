@@ -229,3 +229,11 @@ a:hover{
 .greyText {
   color: #c7c7c7; 
 }
+
+.no-padding{
+  padding: 0px;
+}
+
+.whiteBackground{
+  background-color: white;
+}
