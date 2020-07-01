@@ -199,3 +199,41 @@ a:hover{
 .orange-dark {
   color: #5C2C0C;
 }
+
+.menu-choice{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 22px;
+  /* identical to box height */
+  text-align: center;
+  color: #AA6231;
+}
+a, a:hover {
+  text-decoration: none;
+}
+
+a:hover{
+  opacity: 0.5;
+}
+
+.borderOrange {
+  border: 1px solid #AA6231;
+}
+
+.goal-card{
+  border: 3px solid #DDA35D;
+}
+
+.greyText {
+  color: #c7c7c7; 
+}
+
+.no-padding{
+  padding: 0px;
+}
+
+.whiteBackground{
+  background-color: white;
+}

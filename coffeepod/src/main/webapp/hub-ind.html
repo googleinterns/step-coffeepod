@@ -12,13 +12,15 @@
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
          <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+         <script src="https://kit.fontawesome.com/6593008338.js" crossorigin="anonymous"></script>
          <script src="script.js"></script>
    </head>
    <body>
 
-      <div id="nav-placeholder"></div>
-
+    <div class="page-container">
+    <div id="nav-placeholder"></div>
   <div class="page">
+    
      <div class="container-fluid">
          <div class="row justify-content-center">
 
@@ -39,10 +41,14 @@
                        <h5 class="card-title">Penguin</h5>
                    </div>
                    <div class="text-center">
-                       <p class="card-text">Software Engineer @ Chocolatie | Mentor</p>
-                       <div href="#" class="badge orangeTextDark"> <span class="badge-text orangeTextDark"> Mentor</span></div>
-                   </div>
+                    <p class="card-text">Software Engineer @ Chocolatie</p>
+                    </div>
+
                </div>
+           </div>
+
+           <div class="card-footer text-center bg-transparent border-0">
+                <a href="#" class="badge orangeTextDark whiteBackground"> <span class="badge-text orangeTextDark"> Mentor</span></a>
            </div>
          </div>
 
@@ -58,10 +64,13 @@
                        <h5 class="card-title">Pancake</h5>
                    </div>
                    <div class="text-center">
-                       <p class="card-text">Software Engineer @ Chocolatie | Mentor</p>
-                       <div href="#" class="badge orangeTextLight"> <span class="badge-text orangeTextLight"> Mentee</span></div>
+                       <p class="card-text">Software Engineer @ Chocolatie</p>
                    </div>
                </div>
+           </div>
+           <div class="card-footer text-center bg-transparent border-0">
+            <a href="#" class="badge orangeTextLight whiteBackground"> <span class="badge-text orangeTextLight"> Mentee</span></a>
+    
            </div>
          </div>
 
@@ -76,9 +85,9 @@
 
         <div class="row justify-content-center">
 
-          
+            <!--MENU-->
             <div class="col-lg-3">
-              <div class="make-me-sticky">
+              <div class="make-me-sticky  mb-5">
               <div class="cont shadow-sm">
                 <div id="filter-head">
                   <p class="subtitle-poppins side-menu-header centerText" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -87,34 +96,126 @@
                 </div>
   
                 <div id="collapseOne" class="collapse show" aria-labelledby="filter-head">
-                  <p class=" orangeTextLight subtitle-poppins centerText">topic</p>
-                  <p class=" orangeTextLight subtitle-poppins centerText">sort</p>
-                  <p class=" orangeTextLight subtitle-poppins centerText">show</p>
+                  <p class="centerText"><a href="hub-ind.html#overview-section" class=" menu-choice centerText">overview</a></p>
+                  <div class="dropdown-divider"></div>
+                  <p class="centerText"><a href="hub-ind.html#goal-section" class=" menu-choice centerText">goals</a></p>
+                  <div class="dropdown-divider"></div>
+                  <p class="centerText"><a href="hub-ind.html#meeting-section" class=" menu-choice">meetings</a></p>
                 </div>
               </div>
             </div>
             </div>
-  
+            
+            <!-- CONTENT-->
             <div class="col-lg-9">
-              <div>
-                    <p class="subpage-title"> top matches </p>
-                    <p class="subtitle-poppins"> Showing 8 results </p>
+
+              <div id="overview-section" class="cont shadow-sm">
+                <div id="overview-head">
+                    <button data-toggle="collapse" data-target="#collapseOverview"  aria-controls="collapseOverview" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
+                        Show | Hide
+                    </button>
+                    <p class="weight600 poppins line45 font30 lowercase">
+                        overview
+                    </p>
+                </div>
+                
+                <div id="collapseOverview" class="collapse show" >
+                    <div  class="padNormal roboto line21 font17">
+                    <p>You have been mentor-mentee for <span class="orangeTextLight"> 10 months</span>, since <span class="orangeTextLight"> August, 2019</span>.</p>
+                    <p>You are matched based on <span class="orangeTextLight"> professional interest.</span></p>
+                    <p>You have set <span class="orangeTextLight"> 10 goals.</span></p>
+                    </div>
+                </div>
+
+              </div>
+            
+              <!--GOALS SECTION-->
+              <div id="goal-section" class="cont shadow-sm">
+                <div id="goal-head">
+                    <button style="outline:none" data-toggle="collapse" data-target="#collapseGoal" aria-expanded="true" aria-controls="collapseGoal"class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
+                        Show | Hide
+                    </button>
+                    <p class="weight600 poppins line45 font30 lowercase">
+                    goals
+                    </p>
+                </div>
+                
+                <div id="collapseGoal" class="collapse show" aria-labelledby="goal-head">
+                    <div class="container-fluid mt-2">
+                        <div class="row justify-content-center">
+                          
+                          <div class="col-auto mb-3">
+          
+                            <div class="card goal-card" style="width: 25rem;">
+                              <div class="card-body">
+                                      <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
+                                      <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
+                              </div>
+                            </div>
+                      
+                          </div> <!-- Closing tag of col-auto mb-3-->
+      
+                          <div class="col-auto mb-3">
+          
+                            <div class="card goal-card" style="width: 25rem;">
+                              <div class="card-body">
+                                      <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
+                                      <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
+                              </div>
+                            </div>
+                      
+                          </div> <!-- Closing tag of col-auto mb-3-->
+
+                          <!-- New goal-->
+                          <div class="col-auto mb-3">
+          
+                            <div class="card goal-card" style="width: 25rem;">
+                              <div class="card-body">
+                                      <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
+                                      <p class="poppins weight600 font20 line25 greyText capitalize">Place Holder<i class="fab fa-candle-holder"></i></p>
+                              </div>
+                            </div>
+                      
+                          </div> <!-- Closing tag of col-auto mb-3-->
+      
+                    <!-- Closing tags of a set of decks-->
+                      <!--Closing tag for goal cards container-->
+                    </div> <!-- Closing tag of row justify-content-center-->
+                  </div> <!-- Closing tag of container-fluid mt-5-->
+                </div>
               </div>
 
-              <div class="cont shadow-sm">
-                <button class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
-                <p class="weight600 poppins line45 font30 lowercase">About</p>
-                <p class="padNormal roboto line21 font17">Hello, I’m Pancake. I’m passionate about coding and hope I could help others in their coding journeys. 
-                  In my free time, I make pancakes and consume them. I’m also intersted in ice-skating and skiing.
-                  Feel free to reach out to me if you have any questions. Always happy to help!</p>
-              </div>
-            </div>
+              <!--MEETING SECTION-->
+              <div id="meeting-section" class="cont shadow-sm">
+                <div id="meeting-head">
+                    <button data-toggle="collapse" data-target="#collapseMeeting"  aria-controls="collapseMeeting" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
+                        Show | Hide
+                    </button>
+                    <p class="weight600 poppins line45 font30 lowercase">
+                        meetings
+                    </p>
+                </div>
+                
+                <div id="collapseMeeting" class="collapse show" >
+                    <div  class="padNormal roboto line21 font17">
+                    <p>You have been mentor-mentee for <span class="orangeTextLight"> 10 months</span>, since <span class="orangeTextLight"> August, 2019</span>.</p>
+                    <p>You are matched based on <span class="orangeTextLight"> professional interest.</span></p>
+                    <p>You have set <span class="orangeTextLight"> 10 goals.</span></p>
+                    </div>
+                </div>
 
+              </div>
+              <!--END OF MEETING SECTION-->
+
+
+            </div> <!--Closing tag for content on right side-->
+        
             </div> <!-- Closing tag of row justify-content-center-->
         
 
      </div>
  </div>
+</div>
 
     </body>
  </html> 
