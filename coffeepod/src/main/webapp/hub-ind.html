@@ -16,9 +16,10 @@
    </head>
    <body>
 
-      <div id="nav-placeholder"></div>
-
+    <div class="page-container">
+    <div id="nav-placeholder"></div>
   <div class="page">
+    
      <div class="container-fluid">
          <div class="row justify-content-center">
 
@@ -58,7 +59,7 @@
                        <h5 class="card-title">Pancake</h5>
                    </div>
                    <div class="text-center">
-                       <p class="card-text">Software Engineer @ Chocolatie | Mentor</p>
+                       <p class="card-text">Software Engineer @ Chocolatie</p>
                        <div href="#" class="badge orangeTextLight"> <span class="badge-text orangeTextLight"> Mentee</span></div>
                    </div>
                </div>
@@ -75,8 +76,6 @@
 
 
         <div class="row justify-content-center">
-
-          
             <div class="col-lg-3">
               <div class="make-me-sticky">
               <div class="cont shadow-sm">
@@ -87,34 +86,130 @@
                 </div>
   
                 <div id="collapseOne" class="collapse show" aria-labelledby="filter-head">
-                  <p class=" orangeTextLight subtitle-poppins centerText">topic</p>
-                  <p class=" orangeTextLight subtitle-poppins centerText">sort</p>
-                  <p class=" orangeTextLight subtitle-poppins centerText">show</p>
+                  <p class="centerText"><a href="#" class=" menu-choice centerText">overview</a></p>
+                  <div class="dropdown-divider"></div>
+                  <p class="centerText"><a href="#" class=" menu-choice centerText">goals</a></p>
+                  <div class="dropdown-divider"></div>
+                  <p class="centerText"><a href="#" class=" menu-choice">show</a></p>
                 </div>
               </div>
             </div>
             </div>
-  
+            
+            <!-- CONTENT-->
             <div class="col-lg-9">
-              <div>
-                    <p class="subpage-title"> top matches </p>
-                    <p class="subtitle-poppins"> Showing 8 results </p>
-              </div>
 
               <div class="cont shadow-sm">
-                <button class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
-                <p class="weight600 poppins line45 font30 lowercase">About</p>
-                <p class="padNormal roboto line21 font17">Hello, I’m Pancake. I’m passionate about coding and hope I could help others in their coding journeys. 
-                  In my free time, I make pancakes and consume them. I’m also intersted in ice-skating and skiing.
-                  Feel free to reach out to me if you have any questions. Always happy to help!</p>
-              </div>
-            </div>
+                <div id="overview-head">
+                    <button data-toggle="collapse" data-target="#collapseOverview"  aria-controls="collapseOverview" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
+                        Show | Hide
+                    </button>
+                    <p class="weight600 poppins line45 font30 lowercase">
+                        Overview
+                    </p>
+                </div>
+                
+                <div id="collapseOverview" class="collapse show" >
+                    <div  class="padNormal roboto line21 font17">
+                    <p>You have been mentor-mentee for <span class="orangeTextLight"> 10 months</span>, since <span class="orangeTextLight"> August, 2019</span>.</p>
+                    <p>You are matched based on <span class="orangeTextLight"> professional interest.</span></p>
+                    <p>You have set <span class="orangeTextLight"> 10 goals.</span></p>
+                    </div>
+                </div>
 
+              </div>
+            
+              <!--GOALS SECTION-->
+              <div class="cont shadow-sm">
+                <div id="goal-head">
+                    <button style="outline:none" data-toggle="collapse" data-target="#collapseGoal" aria-expanded="true" aria-controls="collapseGoal"class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
+                        Show | Hide
+                    </button>
+                    <p class="weight600 poppins line45 font30 lowercase">
+                    Goals
+                    </p>
+                </div>
+                
+                <div id="collapseGoal" class="collapse show" aria-labelledby="goal-head">
+                    <div class="container-fluid mt-2">
+                        <div class="row justify-content-center">
+                          
+                          <div class="col-auto mb-3">
+          
+                            <div class="card" style="width: 20rem;">
+                              <div class="pic-container">
+                                  <img class ="profile-pic" src="images/penguin.jpg" />
+                              </div>
+                              <div class="card-body">
+                                  <div class="text-center">
+                                      <div class="d-flex align-items-center">
+                                          <h5 class="card-title">Penguin</h5>
+                                      </div>
+                                      <div class="text-center">
+                                          <p class="card-text">Software Engineer @ Chocolatie | Mentor</p>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                      
+                          </div> <!-- Closing tag of col-auto mb-3-->
+      
+                          <div class="col-auto mb-3">
+          
+                            <div class="card" style="width: 20rem;">
+                              <div class="pic-container">
+                                  <img class ="profile-pic" src="images/penguin.jpg" />
+                              </div>
+                              <div class="card-body">
+                                  <div class="text-center">
+                                      <div class="d-flex align-items-center">
+                                          <h5 class="card-title">Penguin</h5>
+                                      </div>
+                                      <div class="text-center">
+                                          <p class="card-text">Software Engineer @ Chocolatie | Mentor</p>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                      
+                          </div> <!-- Closing tag of col-auto mb-3-->
+
+                          <!-- New goal-->
+                          <div class="col-auto mb-3">
+                          <div class="card" style="width: 20rem;">
+                            <div class="pic-container">
+                                <img class ="profile-pic" src="images/penguin.jpg" />
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <div class="d-flex align-items-center">
+                                        <h5 class="card-title">Penguin</h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="card-text">Software Engineer @ Chocolatie | Mentor</p>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                    
+                        </div> <!-- Closing tag of col-auto mb-3-->
+      
+                    <!-- Closing tags of a set of decks-->
+                      <!--Closing tag for goal cards container-->
+                    </div> <!-- Closing tag of row justify-content-center-->
+                  </div> <!-- Closing tag of container-fluid mt-5-->
+                </div>
+
+              </div>
+
+            </div> <!--Closing tag for content on right side-->
+        
             </div> <!-- Closing tag of row justify-content-center-->
         
 
      </div>
  </div>
+</div>
 
     </body>
  </html> 
