@@ -5,11 +5,11 @@ font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
-a, a:hover {
+.page-links a, a:hover {
     text-decoration: none;
 }
 
-a:hover{
+.page-links a:hover{
     color: #AA6231;
     opacity: 0.5;
 }
@@ -209,13 +209,6 @@ a:hover{
   text-align: center;
   color: #AA6231;
 }
-a, a:hover {
-  text-decoration: none;
-}
-
-a:hover{
-  opacity: 0.5;
-}
 
 .borderOrange {
   border: 1px solid #AA6231;
@@ -250,18 +243,14 @@ a:hover{
   margin-bottom: 15px;
 }
 
-.input, textarea {
+.meeting-form textarea {
   outline: 0;
   border-width: 0 0 2px !important;
-  border-color: black;
+  border-color: #ced4da;
 }
 
-.input:focus, textare:focus {
+.input:focus, .input:textarea:focus {
   border-color: #AA6231 !important;
-}
-
-.form-control {
-  font-size: 15px;
 }
 
 
@@ -277,13 +266,13 @@ a:hover{
 }
 
 a {
-   color: #AA6231
+   color: #AA6231;
 }
 
-input {
+.meeting-form input {
    outline: 0;
    border-width: 0 0 2px !important;
-   border-color: black;
+   border-color: #ced4da;
 }
 
 input:focus, textarea:focus {
@@ -306,25 +295,6 @@ input:focus, textarea:focus {
        min-height:50%;
    }
    body{font-size: 9px;}
-}
-
-@media (max-width:992px) {
-   .vertical-center{
-       min-height:50%;
-   }
-   body{font-size: 10px;}
-}
-
-@media (min-width: 1200px) {
-   body{font-size: 9px;}
-}
-
-@media (min-width: 1440px) {
-   body{font-size: 11px;}
-}
-
-@media (min-width: 1800px) {
-   body{font-size: 14px;}
 }
 
 .margin-auto{
