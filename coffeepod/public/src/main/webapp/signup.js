@@ -1,3 +1,15 @@
+function signup(e) {
+    e.preventDefault();
+    const signupForm = document.getElementById("signup-form");
+    const email = signupForm['email'].value;
+    const password = signupForm["password"].value;
+
+    auth.createUserWithEmailAndPassword(email, password).then(cred => {
+        window.location.replace("index.html");
+    })
+    console.log(email, password);
+}
+
 // create days and years
 function dobSelect(){
     const daySelect = document.getElementById('day');
