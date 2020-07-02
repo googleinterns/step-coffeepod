@@ -5,14 +5,17 @@ font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
-a, a:hover {
-    text-decoration: none;
+a{
+    text-decoration: none !important;
+    color: #AA6231;
 }
 
 a:hover{
     color: #AA6231;
-    opacity: 0.5;
+    opacity: 0.5 !important;
 }
+
+
 
 #profileName {
   font-family: 'Poppins', sans-serif;
@@ -70,14 +73,14 @@ a:hover{
   color: #AA6231;
 }
 
-.pic-container{
+.pic-container-hub{
   position: relative;
-  width: 40%;
-  padding-bottom: 40%;
+  width: 20%;
+  padding-bottom: 20%;
   border-radius: 50%;
   overflow: hidden;
   margin: auto;
-  margin-top: 7%;
+  margin-top: 3%;
 }
 
 .profile-pic{
@@ -116,7 +119,7 @@ a:hover{
     font-weight: normal;
     font-size: 15px;
     letter-spacing: 0.05em;
-    margin-top: 2%;
+    margin-top: 1%;
 }
 
 .subtitle-poppins{
@@ -134,17 +137,10 @@ a:hover{
     background-color:#EFE1CE;
 }
 
-
+/*Syle show more button*/
 .side-choice{
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 15px;
-  line-height: 18px;
-  text-align: right;
-  letter-spacing: 0.05em;
-  color: #AA6231;
-  margin-top: 2px;
+    padding: 0px;
+    padding-top: 3px;
 }
 
 .filter-choice{
@@ -154,6 +150,7 @@ a:hover{
   font-size: 17px;
   line-height: 22px;
 }
+
 
 
 #submit-style{
@@ -170,6 +167,135 @@ a:hover{
   text-align: right;
 }
 
-.submit-text:hover{
-  opacity: 0.5;
+.no-border {
+  border: none;
+}
+
+.deck-middle{
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.badge {
+  border: 2px solid;
+  box-sizing: border-box;
+  border-radius: 25px;
+  padding: 2% 5%;
+}
+
+.badge-text{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.orange-light {
+  color: #DDA35D;
+}
+
+.orange-dark {
+  color: #5C2C0C;
+}
+
+.menu-choice{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 22px;
+  /* identical to box height */
+  text-align: center;
+  color: #AA6231;
+}
+
+.borderOrange {
+  border: 1px solid #AA6231;
+}
+
+.goal-card{
+  border: 3px solid #DDA35D;
+}
+
+.greyText {
+  color: #c7c7c7; 
+}
+
+.no-padding{
+  padding: 0px;
+}
+
+.whiteBackground{
+  background-color: white;
+}
+
+.centerText {
+  text-align: center;
+}
+
+.orangeBox {
+  height: 200px;
+  width: 300px;
+  background-color: white;
+  padding: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+
+.margin-auto{
+  margin: auto;
+  padding: 20px;
+}
+
+.greyButton {
+  background: #c7c7c7;
+}
+
+.floatRight {
+  float: right;
+}
+
+.no-bullet {
+  list-style-type: none;
+  padding: 0px;
+  padding-left: 10px;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+.meeting-title{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  color: #AA6231;
+  padding-left: 10px;
+}
+
+.left-pad-10{
+  padding-left: 10px;
+}
+
+.no-margin-bottom{
+  margin-bottom: 0px;
+}
+
+.no-content {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  color: #000000;
+  text-align: center;
 }
