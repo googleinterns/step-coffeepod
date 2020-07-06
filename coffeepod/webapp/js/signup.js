@@ -8,10 +8,10 @@ function signup(e) {
         return db.collection('user-info').doc(cred.user.uid).set({
             username: signupForm['username'].value,
             name: signupForm['firstName'].value+" "+signupForm['lastName'].value,
-            dob: signupForm['month'].value+"-"+signupForm['day'].value+"-"+signupForm['year'].value
+            dob: signupForm['month'].value+" "+signupForm['day'].value+", "+signupForm['year'].value
         })
     }).then(() => {
-        window.location.href = "index.html"
+        window.location.href = "index.html";
     })
 
 }
@@ -31,7 +31,7 @@ function dobSelect(){
 
 function createOptionValues(type, num){
     const optionEl = document.createElement('option');
-    optionEl.value = type+num.toString();
+    optionEl.value = num.toString();
     optionEl.innerHTML = num.toString();
     optionEl.id = type+num.toString();
     optionEl.className = "roboto xs"
