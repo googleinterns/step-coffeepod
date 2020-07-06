@@ -1,3 +1,23 @@
+function signup(e) {
+    e.preventDefault();
+    const signupForm = document.getElementById("signup-form");
+    const email = signupForm['email'].value;
+    const password = signupForm["password"].value;
+
+    auth.createUserWithEmailAndPassword(email, password).then(cred => {
+        signupForm.reset();
+        window.location.href = "index.html";
+        /*
+        return cred.user.updateProfile({
+            displayName: signupForm['username'].value
+        })
+        
+    }).then(() => {
+        console.log(auth.currentUser.displayName);*/
+    })
+
+}
+
 // create days and years
 function dobSelect(){
     const daySelect = document.getElementById('day');
