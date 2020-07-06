@@ -239,7 +239,7 @@ a:hover{
 
 .orangeBox {
   height: 200px;
-  width: 300px;
+  width: 250px;
   background-color: white;
   padding: 20px;
   margin-top: 15px;
@@ -299,3 +299,4 @@ li {
   color: #000000;
   text-align: center;
 }
+

@@ -1,6 +1,7 @@
 <html>
      <head>
          <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1">
          <title>Hub</title>
          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -16,7 +17,7 @@
          <script src="https://kit.fontawesome.com/6593008338.js" crossorigin="anonymous"></script>
          <script src="js/script.js"></script>
          <script>
-          $(document).ready(load('hub'));
+          $(document).ready(load('hub-ind'));
         </script>
    </head>
     <body>
@@ -154,7 +155,7 @@
                           
                           <div class="col-auto mb-3">
           
-                            <div class="card goal-card" style="width: 25rem;">
+                            <div class="card goal-card" style="width: 15rem;">
                               <div class="card-body">
                                       <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
                                       <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
@@ -165,7 +166,7 @@
       
                           <div class="col-auto mb-3">
           
-                            <div class="card goal-card" style="width: 25rem;">
+                            <div class="card goal-card" style="width: 15rem;">
                               <div class="card-body">
                                       <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
                                       <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
@@ -177,7 +178,7 @@
                           <!-- New goal-->
                           <div class="col-auto mb-3">
           
-                            <div class="card goal-card" style="width: 25rem;">
+                            <div class="card goal-card" style="width: 15rem;">
                               <div class="card-body">
                                       <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
                                       <p class="poppins weight600 font20 line25 greyText capitalize">Place Holder<i class="fab fa-candle-holder"></i></p>
@@ -207,7 +208,7 @@
                 <div id="collapseMeeting" class="collapse show" aria-labelledby="meeting-head">
                 <div class="row">
                     <div class="col-lg-6 image-container">
-                        <div style="padding-left:20px">
+                        <div>
                         <p class="padName line37 weight500 poppins font25">new meeting</p>
                         <div  class="roboto line21 font17">
                             <p>You have <span class="orangeTextLight"> one upcoming meeting</span>, on <span class="orangeTextLight"> Monday, 6 July, 2020</span>.</p>
@@ -248,13 +249,24 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
+                            <br><br>
+                            <div class="form-group poppins container">
+                                <form action = "index.html" method="POST" role="form" class="form-horizontal">
+                                    <div class="text-center">
+                                        <button class="btn orangeButton whiteText poppins weight400 font17 centerText line25 marign-auto">submit</button><br><br>
+                                    </div>
+                                </form>
+                            </div>
                         </form>
                         
                     </div>
                     <div class="col-lg-6">
+                        
                       <p class="padName line37 weight500 poppins font25">calendar</p>
+                        
                       <div class = "orangeBox goal-card centerText"> </div>
+                          
                       
                       <p class="padName line37 weight500 poppins font25">details</p>
                       <div  class="padNormal roboto line21 font17">
@@ -269,32 +281,18 @@
                         </div>
 
                         </div>
-
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-6">
+                        
                         <div class="form-group poppins container">
                             <form action = "index.html" method="POST" role="form" class="form-horizontal">
                                 <div class="text-center">
-                                    <button class="btn orangeButton whiteText poppins weight400 font17 centerText line25 marign-auto">submit</button><br><br>
+                                    <button class="btn greyButton whiteText poppins weight400 font17 centerText line25 marign-auto floatRight">delete</button><br><br>
                                 </div>
                             </form>
                         </div>
-                        </div>
-
-                    <div class="col-lg-6">
-                    <div class="form-group poppins container">
-                        <form action = "index.html" method="POST" role="form" class="form-horizontal">
-                            <div class="text-center">
-                                <button class="btn greyButton whiteText poppins weight400 font17 centerText line25 marign-auto floatRight">delete</button><br><br>
-                            </div>
-                        </form>
-                    </div>
-                    </div>
-
+                   
                   </div>
+                </div>
+
                 </div>
               </div>
               <!--END OF MEETING SECTION-->
@@ -353,7 +351,6 @@
  </div>
  <div id="footer-placeholder"></div>
 </div> <!--Closing tag of page container-->
-
  </body>
  </html> 
 
