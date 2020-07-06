@@ -55,5 +55,5 @@ font-family: 'Roboto', sans-serif;
 
 /* Ultimately, this is the correct place for scroll-padding */
 html {
-  scroll-padding-top: 150px; /* height of sticky header */
+  scroll-padding-top: 100px; /* height of sticky header */
 }
