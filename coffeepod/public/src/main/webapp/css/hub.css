@@ -5,14 +5,17 @@ font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
-.page-links a, a:hover {
-    text-decoration: none;
+a{
+    text-decoration: none !important;
+    color: #AA6231;
 }
 
-.page-links a:hover{
+a:hover{
     color: #AA6231;
-    opacity: 0.5;
+    opacity: 0.5 !important;
 }
+
+
 
 #profileName {
   font-family: 'Poppins', sans-serif;
@@ -243,59 +246,6 @@ font-family: 'Roboto', sans-serif; */
   margin-bottom: 15px;
 }
 
-.meeting-form textarea {
-  outline: 0;
-  border-width: 0 0 2px !important;
-  border-color: #ced4da;
-}
-
-.input:focus, .input:textarea:focus {
-  border-color: #AA6231 !important;
-}
-
-
-.vertical-center {
- min-height: 85%; 
-
- display: flex;
- align-items: center;
-}
-
-.text-center{
-   text-align: center;
-}
-
-a {
-   color: #AA6231;
-}
-
-.meeting-form input {
-   outline: 0;
-   border-width: 0 0 2px !important;
-   border-color: #ced4da;
-}
-
-input:focus, textarea:focus {
-   border-color: #AA6231 !important;
-}
-
-.btn-primary,
-.btn-primary:hover,
-.btn-primary:active,
-.btn-primary:visited,
-.btn-primary:focus {
-   background-color: #EFE1CE;
-   border: none;
-   padding: 0rem 3.5rem;
-   color: black;
-}
-
-@media (max-width:500px) {
-   .vertical-center{
-       min-height:50%;
-   }
-   body{font-size: 9px;}
-}
 
 .margin-auto{
   margin: auto;
@@ -338,3 +288,14 @@ li {
   margin-bottom: 0px;
 }
 
+.no-content {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  color: #000000;
+  text-align: center;
+}

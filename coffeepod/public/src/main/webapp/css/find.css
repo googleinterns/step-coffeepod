@@ -169,3 +169,7 @@ a:hover{
   color: #000000;
   text-align: right;
 }
+
+.submit-text:hover{
+  opacity: 0.5;
+}
