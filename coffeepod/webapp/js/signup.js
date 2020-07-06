@@ -1,3 +1,15 @@
+function login(e) {
+    e.preventDefault();
+    const loginForm = document.getElementById("login-form");
+    const user = loginForm['username'].value;
+    const password = loginForm['password'].value;
+
+    auth.signInWithEmailAndPassword(user, password).then(cred => {
+        console.log(cred.user);
+        window.location.href = "index.html";
+
+    })
+}
 function signup(e) {
     e.preventDefault();
     const signupForm = document.getElementById("signup-form");
@@ -13,7 +25,6 @@ function signup(e) {
     }).then(() => {
         window.location.href = "index.html";
     })
-
 }
 
 // create days and years
