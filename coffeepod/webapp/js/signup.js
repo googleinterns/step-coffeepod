@@ -5,15 +5,13 @@ function signup(e) {
     const password = signupForm["password"].value;
 
     auth.createUserWithEmailAndPassword(email, password).then(cred => {
-        signupForm.reset();
-        window.location.href = "index.html";
-        /*
-        return cred.user.updateProfile({
-            displayName: signupForm['username'].value
+        return db.collection('user-info').doc(cred.user.uid).set({
+            username: signupForm['username'].value,
+            name: signupForm['firstName'].value+" "+signupForm['lastName'].value,
+            dob: signupForm['month'].value+"-"+signupForm['day'].value+"-"+signupForm['year'].value
         })
-        
     }).then(() => {
-        console.log(auth.currentUser.displayName);*/
+        window.location.href = "index.html"
     })
 
 }
