@@ -12,15 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+// $(document).ready(function() {
+//   $.get("navbar.html", function(data){
+//     $("#nav-placeholder").replaceWith(data).promise().done(function() {
+//       document.getElementById(fromWhere).classList.add('active');
+//     });
+//   });
+
+//   $.get("footer.html", function(data){
+//     $("#footer-placeholder").replaceWith(data);
+//   });
+// });
+
 function load(fromWhere){
-  document.getElementById(fromWhere).classList.add('active');
-  console.log(document.getElementById(fromWhere));
-}
+  console.log(fromWhere);
+  $.get("navbar.html", function(data){
+    $("#nav-placeholder").replaceWith(data).promise().done(function() {
+      document.getElementById(fromWhere).classList.add('active');
+    });
+  });
 
-$.get("navbar.html", function(data){
-    $("#nav-placeholder").replaceWith(data);
-});
-
-$.get("footer.html", function(data){
+  $.get("footer.html", function(data){
     $("#footer-placeholder").replaceWith(data);
-});
+  });
+}
