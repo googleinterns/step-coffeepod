@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200;300&family=Poppins:wght@100;200;300;400;500;600&family=Roboto:wght@300;400&display=swap');
+
+/* 
+font-family: 'Crimson Pro', serif;
+font-family: 'Poppins', sans-serif;
+font-family: 'Roboto', sans-serif; */
+
+html, body {
+   background-color: #EFE1CE;
+   height: 100%;
+   font-size: 8px;
+}
+
+.vertical-center {
+  min-height: 85%; 
+
+  display: flex;
+  align-items: center;
+}
+
+.text-center{
+    text-align: center;
+}
+
+a {
+    color: #AA6231 !important;
+}
+
+input {
+    outline: 0;
+    border-width: 0 0 2px !important;
+    border-color: black;
+}
+
+input:focus {
+    border-color: #AA6231 !important;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+    background-color: #EFE1CE;
+    border: none;
+    padding: 0rem 3.5rem;
+    color: black;
+}
+
+@media (max-width:500px) {
+    .vertical-center{
+        min-height:50%;
+    }
+    body{font-size: 9px;}
+}
+
+@media (max-width:992px) {
+    .vertical-center{
+        min-height:50%;
+    }
+    body{font-size: 10px;}
+}
+
+@media (min-width: 1200px) {
+    body{font-size: 9px;}
+}
+
+@media (min-width: 1440px) {
+    body{font-size: 11px;}
+}
+
+@media (min-width: 1800px) {
+    body{font-size: 14px;}
+}
+
+.form-control {
+    font-size: 2em;
+}
+
+.crimson {
+    font-family: 'Crimson Pro', serif;
+    color: #AA6231;
+}
+
+.sm {
+    font-size: 1.5em;
+}
+
+.smd {
+    font-size: 2em;
+}
+
+.md {
+    font-size: 3em;
+}
+
+.lg {
+    font-size: 4em;
+}
+
+.xl {
+    font-size: 9.6em;
+}
+
+.light {
+    font-weight: lighter;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.drkbrown {
+    color: #5C2C0C;
+}
+
+/* Style the hover effect for the home navigation bar in login page*/
+a.underline {
+    position: relative;
+    text-decoration: none;
+    padding: 10px 5px;
+}
+
+a.underline:before{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0.5px;
+    left: 0.5px;
+    right: 0.5px;
+    background-color:#AA6231;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Effect is the same both when the link is hovered and when the link is active*/
+a.underline:hover:before{
+    visibility: visible;
+    width: 100%;
+}
+

@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "team-hi-five-step"
+    "default": "team-hi-five-step",
+    "coffeepod": "team-hi-five-step"
   }
 }
