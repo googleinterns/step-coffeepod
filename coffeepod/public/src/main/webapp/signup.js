@@ -5,9 +5,17 @@ function signup(e) {
     const password = signupForm["password"].value;
 
     auth.createUserWithEmailAndPassword(email, password).then(cred => {
-        window.location.replace("index.html");
+        signupForm.reset();
+        window.location.href = "index.html";
+        /*
+        return cred.user.updateProfile({
+            displayName: signupForm['username'].value
+        })
+        
+    }).then(() => {
+        console.log(auth.currentUser.displayName);*/
     })
-    console.log(email, password);
+
 }
 
 // create days and years
