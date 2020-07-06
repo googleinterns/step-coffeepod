@@ -1,3 +1,15 @@
+function login(e) {
+    e.preventDefault();
+    const loginForm = document.getElementById("login-form");
+    const user = loginForm['username'].value;
+    const password = loginForm['password'].value;
+
+    auth.signInWithEmailAndPassword(user, password).then(cred => {
+        console.log(cred.user);
+        window.location.href = "index.html";
+
+    })
+}
 function signup(e) {
     e.preventDefault();
     const signupForm = document.getElementById("signup-form");
@@ -8,12 +20,11 @@ function signup(e) {
         return db.collection('user-info').doc(cred.user.uid).set({
             username: signupForm['username'].value,
             name: signupForm['firstName'].value+" "+signupForm['lastName'].value,
-            dob: signupForm['month'].value+"-"+signupForm['day'].value+"-"+signupForm['year'].value
+            dob: signupForm['month'].value+" "+signupForm['day'].value+", "+signupForm['year'].value
         })
     }).then(() => {
-        window.location.href = "index.html"
+        window.location.href = "index.html";
     })
-
 }
 
 // create days and years
@@ -31,7 +42,7 @@ function dobSelect(){
 
 function createOptionValues(type, num){
     const optionEl = document.createElement('option');
-    optionEl.value = type+num.toString();
+    optionEl.value = num.toString();
     optionEl.innerHTML = num.toString();
     optionEl.id = type+num.toString();
     optionEl.className = "roboto xs"

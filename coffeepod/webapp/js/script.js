@@ -25,6 +25,13 @@
 //   });
 // });
 
+function logOut(e){
+    e.preventDefault();
+    firebase.auth().signOut().then(() => {
+        window.location.href = "login.html";
+    })
+}
+
 function load(fromWhere){
   console.log(fromWhere);
   $.get("navbar.html", function(data){
