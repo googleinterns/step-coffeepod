@@ -8,6 +8,7 @@
          <link rel="stylesheet" href="css/hub-ind.css">
          <link rel="stylesheet" href="css/style.css">
          <link rel="stylesheet" href="css/footer.css">
+         <link rel="stylesheet" href="css/goals.css">
          <link rel="stylesheet" href="css/navbar_style.css">
          <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -16,6 +17,7 @@
          <script src="https://kit.fontawesome.com/6593008338.js" crossorigin="anonymous"></script>
          <script src="https://kit.fontawesome.com/6593008338.js" crossorigin="anonymous"></script>
          <script src="js/script.js"></script>
+         <script src="js/goals.js"></script>
          <script>
           $(document).ready(load('hub-ind'));
         </script>
@@ -140,6 +142,7 @@
             
               <!--GOALS SECTION-->
               <div id="goal-section" class="cont shadow-sm">
+                
                 <div id="goal-head">
                     <button style="outline:none" data-toggle="collapse" data-target="#collapseGoal" aria-expanded="true" aria-controls="collapseGoal"class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
                         Show | Hide
@@ -150,46 +153,13 @@
                 </div>
                 
                 <div id="collapseGoal" class="collapse show" aria-labelledby="goal-head">
-                    <div class="container-fluid mt-2">
-                        <div class="row justify-content-center">
-                          
-                          <div class="col-auto mb-3">
-          
-                            <div class="card goal-card" style="width: 15rem;">
-                              <div class="card-body">
-                                      <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
-                                      <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
-                              </div>
-                            </div>
-                      
-                          </div> <!-- Closing tag of col-auto mb-3-->
-      
-                          <div class="col-auto mb-3">
-          
-                            <div class="card goal-card" style="width: 15rem;">
-                              <div class="card-body">
-                                      <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
-                                      <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
-                              </div>
-                            </div>
-                      
-                          </div> <!-- Closing tag of col-auto mb-3-->
 
-                          <!-- New goal-->
-                          <div class="col-auto mb-3">
-          
-                            <div class="card goal-card" style="width: 15rem;">
-                              <div class="card-body">
-                                      <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
-                                      <p class="poppins weight600 font20 line25 greyText capitalize">Place Holder<i class="fab fa-candle-holder"></i></p>
-                              </div>
-                            </div>
-                      
-                          </div> <!-- Closing tag of col-auto mb-3-->
-      
-                    <!-- Closing tags of a set of decks-->
-                      <!--Closing tag for goal cards container-->
-                    </div> <!-- Closing tag of row justify-content-center-->
+                    <div class="container-fluid mt-2">
+                        <button id="add-goal" class="btn roboto font15 line15 spaceLetters orangeTextLight" onclick="createNewGoal(); return false;"> Add a new goal card</button>
+                        <div id="goal-board" class="row justify-content-center">
+                            
+                         
+                        </div> <!-- Closing tag of row justify-content-center-->
                   </div> <!-- Closing tag of container-fluid mt-5-->
                 </div>
               </div>
@@ -351,6 +321,43 @@
  </div>
  <div id="footer-placeholder"></div>
 </div> <!--Closing tag of page container-->
+
  </body>
  </html> 
 
+<!-- <div class="col-auto mb-3">
+          
+                            <div class="card goal-card" style="width: 15rem;">
+                              <div class="card-body">
+                                      <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
+                                      <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
+                              </div>
+                            </div>
+                      
+                          </div>  Closing tag of col-auto mb-3
+      
+                          <div class="col-auto mb-3">
+          
+                            <div class="card goal-card" style="width: 15rem;">
+                              <div id="goal-body" class="card-body">
+                                      <button id="add-goals" class="btn float-right grayText"><i class="fas fa-plus" aria-hidden="true" onclick="createNewGoal()"></i></button>
+                                      <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
+                              </div>
+                            </div>
+                      
+                          </div> Closing tag of col-auto mb-3
+
+                          New goal
+                          <div class="col-auto mb-3">
+          
+                            <div class="card goal-card" style="width: 15rem;">
+                              <div class="card-body">
+                                      <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
+                                      <p class="poppins weight600 font20 line25 greyText capitalize">Place Holder<i class="fab fa-candle-holder"></i></p>
+                              </div>
+                            </div>
+                                Closing tag of col-auto mb-3
+                          </div> -->
+      
+                    <!-- Closing tags of a set of decks-->
+                      <!--Closing tag for goal cards container-->

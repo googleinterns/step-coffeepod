@@ -43,4 +43,8 @@ function load(fromWhere){
   $.get("footer.html", function(data){
     $("#footer-placeholder").replaceWith(data);
   });
+
+  $.get("goals.html", function(data){
+    $("#goals-placeholder").replaceWith(data);
+  });
 }
