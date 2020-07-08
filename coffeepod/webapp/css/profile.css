@@ -34,3 +34,16 @@ font-family: 'Roboto', sans-serif; */
   padding-bottom: 7px;
   margin: 0;
 }
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: white;
+    border: none;
+}
+ 
+.hidden {
+  display: none;
+}
+
+/* .btn {
+  padding: 0;
+} */
