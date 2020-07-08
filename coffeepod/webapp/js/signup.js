@@ -10,22 +10,19 @@ function login(e) {
         valid = true;
         loginForm.querySelector("#error").innerHTML = "";
         window.location.replace("index.html");
-        console.log(cred.user);
     }).catch(() => {
         // check if user used username to login
-        db.collection('user-info').get().then(snapshot => {
-            (snapshot.docs).forEach(doc => {
+        return db.collection('user-info').get().then(snapshot => {
+            (snapshot).forEach(doc => {
                 const userInfo = doc.data();
+                console.log(userInfo.username);
                 if (userInfo.username == user) {
+                    valid = true;
                     auth.signInWithEmailAndPassword(userInfo.email, password).then(() => {
-                        console.log(userInfo.username);
-                        valid = true;
-                        console.log(valid);
                         window.location.replace("index.html");
                         return false;
                     }).catch(() => {
                         //incorrect password
-                        console.log("first err");
                         loginForm.querySelector("#error").innerHTML = "Invalid username/email or password.";
                     })
                 }
@@ -33,8 +30,6 @@ function login(e) {
         })
     }).then(() => {
         if (valid == false){
-            console.log(valid);
-            console.log("second err");
             loginForm.querySelector("#error").innerHTML = "Invalid username/email or password.";
 
         }
@@ -57,19 +52,7 @@ function signup(e) {
     signupForm.querySelector("#username-error").innerHTML ='';
     signupForm.querySelector("#password-error").innerHTML ='';
     signupForm.querySelector("#email-error").innerHTML ='';
-
-    /*
-    //check for username uniqueness
-    db.collection('user-info').get().then(snapshot => {
-        (snapshot.docs).forEach(doc => {
-            const userInfo = doc.data();
-            console.log(userInfo);
-            if (userInfo.username == username) {
-                signupForm.querySelector("#username-error").innerHTML = "Username taken.";
-                valid = false;
-            }
-        })
-    })*/
+    signupForm.querySelector("#birthday-error").innerHTML = '';
 
     //check to see if passwords match
     if (copassword != password) {
@@ -79,11 +62,21 @@ function signup(e) {
 
     if ((month == "Month" || day == "Day") || year == "Year"){
         signupForm.querySelector("#birthday-error").innerHTML = "Please enter your birthday.";
+        valid = false;
     }
 
-    //create account if checks pass
-    if (valid == true){
-        auth.createUserWithEmailAndPassword(email, password).then(cred => {
+    if(valid == true){
+        db.collection('user-info').where('username', '==', username).get().then(snapshot => {
+            if(snapshot.empty) {
+                return auth.createUserWithEmailAndPassword(email, password);
+            } else {
+                signupForm.querySelector("#username-error").innerHTML = "Username taken.";
+                return false;
+                //valid = false;
+            } 
+        }).then(cred => {
+            console.log(cred);
+            //Create the user doc in the users collection
             db.collection('profile').doc(cred.user.uid).set({
                 username: username,
                 name: signupForm['firstName'].value+" "+signupForm['lastName'].value,
@@ -94,13 +87,13 @@ function signup(e) {
                 email: email,
                 name: signupForm['firstName'].value+" "+signupForm['lastName'].value,
                 dob: month+" "+day+", "+year
+            }).then(() => {
+                window.location.replace("index.html");
             })
-        }).catch((err) => {
-            signupForm.querySelector("#email-error").innerHTML = err.message;
+        }).catch(() => {
+            signupForm.querySelector("#email-error").innerHTML = "This email is already in use."
             valid = false;
-        }).then(() => {
-            window.location.href = "index.html";
-        })
+        });
     }
 }
 
