@@ -52,6 +52,7 @@ function signup(e) {
     signupForm.querySelector("#username-error").innerHTML ='';
     signupForm.querySelector("#password-error").innerHTML ='';
     signupForm.querySelector("#email-error").innerHTML ='';
+    signupForm.querySelector("#birthday-error").innerHTML = '';
 
     //check to see if passwords match
     if (copassword != password) {
