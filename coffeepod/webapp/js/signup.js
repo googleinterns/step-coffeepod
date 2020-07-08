@@ -58,16 +58,18 @@ function signup(e) {
     signupForm.querySelector("#password-error").innerHTML ='';
     signupForm.querySelector("#email-error").innerHTML ='';
 
+    /*
     //check for username uniqueness
     db.collection('user-info').get().then(snapshot => {
-        snapshot.forEach(doc => {
+        (snapshot.docs).forEach(doc => {
             const userInfo = doc.data();
+            console.log(userInfo);
             if (userInfo.username == username) {
                 signupForm.querySelector("#username-error").innerHTML = "Username taken.";
                 valid = false;
             }
         })
-    })
+    })*/
 
     //check to see if passwords match
     if (copassword != password) {
@@ -92,7 +94,7 @@ function signup(e) {
             signupForm.querySelector("#email-error").innerHTML = err.message;
             valid = false;
         }).then(() => {
-            if (valid == true) window.location.href = "index.html";
+            window.location.href = "index.html";
         })
     }
 }
