@@ -6,8 +6,6 @@ function getProfile() {
       // User is signed in.
       name = user.displayName;
       email = user.email;
-      console.log(name);
-      console.log(email);
       // photoUrl = user.photoURL;
       // emailVerified = user.emailVerified;
       uid = user.uid;

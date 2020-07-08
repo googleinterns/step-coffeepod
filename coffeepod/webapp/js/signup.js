@@ -84,6 +84,10 @@ function signup(e) {
     //create account if checks pass
     if (valid == true){
         auth.createUserWithEmailAndPassword(email, password).then(cred => {
+            db.collection('profile').doc(cred.user.uid).set({
+                username: username,
+                name: signupForm['firstName'].value+" "+signupForm['lastName'].value,
+            });
             return db.collection('user-info').doc(cred.user.uid).set({
                 username: username,
                 email: email,
