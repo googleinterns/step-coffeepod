@@ -1,17 +1,21 @@
-var name, email, photoUrl, uid, emailVerified;
-var user = firebase.auth().currentUser;
+var name, email, photoUrl, uid, emailVerified, user;
 
 function getProfile() {
-  // if (user) {
-  //   // User is signed in.
-  //   name = user.displayName;
-  //   email = user.email;
-  //   photoUrl = user.photoURL;
-  //   emailVerified = user.emailVerified;
-  //   uid = user.uid;
-  // } else {
-  //   // No user is signed in.
-  // }
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      name = user.displayName;
+      email = user.email;
+      console.log(name);
+      console.log(email);
+      // photoUrl = user.photoURL;
+      // emailVerified = user.emailVerified;
+      uid = user.uid;
+    } else {
+      // No user is signed in.
+      console.log("not logged in");
+    }
+  });
 }
 
 function updateAbout() {
@@ -24,6 +28,10 @@ function saveAbout() {
   document.getElementById("saveAbt").classList.add("hidden");
   document.getElementById("updateAbt").classList.remove("hidden");
   document.getElementById("aboutText").disabled = true;
+  console.log(document.getElementById("aboutText").value);
+  firebase.firestore().collection('profile').doc(uid).set({ 
+    about: document.getElementById("aboutText").value
+  });
 }
 
 function updateExperience() {
