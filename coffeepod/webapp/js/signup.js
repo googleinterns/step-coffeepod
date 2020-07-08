@@ -80,7 +80,9 @@ function signup(e) {
             db.collection('profile').doc(cred.user.uid).set({
                 username: username,
                 name: signupForm['firstName'].value+" "+signupForm['lastName'].value,
-                about: "Edit your page to add a bio"
+                about: "Edit your page to add a bio",
+                title: "Add your title",
+                location: "Add your location"
             });
             return db.collection('user-info').doc(cred.user.uid).set({
                 username: username,
