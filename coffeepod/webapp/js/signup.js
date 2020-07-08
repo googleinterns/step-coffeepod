@@ -84,6 +84,12 @@ function signup(e) {
                 title: "Add your title",
                 location: "Add your location"
             });
+            db.collection('profile').doc(cred.user.uid).collection('experience').add ({
+                filled: false
+            });
+            db.collection('profile').doc(cred.user.uid).collection('education').add ({
+                filled: false
+            });
             return db.collection('user-info').doc(cred.user.uid).set({
                 username: username,
                 email: email,
