@@ -36,7 +36,7 @@ function createNewGoal() {
 
 	goalCard.appendChild(goalContent);
 
-	goalContent.innerHTML = ' <div id="goal-body" class="card-body"> <button id="add-goals" class="btn float-right grayText"><i class="fas fa-plus" aria-hidden="true" onclick="createNewGoal()"></i></button> \
+	goalContent.innerHTML = ' <div id="goal-body" class="card-body"> <button class="btn float-right grayText"><i class="fas fa-plus" aria-hidden="true"></i></button> \
 	<p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p> \
 	</div>';
 
