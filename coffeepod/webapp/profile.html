@@ -34,30 +34,34 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
     </script>
-    <script src="js/profile.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/profile.js"></script>
     <script>
+      $(document).ready(getProfile());
       $(document).ready(load('profile'));
     </script>
   </head>
-  <body onload="getProfile();">
+  <body>
     <div id="page-container">
       <div id="nav-placeholder"></div>
       <div class="page">
         <div class="container-fluid">
           <div class="row justify-content-center">
-            <div id="profileHeader" class="col-lg-8">
+            <div id="profileHeader" class="col-xl-8">
               <div class="cont shadow-sm">
                 <div class="row">
-                  <div class="col-lg-3">
+                  <div class="col-xl-3 my-auto">
                     <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
                   </div>
-                  <div class="col-lg-7 text-center text-lg-left">
-                    <p class="padName line37 weight500 poppins font25">Blueberry Pancake</p>
-                    <p class="padNormal line23 capitalize roboto font20 spaceLetters">Software Engineer | Mentor</p>
-                    <p id="padNormal line21 capitalize roboto font17">Mountain View, California</p>
+                  <div class="col-xl-7 text-center text-xl-left my-auto">
+                    <p id="name" class="padNormal line37 weight500 poppins font25"></p>
+                    <textarea id="title" disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="headForm form-control padName line21 capitalize roboto font20 spaceLetters blackText" placeholder="Add your title"></textarea>
+                    <textarea id="location" disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="headForm form-control padNormal line21 capitalize roboto font17 blackText" placeholder="Add your location"></textarea>
                   </div>
-                  <div class="col-lg-2 text-center text-lg-right">
+                  <div class="col-xl-2 text-center text-xl-right my-auto">
+                    <button type="button" id="updateHd" onclick="updateHead()" class="btn roboto font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
+                    <button type="button" id="saveHd" onclick="saveHead()" class="hidden btn roboto font15 line15 capitalize spaceLetters orangeTextLight">Save</button>
+                    </br></br>
                     <button class="btn orangeButton whiteText poppins weight500 font17 text-center line25">chat</button></br></br>
                     <button class="btn poppins weight500 font17 text-center line25 padName">+ mentor </button>
                     <button class="btn poppins weight500 font17 text-center line25 padName">+ mentee</button>
@@ -65,11 +69,12 @@
                 </div>
               </div>
               <div class="cont shadow-sm">
-                <button class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
-                <p class="weight600 poppins line45 font30 lowercase">About</p>
-                <p class="padNormal roboto line21 font17">Hello, I’m Pancake. I’m passionate about coding and hope I could help others in their coding journeys. 
-                  In my free time, I make pancakes and consume them. I’m also intersted in ice-skating and skiing.
-                  Feel free to reach out to me if you have any questions. Always happy to help!</p>
+                <form>
+                  <button type="button" id="updateAbt" onclick="updateAbout()" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
+                  <button type="button" id="saveAbt" onclick="saveAbout()" class="hidden btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Save</button>
+                  <p class="weight600 poppins line45 font30 lowercase">About</p>
+                  <textarea disabled id="aboutText" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' class="form-control padNormal roboto line21 font17 blackText" style="overflow:hidden;resize:none" placeholder="Edit your page to add a bio"></textarea>
+                </form>
               </div>
               <div class="cont shadow-sm">
                 <button class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Show | Hide</button>
@@ -101,69 +106,78 @@
                 </div>
               </div>
               <div class="cont shadow-sm">
-                <button class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
+                <button type="button" id="updateExp" onclick="updateExperience()" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
+                <button type="button" id="saveExp" onclick="saveExperience()" class="hidden btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Save</button>
                 <p class="weight600 poppins line45 font30">experience</p>
-                <div class="row">
-                  <div class="col-lg-4 image-container my-auto">
-                    <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/icecream.jpg" alt="pancake" width=50% height=50%></div>
-                  </div>
-                  <div class="col-lg-8 my-auto">
-                    <p class="roboto float-right font17 line21 spaceLetters capitalize">Since may 2020</p>
-                    <p class="padName line37 weight500 poppins font25">Chocolatie</p>
-                    <p class="padNormal line23 capitalize roboto font20 spaceLetters">Software Engineer</p>
-                    <p class ="padNormal roboto line21 font17">Design, develop and build a web application</p>
-                    <p class ="padNormal roboto line21 font17">The app leads to a triple increase in visitors in the first three months since launching</p> 
-                  </div>
+                <div id="expFrom" style="display: none">
+                    <form>
+                      <div class="row">
+                        <div class="col-xl-4 image-container my-auto">
+                          <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/strawberry.jpg" alt="pancake" width=50% height=50%></div>
+                        </div>
+                        <div class="col-xl-8 my-auto">
+                          <div class="form-row">
+                              <div class="col-xl-6">
+                                <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="company experienceFrom form-control padName line37 weight500 poppins font25 blackText text-center text-xl-left" placeholder="Company here"></textarea>
+                              </div>
+                              <div class="col-xl-6">
+                                <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="date experienceFrom form-control roboto float-right padName font17 line37 spaceLetters capitalize text-center text-xl-right" placeholder="Date here"></textarea>
+                              </div>
+                            </div>
+                          <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="title experienceFrom form-control padNormal line23 capitalize roboto font20 spaceLetters blackText text-center text-xl-left" placeholder="Title here"></textarea>
+                          <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="2" style="overflow:hidden;resize:none" class ="about experienceFrom form-control padNormal roboto line21 font17 blackText text-center text-xl-left"placeholder="Add an experience!"></textarea>
+                        </div>
+                      </div>
+                    </form>
                 </div>
-                <div class="row">
-                  <div class="col-lg-4 image-container my-auto">
+                <div id="expCont">
+                <!-- <div class="row">
+                  <div class="col-xl-4 image-container my-auto">
                     <div class="line"></div>
                   </div>
+                </div> -->
                 </div>
-                <div class="row">
-                  <div class="col-lg-4 image-container my-auto">
-                    <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/strawberry.jpg" alt="pancake" width=50% height=50%></div>
-                  </div>
-                  <div class="col-lg-8 my-auto">
-                    <p class="roboto float-right font17 line21 spaceLetters capitalize">August 2019 - may 2020</p>
-                    <p class="padName line37 weight500 poppins font25">Strawberries</p>
-                    <p class="padNormal line23 capitalize roboto font20 spaceLetters">Software Engineer Intern</p>
-                    <p class ="padNormal roboto line21 font17">Analyzed and evaluated current web application, renovated existing features and
-                      created new functionality to attract users and improve the navigability of the app</p>
-                  </div>
-                </div>
+                </br>
+                <button type="button" id="addExp" onclick="addExpForm()" class="hidden btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">+ add new</button>
+                </br>
               </div>
               <div class="cont shadow-sm">
+                <button type="button" id="updateEdu" onclick="updateEducation()" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
+                <button type="button" id="saveEdu" onclick="saveEducation()" class="hidden btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Save</button>
                 <p class="weight600 poppins line45 font30">education</p>
-                <div class="row">
-                  <div class="col-lg-4 image-container my-auto">
-                    <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/coffee.jpg" alt="pancake" width=50% height=50%></div>
+                <form>
+                  <div class="row">
+                    <div class="col-xl-4 image-container my-auto">
+                      <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/coffee.jpg" alt="pancake" width=50% height=50%></div>
+                    </div>
+                    <div class="col-xl-8 my-auto">
+                      <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="educationForm form-control padName line37 weight500 poppins font25 blackText text-center text-xl-left">Coffee College</textarea>
+                      <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="educationForm form-control padNormal line23 capitalize roboto font20 spaceLetters blackText text-center text-xl-left">B.A, Computer Science</textarea>
+                      <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class ="educationForm form-control padNormal roboto line21 font17 blackText text-center text-xl-left">Class of 2018</textarea>
+                    </div>
                   </div>
-                  <div class="col-lg-8 my-auto">
-                    <p class="padName line37 weight500 poppins font25">Coffee College</p>
-                    <p class="padNormal line23 capitalize roboto font20 spaceLetters">B.A, Computer Science</p>
-                    <p class ="padNormal roboto line21 font17">Class of 2018</p>
+                </form>
+                <form>
+                  <div class="row">
+                    <div class="col-xl-4 image-container my-auto">
+                      <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/waffle.jpg" alt="pancake" width=50% height=50%></div>
+                    </div>
+                    <div class="col-xl-8 my-auto">
+                      <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="educationForm form-control padName line37 weight500 poppins font25 blackText text-center text-xl-left">Waffle High School</textarea>
+                      <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class ="educationForm form-control padNormal roboto line21 font17 blackText text-center text-xl-left">Class of 2014</textarea>
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-4 image-container my-auto">
-                    <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/waffle.jpg" alt="pancake" width=50% height=50%></div>
-                  </div>
-                  <div class="col-lg-8 my-auto">
-                    <p class="padName line37 weight500 poppins font25">Waffle High School</p>
-                    <p class ="padNormal roboto line21 font17">Class of 2014</p>
-                  </div>
-                </div>
+                </form>
               </div>
               <div class="cont shadow-sm">
                 <p class="weight600 poppins line45 font30">questions answered: 1</p>
                 <div class="border">
-                  <button class="btn roboto float-none float-sm-right font15 line15 capitalize spaceLetters orangeTextLight">Follow</button>
+                  <button class="btn roboto float-none float-lg-right font15 line15 capitalize spaceLetters orangeTextLight">Follow</button>
                   <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-xl-2">
                       <div class="text-center mb-3"><img class="center-cropped-small rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
                     </div>
-                    <div class="col-lg-10 text-center text-lg-left">
+                    <div class="col-xl-10 text-center text-xl-left">
                       <p class="font15 poppins line15 padNormal"><span class ="weight500">Pancake  </span><span class="spaceLetters greyText">June 16, 2020</span></p>
                       <p class="padNormal line15 capitalize roboto font12 spaceLetters">Software Engineer | Mentor</p>
                     </div>
@@ -176,12 +190,12 @@
               <div class="cont shadow-sm">
                 <p class="weight600 poppins line45 font30">questions following: 1</p>
                 <div class="border">
-                  <button class="btn roboto float-none float-sm-right font15 line15 capitalize spaceLetters orangeTextLight">Unfollow</button>
+                  <button class="btn roboto float-none float-lg-right font15 line15 capitalize spaceLetters orangeTextLight">Unfollow</button>
                   <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-xl-2">
                       <div class="text-center mb-3"><img class="center-cropped-small rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
                     </div>
-                    <div class="col-lg-10 text-center text-lg-left">
+                    <div class="col-xl-10 text-center text-xl-left">
                       <p class="font15 poppins line15 padNormal"><span class ="weight500">Pancake  </span><span class="spaceLetters greyText">June 16, 2020</span></p>
                       <p class="padNormal line15 capitalize roboto font12 spaceLetters">Software Engineer | Mentor</p>
                     </div>
@@ -192,7 +206,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 d-none d-lg-block">
+            <div class="col-xl-4 d-none d-xl-block">
               <div class="make-me-sticky">
                 <div class="cont shadow-sm">
                   <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
