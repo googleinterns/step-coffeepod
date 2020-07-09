@@ -55,8 +55,8 @@
                   </div>
                   <div class="col-xl-7 text-center text-xl-left my-auto">
                     <p id="name" class="padNormal line37 weight500 poppins font25"></p>
-                    <textarea id="title" disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="headForm form-control padName line21 capitalize roboto font20 spaceLetters blackText"></textarea>
-                    <textarea id="location" disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="headForm form-control padNormal line21 capitalize roboto font17 blackText"></textarea>
+                    <textarea id="title" disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="headForm form-control padName line21 capitalize roboto font20 spaceLetters blackText" placeholder="Add your title"></textarea>
+                    <textarea id="location" disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="headForm form-control padNormal line21 capitalize roboto font17 blackText" placeholder="Add your location"></textarea>
                   </div>
                   <div class="col-xl-2 text-center text-xl-right my-auto">
                     <button type="button" id="updateHd" onclick="updateHead()" class="btn roboto font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
@@ -73,7 +73,7 @@
                   <button type="button" id="updateAbt" onclick="updateAbout()" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
                   <button type="button" id="saveAbt" onclick="saveAbout()" class="hidden btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Save</button>
                   <p class="weight600 poppins line45 font30 lowercase">About</p>
-                  <textarea disabled id="aboutText" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' class="form-control padNormal roboto line21 font17 blackText" style="overflow:hidden;resize:none"></textarea>
+                  <textarea disabled id="aboutText" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' class="form-control padNormal roboto line21 font17 blackText" style="overflow:hidden;resize:none" placeholder="Edit your page to add a bio"></textarea>
                 </form>
               </div>
               <div class="cont shadow-sm">
@@ -109,51 +109,37 @@
                 <button type="button" id="updateExp" onclick="updateExperience()" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
                 <button type="button" id="saveExp" onclick="saveExperience()" class="hidden btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Save</button>
                 <p class="weight600 poppins line45 font30">experience</p>
-                <form>
-                  <div class="row">
-                    <div class="col-xl-4 image-container my-auto">
-                      <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/icecream.jpg" alt="pancake" width=50% height=50%></div>
-                    </div>
-                    <div class="col-xl-8 my-auto">
-                      <div class="form-row">
-                        <div class="col-xl-6">
-                          <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="experienceFrom form-control padName line37 weight500 poppins font25 blackText text-center text-xl-left">Chocolatie</textarea>
+                <div id="expFrom" style="display: none">
+                    <form>
+                      <div class="row">
+                        <div class="col-xl-4 image-container my-auto">
+                          <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/strawberry.jpg" alt="pancake" width=50% height=50%></div>
                         </div>
-                        <div class="col-xl-6">
-                          <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="experienceFrom form-control roboto float-right padName font17 line37 spaceLetters capitalize text-center text-xl-right">Since may 2020</textarea>
+                        <div class="col-xl-8 my-auto">
+                          <div class="form-row">
+                              <div class="col-xl-6">
+                                <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="company experienceFrom form-control padName line37 weight500 poppins font25 blackText text-center text-xl-left" placeholder="Company here"></textarea>
+                              </div>
+                              <div class="col-xl-6">
+                                <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="date experienceFrom form-control roboto float-right padName font17 line37 spaceLetters capitalize text-center text-xl-right" placeholder="Date here"></textarea>
+                              </div>
+                            </div>
+                          <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="title experienceFrom form-control padNormal line23 capitalize roboto font20 spaceLetters blackText text-center text-xl-left" placeholder="Title here"></textarea>
+                          <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="2" style="overflow:hidden;resize:none" class ="about experienceFrom form-control padNormal roboto line21 font17 blackText text-center text-xl-left"placeholder="Add an experience!"></textarea>
                         </div>
                       </div>
-                      <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="experienceFrom form-control padNormal line23 capitalize roboto font20 spaceLetters blackText text-center text-xl-left">Software Engineer</textarea>
-                      <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="4" style="overflow:hidden;resize:none" class ="experienceFrom form-control padNormal roboto line21 font17 blackText text-center text-xl-left">Design, develop and build a web application
-The app leads to a triple increase in visitors in the first three months since launching
-                      </textarea> 
-                    </div> 
-                  </div>
-                </form>
-                <div class="row">
+                    </form>
+                </div>
+                <div id="expCont">
+                <!-- <div class="row">
                   <div class="col-xl-4 image-container my-auto">
                     <div class="line"></div>
                   </div>
+                </div> -->
                 </div>
-                <form>
-                  <div class="row">
-                    <div class="col-xl-4 image-container my-auto">
-                      <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/strawberry.jpg" alt="pancake" width=50% height=50%></div>
-                    </div>
-                    <div class="col-xl-8 my-auto">
-                      <div class="form-row ">
-                          <div class="col-xl-6">
-                            <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="experienceFrom form-control padName line37 weight500 poppins font25 blackText text-center text-xl-left">Strawberries</textarea>
-                          </div>
-                          <div class="col-xl-6">
-                            <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="experienceFrom form-control roboto float-right padName font17 line37 spaceLetters capitalize text-center text-xl-right">August 2019 - may 2020</textarea>
-                          </div>
-                        </div>
-                      <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1" style="overflow:hidden;resize:none" class="experienceFrom form-control padNormal line23 capitalize roboto font20 spaceLetters blackText text-center text-xl-left">Software Engineer Intern</textarea>
-                      <textarea disabled oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="4" style="overflow:hidden;resize:none" class ="experienceFrom form-control padNormal roboto line21 font17 blackText text-center text-xl-left">Analyzed and evaluated current web application, renovated existing features and created new functionality to attract users and improve the navigability of the app</textarea>
-                    </div>
-                  </div>
-                </form>
+                </br>
+                <button type="button" id="addExp" onclick="addExpForm()" class="hidden btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">+ add new</button>
+                </br>
               </div>
               <div class="cont shadow-sm">
                 <button type="button" id="updateEdu" onclick="updateEducation()" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Update</button>
