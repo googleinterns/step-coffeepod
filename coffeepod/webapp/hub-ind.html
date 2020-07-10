@@ -5,11 +5,13 @@
          <title>Hub</title>
          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
          <link rel="stylesheet" href="css/hub-ind.css">
          <link rel="stylesheet" href="css/style.css">
          <link rel="stylesheet" href="css/footer.css">
          <link rel="stylesheet" href="css/goals.css">
          <link rel="stylesheet" href="css/navbar_style.css">
+         
          <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
          <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -21,6 +23,7 @@
          <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+
         <script>
         var firebaseConfig = {
             apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
@@ -36,6 +39,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         </script>
+
          <script>
           $(document).ready(load('hub-ind'));
         </script>
@@ -173,8 +177,26 @@
                 <div id="collapseGoal" class="collapse show" aria-labelledby="goal-head">
 
                     <div class="container-fluid mt-2">
-                        <button id="add-goal" class="btn roboto font15 line15 spaceLetters orangeTextLight" onclick="createNewGoal();"> Add a new goal card</button>
+                        <button id="add-goal" class="btn roboto font15 line15 spaceLetters orangeTextLight" onclick="createNewGoalCard();"> Add a new goal card</button>
                         <div id="goal-board" class="row justify-content-center">
+
+                             <div class="col-auto mb-3">
+          
+                            <div class="card goal-card" style="width: 15rem;">
+                              <div id="goal-body" class="card-body">
+                                      <button id="add-goals" class="btn float-right grayText"><i class="fas fa-plus" aria-hidden="true"></i></button>
+                                      <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
+                                      <div class = "goals">
+                                          <ul> 
+                                              <input class="" type="checkbox" > <li contenteditable="true">Meet us</li> 
+                                          </ul>
+                            
+                                      </div>
+                                    
+                              </div>
+                            </div>
+                      
+                          </div> 
                             
                          
                         </div> <!-- Closing tag of row justify-content-center-->
@@ -358,7 +380,7 @@
           
                             <div class="card goal-card" style="width: 15rem;">
                               <div id="goal-body" class="card-body">
-                                      <button id="add-goals" class="btn float-right grayText"><i class="fas fa-plus" aria-hidden="true" onclick="createNewGoal()"></i></button>
+                                      <button id="add-goals" class="btn float-right grayText"><i class="fas fa-plus" aria-hidden="true" onclick="createNewGoalCard()"></i></button>
                                       <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
                               </div>
                             </div>

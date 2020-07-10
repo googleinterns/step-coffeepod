@@ -316,3 +316,12 @@ input:focus, textarea:focus {
   border-width: 0 0 2px !important;
   border-color: #ced4da;
 }
+
+.goals {
+    font-family: Roboto;
+    font-size: 17px;
+    line-height: 21px;
+    padding: 0;
+    padding-bottom: 5px;
+    margin: 0;
+}

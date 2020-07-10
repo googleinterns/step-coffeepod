@@ -1,4 +1,4 @@
-
+db.collection('mentorship').get()
 
 
 /*var cont = 1;
@@ -22,8 +22,11 @@ window.onload = function(){
 }
 */
 
+function selectText() {
+  document.execCommand('selectAll', false, null);
+};
 
-function createNewGoal() {
+function createNewGoalCard() {
 	const goalBoard = document.getElementById("goal-board");
 	console.log(document.getElementById("goal-board"));
 	const goalCard = document.createElement('div');
@@ -37,7 +40,7 @@ function createNewGoal() {
 	goalCard.appendChild(goalContent);
 
 	goalContent.innerHTML = ' <div id="goal-body" class="card-body"> <button class="btn float-right grayText"><i class="fas fa-plus" aria-hidden="true"></i></button> \
-	<p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p> \
+	<p contenteditable="true" onclick="selectText()" class="poppins weight600 font20 line25 orangeTextLight">First Goals</p> \
 	</div>';
 
 	sessionStorage.inputBoxes = goalBoard.innerHTML;
