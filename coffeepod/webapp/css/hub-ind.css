@@ -15,6 +15,38 @@ a:hover{
     opacity: 0.5 !important;
 }
 
+/* No text decoration and no left indentation*/
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+
+li {
+  margin-bottom: 5px;
+  display: inline-flex; /* align text and checkbox*/
+  width: 12.5rem;
+}
+
+
+input[type=checkbox]:checked + label {
+    border: 2px solid #DDA35D;
+    background-color: #DDA35D;
+    
+}
+
+input[type=checkbox]{
+    box-sizing: border-box;
+    margin-right: 15px;
+    margin-top: 5px; /* align text and checkbox*/
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 5px;
+  max-width: 10rem;
+}
+
 
 
 #profileName {
@@ -267,9 +299,6 @@ a:hover{
   padding-left: 10px;
 }
 
-li {
-  margin-bottom: 5px;
-}
 
 .meeting-title{
   font-family: Poppins;

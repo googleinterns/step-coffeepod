@@ -28,7 +28,6 @@ function selectText() {
 
 function createNewGoalCard() {
 	const goalBoard = document.getElementById("goal-board");
-	console.log(document.getElementById("goal-board"));
 	const goalCard = document.createElement('div');
 	goalCard.classList.add("col-auto", "mb-3");
 
