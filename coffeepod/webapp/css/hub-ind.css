@@ -44,9 +44,26 @@ input[type=checkbox]{
 label {
   display: inline-block;
   margin-bottom: 5px;
-  max-width: 10rem;
+  max-width: 9rem;
 }
 
+.delete-goal{
+    color: #DDA35D;
+    display: flex;
+    justify-content: flex-end;
+    margin-left: auto;
+    padding-top: 0px;
+    margin-right: 6px;
+}
+
+.btn-goal:focus,.btn-goal:active {
+   outline: none !important;
+   box-shadow: none;
+}
+
+.btn-goal:hover {
+    color: #c7c7c7;
+}
 
 
 #profileName {
