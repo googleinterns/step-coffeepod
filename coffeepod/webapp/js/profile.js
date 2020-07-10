@@ -13,8 +13,6 @@ function getProfile() {
         if (profile.exists) {
           loadExperience()
           updatePage(profile);
-          // document.getElementById("aboutText").value = profile.data().about;
-          console.log("Document data:", profile.data());
         } else {
           // doc.data() will be undefined in this case
           console.log("No such profile!");
@@ -22,7 +20,6 @@ function getProfile() {
       }).catch(function(error) {
         console.log("Error getting profile:", error);
       });
-      console.log(email);
     } else {
       console.log("not logged in");
     }
@@ -56,6 +53,10 @@ function updateExperience() {
   for (var i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = false;
   }
+  var deleteBut = document.getElementsByClassName("deleteExp");
+  for (var i = 0, len = deleteBut.length; i < len; i++) {
+    deleteBut[i].classList.remove("hidden");
+  }
 }
 
 
@@ -68,6 +69,10 @@ function saveExperience() {
   for (var i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = true;
   }
+  var deleteBut = document.getElementsByClassName("deleteExp");
+  for (var i = 0, len = deleteBut.length; i < len; i++) {
+    deleteBut[i].classList.add("hidden");
+  }
   saveEachExperience();
 }
 
@@ -79,6 +84,13 @@ function updateEducation() {
   for (var i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = false;
   }
+}
+
+function deleteExp(button) {
+  var form = button.closest('.formTempExp');
+  var id = form.id;
+  form.remove();
+  db.collection("profile").doc(uid).collection("experience").doc(id).delete();
 }
 
 // save the edits made to the education mode
@@ -143,7 +155,6 @@ function saveEachExperience() {
   var cont = document.getElementById("expCont");
   var forms = cont.children;
   for(var form of forms) {
-    console.log(form.id);
     firebase.firestore().collection('profile').doc(uid).collection("experience").doc(form.id).update({ 
       about: form.querySelector(".about").value,
       title: form.querySelector(".title").value,
@@ -172,7 +183,6 @@ function addExpForm() {
   })
   .then(function(docRef) {
     clone.id = docRef.id;
-    console.log(clone.id);
   });  
 }
 
