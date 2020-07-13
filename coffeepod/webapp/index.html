@@ -40,6 +40,7 @@
     <script src="js/index.js"></script>
     <script>
         $(document).ready(getProfile());
+        $(document).ready(loadQuestions());
         $(document).ready(load('cafe'));
     </script>
   </head>
@@ -117,43 +118,24 @@
                 </div>
               
               </div>
-              <div class="cont shadow-sm">
-                <div class = "row">
+              <div class="cont shadow-sm" style = "display: none" id = "questionsTemp">
+                <div class = "row mb-2">
                   <div class="col-3 col-md-1">
                     <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
                   </div>
                   <div class="col-9 col-md-10 mt-2">
-                    <p class="font15 poppins line15 padNormal weight500">Pancake <span class = "font12 spaceLetters greyText roboto"> June 16, 2020 </span></p>
-                    <p class="font12 roboto padNormal spaceLetters">Software Engineer | Mentor</p>
+                    <p class = "line15 padNormal"><span class="font15 poppins weight500" id = "name"></span><span class = "font12 spaceLetters roboto ml-1 greyText" id = "date"></span></p>
+                    <p class="font12 roboto spaceLetters" id = "title"></p>
                   </div>
                   <div class="col col-md-1 mt-2">
                     <p class = "roboto font15 line15 padNormal spaceLetters orangeTextLight" style = "text-align: right">Follow</p>
                   </div>
                 </div>
-                <br>
-                  <p class = "poppins weight600 font17 line21 padNormal"> What's your favorite ice-cream flavor? </p>
-                  <p class = "roboto weight300 font15 line21 padNormal"> I personally love chocolate and sea salt caramel ice cream. How about you? </p>
-                  <a class = "roboto font15 line21 padNormal orangeTextLight" href = "#"> See Answer(s) </a>
-
-              </div>
-              <div class="cont shadow-sm">
-                <div class = "row">
-                  <div class="col-3 col-md-1">
-                      <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
-                  </div>
-                  <div class="col-9 col-md-10 mt-2">
-                      <p class="font15 roboto line15 padNormal weight500">Pancake <span class = "font12 spaceLetters greyText roboto"> June 16, 2020 </span></p>
-                      <p class="font12 roboto padNormal spaceLetters">Software Engineer | Mentor</p>
-                  </div>
-                  <div class="col col-md-1 mt-2">
-                      <p class = "roboto font15 line15 padNormal spaceLetters orangeTextLight" style = "text-align: right">Follow</p>
-                  </div>
-                </div>
-                <br>
-                  <p class = "poppins weight600 font17 line21 padNormal"> What's your favorite ice-cream flavor? </p>
-                  <p class = "roboto weight300 font15 line21 padNormal"> I personally love chocolate and sea salt caramel ice cream. How about you? </p>
+                  <p class = "poppins weight600 font17 line21 padNormal" id = "question"></p>
+                  <p class = "roboto weight300 font15 line21 padNormal" id = "content"></p>
                   <a class = "roboto font15 line21 padNormal orangeTextLight" href = "#"> See Answer(s) </a>
               </div>
+              <div id = "questionsCont"></div>
             </div>
           </div>
         </div>
