@@ -22,7 +22,7 @@ ul {
 }
 
 
-li {
+.goals li {
   margin-bottom: 5px;
   display: inline-flex; /* align text and checkbox*/
   width: 12.5rem;
@@ -30,9 +30,9 @@ li {
 
 
 input[type=checkbox]:checked + label {
-    border: 2px solid #DDA35D;
-    background-color: #DDA35D;
-    
+    color: #c7c7c7;
+    font-style: italic;
+    text-decoration: line-through;
 }
 
 input[type=checkbox]{
