@@ -10,6 +10,7 @@
 .dim-back {
     box-shadow: 0 0 0 9000px rgba(0,0,0,0.1);
     overflow: auto;
+    z-index: 9999;
 }
 
 #post {
@@ -29,14 +30,28 @@
     color: black;
 }
 
+textarea, 
+textarea.form-control{
+    outline: 0;
+    border-width: 0 0 1px !important;
+    border-color: rgba(0,0,0,0);
+}
+
+textarea:focus, 
+textarea.form-control:focus,
+.form-control:focus {
+    border-color: #AA6231 !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
 .dimmed {
-  z-index: 10;
-  display: block;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.1);
-  pointer-events: none;
+    opacity:0.5;
+}
+
+.navbar .sticky-top .navbar-expand-xl .navbar-light .dimmed{
+    opacity: 0.5;
+}
+
+footer .dimmed {
+    opacity: 0.5;
 }
