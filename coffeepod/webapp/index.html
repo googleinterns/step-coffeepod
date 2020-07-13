@@ -96,9 +96,17 @@
                 </div>
                 </div>
                 <div class = "row mx-1 newPostContainer" style = "opacity: 0.5">
-                    <form style = "width: 100%">
-                        <textarea onblur = "blurPost()" onclick = "newPost()" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
-                            class = "poppins weight600 font17 line21 padNormal form-control border-0"  id = "new-post" style = "background-color: white;" placeholder = "Any questions on your mind today?"></textarea>
+                    <form onsubmit = "saveQuestion(event)" id = "postForm" style = "width: 100%">
+                        <select style = "display:none; max-width:100px" id = "topic" class = "font15 custom-select mb-3" required />
+                            <option>career</option>
+                            <option>academics</option>
+                            <option>hobbies</option>
+                            <option>misc</option>
+                        </select>
+                        <textarea required oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                            class = "poppins weight600 font17 line21 padNormal form-control mb-3" id = "new-post-q" style = "background-color: white;" placeholder = "Any questions on your mind today?"></textarea>
+                        <textarea required oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                            class = "roboto weight300 font15 line21 padNormal form-control"  id = "new-post" style = "background-color: white; display:none" placeholder = "Enter additional information about your question here."></textarea>
                         <div class = "row">
                             <div class="col-10">&nbsp;</div>
                             <div class="col-2">
@@ -150,7 +158,7 @@
           </div>
         </div>
       </div>
-      <div><span id="footer-placeholder"></span></div>
+      <span id="footer-placeholder"></span>
     </div>
   </body>
 </html>
