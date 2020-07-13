@@ -132,3 +132,36 @@ window.addEventListener('click', function(e){
     blurPost();
   }
 });
+
+function genQuestions() {
+  const temp = document.getElementById("questionsTemp");
+  let clone = temp.cloneNode(true);
+  clone.style.display = "block";
+  let cont = document.getElementById("questionsCont");
+  cont.appendChild(clone);
+  return clone;
+}
+
+function loadQuestions() {
+  db.collection("forum").get().then(snapshot => {
+    snapshot.forEach(question => {
+      const questionInfo = question.data();
+      const userID = questionInfo.userID;
+      let quest = genQuestions();
+
+      db.collection('profile').where(firebase.firestore.FieldPath.documentId(), '==', userID).get().then(snapshot => {
+        if(!snapshot.empty){
+            snapshot.forEach(user => {
+               quest.querySelector("#name").innerText = user.data().name;
+               quest.querySelector("#title").innerText = user.data().title;
+            })
+        }
+      }).then(() => {
+         quest.querySelector("#date").innerText = questionInfo.date;
+         quest.querySelector("#question").innerText = questionInfo.title;
+         quest.querySelector("#content").innerText = questionInfo.content;
+         quest.id = question.id;
+        })
+    });
+  });  
+}
