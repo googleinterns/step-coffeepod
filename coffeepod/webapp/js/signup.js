@@ -90,6 +90,9 @@ function signup(e) {
             db.collection('profile').doc(cred.user.uid).collection('education').add ({
                 filled: false
             });
+            db.collection('user-info').doc(cred.user.uid).collection('mentorship').add ({
+                filled: false
+            });
             return db.collection('user-info').doc(cred.user.uid).set({
                 username: username,
                 email: email,
