@@ -11,10 +11,9 @@ function getProfile() {
       var profileRef = db.collection("profile").doc(uid);
       profileRef.get().then(function(profile) {
         if (profile.exists) {
-          loadExperience()
+          loadExperience();
+          loadEducation();
           updatePage(profile);
-          // document.getElementById("aboutText").value = profile.data().about;
-          console.log("Document data:", profile.data());
         } else {
           // doc.data() will be undefined in this case
           console.log("No such profile!");
@@ -22,7 +21,6 @@ function getProfile() {
       }).catch(function(error) {
         console.log("Error getting profile:", error);
       });
-      console.log(email);
     } else {
       console.log("not logged in");
     }
@@ -56,6 +54,10 @@ function updateExperience() {
   for (var i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = false;
   }
+  var deleteBut = document.getElementsByClassName("deleteExp");
+  for (var i = 0, len = deleteBut.length; i < len; i++) {
+    deleteBut[i].classList.remove("hidden");
+  }
 }
 
 
@@ -68,6 +70,10 @@ function saveExperience() {
   for (var i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = true;
   }
+  var deleteBut = document.getElementsByClassName("deleteExp");
+  for (var i = 0, len = deleteBut.length; i < len; i++) {
+    deleteBut[i].classList.add("hidden");
+  }
   saveEachExperience();
 }
 
@@ -75,20 +81,46 @@ function saveExperience() {
 function updateEducation() {
   document.getElementById("updateEdu").classList.add("hidden");
   document.getElementById("saveEdu").classList.remove("hidden");
+  document.getElementById("addEdu").classList.remove("hidden");
   var elements = document.getElementsByClassName("educationForm");
   for (var i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = false;
   }
+  var deleteBut = document.getElementsByClassName("deleteEdu");
+  for (var i = 0, len = deleteBut.length; i < len; i++) {
+    deleteBut[i].classList.remove("hidden");
+  }
+}
+// delete the experience that called this function
+function deleteExp(button) {
+  var form = button.closest('.formTempExp');
+  var id = form.id;
+  form.remove();
+  db.collection("profile").doc(uid).collection("experience").doc(id).delete();
+}
+
+// delete the education that called this function
+function deleteEdu(button) {
+  var form = button.closest('.formTempEdu');
+  var id = form.id;
+  form.remove();
+  db.collection("profile").doc(uid).collection("education").doc(id).delete();
 }
 
 // save the edits made to the education mode
 function saveEducation() {
   document.getElementById("saveEdu").classList.add("hidden");
-  document.getElementById("updateEdu").aclassList.remove("hidden");
+  document.getElementById("addEdu").classList.add("hidden");
+  document.getElementById("updateEdu").classList.remove("hidden");
   var elements = document.getElementsByClassName("educationForm");
   for (var i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = true;
   }
+  var deleteBut = document.getElementsByClassName("deleteEdu");
+  for (var i = 0, len = deleteBut.length; i < len; i++) {
+    deleteBut[i].classList.add("hidden");
+  }
+  saveEachEducation();
 }
 
 // put the header into edit mode
@@ -138,17 +170,42 @@ function loadExperience() {
   });  
 }
 
+// add in all the education from firebase
+function loadEducation() {
+  db.collection("profile").doc(uid).collection("education").where("filled", "==", true).get().then(querySnapshot => {
+    querySnapshot.forEach(education => {
+      var form = makeEduForm();
+      form.querySelector(".school").innerText = education.data().school;
+      form.querySelector(".date").innerText = education.data().date;
+      form.querySelector(".degree").innerText = education.data().degree;
+      form.id = education.id;
+    });
+  });  
+}
+
 // save all the experience to firebase
 function saveEachExperience() {
   var cont = document.getElementById("expCont");
   var forms = cont.children;
   for(var form of forms) {
-    console.log(form.id);
     firebase.firestore().collection('profile').doc(uid).collection("experience").doc(form.id).update({ 
       about: form.querySelector(".about").value,
       title: form.querySelector(".title").value,
       date: form.querySelector(".date").value,
       company: form.querySelector(".company").value
+    });
+  }
+}
+
+// save all the education to firebase
+function saveEachEducation() {
+  var cont = document.getElementById("eduCont");
+  var forms = cont.children;
+  for(var form of forms) {
+    firebase.firestore().collection('profile').doc(uid).collection("education").doc(form.id).update({ 
+      school: form.querySelector(".school").value,
+      degree: form.querySelector(".degree").value,
+      date: form.querySelector(".date").value,
     });
   }
 }
@@ -165,14 +222,29 @@ function addExpForm() {
   resizeAllTextarea();
   db.collection('profile').doc(uid).collection('experience').add ({
     filled: true,
-    company: "Company here",
-    date: "Date here",
-    title: "Title here",
-    about: "Add your experience!"
+    company: "",
+    date: "",
+    title: "",
+    about: "A"
   })
   .then(function(docRef) {
     clone.id = docRef.id;
-    console.log(clone.id);
+  });  
+}
+
+// add a form to the education section so the user can add a new setion
+function addEduForm() {
+  var clone = makeEduForm();
+  // resize the textareas
+  resizeAllTextarea();
+  db.collection('profile').doc(uid).collection('education').add ({
+    filled: true,
+    school: "",
+    date: "",
+    degree: ""
+  })
+  .then(function(docRef) {
+    clone.id = docRef.id;
   });  
 }
 
@@ -182,6 +254,16 @@ function makeExpForm() {
   var clone = form.cloneNode(true);
   clone.style.display = "block";
   var cont = document.getElementById("expCont");
+  cont.appendChild(clone);
+  return clone;
+}
+
+// makes a new form for the education section
+function makeEduForm() {
+  var form = document.getElementById("eduFrom");
+  var clone = form.cloneNode(true);
+  clone.style.display = "block";
+  var cont = document.getElementById("eduCont");
   cont.appendChild(clone);
   return clone;
 }

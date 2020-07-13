@@ -6,3 +6,37 @@
 .menuli {
     padding: 1rem 0rem !important;
 }
+
+.dim-back {
+    box-shadow: 0 0 0 9000px rgba(0,0,0,0.1);
+    overflow: auto;
+}
+
+#post {
+    position:relative;
+}
+
+.btn-primary,
+.btn-primary:disabled,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+    background-color: #EFE1CE;
+    border: none;
+    padding: 0rem 3.5rem;
+    margin-right:0.2 em;
+    color: black;
+}
+
+.dimmed {
+  z-index: 10;
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
