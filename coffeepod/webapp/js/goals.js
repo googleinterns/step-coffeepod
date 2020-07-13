@@ -22,10 +22,55 @@ window.onload = function(){
 }
 */
 
+// call a function to delete a goal
+function deleteGoal(id) {
+    const goalToDelete = document.getElementById(id);
+    goalToDelete.remove();
+}
+
+// add delete button to each goal
+function addDeleteButton(goal) {
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add("btn", "btn-goal",  "delete-goal");
+
+    const deleteIcon = document.createElement('i');
+    deleteIcon.classList.add("fa", "fa-times");
+    deleteIcon.setAttribute("aria-hidden", "true");
+    deleteButton.appendChild(deleteIcon);
+
+    goal.appendChild(deleteButton);
+}
+
+// add a checkbox to an individual goal
+function addCheckBox(goal) {
+    const checkBox = document.createElement('input');
+    checkBox.setAttribute('type', 'checkbox');
+
+    const label = document.createElement('label');
+    label.setAttribute("onclick", "selectText()");
+    label.innerText = "Meet up";
+    label.setAttribute("contenteditable", "true");
+    goal.appendChild(checkBox);
+    goal.appendChild(label);
+}
+
+// create a new goal with checkbox and delete button
+function createNewGoal() {
+    const goalList = document.getElementById("goal-list-1");
+    const goal = document.createElement('li');
+    addCheckBox(goal);
+    addDeleteButton(goal);
+
+    goalList.appendChild(goal);
+}
+
+// when the user clicks on text, it selects all
 function selectText() {
   document.execCommand('selectAll', false, null);
 };
 
+
+// create a whole new goal card
 function createNewGoalCard() {
 	const goalBoard = document.getElementById("goal-board");
 	const goalCard = document.createElement('div');
@@ -38,9 +83,14 @@ function createNewGoalCard() {
 
 	goalCard.appendChild(goalContent);
 
-	goalContent.innerHTML = ' <div id="goal-body" class="card-body"> <button class="btn float-right grayText"><i class="fas fa-plus" aria-hidden="true"></i></button> \
-	<p contenteditable="true" onclick="selectText()" class="poppins weight600 font20 line25 orangeTextLight">First Goals</p> \
+	goalContent.innerHTML = ' <div id="goal-body" class="card-body"> <button class="btn grayText"><i class="fas fa-plus" aria-hidden="true"></i></button> \
+	<p contenteditable="true" onclick="selectText()" class="cardTitle">Title</p> \
 	</div>';
+
+    const goalListDiv = document.createElement('div');
+    const goalList = document.createElement('ul');
+    goalList.setAttribute("id", "goal-list");
+    goalListDiv.appendChild(goalList);
 
 	sessionStorage.inputBoxes = goalBoard.innerHTML;
 	

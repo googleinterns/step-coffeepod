@@ -184,17 +184,17 @@
           
                             <div class="card goal-card" style="width: 15rem;">
                               <div id="goal-body" class="card-body">
-                                      <button id="add-goals" class="btn float-right grayText"><i class="fas fa-plus" aria-hidden="true"></i></button>
-                                      <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
+                                      <button id="add-goals" class="btn float-right grayText" onclick="createNewGoal()"><i class="fas fa-plus" aria-hidden="true"></i></button>
+                                      <p class="cardTitle">First Goals</p>
                                       <div class = "goals">
-                                          <ul> 
-                                              <li>
+                                          <ul id="goal-list-1"> 
+                                              <li id="goal-1-1">
                                               <input type="checkbox"> </input> <label contenteditable="true" onclick="selectText()">Meet up</label>
-                                              <button id="add-goals" class="btn btn-goal float-right delete-goal"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                              <button class="btn btn-goal delete-goal" onclick='deleteGoal("goal-1-1")'><i class="fa fa-times" aria-hidden="true"></i></button>
                                               </li> 
                                               <li>
                                               <input type="checkbox"> </input> <label contenteditable="true" onclick="selectText()">Set up a coffee chat after first month</label>
-                                              <button id="add-goals" class="btn btn-goal float-right delete-goal"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                              <button class="btn btn-goal delete-goal"><i class="fa fa-times" aria-hidden="true"></i></button>
                                               </li> 
                                           </ul>
                             

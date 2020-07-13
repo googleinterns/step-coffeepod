@@ -371,3 +371,12 @@ input:focus, textarea:focus {
     padding-bottom: 5px;
     margin: 0;
 }
+
+.cardTitle {
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 25px;
+  color: #AA6231;
+}
