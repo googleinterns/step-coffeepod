@@ -22,6 +22,16 @@ window.onload = function(){
 }
 */
 
+$(document).ready(function() {
+ $('.enter-leave').keydown(function(e) {
+     if(e.which == 13) {
+         //debugger;
+        $(this).blur().next().focus();
+        return false;
+      }
+ });
+ })
+
 function holder() {
 
 }
