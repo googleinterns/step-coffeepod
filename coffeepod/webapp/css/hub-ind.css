@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200;300&family=Poppins:wght@100;200;300;400;500;600&family=Roboto:wght@300;400&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300&display=swap');
 /* 
 font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
@@ -53,7 +53,12 @@ label {
     justify-content: flex-end;
     margin-left: auto;
     padding-top: 0px;
-    margin-right: 6px;
+    margin-right: 7px;
+}
+
+.delete-goal-card{
+    color: #828282;
+    float: right;
 }
 
 .btn-goal:focus,.btn-goal:active {
@@ -139,15 +144,6 @@ label {
   height: 100%;
 }
 
-.card-title {
-  margin: auto;
-  font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 22px;
-  color: #000000;
- }
 
 .subpage-title{
     font-family: 'Poppins', sans-serif;
@@ -372,11 +368,22 @@ input:focus, textarea:focus {
     margin: 0;
 }
 
-.cardTitle {
+.card-title {
   font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
-  line-height: 25px;
+  line-height: normal;
   color: #AA6231;
+}
+
+.card-name-title{
+  margin: auto;
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 22px;
+  color: #000000;
+
 }
