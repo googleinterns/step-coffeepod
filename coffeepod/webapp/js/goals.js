@@ -46,8 +46,9 @@ function addButton(parent, buttonClasses, iconClasses, onclickFunc) {
     button.classList.add(...buttonClasses);
 
     const icon = document.createElement('i');
-    button.classList.add(...iconClasses);
-    button. setAttribute("onclick",onclickFunc);
+    icon.classList.add(...iconClasses);
+    button.setAttribute("onclick", onclickFunc);
+
     icon.setAttribute("aria-hidden", "true");
     //deleteIcon.setAttribute("onclick","deleteGoal"+goalId);
     button.appendChild(icon);
@@ -70,9 +71,8 @@ function addCheckBox(goal) {
 }
 
 // create a new goal with checkbox and delete button
-function createNewGoal() {
-    const goalBoardId = 'goal-list-1';
-    const goalList = document.getElementById(goalBoardId);
+function createNewGoal(goalListId) {
+    const goalList = document.getElementById(goalListId);
     const goal = document.createElement('li');
     addCheckBox(goal);
     addButton(goal, ["btn", "btn-goal",  "delete-goal"], ["fa", "fa-times"], holder);
@@ -102,7 +102,7 @@ function createNewGoalCard() {
 
     const goalCardBody = document.createElement('div');
     goalCardBody.setAttribute("class", "card-body");
-    addButton(goalCardBody,["btn", "float-right"], ["fas", "fa-plus"], "createNewGoal()");
+    addButton(goalCardBody,["btn", "float-right"], ["fas", "fa-plus"], "createNewGoal('goal-list-2')");
     
 
     const goalCardTitle = document.createElement('p');
@@ -118,8 +118,9 @@ function createNewGoalCard() {
 	</div>';*/
 
     const goalListDiv = document.createElement('div');
+    goalListDiv.classList.add("goals");
     const goalList = document.createElement('ul');
-    goalList.setAttribute("id", "goal-list");
+    goalList.setAttribute("id", "goal-list-2");
     goalListDiv.appendChild(goalList);
     goalCardBody.appendChild(goalListDiv);
 
