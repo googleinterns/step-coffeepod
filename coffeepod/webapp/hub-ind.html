@@ -67,7 +67,7 @@
             <div class="card-body">
                <div class="text-center">
                    <div class="d-flex align-items-center">
-                       <h5 class="card-title">Penguin</h5>
+                       <h5 class="card-name-title">Penguin</h5>
                    </div>
                    <div class="text-center">
                     <p class="card-text">Software Engineer @ Chocolatie</p>
@@ -90,7 +90,7 @@
             <div class="card-body">
                <div class="text-center">
                    <div class="d-flex align-items-center">
-                       <h5 class="card-title">Pancake</h5>
+                       <h5 class="card-name-title">Pancake</h5>
                    </div>
                    <div class="text-center">
                        <p class="card-text">Software Engineer @ Chocolatie</p>
@@ -177,15 +177,17 @@
                 <div id="collapseGoal" class="collapse show" aria-labelledby="goal-head">
 
                     <div class="container-fluid mt-2">
+
+
                         <button id="add-goal" class="btn roboto font15 line15 spaceLetters orangeTextLight" onclick="createNewGoalCard();"> Add a new goal card</button>
                         <div id="goal-board" class="row justify-content-center">
 
-                             <div class="col-auto mb-3">
+                             <div id="goal-card-1" class="col-auto mb-3">
           
                             <div class="card goal-card" style="width: 15rem;">
                               <div id="goal-body" class="card-body">
-                                      <button id="add-goals" class="btn float-right grayText" onclick="createNewGoal()"><i class="fas fa-plus" aria-hidden="true"></i></button>
-                                      <p class="cardTitle">First Goals</p>
+                                      <button class="btn float-right" onclick="createNewGoal()"><i class="fas fa-plus" aria-hidden="true"></i></button>
+                                      <p class="card-title" contenteditable="true">First Goals</p>
                                       <div class = "goals">
                                           <ul id="goal-list-1"> 
                                               <li id="goal-1-1">
@@ -199,13 +201,14 @@
                                           </ul>
                             
                                       </div>
+                                      <button class="btn btn-goal delete-goal-card" onclick='deleteGoalCard("goal-card-1")'><i class="fas fa-trash" aria-hidden="true"></i></button>
                                     
                               </div>
-                            </div>
+
                       
                           </div> 
                             
-                         
+                        </div>
                         </div> <!-- Closing tag of row justify-content-center-->
                   </div> <!-- Closing tag of container-fluid mt-5-->
                 </div>

@@ -1,4 +1,4 @@
-db.collection('mentorship').get()
+
 
 
 /*var cont = 1;
@@ -22,24 +22,39 @@ window.onload = function(){
 }
 */
 
+function holder() {
+
+}
+
 // call a function to delete a goal
 function deleteGoal(id) {
     const goalToDelete = document.getElementById(id);
     goalToDelete.remove();
 }
 
-// add delete button to each goal
-function addDeleteButton(goal) {
-    const deleteButton = document.createElement('button');
-    deleteButton.classList.add("btn", "btn-goal",  "delete-goal");
-
-    const deleteIcon = document.createElement('i');
-    deleteIcon.classList.add("fa", "fa-times");
-    deleteIcon.setAttribute("aria-hidden", "true");
-    deleteButton.appendChild(deleteIcon);
-
-    goal.appendChild(deleteButton);
+// delete a goal card
+function deleteGoalCard(goalCardId) {
+    const goalCard = document.getElementById(goalCardId);
+    goalCard.remove();
 }
+
+// add a button to some parent with some classes and some onclick function
+function addButton(parent, buttonClasses, iconClasses, onclickFunc) {
+    const button = document.createElement('button');
+
+    // use spread to add multiple classes
+    button.classList.add(...buttonClasses);
+
+    const icon = document.createElement('i');
+    button.classList.add(...iconClasses);
+    button. setAttribute("onclick",onclickFunc);
+    icon.setAttribute("aria-hidden", "true");
+    //deleteIcon.setAttribute("onclick","deleteGoal"+goalId);
+    button.appendChild(icon);
+    parent.appendChild(button);
+}
+
+
 
 // add a checkbox to an individual goal
 function addCheckBox(goal) {
@@ -56,10 +71,11 @@ function addCheckBox(goal) {
 
 // create a new goal with checkbox and delete button
 function createNewGoal() {
-    const goalList = document.getElementById("goal-list-1");
+    const goalBoardId = 'goal-list-1';
+    const goalList = document.getElementById(goalBoardId);
     const goal = document.createElement('li');
     addCheckBox(goal);
-    addDeleteButton(goal);
+    addButton(goal, ["btn", "btn-goal",  "delete-goal"], ["fa", "fa-times"], holder);
 
     goalList.appendChild(goal);
 }
@@ -75,6 +91,7 @@ function createNewGoalCard() {
 	const goalBoard = document.getElementById("goal-board");
 	const goalCard = document.createElement('div');
 	goalCard.classList.add("col-auto", "mb-3");
+    goalCard.setAttribute("id", "goal-card-2");
 
 	goalBoard.appendChild(goalCard);
 
@@ -83,27 +100,84 @@ function createNewGoalCard() {
 
 	goalCard.appendChild(goalContent);
 
-	goalContent.innerHTML = ' <div id="goal-body" class="card-body"> <button class="btn grayText"><i class="fas fa-plus" aria-hidden="true"></i></button> \
-	<p contenteditable="true" onclick="selectText()" class="cardTitle">Title</p> \
-	</div>';
+    const goalCardBody = document.createElement('div');
+    goalCardBody.setAttribute("class", "card-body");
+    addButton(goalCardBody,["btn", "float-right"], ["fas", "fa-plus"], "createNewGoal()");
+    
+
+    const goalCardTitle = document.createElement('p');
+    goalCardBody.appendChild(goalCardTitle);
+    goalCardTitle.setAttribute('contenteditable', 'true');
+    goalCardTitle.setAttribute('onclick', "selectText()");
+    goalCardTitle.classList.add("card-title");
+    goalCardTitle.innerText = "Title";
+
+
+	/*goalContent.innerHTML = ' <div class="card-body"> <button class="btn float-right grayText" onclick="createNewGoal()"><i class="fas fa-plus" aria-hidden="true"></i></button> \
+	<p contenteditable="true" onclick="selectText()" class="card-title">Title</p> \
+	</div>';*/
+
+    const goalListDiv = document.createElement('div');
+    const goalList = document.createElement('ul');
+    goalList.setAttribute("id", "goal-list");
+    goalListDiv.appendChild(goalList);
+    goalCardBody.appendChild(goalListDiv);
+
+    addButton(goalCardBody, ["btn", "btn-goal", "delete-goal-card"], ["fas", "fa-trash"], "deleteGoalCard('goal-card-2')");
+    goalContent.appendChild(goalCardBody);
+	
+}
+
+/*
+// create a whole new goal card where users can add new goals
+function createNewGoalCard() {
+    // Create a goal card (outer bone)
+	const goalBoard = document.getElementById("goal-board");
+
+	const goalCard = document.createElement('div');
+	goalCard.classList.add("col-auto", "mb-3");
+    goalCard.setAttribute("id", "goal-card-2");
+	goalBoard.appendChild(goalCard);
+
+    // Goal content includes body, title, list of goals, add and delete buttons
+	const goalContent = document.createElement('div');
+	goalContent.classList.add("card", "goal-card");
+
+    const goalCardBody = document.createElement('div');
+    goalCardBody.setAttribute("class", "card-body");
+    addButton(goalCardBody,["btn", "float-right"], ["fas", "fa-plus"], "createNewGoal()");
+
+    const goalCardTitle = document.createElement('p');
+    goalCardTitle.setAttribute('contenteditable', 'true');
+    goalCardTitle.setAttribute('onclick', selectText());
+    goalCardTitle.classList.add("card-title");
+    goalCardTitle.innerText = "Title";
 
     const goalListDiv = document.createElement('div');
     const goalList = document.createElement('ul');
     goalList.setAttribute("id", "goal-list");
     goalListDiv.appendChild(goalList);
 
-	sessionStorage.inputBoxes = goalBoard.innerHTML;
-	
-}
+    goalContent.appendChild(goalCardTitle);
+    goalContent.appendChild(goalCardBody);
+    goalCardBody.appendChild(goalListDiv);
+    addButton(goalCardBody,["btn", "float-right"], ["fas", "fa-plus"], deleteGoalCard("goal-card-2"));
+    
+    goalCard.appendChild(goalContent);
+} */
 
-window.load = function() {
+/*window.load = function() {
 	if (sessionStorage.inputBoxes) {
 		console.log(document.getElementById("goal-board"));
 		const goalBoard = document.getElementById("goal-board");
-		goalBoard.innerHTML = sessionStorage.inputBoxes;
+		//goalBoard.innerHTML = sessionStorage.inputBoxes;
 		
 	}
-};
+};*/
+
+
+
+
 
 
 function addNode(checked){
