@@ -43,3 +43,7 @@ font-family: 'Roboto', sans-serif; */
 .hidden {
   display: none;
 }
+
+.deleteGoal {
+  padding-left: 10px;
+}
