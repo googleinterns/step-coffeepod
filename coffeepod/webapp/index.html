@@ -38,6 +38,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/index-main.js"></script>
     <script>
         $(document).ready(getProfile());
         $(document).ready(loadQuestions());
@@ -92,7 +93,7 @@
                 </div>
                 <!-- asking a question -->
                 <div class="col col-md-11 mt-2">
-                    <p class = "line15 padNormal"><span class="font15 poppins weight500 name"></span><span class = "font12 spaceLetters roboto ml-1 greyText" id = "date"></span></p>
+                    <p class = "line15 padNormal"><span class="font15 poppins weight500 name"></span><span class = "font12 spaceLetters roboto ml-1 greyText" id = "currDate"></span></p>
                     <p class="font12 roboto spaceLetters title"></p>
                 </div>
                 </div>
@@ -116,9 +117,8 @@
                         </div>
                     </form>
                 </div>
-              
               </div>
-              <div class="cont shadow-sm" style = "display: none" id = "questionsTemp">
+              <div class="cont shadow-sm forumPost" style = "display: none" id = "questionsTemp">
                 <div class = "row mb-2">
                   <div class="col-3 col-md-1">
                     <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
@@ -133,7 +133,7 @@
                 </div>
                   <p class = "poppins weight600 font17 line21 padNormal" id = "question"></p>
                   <p class = "roboto weight300 font15 line21 padNormal" id = "content"></p>
-                  <a class = "roboto font15 line21 padNormal orangeTextLight" href = "#"> See Answer(s) </a>
+                  <a class = "roboto font15 line21 padNormal orangeTextLight" id = "seeMore" onclick = "passId(this.id)"> See Answer(s) </a>
               </div>
               <div id = "questionsCont"></div>
             </div>

@@ -55,3 +55,7 @@ textarea.form-control:focus,
 footer .dimmed {
     opacity: 0.5;
 }
+
+a {
+   color: #AA6231 !important;
+}
