@@ -1,5 +1,4 @@
-let name, email, uid, user, username, mentors, mentees;
-
+let name, email, uid, user, username, mentors, mentees, personal;
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const open = urlParams.get('user');
@@ -10,6 +9,7 @@ function getProfile() {
   if(open == null) {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
+        personal = true;
         name = user.displayName;
         email = user.email;
         uid = user.uid;
@@ -20,6 +20,17 @@ function getProfile() {
           mentees = userinfo.data().mentees;
           loadMentors(mentors, "mentorStore");
           loadMentors(mentees, "menteeStore");
+          if(mentors.length == 0) {
+            document.getElementById("mentorTitle").classList.add("hidden");
+            document.getElementById("mentorStore");
+          }
+          if(mentees.length == 0) {
+            document.getElementById("menteeTitle").classList.add("hidden");
+            document.getElementById("menteeStore");
+          }
+          if(personal && mentees.length == 0 && mentors.length == 0) {
+            document.getElementById("promptMentor").classList.remove("hidden");
+          }
         });
         let profileRef = db.collection("profile").doc(uid);
         profileRef.get().then(function(profile) {
@@ -78,6 +89,13 @@ function saveAbout() {
   firebase.firestore().collection('profile').doc(uid).update({ 
     about: document.getElementById("aboutText").value
   });
+  if(personal) {
+    if(document.getElementById("aboutText").value == "") {
+      document.getElementById("promptAbt").classList.remove("hidden");
+    } else {
+      document.getElementById("promptAbt").classList.add("hidden");
+    }
+  }
 }
 
 // this puts the experience section into edit mode
@@ -169,6 +187,10 @@ function deleteExp(button) {
   let id = form.id;
   form.remove();
   db.collection("profile").doc(uid).collection("experience").doc(id).delete();
+  console.log(document.getElementById("expCont").childNodes.length);
+  if(document.getElementById("expCont").childNodes.length == 0 && personal) {
+    document.getElementById("promptExper").classList.remove("hidden");
+  }
 }
 
 // delete the education that called this function
@@ -177,6 +199,10 @@ function deleteEdu(button) {
   let id = form.id;
   form.remove();
   db.collection("profile").doc(uid).collection("education").doc(id).delete();
+  console.log(document.getElementById("eduCont").childNodes.length);
+  if(document.getElementById("eduCont").childNodes.length == 0  && personal) {
+    document.getElementById("promptEdu").classList.remove("hidden");
+  }
 }
 
 // save the edits made to the education mode
@@ -223,6 +249,9 @@ function saveHead() {
 function updatePage(profile) {
   let abtText = document.getElementById("aboutText");
   abtText.value = profile.data().about;
+  if(abtText.value == "" && personal) {
+    document.getElementById("promptAbt").classList.remove("hidden");
+  }
   document.getElementById("name").innerText = profile.data().name;
   document.getElementById("title").innerText = profile.data().title;
   document.getElementById("location").innerText = profile.data().location;
@@ -230,8 +259,10 @@ function updatePage(profile) {
 
 // add in all the experience from firebase
 function loadExperience() {
+  let count = 0;
   db.collection("profile").doc(uid).collection("experience").where("filled", "==", true).get().then(querySnapshot => {
     querySnapshot.forEach(experience => {
+      count++;
       let form = makeExpForm();
       form.querySelector(".company").innerText = experience.data().company;
       form.querySelector(".date").innerText = experience.data().date;
@@ -239,19 +270,27 @@ function loadExperience() {
       form.querySelector(".about").innerText = experience.data().about;
       form.id = experience.id;
     });
+    if(count == 0 && personal) {
+      document.getElementById("promptExper").classList.remove("hidden");
+    }
   });  
 }
 
 // add in all the education from firebase
 function loadEducation() {
+  let count = 0;
   db.collection("profile").doc(uid).collection("education").where("filled", "==", true).get().then(querySnapshot => {
     querySnapshot.forEach(education => {
+      count++;
       let form = makeEduForm();
       form.querySelector(".school").innerText = education.data().school;
       form.querySelector(".date").innerText = education.data().date;
       form.querySelector(".degree").innerText = education.data().degree;
       form.id = education.id;
     });
+    if(count == 0  && personal) {
+      document.getElementById("promptEdu").classList.remove("hidden");
+    }
   });  
 }
 
@@ -318,6 +357,9 @@ function addExpForm() {
   .then(function(docRef) {
     clone.id = docRef.id;
   });  
+  if(personal) {
+    document.getElementById("promptExper").classList.add("hidden");
+  }
 }
 
 // add a form to the education section so the user can add a new setion
@@ -333,7 +375,10 @@ function addEduForm() {
   })
   .then(function(docRef) {
     clone.id = docRef.id;
-  });  
+  }); 
+  if(personal) { 
+    document.getElementById("promptEdu").classList.add("hidden");
+  }
 }
 
 // makes a new form for the experience section
