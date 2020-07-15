@@ -22,19 +22,31 @@ window.onload = function(){
 }
 */
 
-$(document).ready(function() {
+// Enter and leave the contenteditable area which works for dynamically added elements
+$(document).on("keypress", '.enter-leave', function(e) {
+    var keyC = e.keyCode;
+    if (keyC == 13) {
+         $(this).blur().next().focus();
+        return false;
+    }
+});
+
+// This version works with static content (content already added to HTML only)
+/*$(document).ready(function() {
  $('.enter-leave').keydown(function(e) {
      if(e.which == 13) {
          //debugger;
         $(this).blur().next().focus();
         return false;
       }
+      console.log("We are here!");
  });
- })
+ })*/
 
 function holder() {
 
 }
+
 
 // call a function to delete a goal
 function deleteGoal(id) {
@@ -73,6 +85,7 @@ function addCheckBox(goal) {
     checkBox.setAttribute('type', 'checkbox');
 
     const label = document.createElement('label');
+    label.classList.add("enter-leave");
     label.setAttribute("onclick", "selectText()");
     label.innerText = "Meet up";
     label.setAttribute("contenteditable", "true");
@@ -116,10 +129,10 @@ function createNewGoalCard() {
     
 
     const goalCardTitle = document.createElement('p');
+    goalCardTitle.classList.add("card-title", "enter-leave");
     goalCardBody.appendChild(goalCardTitle);
     goalCardTitle.setAttribute('contenteditable', 'true');
     goalCardTitle.setAttribute('onclick', "selectText()");
-    goalCardTitle.classList.add("card-title");
     goalCardTitle.innerText = "Title";
 
 
@@ -139,43 +152,6 @@ function createNewGoalCard() {
 	
 }
 
-/*
-// create a whole new goal card where users can add new goals
-function createNewGoalCard() {
-    // Create a goal card (outer bone)
-	const goalBoard = document.getElementById("goal-board");
-
-	const goalCard = document.createElement('div');
-	goalCard.classList.add("col-auto", "mb-3");
-    goalCard.setAttribute("id", "goal-card-2");
-	goalBoard.appendChild(goalCard);
-
-    // Goal content includes body, title, list of goals, add and delete buttons
-	const goalContent = document.createElement('div');
-	goalContent.classList.add("card", "goal-card");
-
-    const goalCardBody = document.createElement('div');
-    goalCardBody.setAttribute("class", "card-body");
-    addButton(goalCardBody,["btn", "float-right"], ["fas", "fa-plus"], "createNewGoal()");
-
-    const goalCardTitle = document.createElement('p');
-    goalCardTitle.setAttribute('contenteditable', 'true');
-    goalCardTitle.setAttribute('onclick', selectText());
-    goalCardTitle.classList.add("card-title");
-    goalCardTitle.innerText = "Title";
-
-    const goalListDiv = document.createElement('div');
-    const goalList = document.createElement('ul');
-    goalList.setAttribute("id", "goal-list");
-    goalListDiv.appendChild(goalList);
-
-    goalContent.appendChild(goalCardTitle);
-    goalContent.appendChild(goalCardBody);
-    goalCardBody.appendChild(goalListDiv);
-    addButton(goalCardBody,["btn", "float-right"], ["fas", "fa-plus"], deleteGoalCard("goal-card-2"));
-    
-    goalCard.appendChild(goalContent);
-} */
 
 /*window.load = function() {
 	if (sessionStorage.inputBoxes) {
