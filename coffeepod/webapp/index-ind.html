@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Forum</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar_style.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <!-- SCRIPTS -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
+            authDomain: "team-hi-five-step.firebaseapp.com",
+            databaseURL: "https://team-hi-five-step.firebaseio.com",
+            projectId: "team-hi-five-step",
+            storageBucket: "team-hi-five-step.appspot.com",
+            messagingSenderId: "296440646158",
+            appId: "1:296440646158:web:d06db7292a4cc92d714a5f",
+            measurementId: "G-SV4KD1V658"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/index-ind.js"></script>
+    <script>
+        $(document).ready(getProfile());
+        $(document).ready(postQuestion());
+        $(document).ready(displayComments());
+        $(document).ready(load('cafe'));
+    </script>
+  </head>
+  <body>
+    <div id="page-container">
+      <span id="nav-placeholder"></span>
+      <div class="page" id = "page">
+      <!-- put it in a container -->
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+          <!-- side cols -->
+            <div class="col-lg-3 d-none d-lg-block">
+            <!-- first side col sticky -->
+              <div class="make-me-sticky">
+                <div class="cont shadow-sm"> 
+                  <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> filter </p>
+                  <ul class = "menu poppins weight300 font17 line21 text-center orangeTextLight">
+                    <li class="menuli">newest</li>
+                    <li class="menuli">oldest</li>
+                    <li class="menuli">unanswered</li>
+                  </ul>  
+                </div>
+              </div>
+            </div>
+
+            <!-- main section -->
+            <div id="profileHeader" class="col-lg-9">
+              <!-- first main content section -->
+                <div class="cont shadow-sm" id = "mainPost">
+                    <div class = "row mb-2">
+                    <div class="col-3 col-md-1">
+                        <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
+                    </div>
+                    <div class="col-9 col-md-10 mt-2">
+                        <p class = "line15 padNormal"><span class="font15 poppins weight500" id = "userName"></span><span class = "font12 spaceLetters roboto ml-1 greyText" id = "postDate"></span></p>
+                        <p class="font12 roboto spaceLetters" id = "userTitle"></p>
+                    </div>
+                    <div class="col col-md-1 mt-2">
+                        <p class = "roboto font15 line15 padNormal spaceLetters orangeTextLight" style = "text-align: right">Follow</p>
+                    </div>
+                    </div>
+                    <p class = "poppins weight600 font17 line21 padNormal" id = "postQuestion"></p>
+                    <p class = "roboto weight300 font15 line21 padNormal" id = "postContent"></p>
+                </div>
+                <div class="cont shadow-sm" id = "post">
+                    <div class = "row newComment" style = "opacity: 0.5">
+                    <div class="col-3 col-md-1">
+                        <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px;">
+                    </div>
+                    <!-- commenting -->
+                    <div class="col col-md-11 mt-2">
+                        <p class = "line15 padNormal"><span class="font15 poppins weight500 name"></span><span class = "font12 spaceLetters roboto ml-1 greyText" id = "currDate"></span></p>
+                        <p class="font12 roboto spaceLetters title"></p>
+                    </div>
+                    </div>
+                    <div class = "row mx-1 newComment" style = "opacity: 0.5">
+                        <form onsubmit = "storeComment(event)" id = "commentForm" style = "width: 100%">
+                            <textarea required oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                                class = "roboto weight300 font17 line21 padNormal form-control"  id = "new-comment" style = "background-color: white;" placeholder = "What are your thoughts?"></textarea>
+                            <div class = "row">
+                                <div class="col-9">&nbsp;</div>
+                                <div class="col-2">
+                                    <button type = "submit" style = "display: none" class="btn btn-primary poppins font17 spaceLetters" id = "commentButton">comment!</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id = "commentsTemp" class = "mb-5" style = "display:none">
+                        <div class = "row mb-2">
+                            <div class="col-3 col-md-1">
+                                <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
+                            </div>
+                            <div class="col-9 col-md-10 mt-2">
+                                <p class = "line15 padNormal"><span class="font15 poppins weight500" id = "name"></span><span class = "font12 spaceLetters roboto ml-1 greyText" id = "date"></span></p>
+                                <p class="font12 roboto spaceLetters" id = "title"></p>
+                            </div>
+                            <div class="col col-md-1 mt-2"></div>
+                        </div>
+                        <p class = "roboto weight300 font15 line21 padNormal" id = "comment"></p>
+                    </div>
+                    <div id = "commentsCont"></div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span id="footer-placeholder"></span>
+    </div>
+  </body>
+</html>
