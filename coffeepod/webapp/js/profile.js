@@ -1,4 +1,4 @@
-let name, email, uid, user, username;
+let name, email, uid, user, username, mentors, mentees;
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -16,6 +16,10 @@ function getProfile() {
         let userRef = db.collection("user-info").doc(uid);
         userRef.get().then(function(userinfo) {
           username = userinfo.data().username;
+          mentors = userinfo.data().mentors;
+          mentees = userinfo.data().mentees;
+          loadMentors(mentors, "mentorStore");
+          loadMentors(mentees, "menteeStore");
         });
         let profileRef = db.collection("profile").doc(uid);
         profileRef.get().then(function(profile) {
@@ -41,6 +45,13 @@ function getProfile() {
     // load someone elses page
   }
   resizeAllTextarea();
+}
+
+// load mentors to the page
+function loadMentors(list, store) {
+  for(var i = 0; i < list.length; i++) {
+    makeMentorCard(list[i], store);
+  }
 }
 
 // this puts the about section into edit mode
@@ -341,6 +352,22 @@ function makeEduForm() {
   let clone = form.cloneNode(true);
   clone.style.display = "block";
   let cont = document.getElementById("eduCont");
+  cont.appendChild(clone);
+  return clone;
+}
+
+// make a mentee card
+function makeMentorCard(id, store) {
+  let card = document.getElementById("mentorTemp");
+  let clone = card.cloneNode(true);
+  clone.style.display = "block";
+  let mentor = db.collection("user-info").doc(id);
+  let name;
+  mentor.get().then(function(userinfo) {
+    name = userinfo.data().name;
+    clone.children[1].children[0].children[0].innerText = name;
+  });
+  let cont = document.getElementById(store);
   cont.appendChild(clone);
   return clone;
 }
