@@ -20,7 +20,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
     <script>
-      var firebaseConfig = {
+      const firebaseConfig = {
           apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
           authDomain: "team-hi-five-step.firebaseapp.com",
           databaseURL: "https://team-hi-five-step.firebaseio.com",
@@ -63,8 +63,8 @@
                     <button type="button" id="saveHd" onclick="saveHead()" class="hidden btn roboto font15 line15 capitalize spaceLetters orangeTextLight">Save</button>
                     </br></br>
                     <button class="btn orangeButton whiteText poppins weight500 font17 text-center line25">chat</button></br></br>
-                    <button class="btn poppins weight500 font17 text-center line25 padName">+ mentor </button>
-                    <button class="btn poppins weight500 font17 text-center line25 padName">+ mentee</button>
+                    <button id="addMentor" class="btn poppins weight500 font17 text-center line25 padName">+ mentor</button>
+                    <button id="addMentee" class="btn poppins weight500 font17 text-center line25 padName">+ mentee</button>
                   </div>
                 </div>
               </div>
@@ -80,29 +80,23 @@
                 <button class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">Show | Hide</button>
                 <p class="weight600 poppins line45 font30">mentorship</p>
                 <p class="padNormal roboto line21 font20">
-                  <span class="orangeTextLight">Pancake </span> <span>is currently a mentor of: </span>
+                  <span class="orangeTextLight username"> </span> <span>is currently a mentor of: </span>
+                </p>
+                <div if="mentorTemp" class="card" style="display: none" >
+                  <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/syrup.jpg" alt="pancake" width=50% height=50%></div>
+                  <div class="card-body">
+                    <h5 class="card-title text-center"><a class="mentorlink"></a></h5>
+                  </div>
+                </div>
+                <div id="mentees">
+                  <div id="menteeStore" class="card-deck"></div>
+                </div>
+                </br></br>
+                <p class="padNormal roboto line21 font20">
+                  <span class="orangeTextLight username"></span> <span>is currently a mentee of: </span>
                 </p>
                 <div id="mentors">
-                  <div class="card-deck">
-                    <div class="card">
-                      <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/syrup.jpg" alt="pancake" width=50% height=50%></div>
-                      <div class="card-body">
-                        <h5 class="card-title text-center">Maple Syrup</h5>
-                      </div>
-                    </div>
-                    <div class="card">
-                      <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/milk.jpg" alt="pancake" width=50% height=50%></div>
-                      <div class="card-body">
-                        <h5 class="card-title text-center orangeTextLight">Almond Milk</h5>
-                      </div>
-                    </div>
-                    <div class="card">
-                      <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/cookies.jpg" alt="pancake" width=50% height=50%></div>
-                      <div class="card-body">
-                        <h5 class="card-title text-center">Cookies</h5>
-                      </div>
-                    </div>
-                  </div>
+                  <div id="mentorStore" class="card-deck"></div>
                 </div>
               </div>
               <div class="cont shadow-sm">
@@ -212,24 +206,30 @@
             <div class="col-xl-4 d-none d-xl-block">
               <div class="make-me-sticky">
                 <div class="cont shadow-sm">
-                  <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
+                  <button id="updatePen" class="btn float-right grayText" onclick="updateGoal()"><i class="fas fa-pen" aria-hidden="true"></i></button>
+                  <button class="btn float-right grayText hidden updateGoal" onclick="saveGoal()"><i class="fas fa-pen" aria-hidden="true"></i></button>
                   <p class="poppins weight600 font20 line25 orangeTextLight capitalize">Next Goals</p>
                   <div class="borderOrange">
-                    <ul class="font17 line20 padNormal">
-                      <li>Share my knowledge</li>
-                      <li>Help others</li>
-                      <li>Connect with my mentors and mentees</li>
-                    </ul>
+                    <div id="myDIV" class="header">
+                      <div class="form-row">
+                        <div class="col-xl-8">
+                          <input type="text" id="myInput" placeholder="Goal" class="hidden updateGoal form-control">
+                        </div>
+                        <div class="col-xl-4">
+                          <button onclick="newElement()" class="btn orangeButton whiteText poppins weight500 font17 text-center line25 addBtnGoal hidden updateGoal">Add</button>
+                        </div>
+                      </div>  
+                    </div>
+                      <ul id="myUL" class="font17 line20 padNormal">
+                      </ul>
                   </div>
                 </div>
                 <div class="cont shadow-sm">
-                  <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
+                  <button id="updateFinishedPen" class="btn float-right grayText" onclick="updateFinished()"><i class="fas fa-pen" aria-hidden="true"></i></button>
+                  <button class="btn float-right grayText updateFinished hidden" onclick="saveFinished()"><i class="fas fa-pen" aria-hidden="true"></i></button>
                   <p class="poppins weight600 font20 line25 orangeTextLight capitalize">Accomplished goals</p>
                   <div class="borderOrange">
-                    <ul class="font17 line20 padNormal">
-                      <li>Join <span class="orangeTextLight">coffeepod.</span></li>
-                      <li>Find a mentor/ mentee</li>
-                      <li>Ask my first question!</li>
+                    <ul id="finishedUL" class="font17 line20 padNormal">
                     </ul>
                   </div>
                 </div>
