@@ -82,7 +82,9 @@ function signup(e) {
                 name: signupForm['firstName'].value+" "+signupForm['lastName'].value,
                 about: "",
                 title: "",
-                location: ""
+                location: "",
+                goals: ["Ask a question", "Find a mentor or mentee"],
+                finished: ["Join coffepod!"]
             });
             db.collection('profile').doc(cred.user.uid).collection('experience').add ({
                 filled: false
@@ -94,7 +96,9 @@ function signup(e) {
                 username: username,
                 email: email,
                 name: signupForm['firstName'].value+" "+signupForm['lastName'].value,
-                dob: month+" "+day+", "+year
+                dob: month+" "+day+", "+year,
+                mentors: [],
+                mentees: []
             }).then(() => {
                 window.location.replace("index.html");
             })
