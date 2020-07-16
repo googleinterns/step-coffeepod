@@ -1,12 +1,12 @@
 
 
 // REPLACE WITH CURRENT USER"S ID
-const P_ID = "302vr6Tmw8t96kO5Ccof";
+const mentorshipID = "302vr6Tmw8t96kO5Ccof";
 
 // asynchronous work
 
 function getGoalCards() {
-    db.collection('mentorship').doc(P_ID).collection("goals").get().then((snapshot) => {
+    db.collection('mentorship').doc(mentorshipID).collection("goals").get().then((snapshot) => {
         snapshot.docs.forEach(goalDocument => { // There should be just one goal document
             const allGoalCards = goalDocument.data().goalCards;
             putGoalCardsOnPage(allGoalCards);
@@ -75,8 +75,8 @@ function addGoalCardContent(title, goals, idNum) {
 
 // create a new goal with checkbox and delete button
 function addGoals(goals, goalList) {
-    const numCard = goalList.id.substr(-1);
-
+    const startIdx = goalList.id.lastIndexOf("-");
+    const numCard = goalList.id.substring(startIdx + 1);
     for(j = 0; j < goals.length; j++) {
         const goalId = 'goal-' + numCard + '-' + j;
         const goal = document.createElement('li');
@@ -163,7 +163,17 @@ function holder() {
 // call a function to delete a goal
 function deleteGoal(id) {
     const goalToDelete = document.getElementById(id);
+    const startIdx = id.lastIndexOf("-");
+    const goalCardNum = id.substring(startIdx+1);
+
     goalToDelete.remove();
+    db.collection('mentorship').doc(mentorshipID).collection("goals").get().then((snapshot) => {
+        snapshot.docs.forEach(goalDocument => { // There should be just one goal document
+            goalDocument.update({
+                //goalCards.goals[goalCardNum]: firebase.firestore.FieldValue.delete()
+            });
+        });
+    });
 }
 
 // delete a goal card
