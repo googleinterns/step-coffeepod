@@ -1,5 +1,4 @@
-let name, email, uid, user, username;
-
+let name, email, uid, user, username, mentors, mentees, personal;
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const open = urlParams.get('user');
@@ -10,12 +9,28 @@ function getProfile() {
   if(open == null) {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
+        personal = true;
         name = user.displayName;
         email = user.email;
         uid = user.uid;
         let userRef = db.collection("user-info").doc(uid);
         userRef.get().then(function(userinfo) {
           username = userinfo.data().username;
+          mentors = userinfo.data().mentors;
+          mentees = userinfo.data().mentees;
+          loadMentors(mentors, "mentorStore");
+          loadMentors(mentees, "menteeStore");
+          if(mentors.length == 0) {
+            document.getElementById("mentorTitle").classList.add("hidden");
+            document.getElementById("mentorStore");
+          }
+          if(mentees.length == 0) {
+            document.getElementById("menteeTitle").classList.add("hidden");
+            document.getElementById("menteeStore");
+          }
+          if(personal && mentees.length == 0 && mentors.length == 0) {
+            document.getElementById("promptMentor").classList.remove("hidden");
+          }
         });
         let profileRef = db.collection("profile").doc(uid);
         profileRef.get().then(function(profile) {
@@ -26,6 +41,7 @@ function getProfile() {
             updateUsername();
             loadGoals(profile);
             loadFinished(profile);
+            loadTags(profile);
           } else {
             // doc.data() will be undefined in this case
             console.log("No such profile!");
@@ -43,11 +59,29 @@ function getProfile() {
   resizeAllTextarea();
 }
 
+// load mentors to the page
+function loadMentors(list, store) {
+  for(var i = 0; i < list.length; i++) {
+    makeMentorCard(list[i], store);
+  }
+}
+
 // this puts the about section into edit mode
 function updateAbout() {
   document.getElementById("updateAbt").classList.add("hidden");
   document.getElementById("saveAbt").classList.remove("hidden");
   document.getElementById("aboutText").disabled = false;
+}
+
+// this puts the tag section into edit mode
+function updateTags() {
+  document.getElementById("updateTag").classList.add("hidden");
+  document.getElementById("saveTag").classList.remove("hidden");
+  document.getElementById("tagList").classList.remove("hidden");
+  let elements = document.getElementsByClassName("tag");
+  for (let i = 0, len = elements.length; i < len; i++) {
+    elements[i].disabled = false;
+  }
 }
 
 // load in the username on the page
@@ -67,6 +101,57 @@ function saveAbout() {
   firebase.firestore().collection('profile').doc(uid).update({ 
     about: document.getElementById("aboutText").value
   });
+  if(personal) {
+    if(document.getElementById("aboutText").value == "") {
+      document.getElementById("promptAbt").classList.remove("hidden");
+    } else {
+      document.getElementById("promptAbt").classList.add("hidden");
+    }
+  }
+}
+
+// save the edits made to the tags
+function saveTags() {
+  document.getElementById("updateTag").classList.remove("hidden");
+  document.getElementById("saveTag").classList.add("hidden");
+  document.getElementById("tagList").classList.add("hidden");
+  let elements = document.getElementsByClassName("tag");
+  for (let i = 0, len = elements.length; i < len; i++) {
+    elements[i].disabled = true;
+  }
+  let tags = document.getElementsByClassName("tag");
+  let tagList = [];
+  let store = document.getElementById("tagStore");
+  while (store.firstChild) {
+    store.removeChild(store.firstChild);
+  }
+  console.log(store.children);
+  for(let i = 0; i < tags.length; i++) {
+    if(tags[i].checked == true) {
+      tagList.push(tags[i].id);
+      makeTag(tags[i]);
+    }
+  }
+  firebase.firestore().collection('profile').doc(uid).update({ 
+    tags: tagList
+  });
+  if(personal && tagList.length != 0) {
+    document.getElementById("promptTag").classList.add("hidden");
+  } else {
+    document.getElementById("promptTag").classList.remove("hidden");
+  }
+}
+
+// make the tag for the profile
+function makeTag(checkElement) {
+  let store = document.getElementById("tagStore");
+  var tagBut = document.createElement("div");
+  tagBut.classList.add("tagList");
+  var what = document.createElement("p");
+  what.classList.add("padNormal");
+  what.innerText = checkElement.parentNode.textContent.replace(/(\r\n|\n|\r)/gm, "");
+  tagBut.appendChild(what);
+  store.appendChild(tagBut);
 }
 
 // this puts the experience section into edit mode
@@ -158,6 +243,10 @@ function deleteExp(button) {
   let id = form.id;
   form.remove();
   db.collection("profile").doc(uid).collection("experience").doc(id).delete();
+  console.log(document.getElementById("expCont").childNodes.length);
+  if(document.getElementById("expCont").childNodes.length == 0 && personal) {
+    document.getElementById("promptExper").classList.remove("hidden");
+  }
 }
 
 // delete the education that called this function
@@ -166,6 +255,10 @@ function deleteEdu(button) {
   let id = form.id;
   form.remove();
   db.collection("profile").doc(uid).collection("education").doc(id).delete();
+  console.log(document.getElementById("eduCont").childNodes.length);
+  if(document.getElementById("eduCont").childNodes.length == 0  && personal) {
+    document.getElementById("promptEdu").classList.remove("hidden");
+  }
 }
 
 // save the edits made to the education mode
@@ -212,6 +305,9 @@ function saveHead() {
 function updatePage(profile) {
   let abtText = document.getElementById("aboutText");
   abtText.value = profile.data().about;
+  if(abtText.value == "" && personal) {
+    document.getElementById("promptAbt").classList.remove("hidden");
+  }
   document.getElementById("name").innerText = profile.data().name;
   document.getElementById("title").innerText = profile.data().title;
   document.getElementById("location").innerText = profile.data().location;
@@ -219,8 +315,10 @@ function updatePage(profile) {
 
 // add in all the experience from firebase
 function loadExperience() {
+  let count = 0;
   db.collection("profile").doc(uid).collection("experience").where("filled", "==", true).get().then(querySnapshot => {
     querySnapshot.forEach(experience => {
+      count++;
       let form = makeExpForm();
       form.querySelector(".company").innerText = experience.data().company;
       form.querySelector(".date").innerText = experience.data().date;
@@ -228,19 +326,27 @@ function loadExperience() {
       form.querySelector(".about").innerText = experience.data().about;
       form.id = experience.id;
     });
+    if(count == 0 && personal) {
+      document.getElementById("promptExper").classList.remove("hidden");
+    }
   });  
 }
 
 // add in all the education from firebase
 function loadEducation() {
+  let count = 0;
   db.collection("profile").doc(uid).collection("education").where("filled", "==", true).get().then(querySnapshot => {
     querySnapshot.forEach(education => {
+      count++;
       let form = makeEduForm();
       form.querySelector(".school").innerText = education.data().school;
       form.querySelector(".date").innerText = education.data().date;
       form.querySelector(".degree").innerText = education.data().degree;
       form.id = education.id;
     });
+    if(count == 0  && personal) {
+      document.getElementById("promptEdu").classList.remove("hidden");
+    }
   });  
 }
 
@@ -287,6 +393,19 @@ function loadFinished(profile) {
   }
 }
 
+// function to load the tags from firebase that the use has picked
+function loadTags(profile) {
+  let tags = profile.data().tags;
+  for(let i = 0; i < tags.length; i++) {
+    let tag = document.getElementById(tags[i]);
+    tag.checked = true;
+    makeTag(tag);
+  }
+  if(personal && tags.length == 0) {
+    document.getElementById("promptTag").classList.remove("hidden");
+  }
+}
+
 // function to resize an object based on the content inside of it
 function resize(resizeObj) {
   resizeObj.style.height = (resizeObj.scrollHeight+10)+'px';
@@ -307,6 +426,9 @@ function addExpForm() {
   .then(function(docRef) {
     clone.id = docRef.id;
   });  
+  if(personal) {
+    document.getElementById("promptExper").classList.add("hidden");
+  }
 }
 
 // add a form to the education section so the user can add a new setion
@@ -322,7 +444,10 @@ function addEduForm() {
   })
   .then(function(docRef) {
     clone.id = docRef.id;
-  });  
+  }); 
+  if(personal) { 
+    document.getElementById("promptEdu").classList.add("hidden");
+  }
 }
 
 // makes a new form for the experience 
@@ -341,6 +466,22 @@ function makeEduForm() {
   let clone = form.cloneNode(true);
   clone.style.display = "block";
   let cont = document.getElementById("eduCont");
+  cont.appendChild(clone);
+  return clone;
+}
+
+// make a mentee card
+function makeMentorCard(id, store) {
+  let card = document.getElementById("mentorTemp");
+  let clone = card.cloneNode(true);
+  clone.style.display = "block";
+  let mentor = db.collection("user-info").doc(id);
+  let name;
+  mentor.get().then(function(userinfo) {
+    name = userinfo.data().name;
+    clone.children[1].children[0].children[0].innerText = name;
+  });
+  let cont = document.getElementById(store);
   cont.appendChild(clone);
   return clone;
 }

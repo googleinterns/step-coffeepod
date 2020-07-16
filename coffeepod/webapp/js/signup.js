@@ -97,6 +97,7 @@ function signup(e) {
                 email: email,
                 name: signupForm['firstName'].value+" "+signupForm['lastName'].value,
                 dob: month+" "+day+", "+year,
+                // store the ids for the mentors and mentees user info so we can find it
                 mentors: [],
                 mentees: []
             }).then(() => {
