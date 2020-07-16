@@ -1,31 +1,69 @@
-var name, email, photoUrl, uid, emailVerified, user;
-var expForm = document.getElementById
+let name, email, uid, user, username, mentors, mentees, personal;
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const open = urlParams.get('user');
+console.log(open);
 
 // this function loads in the profile based on the person who is logged in
 function getProfile() {
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      name = user.displayName;
-      email = user.email;
-      uid = user.uid;
-      var profileRef = db.collection("profile").doc(uid);
-      profileRef.get().then(function(profile) {
-        if (profile.exists) {
-          loadExperience();
-          loadEducation();
-          updatePage(profile);
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such profile!");
-        }
-      }).catch(function(error) {
-        console.log("Error getting profile:", error);
-      });
-    } else {
-      console.log("not logged in");
-    }
-  });
+  if(open == null) {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        personal = true;
+        name = user.displayName;
+        email = user.email;
+        uid = user.uid;
+        let userRef = db.collection("user-info").doc(uid);
+        userRef.get().then(function(userinfo) {
+          username = userinfo.data().username;
+          mentors = userinfo.data().mentors;
+          mentees = userinfo.data().mentees;
+          loadMentors(mentors, "mentorStore");
+          loadMentors(mentees, "menteeStore");
+          if(mentors.length == 0) {
+            document.getElementById("mentorTitle").classList.add("hidden");
+            document.getElementById("mentorStore");
+          }
+          if(mentees.length == 0) {
+            document.getElementById("menteeTitle").classList.add("hidden");
+            document.getElementById("menteeStore");
+          }
+          if(personal && mentees.length == 0 && mentors.length == 0) {
+            document.getElementById("promptMentor").classList.remove("hidden");
+          }
+        });
+        let profileRef = db.collection("profile").doc(uid);
+        profileRef.get().then(function(profile) {
+          if (profile.exists) {
+            loadExperience();
+            loadEducation();
+            updatePage(profile);
+            updateUsername();
+            loadGoals(profile);
+            loadFinished(profile);
+            loadTags(profile);
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such profile!");
+          }
+        }).catch(function(error) {
+          console.log("Error getting profile:", error);
+        });
+      } else {
+        console.log("not logged in");
+      }
+    });
+  } else {
+    // load someone elses page
+  }
   resizeAllTextarea();
+}
+
+// load mentors to the page
+function loadMentors(list, store) {
+  for(var i = 0; i < list.length; i++) {
+    makeMentorCard(list[i], store);
+  }
 }
 
 // this puts the about section into edit mode
@@ -33,6 +71,26 @@ function updateAbout() {
   document.getElementById("updateAbt").classList.add("hidden");
   document.getElementById("saveAbt").classList.remove("hidden");
   document.getElementById("aboutText").disabled = false;
+}
+
+// this puts the tag section into edit mode
+function updateTags() {
+  document.getElementById("updateTag").classList.add("hidden");
+  document.getElementById("saveTag").classList.remove("hidden");
+  document.getElementById("tagList").classList.remove("hidden");
+  let elements = document.getElementsByClassName("tag");
+  for (let i = 0, len = elements.length; i < len; i++) {
+    elements[i].disabled = false;
+  }
+}
+
+// load in the username on the page
+function updateUsername() {
+  let usernameSlots = document.getElementsByClassName("username");
+  for (let i = 0, len = usernameSlots.length; i < len; i++) {
+    usernameSlots[i].innerText = username;
+  }
+
 }
 
 // save the edits made to the about section
@@ -43,6 +101,57 @@ function saveAbout() {
   firebase.firestore().collection('profile').doc(uid).update({ 
     about: document.getElementById("aboutText").value
   });
+  if(personal) {
+    if(document.getElementById("aboutText").value == "") {
+      document.getElementById("promptAbt").classList.remove("hidden");
+    } else {
+      document.getElementById("promptAbt").classList.add("hidden");
+    }
+  }
+}
+
+// save the edits made to the tags
+function saveTags() {
+  document.getElementById("updateTag").classList.remove("hidden");
+  document.getElementById("saveTag").classList.add("hidden");
+  document.getElementById("tagList").classList.add("hidden");
+  let elements = document.getElementsByClassName("tag");
+  for (let i = 0, len = elements.length; i < len; i++) {
+    elements[i].disabled = true;
+  }
+  let tags = document.getElementsByClassName("tag");
+  let tagList = [];
+  let store = document.getElementById("tagStore");
+  while (store.firstChild) {
+    store.removeChild(store.firstChild);
+  }
+  console.log(store.children);
+  for(let i = 0; i < tags.length; i++) {
+    if(tags[i].checked == true) {
+      tagList.push(tags[i].id);
+      makeTag(tags[i]);
+    }
+  }
+  firebase.firestore().collection('profile').doc(uid).update({ 
+    tags: tagList
+  });
+  if(personal && tagList.length != 0) {
+    document.getElementById("promptTag").classList.add("hidden");
+  } else {
+    document.getElementById("promptTag").classList.remove("hidden");
+  }
+}
+
+// make the tag for the profile
+function makeTag(checkElement) {
+  let store = document.getElementById("tagStore");
+  var tagBut = document.createElement("div");
+  tagBut.classList.add("tagList");
+  var what = document.createElement("p");
+  what.classList.add("padNormal");
+  what.innerText = checkElement.parentNode.textContent.replace(/(\r\n|\n|\r)/gm, "");
+  tagBut.appendChild(what);
+  store.appendChild(tagBut);
 }
 
 // this puts the experience section into edit mode
@@ -50,12 +159,12 @@ function updateExperience() {
   document.getElementById("updateExp").classList.add("hidden");
   document.getElementById("saveExp").classList.remove("hidden");
   document.getElementById("addExp").classList.remove("hidden");
-  var elements = document.getElementsByClassName("experienceFrom");
-  for (var i = 0, len = elements.length; i < len; i++) {
+  let elements = document.getElementsByClassName("experienceFrom");
+  for (let i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = false;
   }
-  var deleteBut = document.getElementsByClassName("deleteExp");
-  for (var i = 0, len = deleteBut.length; i < len; i++) {
+  let deleteBut = document.getElementsByClassName("deleteExp");
+  for (let i = 0, len = deleteBut.length; i < len; i++) {
     deleteBut[i].classList.remove("hidden");
   }
 }
@@ -66,12 +175,12 @@ function saveExperience() {
   document.getElementById("saveExp").classList.add("hidden");
   document.getElementById("addExp").classList.add("hidden");
   document.getElementById("updateExp").classList.remove("hidden");
-  var elements = document.getElementsByClassName("experienceFrom");
-  for (var i = 0, len = elements.length; i < len; i++) {
+  let elements = document.getElementsByClassName("experienceFrom");
+  for (let i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = true;
   }
-  var deleteBut = document.getElementsByClassName("deleteExp");
-  for (var i = 0, len = deleteBut.length; i < len; i++) {
+  let deleteBut = document.getElementsByClassName("deleteExp");
+  for (let i = 0, len = deleteBut.length; i < len; i++) {
     deleteBut[i].classList.add("hidden");
   }
   saveEachExperience();
@@ -82,29 +191,74 @@ function updateEducation() {
   document.getElementById("updateEdu").classList.add("hidden");
   document.getElementById("saveEdu").classList.remove("hidden");
   document.getElementById("addEdu").classList.remove("hidden");
-  var elements = document.getElementsByClassName("educationForm");
-  for (var i = 0, len = elements.length; i < len; i++) {
+  let elements = document.getElementsByClassName("educationForm");
+  for (let i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = false;
   }
-  var deleteBut = document.getElementsByClassName("deleteEdu");
-  for (var i = 0, len = deleteBut.length; i < len; i++) {
+  let deleteBut = document.getElementsByClassName("deleteEdu");
+  for (let i = 0, len = deleteBut.length; i < len; i++) {
     deleteBut[i].classList.remove("hidden");
   }
 }
+
+// method user to put the goal section into update mode
+function updateGoal() {
+  document.getElementById("updatePen").classList.add("hidden");
+  let elements = document.getElementsByClassName("updateGoal");
+  for(let i = 0, len = elements.length; i < len; i++) {
+    elements[i].classList.remove("hidden");
+  }
+}
+
+// method user to put the goal sectin into default mode
+function saveGoal() {
+  document.getElementById("updatePen").classList.remove("hidden");
+  let elements = document.getElementsByClassName("updateGoal");
+  for(let i = 0, len = elements.length; i < len; i++) {
+    elements[i].classList.add("hidden");
+  }
+}
+
+// method user to put the finished section into update mode
+function updateFinished() {
+  document.getElementById("updateFinishedPen").classList.add("hidden");
+  let elements = document.getElementsByClassName("updateFinished");
+  for(let i = 0, len = elements.length; i < len; i++) {
+    elements[i].classList.remove("hidden");
+  }
+}
+
+// method user to put the finished sectin into default mode
+function saveFinished() {
+  document.getElementById("updateFinishedPen").classList.remove("hidden");
+  let elements = document.getElementsByClassName("updateFinished");
+  for(let i = 0, len = elements.length; i < len; i++) {
+    elements[i].classList.add("hidden");
+  }
+}
+
 // delete the experience that called this function
 function deleteExp(button) {
-  var form = button.closest('.formTempExp');
-  var id = form.id;
+  let form = button.closest('.formTempExp');
+  let id = form.id;
   form.remove();
   db.collection("profile").doc(uid).collection("experience").doc(id).delete();
+  console.log(document.getElementById("expCont").childNodes.length);
+  if(document.getElementById("expCont").childNodes.length == 0 && personal) {
+    document.getElementById("promptExper").classList.remove("hidden");
+  }
 }
 
 // delete the education that called this function
 function deleteEdu(button) {
-  var form = button.closest('.formTempEdu');
-  var id = form.id;
+  let form = button.closest('.formTempEdu');
+  let id = form.id;
   form.remove();
   db.collection("profile").doc(uid).collection("education").doc(id).delete();
+  console.log(document.getElementById("eduCont").childNodes.length);
+  if(document.getElementById("eduCont").childNodes.length == 0  && personal) {
+    document.getElementById("promptEdu").classList.remove("hidden");
+  }
 }
 
 // save the edits made to the education mode
@@ -112,12 +266,12 @@ function saveEducation() {
   document.getElementById("saveEdu").classList.add("hidden");
   document.getElementById("addEdu").classList.add("hidden");
   document.getElementById("updateEdu").classList.remove("hidden");
-  var elements = document.getElementsByClassName("educationForm");
-  for (var i = 0, len = elements.length; i < len; i++) {
+  let elements = document.getElementsByClassName("educationForm");
+  for (let i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = true;
   }
-  var deleteBut = document.getElementsByClassName("deleteEdu");
-  for (var i = 0, len = deleteBut.length; i < len; i++) {
+  let deleteBut = document.getElementsByClassName("deleteEdu");
+  for (let i = 0, len = deleteBut.length; i < len; i++) {
     deleteBut[i].classList.add("hidden");
   }
   saveEachEducation();
@@ -127,8 +281,8 @@ function saveEducation() {
 function updateHead() {
   document.getElementById("updateHd").classList.add("hidden");
   document.getElementById("saveHd").classList.remove("hidden");
-  var elements = document.getElementsByClassName("headForm");
-  for (var i = 0, len = elements.length; i < len; i++) {
+  let elements = document.getElementsByClassName("headForm");
+  for (let i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = false;
   }
 }
@@ -137,8 +291,8 @@ function updateHead() {
 function saveHead() {
   document.getElementById("saveHd").classList.add("hidden");
   document.getElementById("updateHd").classList.remove("hidden");
-  var elements = document.getElementsByClassName("headForm");
-  for (var i = 0, len = elements.length; i < len; i++) {
+  let elements = document.getElementsByClassName("headForm");
+  for (let i = 0, len = elements.length; i < len; i++) {
     elements[i].disabled = true;
   }
   firebase.firestore().collection('profile').doc(uid).update({ 
@@ -149,8 +303,11 @@ function saveHead() {
 
 // update the profile page with information from firebase
 function updatePage(profile) {
-  var abtText = document.getElementById("aboutText");
+  let abtText = document.getElementById("aboutText");
   abtText.value = profile.data().about;
+  if(abtText.value == "" && personal) {
+    document.getElementById("promptAbt").classList.remove("hidden");
+  }
   document.getElementById("name").innerText = profile.data().name;
   document.getElementById("title").innerText = profile.data().title;
   document.getElementById("location").innerText = profile.data().location;
@@ -158,36 +315,46 @@ function updatePage(profile) {
 
 // add in all the experience from firebase
 function loadExperience() {
+  let count = 0;
   db.collection("profile").doc(uid).collection("experience").where("filled", "==", true).get().then(querySnapshot => {
     querySnapshot.forEach(experience => {
-      var form = makeExpForm();
+      count++;
+      let form = makeExpForm();
       form.querySelector(".company").innerText = experience.data().company;
       form.querySelector(".date").innerText = experience.data().date;
       form.querySelector(".title").innerText = experience.data().title;
       form.querySelector(".about").innerText = experience.data().about;
       form.id = experience.id;
     });
+    if(count == 0 && personal) {
+      document.getElementById("promptExper").classList.remove("hidden");
+    }
   });  
 }
 
 // add in all the education from firebase
 function loadEducation() {
+  let count = 0;
   db.collection("profile").doc(uid).collection("education").where("filled", "==", true).get().then(querySnapshot => {
     querySnapshot.forEach(education => {
-      var form = makeEduForm();
+      count++;
+      let form = makeEduForm();
       form.querySelector(".school").innerText = education.data().school;
       form.querySelector(".date").innerText = education.data().date;
       form.querySelector(".degree").innerText = education.data().degree;
       form.id = education.id;
     });
+    if(count == 0  && personal) {
+      document.getElementById("promptEdu").classList.remove("hidden");
+    }
   });  
 }
 
 // save all the experience to firebase
 function saveEachExperience() {
-  var cont = document.getElementById("expCont");
-  var forms = cont.children;
-  for(var form of forms) {
+  let cont = document.getElementById("expCont");
+  let forms = cont.children;
+  for(let form of forms) {
     firebase.firestore().collection('profile').doc(uid).collection("experience").doc(form.id).update({ 
       about: form.querySelector(".about").value,
       title: form.querySelector(".title").value,
@@ -199,14 +366,43 @@ function saveEachExperience() {
 
 // save all the education to firebase
 function saveEachEducation() {
-  var cont = document.getElementById("eduCont");
-  var forms = cont.children;
-  for(var form of forms) {
+  let cont = document.getElementById("eduCont");
+  let forms = cont.children;
+  for(let form of forms) {
     firebase.firestore().collection('profile').doc(uid).collection("education").doc(form.id).update({ 
       school: form.querySelector(".school").value,
       degree: form.querySelector(".degree").value,
       date: form.querySelector(".date").value,
     });
+  }
+}
+
+// function to load the goals from firebase
+function loadGoals(profile) {
+  let goals = profile.data().goals;
+  for(let i = 0, len = goals.length; i < len; i++) {
+    loadGoal(goals[i], "myUL", "updateGoal");
+  }
+}
+
+//function to load the finished goals from firebase
+function loadFinished(profile) {
+  let goals = profile.data().finished;
+  for(let i = 0, len = goals.length; i < len; i++) {
+    loadGoal(goals[i], "finishedUL", "updateFinished");
+  }
+}
+
+// function to load the tags from firebase that the use has picked
+function loadTags(profile) {
+  let tags = profile.data().tags;
+  for(let i = 0; i < tags.length; i++) {
+    let tag = document.getElementById(tags[i]);
+    tag.checked = true;
+    makeTag(tag);
+  }
+  if(personal && tags.length == 0) {
+    document.getElementById("promptTag").classList.remove("hidden");
   }
 }
 
@@ -217,7 +413,7 @@ function resize(resizeObj) {
 
 // add a form to the experience section so the user can add a new setion
 function addExpForm() {
-  var clone = makeExpForm();
+  let clone = makeExpForm();
   // resize the textareas
   resizeAllTextarea();
   db.collection('profile').doc(uid).collection('experience').add ({
@@ -225,16 +421,19 @@ function addExpForm() {
     company: "",
     date: "",
     title: "",
-    about: "A"
+    about: ""
   })
   .then(function(docRef) {
     clone.id = docRef.id;
   });  
+  if(personal) {
+    document.getElementById("promptExper").classList.add("hidden");
+  }
 }
 
 // add a form to the education section so the user can add a new setion
 function addEduForm() {
-  var clone = makeEduForm();
+  let clone = makeEduForm();
   // resize the textareas
   resizeAllTextarea();
   db.collection('profile').doc(uid).collection('education').add ({
@@ -245,25 +444,44 @@ function addEduForm() {
   })
   .then(function(docRef) {
     clone.id = docRef.id;
-  });  
+  }); 
+  if(personal) { 
+    document.getElementById("promptEdu").classList.add("hidden");
+  }
 }
 
 // makes a new form for the experience section
 function makeExpForm() {
-  var form = document.getElementById("expFrom");
-  var clone = form.cloneNode(true);
+  let form = document.getElementById("expFrom");
+  let clone = form.cloneNode(true);
   clone.style.display = "block";
-  var cont = document.getElementById("expCont");
+  let cont = document.getElementById("expCont");
   cont.appendChild(clone);
   return clone;
 }
 
 // makes a new form for the education section
 function makeEduForm() {
-  var form = document.getElementById("eduFrom");
-  var clone = form.cloneNode(true);
+  let form = document.getElementById("eduFrom");
+  let clone = form.cloneNode(true);
   clone.style.display = "block";
-  var cont = document.getElementById("eduCont");
+  let cont = document.getElementById("eduCont");
+  cont.appendChild(clone);
+  return clone;
+}
+
+// make a mentee card
+function makeMentorCard(id, store) {
+  let card = document.getElementById("mentorTemp");
+  let clone = card.cloneNode(true);
+  clone.style.display = "block";
+  let mentor = db.collection("user-info").doc(id);
+  let name;
+  mentor.get().then(function(userinfo) {
+    name = userinfo.data().name;
+    clone.children[1].children[0].children[0].innerText = name;
+  });
+  let cont = document.getElementById(store);
   cont.appendChild(clone);
   return clone;
 }
@@ -274,3 +492,112 @@ function resizeAllTextarea() {
     this.style.height = (this.scrollHeight+10)+'px';
   });
 }
+
+
+
+// // Add a "checked" symbol when clicking on a list item
+// let list = document.getElementById('myUL');
+// list.addEventListener('click', function(ev) {
+//   if (ev.target.tagName === 'LI') {
+//     ev.target.classList.toggle('checked');
+//   }
+// }, false);
+
+// Create a new list item when clicking on the "Add" button
+function newElement() {
+  let li = document.createElement("li");
+  li.classList.add("goal");
+  let inputValue = document.getElementById("myInput").value;
+  li.innerText = inputValue;
+  const deleteButtonElement = document.createElement('i');
+  deleteButtonElement.classList.add("deleteGoal", "updateGoal");
+  const deleteIcon = document.createElement('i');
+  deleteIcon.className = "fas fa-times";
+  deleteButtonElement.addEventListener('click', () => {
+    // Remove the task from the DOM.
+    li.remove();
+  });
+  deleteButtonElement.appendChild(deleteIcon);
+  li.appendChild(deleteButtonElement);
+  if (inputValue === '') {
+    alert("You must write something!");
+  } else {
+    document.getElementById("myUL").appendChild(li);
+    firebase.firestore().collection('profile').doc(uid).update({ 
+      goals: firebase.firestore.FieldValue.arrayUnion(inputValue)
+    });
+  }
+  document.getElementById("myInput").value = "";
+}
+
+// method used to load the data from the data store into a li in the goal section
+function loadGoal(value, parentID, classAdd) {
+  let li = document.createElement("li");
+  li.classList.add("goal");
+  li.innerText = value;
+  document.getElementById(parentID).appendChild(li);
+  const deleteButtonElement = document.createElement('i');
+  deleteButtonElement.classList.add("deleteGoal", "hidden", classAdd);
+  const deleteIcon = document.createElement('i');
+  deleteIcon.className = "fas fa-times";
+  deleteButtonElement.addEventListener('click', () => {
+    if(li.parentElement.id == "myUL") {
+      moveToDone(li);
+    } else {
+      deleteGoal(li);
+    }
+  });
+  deleteButtonElement.appendChild(deleteIcon);
+  li.appendChild(deleteButtonElement);
+}
+
+// move a goal to the finished goals 
+function moveToDone(li) {
+  let clone = li.cloneNode(true);
+  li.remove();
+  console.log(li.innerText);
+  document.getElementById("finishedUL").appendChild(clone);
+  console.log(clone.children);
+  clone.children[0].classList.remove("updateGoal");
+  clone.children[0].classList.add("updateFinished", "hidden");
+  // delete it from the goals list
+  firebase.firestore().collection('profile').doc(uid).update({ 
+    goals: firebase.firestore.FieldValue.arrayRemove(li.innerText)
+  });
+  firebase.firestore().collection('profile').doc(uid).update({ 
+    finished: firebase.firestore.FieldValue.arrayUnion(li.innerText)
+  });
+}
+
+// get rid of the goal from firebase to delete it
+function deleteGoal(li) {
+  li.remove();
+  firebase.firestore().collection('profile').doc(uid).update({ 
+    finished: firebase.firestore.FieldValue.arrayRemove(li.innerText)
+  });
+}
+
+//  // Create a "close" button and append it to each list item
+//   const myNodelist = document.getElementsByClassName("goal");
+//   console.log(myNodelist);
+//   console.log(myNodelist.length);
+//   for (let i = 0; i < myNodelist.length; i++) {
+//     console.log(myNodelist[i]);
+//     let span = document.createElement("SPAN");
+//     let txt = document.createTextNode("\u00D7");
+//     span.className = "close";
+//     span.appendChild(txt);
+//     console.log("Adding" + span);
+//     myNodelist[i].appendChild(span);
+//   }
+
+//   // Click on a close button to hide the current list item
+//   let close = document.getElementsByClassName("close");
+//   // console.log(close);
+//   let i;
+//   for (i = 0; i < close.length; i++) {
+//     close[i].onclick = function() {
+//       let div = this.parentElement;
+//       div.style.display = "none";
+//     }
+//   }
