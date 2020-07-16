@@ -191,13 +191,24 @@
                                       <button class="btn float-right" onclick="createNewGoal('goal-list-!')"><i class="fas fa-plus" aria-hidden="true"></i></button>
                                       <p class="card-title enter-leave" contenteditable="true" onclick="selectText()">Static First Goals</p>
                                       <div class = "goals">
-                                          <ul id="goal-list-!"> 
-                                              <li id="goal-!-!">
+                                          <ul id="goal-list-unchecked-!"> 
+                                              <li id="goal-unchecked-!">
                                               <input type="checkbox"> </input> <label class="enter-leave" contenteditable="true" onclick="selectText()">Meet up</label>
-                                              <button class="btn btn-goal delete-goal" onclick='deleteGoal("goal-!-!")'><i class="fa fa-times" aria-hidden="true"></i></button>
+                                              <button class="btn btn-goal delete-goal" onclick='deleteGoal("goal-unchecked-!")'><i class="fa fa-times" aria-hidden="true"></i></button>
                                               </li> 
                                               <li>
                                               <input type="checkbox"> </input> <label class="enter-leave" contenteditable="true" onclick="selectText()">Set up a coffee chat after first month</label>
+                                              <button class="btn btn-goal delete-goal"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                              </li> 
+                                          </ul><hr>
+
+                                          <ul id="goal-list-checked-!!"> 
+                                              <li id="goal-checked-!!">
+                                              <input type="checkbox" checked> </input> <label>Meet up</label>
+                                              <button class="btn btn-goal delete-goal" onclick='deleteGoal("goal-checked-!!")'><i class="fa fa-times" aria-hidden="true"></i></button>
+                                              </li> 
+                                              <li>
+                                              <input type="checkbox" checked> </input> <label>Set up a coffee chat after first month</label>
                                               <button class="btn btn-goal delete-goal"><i class="fa fa-times" aria-hidden="true"></i></button>
                                               </li> 
                                           </ul>

@@ -5,6 +5,9 @@ font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
 
+hr {
+    background-color: #c7c7c7;
+}
 a{
     text-decoration: none !important;
     color: #AA6231;
