@@ -13,6 +13,10 @@ html, body {
   width: 100%;
 }
 
+a {
+    cursor: pointer;
+}
+
 #page-container {
   min-height: 100%;
   position: relative;
@@ -64,11 +68,11 @@ html, body {
 }
 
 .orangeTextLight {
-  color: #AA6231;
+  color: #AA6231 !important;
 }
 
 .orangeTextDark {
-  color: #5C2C0C;
+  color: #5C2C0C !important;
 }
 
 .blackText {
