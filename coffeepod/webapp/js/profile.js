@@ -41,6 +41,7 @@ function getProfile() {
             updateUsername();
             loadGoals(profile);
             loadFinished(profile);
+            loadTags(profile);
           } else {
             // doc.data() will be undefined in this case
             console.log("No such profile!");
@@ -72,6 +73,17 @@ function updateAbout() {
   document.getElementById("aboutText").disabled = false;
 }
 
+// this puts the tag section into edit mode
+function updateTags() {
+  document.getElementById("updateTag").classList.add("hidden");
+  document.getElementById("saveTag").classList.remove("hidden");
+  document.getElementById("tagList").classList.remove("hidden");
+  let elements = document.getElementsByClassName("tag");
+  for (let i = 0, len = elements.length; i < len; i++) {
+    elements[i].disabled = false;
+  }
+}
+
 // load in the username on the page
 function updateUsername() {
   let usernameSlots = document.getElementsByClassName("username");
@@ -96,6 +108,49 @@ function saveAbout() {
       document.getElementById("promptAbt").classList.add("hidden");
     }
   }
+}
+
+// save the edits made to the tags
+function saveTags() {
+  document.getElementById("updateTag").classList.remove("hidden");
+  document.getElementById("saveTag").classList.add("hidden");
+  document.getElementById("tagList").classList.add("hidden");
+  let elements = document.getElementsByClassName("tag");
+  for (let i = 0, len = elements.length; i < len; i++) {
+    elements[i].disabled = true;
+  }
+  let tags = document.getElementsByClassName("tag");
+  let tagList = [];
+  let store = document.getElementById("tagStore");
+  while (store.firstChild) {
+    store.removeChild(store.firstChild);
+  }
+  console.log(store.children);
+  for(let i = 0; i < tags.length; i++) {
+    if(tags[i].checked == true) {
+      tagList.push(tags[i].id);
+      makeTag(tags[i]);
+    }
+  }
+  firebase.firestore().collection('profile').doc(uid).update({ 
+    tags: tagList
+  });
+  if(personal && tagList.length != 0) {
+    document.getElementById("promptTag").classList.add("hidden");
+  } else {
+    document.getElementById("promptTag").classList.remove("hidden");
+  }
+}
+
+// make the tag for the profile
+function makeTag(checkElement) {
+  let store = document.getElementById("tagStore");
+  var tagBut = document.createElement("div");
+  tagBut.classList.add("tagList");
+  var what = document.createElement("p");
+  what.innerText = checkElement.parentNode.textContent.replace(/(\r\n|\n|\r)/gm,"");
+  tagBut.appendChild(what);
+  store.appendChild(tagBut);
 }
 
 // this puts the experience section into edit mode
@@ -334,6 +389,19 @@ function loadFinished(profile) {
   let goals = profile.data().finished;
   for(let i = 0, len = goals.length; i < len; i++) {
     loadGoal(goals[i], "finishedUL", "updateFinished");
+  }
+}
+
+// function to load the tags from firebase that the use has picked
+function loadTags(profile) {
+  let tags = profile.data().tags;
+  for(let i = 0; i < tags.length; i++) {
+    let tag = document.getElementById(tags[i]);
+    tag.checked = true;
+    makeTag(tag);
+  }
+  if(personal && tags.length == 0) {
+    document.getElementById("promptTag").classList.remove("hidden");
   }
 }
 
