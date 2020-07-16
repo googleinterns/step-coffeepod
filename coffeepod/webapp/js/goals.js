@@ -45,6 +45,8 @@ function addOutlineGoalCard(goalCardId) {
 function addGoalCardContent(title, goals, idNum) {
     const goalListId = "goal-list-" + idNum;
     const goalCardId = "goal-card-" + idNum;
+    goalListId.toString();
+    goalCardId.toString();
 
     const goalContent = document.createElement('div');
 	goalContent.classList.add("card", "goal-card");
@@ -71,7 +73,7 @@ function addGoalCardContent(title, goals, idNum) {
     // add goals to goals list
     //addGoals(goals,goalListId);
 
-    addButton(goalCardBody, ["btn", "btn-goal", "delete-goal-card"], ["fas", "fa-trash"], "deleteGoalCard("+goalCardId+")");
+    addButton(goalCardBody, ["btn", "btn-goal", "delete-goal-card"], ["fas", "fa-trash"], 'deleteGoalCard(' + "'"+goalCardId+"'" + ')');
     goalContent.appendChild(goalCardBody);
 
     return goalContent;
