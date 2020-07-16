@@ -7,58 +7,84 @@ console.log(open);
 // this function loads in the profile based on the person who is logged in
 function getProfile() {
   if(open == null) {
+    personal = true;
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        personal = true;
         name = user.displayName;
         email = user.email;
         uid = user.uid;
-        let userRef = db.collection("user-info").doc(uid);
-        userRef.get().then(function(userinfo) {
-          username = userinfo.data().username;
-          mentors = userinfo.data().mentors;
-          mentees = userinfo.data().mentees;
-          loadMentors(mentors, "mentorStore");
-          loadMentors(mentees, "menteeStore");
-          if(mentors.length == 0) {
-            document.getElementById("mentorTitle").classList.add("hidden");
-            document.getElementById("mentorStore");
-          }
-          if(mentees.length == 0) {
-            document.getElementById("menteeTitle").classList.add("hidden");
-            document.getElementById("menteeStore");
-          }
-          if(personal && mentees.length == 0 && mentors.length == 0) {
-            document.getElementById("promptMentor").classList.remove("hidden");
-          }
-        });
-        let profileRef = db.collection("profile").doc(uid);
-        profileRef.get().then(function(profile) {
-          if (profile.exists) {
-            loadExperience();
-            loadEducation();
-            updatePage(profile);
-            updateUsername();
-            loadGoals(profile);
-            loadFinished(profile);
-            loadTags(profile);
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such profile!");
-          }
-        }).catch(function(error) {
-          console.log("Error getting profile:", error);
-        });
+        loadData();
       } else {
         console.log("not logged in");
       }
     });
   } else {
     // load someone elses page
+    uid = open;
+    personal = false;
+    let userRef = db.collection("user-info").doc(uid);
+    userRef.get().then(function(userinfo) {
+      name = userinfo.data().name;
+      email = userinfo.data().email;
+    }).then(loadData());
   }
   resizeAllTextarea();
 }
 
+// check if we should hide the goals and disable the buttons when someone is looking at another persons page
+function checkPersonal() {
+  console.log(personal);
+  if(personal) {
+    console.log(document.getElementById("goalCol"));
+    document.getElementById("goalCol").classList.add("d-xl-block");
+  } else {
+    let buttons = document.getElementsByClassName("update");
+    for(let i = 0; i < buttons.length; i ++) {
+      console.log(buttons[i]);
+      buttons[i].classList.add("hidden");
+    }
+  }
+}
+
+// load the personal data based on the uid of the page we are trying to get
+function loadData() {
+  let userRef = db.collection("user-info").doc(uid);
+  userRef.get().then(function(userinfo) {
+    username = userinfo.data().username;
+    mentors = userinfo.data().mentors;
+    mentees = userinfo.data().mentees;
+    loadMentors(mentors, "mentorStore");
+    loadMentors(mentees, "menteeStore");
+    if(mentors.length == 0) {
+      document.getElementById("mentorTitle").classList.add("hidden");
+      document.getElementById("mentorStore");
+    }
+    if(mentees.length == 0) {
+      document.getElementById("menteeTitle").classList.add("hidden");
+      document.getElementById("menteeStore");
+    }
+    if(personal && mentees.length == 0 && mentors.length == 0) {
+      document.getElementById("promptMentor").classList.remove("hidden");
+    }
+  });
+  let profileRef = db.collection("profile").doc(uid);
+  profileRef.get().then(function(profile) {
+    if (profile.exists) {
+      loadExperience();
+      loadEducation();
+      updatePage(profile);
+      updateUsername();
+      loadGoals(profile);
+      loadFinished(profile);
+      loadTags(profile);
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such profile!");
+    }
+  }).catch(function(error) {
+    console.log("Error getting profile:", error);
+  });
+}
 // load mentors to the page
 function loadMentors(list, store) {
   for(var i = 0; i < list.length; i++) {
@@ -133,7 +159,8 @@ function saveTags() {
     }
   }
   firebase.firestore().collection('profile').doc(uid).update({ 
-    tags: tagList
+    tags: tagList,
+    tagSize: tagList.length
   });
   if(personal && tagList.length != 0) {
     document.getElementById("promptTag").classList.add("hidden");
