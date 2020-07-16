@@ -148,7 +148,8 @@ function makeTag(checkElement) {
   var tagBut = document.createElement("div");
   tagBut.classList.add("tagList");
   var what = document.createElement("p");
-  what.innerText = checkElement.parentNode.textContent.replace(/(\r\n|\n|\r)/gm,"");
+  what.classList.add("padNormal");
+  what.innerText = checkElement.parentNode.textContent.replace(/(\r\n|\n|\r)/gm, "");
   tagBut.appendChild(what);
   store.appendChild(tagBut);
 }

@@ -124,7 +124,7 @@ font-family: 'Roboto', sans-serif; */
   border: 2px solid #AA6231;
   box-sizing: border-box;
   border-radius: 15px;
-  height: 35px;
+  /* height: 35px; */
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
