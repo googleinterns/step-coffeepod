@@ -80,6 +80,7 @@ function addGoals(goals, goalList) {
     for(j = 0; j < goals.length; j++) {
         const goalId = 'goal-' + numCard + '-' + j;
         const goal = document.createElement('li');
+        goal.setAttribute("id",goalId);
         addCheckBox(goal, goals[j].content);
         addButton(goal, ["btn", "btn-goal",  "delete-goal"], ["fa", "fa-times"], 'deleteGoal(' + "'"+goalId+"'" + ')');
         goalList.appendChild(goal);
@@ -183,7 +184,7 @@ function addButton(parent, buttonClasses, iconClasses, onclickFunc) {
     button.setAttribute("onclick", onclickFunc);
 
     icon.setAttribute("aria-hidden", "true");
-    //deleteIcon.setAttribute("onclick","deleteGoal"+goalId);
+    icon.setAttribute("onclick",onclickFunc);
     button.appendChild(icon);
     parent.appendChild(button);
 }
