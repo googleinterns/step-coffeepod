@@ -18,33 +18,35 @@
          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
          <script src="https://kit.fontawesome.com/6593008338.js" crossorigin="anonymous"></script>
          <script src="https://kit.fontawesome.com/6593008338.js" crossorigin="anonymous"></script>
-         <script src="js/script.js"></script>
-         <script src="js/goals.js"></script>
+         
          <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
 
         <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
-            authDomain: "team-hi-five-step.firebaseapp.com",
-            databaseURL: "https://team-hi-five-step.firebaseio.com",
-            projectId: "team-hi-five-step",
-            storageBucket: "team-hi-five-step.appspot.com",
-            messagingSenderId: "296440646158",
-            appId: "1:296440646158:web:d06db7292a4cc92d714a5f",
-            measurementId: "G-SV4KD1V658"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+            const firebaseConfig = {
+                apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
+                authDomain: "team-hi-five-step.firebaseapp.com",
+                databaseURL: "https://team-hi-five-step.firebaseio.com",
+                projectId: "team-hi-five-step",
+                storageBucket: "team-hi-five-step.appspot.com",
+                messagingSenderId: "296440646158",
+                appId: "1:296440646158:web:d06db7292a4cc92d714a5f",
+                measurementId: "G-SV4KD1V658"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
         </script>
+        <script src="js/script.js"></script>
+        <script src="js/goals.js"></script>
 
-         <script>
+        <script>
           $(document).ready(load('hub'));
         </script>
    </head>
-    <body>
+
+    <body onload = "loadData()">
 
     <div id="page-container">
     <div id="nav-placeholder"></div>
@@ -182,17 +184,17 @@
                         <button id="add-goal" class="btn roboto font15 line15 spaceLetters orangeTextLight" onclick="createNewGoalCard();"> Add a new goal card</button>
                         <div id="goal-board" class="row justify-content-center">
 
-                             <div id="goal-card-1" class="col-auto mb-3">
+                             <div id="goal-card-!" class="col-auto mb-3">
           
                             <div class="card goal-card" style="width: 15rem;">
                               <div id="goal-body" class="card-body">
-                                      <button class="btn float-right" onclick="createNewGoal('goal-list-1')"><i class="fas fa-plus" aria-hidden="true"></i></button>
+                                      <button class="btn float-right" onclick="createNewGoal('goal-list-!')"><i class="fas fa-plus" aria-hidden="true"></i></button>
                                       <p class="card-title enter-leave" contenteditable="true" onclick="selectText()">First Goals</p>
                                       <div class = "goals">
-                                          <ul id="goal-list-1"> 
-                                              <li id="goal-1-1">
+                                          <ul id="goal-list-!"> 
+                                              <li id="goal-!-!">
                                               <input type="checkbox"> </input> <label class="enter-leave" contenteditable="true" onclick="selectText()">Meet up</label>
-                                              <button class="btn btn-goal delete-goal" onclick='deleteGoal("goal-1-1")'><i class="fa fa-times" aria-hidden="true"></i></button>
+                                              <button class="btn btn-goal delete-goal" onclick='deleteGoal("goal-!-!")'><i class="fa fa-times" aria-hidden="true"></i></button>
                                               </li> 
                                               <li>
                                               <input type="checkbox"> </input> <label class="enter-leave" contenteditable="true" onclick="selectText()">Set up a coffee chat after first month</label>
@@ -201,7 +203,7 @@
                                           </ul>
                             
                                       </div>
-                                      <button class="btn btn-goal delete-goal-card" onclick='deleteGoalCard("goal-card-1")'><i class="fas fa-trash" aria-hidden="true"></i></button>
+                                      <button class="btn btn-goal delete-goal-card" onclick='deleteGoalCard("goal-card-!")'><i class="fas fa-trash" aria-hidden="true"></i></button>
                                     
                               </div>
                             
