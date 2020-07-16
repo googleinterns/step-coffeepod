@@ -515,6 +515,7 @@ function newElement() {
   deleteIcon.className = "fas fa-times";
   deleteButtonElement.addEventListener('click', () => {
     // Remove the task from the DOM.
+    moveToDone(li);
     li.remove();
   });
   deleteButtonElement.appendChild(deleteIcon);
@@ -553,14 +554,8 @@ function loadGoal(value, parentID, classAdd) {
 
 // move a goal to the finished goals 
 function moveToDone(li) {
-  let clone = li.cloneNode(true);
+  loadGoal(li.innerText, "finishedUL", "updateFinished");
   li.remove();
-  console.log(li.innerText);
-  document.getElementById("finishedUL").appendChild(clone);
-  console.log(clone.children);
-  clone.children[0].classList.remove("updateGoal");
-  clone.children[0].classList.add("updateFinished", "hidden");
-  // delete it from the goals list
   firebase.firestore().collection('profile').doc(uid).update({ 
     goals: firebase.firestore.FieldValue.arrayRemove(li.innerText)
   });
