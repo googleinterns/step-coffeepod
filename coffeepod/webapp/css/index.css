@@ -56,6 +56,13 @@ footer .dimmed {
     opacity: 0.5;
 }
 
-a {
-   color: #AA6231 !important;
+
+a: hover {
+    color: #EFE1CE;
+}
+
+#commentsTemp {
+    outline: 0;
+    border-width: 0 0 1px !important;
+    border-color: black !important;
 }
