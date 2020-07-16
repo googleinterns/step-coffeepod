@@ -54,7 +54,7 @@ function addGoalCardContent(title, checkedGoals, uncheckedGoals, idNum) {
     const goalCardBody = document.createElement('div');
     goalCardBody.setAttribute("class", "card-body");
     goalCardBody.setAttribute("id", goalCardId);
-    addButton(goalCardBody,["btn", "float-right"], ["fas", "fa-plus"], "createNewGoal("+goalUncheckedListId+")");
+    addButton(goalCardBody,["btn", "float-right"], ["fas", "fa-plus"], "createNewGoal("+ "'" + goalUncheckedListId + "'" +")");
 
     const goalCardTitle = document.createElement('p');
     goalCardTitle.classList.add("card-title", "enter-leave");
@@ -214,7 +214,6 @@ function addButton(parent, buttonClasses, iconClasses, onclickFunc) {
 
     const icon = document.createElement('i');
     icon.classList.add(...iconClasses);
-    button.setAttribute("onclick", onclickFunc);
 
     icon.setAttribute("aria-hidden", "true");
     icon.setAttribute("onclick",onclickFunc);
@@ -245,12 +244,14 @@ function addCheckBox(goal, content, checked) {
 }
 
 // create a new goal with checkbox and delete button
-function createNewGoal(goalListId) {
-    console.log("I'm creating a new goal");
-    const goalList = document.getElementById(goalListId);
+function createNewGoal(goalUncheckedListId) {
+    const goalList = document.getElementById(goalUncheckedListId);
+    const numUncheckedGoals = goalList.getElementsByTagName("li").length;
+    const goalId = "goal-unchecked-" +  goalUncheckedListId.substring(goalUncheckedListId.lastIndexOf("-")) + "-" +  numUncheckedGoals;
     const goal = document.createElement('li');
-    addCheckBox(goal, "This is for new parameter for addCheckBox", false);
-    addButton(goal, ["btn", "btn-goal",  "delete-goal"], ["fa", "fa-times"], holder);
+    goal.setAttribute("id", goalId);
+    addCheckBox(goal, "New Goal", false);
+    addButton(goal, ["btn", "btn-goal",  "delete-goal"], ["fa", "fa-times"], 'deleteGoal(' + "'"+goalId+"'" + ')');
 
     goalList.appendChild(goal);
 }
