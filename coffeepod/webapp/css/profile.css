@@ -4,7 +4,14 @@
 font-family: 'Crimson Pro', serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Roboto', sans-serif; */
+a, a:hover {
+    text-decoration: none;
+}
 
+a:hover{
+    color: #AA6231;
+    opacity: 0.5;
+}
 
 .line {
   width: 0px;
@@ -38,10 +45,6 @@ font-family: 'Roboto', sans-serif; */
 .form-control:disabled, .form-control[readonly] {
     background-color: white;
     border: none;
-}
- 
-.hidden {
-  display: none;
 }
 
 .deleteGoal {

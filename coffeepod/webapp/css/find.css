@@ -173,3 +173,15 @@ a:hover{
 .submit-text:hover{
   opacity: 0.5;
 }
+
+.no-content {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 37px;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  color: #000000;
+  text-align: center;
+}
