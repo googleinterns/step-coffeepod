@@ -72,7 +72,7 @@ function createGoalCardTitle(title, goalTitleId) {
 function createGoalCardBodyWithAddButton (goalCardId, goalUncheckedListId) {
     const goalCardBody = document.createElement('div');
     goalCardBody.setAttribute("class", "card-body");
-    //goalCardBody.setAttribute("id", goalCardId);
+    goalCardBody.setAttribute("id", "body-" + goalCardId);
     addButton(goalCardBody,["btn", "float-right"], ["fas", "fa-plus"], "createNewGoal("+ "'" + goalUncheckedListId + "'" +")");
     return goalCardBody;
 }
@@ -152,16 +152,6 @@ function addGoals(goals, goalList, checked) {
 function moveCheckedGoal(goalId) {  
 }
 
-async function getNewGoalCardId() {
-    let numGoalCard = await db.collection('mentorship').doc(mentorshipID).collection("goals").get().then(snapshot => {
-        return snapshot.size;
-    });
-
-    console.log(numGoalCard);
-    return numGoalCard;
-}
-
-getNewGoalCardId();
 
 
 function createNewGoalCard() {
@@ -204,10 +194,11 @@ $(document).on("keypress", '.enter-leave', function(e) {
         $(this).blur().next().focus();
         const goalId = this.id;
         let goalCardId
+
         if (goalId.includes("checked")) {
             goalCardId = getGoalCardId(this.parentNode.id);
         } else {
-            goalCardId = this.parentNode.id;
+            goalCardId = this.parentNode.id.substring(this.parentNode.id.indexOf("-")+1);
         }
         
         
