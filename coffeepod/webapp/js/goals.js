@@ -27,26 +27,20 @@ function loadData() {
 
 // add goalCardOutline, goalCardContent to a one full GoalCard and add it to the board of cards
 
-function addComponentsGoalCard (goalCardId, title, checkedGoals,uncheckedGoals, idNum) {
+function addComponentsGoalCard (title, checkedGoals,uncheckedGoals, goalCardId) {
     const goalCard = addOutlineGoalCard(goalCardId);
-    const goalContent = addGoalCardContent(title, checkedGoals, uncheckedGoals, idNum);
+    const goalContent = addGoalCardContent(title, checkedGoals, uncheckedGoals, goalCardId);
     goalCard.appendChild(goalContent);
 }
 
 function putGoalCardsOnPage(allGoalCards, goalCardsIds) {
-    let idNum;
     for (i = 0; i < allGoalCards.length; i++) {
         const title = allGoalCards[i].title;
         const checkedGoals = allGoalCards[i].checked;
         const uncheckedGoals = allGoalCards[i].unchecked;
         // make Id num consistent with goalCardId
-        idNum = getIdNumFromGoalCardId(goalCardsIds[i]);
-        addComponentsGoalCard(goalCardsIds[i], title, checkedGoals, uncheckedGoals, idNum);
+        addComponentsGoalCard(title, checkedGoals, uncheckedGoals, goalCardsIds[i]);
     }
-}
-
-function getIdNumFromGoalCardId(goalCardId) {
-    return goalCardId.substring(goalCardId.lastIndexOf("-")+1);
 }
 
 function addOutlineGoalCard(goalCardId) {
@@ -89,11 +83,10 @@ function createElement(tag, classList, id, withId) {
     return element;
 }
 
-function addGoalCardContent(title, checkedGoals, uncheckedGoals, idNum) {
-    const goalCheckedListId = "goal-checked-list-" + idNum;
-    const goalUncheckedListId = "goal-unchecked-list-" + idNum;
-    const goalCardId = "goal-card-" + idNum;
-    const goalTitleId = "goal-title-" + idNum;
+function addGoalCardContent(title, checkedGoals, uncheckedGoals, goalCardId) {
+    const goalCheckedListId = "goal-checked-list-" + goalCardId;
+    const goalUncheckedListId = "goal-unchecked-list-" + goalCardId;
+    const goalTitleId = "goal-title-" + goalCardId;
 
     const goalContent = createElement('div',["card", "goal-card"], "", false);
 
@@ -153,26 +146,25 @@ function moveCheckedGoal(goalId) {
 }
 
 
-
 function createNewGoalCard() {
     db.collection('mentorship').doc(mentorshipID).collection("goals").get().then((snapshot) => {
-        // allGoalCards is an array of goalCards
-        const idNum = snapshot.size;
-        console.log(snapshot.size);
 
-        // Put this on the page
-        const goalCardId = "goal-card-" + idNum;
-        addComponentsGoalCard (goalCardId, "New Title", [], [], idNum);
+       
 
         // push goal card into firestore
-        db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId).set({
+        db.collection('mentorship').doc(mentorshipID).collection("goals").add({
             checked: [],
             unchecked: [],
-            title: "New Title"
-        })
-    });
+            title: "New Title",
+            timestamp: Date.now()
+        }).then (function(newDocRef) {
+             // Put this on the page
+            const goalCardId = newDocRef.id;
+            addComponentsGoalCard ("New Title", [], [], goalCardId);
 
-    
+        })
+
+    });
 }
 
 // Get selected text 
@@ -230,30 +222,15 @@ $(document).on("keypress", '.enter-leave', function(e) {
     }
 });
 
-// This version works with static content (content already added to HTML only)
-/*$(document).ready(function() {
- $('.enter-leave').keydown(function(e) {
-     if(e.which == 13) {
-         //debugger;
-        $(this).blur().next().focus();
-        return false;
-      }
-      console.log("We are here!");
- });
- })*/
-
-function holder() {
-
-}
-
 
 function getGoalCardId(goalId) {
     const endIdx = goalId.lastIndexOf("-");
     const containsGoalCardNum = goalId.substring(0, endIdx);
     const startIdx = containsGoalCardNum.lastIndexOf("-");
-    const goalCardId = "goal-card-" + containsGoalCardNum.substring(startIdx + 1);
+    const goalCardId = containsGoalCardNum.substring(startIdx + 1);
     return goalCardId;
 }
+
 // call a function to delete a goal
 function deleteGoal(goalId) {
     //Delete from DOM
@@ -278,6 +255,9 @@ function deleteGoal(goalId) {
 function deleteGoalCard(goalCardId) {
     const goalCard = document.getElementById(goalCardId);
     goalCard.remove();
+
+    //delete goal card from firestore
+    db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId).delete();
 }
 
 // add a button to some parent with some classes and some onclick function
@@ -295,7 +275,6 @@ function addButton(parent, buttonClasses, iconClasses, onclickFunc) {
     button.appendChild(icon);
     parent.appendChild(button);
 }
-
 
 
 // add a checkbox to an individual goal
@@ -346,72 +325,7 @@ function selectText() {
 };
 
 
-// create a whole new goal card
-function createGoalCard() {
-	const goalBoard = document.getElementById("goal-board");
-	const goalCard = document.createElement('div');
-	goalCard.classList.add("col-auto", "mb-3");
-    goalCard.setAttribute("id", "goal-card-!!");
 
-	goalBoard.appendChild(goalCard);
-
-	const goalContent = document.createElement('div');
-	goalContent.classList.add("card", "goal-card");
-
-	goalCard.appendChild(goalContent);
-
-    const goalCardBody = document.createElement('div');
-    goalCardBody.setAttribute("class", "card-body");
-    addButton(goalCardBody,["btn", "float-right"], ["fas", "fa-plus"], "createNewGoal('goal-list-!!')");
-    
-
-    const goalCardTitle = document.createElement('p');
-    goalCardTitle.classList.add("card-title", "enter-leave");
-    goalCardBody.appendChild(goalCardTitle);
-    goalCardTitle.setAttribute('contenteditable', 'true');
-    goalCardTitle.setAttribute('onclick', "selectText()");
-    goalCardTitle.innerText = "Title";
-
-
-    const goalListDiv = document.createElement('div');
-    goalListDiv.classList.add("goals");
-    const goalList = document.createElement('ul');
-    goalList.setAttribute("id", "goal-list-!!");
-    goalListDiv.appendChild(goalList);
-    goalCardBody.appendChild(goalListDiv);
-
-    addButton(goalCardBody, ["btn", "btn-goal", "delete-goal-card"], ["fas", "fa-trash"], "deleteGoalCard('goal-card-!!')");
-    goalContent.appendChild(goalCardBody);
-	
-}
-
-
-/*window.load = function() {
-	if (sessionStorage.inputBoxes) {
-		console.log(document.getElementById("goal-board"));
-		const goalBoard = document.getElementById("goal-board");
-		//goalBoard.innerHTML = sessionStorage.inputBoxes;
-		
-	}
-};*/
-
-
-
-
-
-
-function addNode(checked){
-	var newNode = document.createElement('article');      
-newNode.innerHTML  = "<input type='checkbox' id='t"+cont+"' "+((checked)?"checked":"")+"/> <label for='t"+cont+"'></label><span contenteditable='true'>Task #"+cont+"</span>";
-		newNode.id = "article"+cont;
-		newNode.ondblclick = onDblClick;
-		cont++;
-	var main_sec = document.getElementById("main_sec");
-		main_sec.appendChild(newNode);
-		
-		//main_sec.scrollTop = main_sec.scrollHeight;
-}
-
-function onDblClick(event){
+/*function onDblClick(event){
 	document.getElementById(event.target.id).remove();
-}
+}*/
