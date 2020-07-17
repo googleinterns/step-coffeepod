@@ -8,10 +8,13 @@ function getGoalCards() {
     db.collection('mentorship').doc(mentorshipID).collection("goals").get().then((snapshot) => {
         // allGoalCards is an array of goalCards
         const allGoalCards = [];
+        const goalCardsIds = []
         snapshot.docs.forEach(goalDocument => { // There should be just one goal document
             allGoalCards.push(goalDocument.data());
+            goalCardsIds.push(goalDocument.id);
         });
-        putGoalCardsOnPage(allGoalCards);
+        console.log(allGoalCards);
+        putGoalCardsOnPage(allGoalCards, goalCardsIds);
     });
 }
 
@@ -21,15 +24,14 @@ function loadData() {
 }
 
 
-function putGoalCardsOnPage(allGoalCards) {
+function putGoalCardsOnPage(allGoalCards, goalCardsIds) {
     for (i = 0; i < allGoalCards.length; i++) {
         const title = allGoalCards[i].title;
         const checkedGoals = allGoalCards[i].checked;
         const uncheckedGoals = allGoalCards[i].unchecked;
-        const goalCard = addOutlineGoalCard('goal-card-'+ i);
+        const goalCard = addOutlineGoalCard(goalCardsIds[i]);
         const goalContent = addGoalCardContent(title, checkedGoals, uncheckedGoals, i);
         goalCard.appendChild(goalContent);
-        console.log("finish creating card num: " + i);
     }
     
 }
@@ -200,14 +202,7 @@ function deleteGoal(id) {
     const goalCardNum = id.substring(startIdx+1);
 
     goalToDelete.remove();
-    /*db.collection('mentorship').doc(mentorshipID).collection("goals").updateData() {
-        
-        snapshot.docs.forEach(goalDocument => { // There should be just one goal document
-            goalDocument.update({
-                //goalCards.goals[goalCardNum]: firebase.firestore.FieldValue.delete()
-            });
-        });
-    });*/
+    //db.collection('mentorship').doc(mentorshipID).
 }
 
 // delete a goal card
