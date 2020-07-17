@@ -72,16 +72,22 @@ function addGoalCardContent(title, checkedGoals, uncheckedGoals, idNum) {
     const goalCheckedList = document.createElement('ul');
     goalCheckedList.setAttribute("id", goalCheckedListId);
     
+    addGoals(uncheckedGoals, goalUncheckedList, false);
+    addGoals(checkedGoals, goalCheckedList, true);
 
     const lineBreak = document.createElement('hr');
     
     goalListDiv.appendChild(goalUncheckedList);
-    goalListDiv.appendChild(lineBreak);
+    console.log(goalUncheckedList);
+    if (goalCheckedList.hasChildNodes()) {
+        console.log("There should be a line break");
+        goalListDiv.appendChild(lineBreak);
+    }
+    
     goalListDiv.appendChild(goalCheckedList);
     goalCardBody.appendChild(goalListDiv);
 
-    addGoals(uncheckedGoals, goalUncheckedList, false);
-    addGoals(checkedGoals, goalCheckedList, true);
+    
 
     addButton(goalCardBody, ["btn", "btn-goal", "delete-goal-card"], ["fas", "fa-trash"], 'deleteGoalCard(' + "'"+goalCardId+"'" + ')');
     goalContent.appendChild(goalCardBody);
@@ -112,6 +118,11 @@ function addGoals(goals, goalList, checked) {
 
 // UPDATE CONTENT IN FIRESTORE
 // create a whole new goal card with data already stored in firestore
+
+function moveCheckedGoal(goalId) {
+    
+
+}
 function createGoalCard() {
 	const goalBoard = document.getElementById("goal-board");
 	const goalCard = document.createElement('div');
