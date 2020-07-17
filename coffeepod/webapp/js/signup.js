@@ -99,7 +99,9 @@ function signup(e) {
                 dob: month+" "+day+", "+year,
                 // store the ids for the mentors and mentees user info so we can find it
                 mentors: [],
-                mentees: []
+                mentees: [],
+                tags: [],
+                tagSize: 0
             }).then(() => {
                 window.location.replace("index.html");
             })
