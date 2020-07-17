@@ -1,0 +1,22 @@
+.border {
+  border: 5px solid #000000;
+  padding: 30px;
+}
+
+ .setButtonWidth {
+   width: 100px;
+   margin-right: 10px;
+ }
+
+ .paddedBorder {
+   margin-bottom: 30px;
+ }
+
+ a, a:hover {
+    text-decoration: none;
+}
+
+a:hover{
+    color: #AA6231;
+    opacity: 0.5;
+}

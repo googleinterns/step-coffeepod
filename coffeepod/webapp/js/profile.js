@@ -37,6 +37,15 @@ function checkPersonal() {
   if(personal) {
     console.log(document.getElementById("goalCol"));
     document.getElementById("goalCol").classList.add("d-xl-block");
+    let notPersonal = document.getElementsByClassName("nonPersonal");
+    for(let i = 0; i < notPersonal.length; i ++) {
+      notPersonal[i].classList.add("hidden");
+    }
+    let buttons = document.getElementsByClassName("update");
+    for(let i = 0; i < buttons.length; i ++) {
+      console.log(buttons[i]);
+      buttons[i].classList.remove("hidden");
+    }
   } else {
     let buttons = document.getElementsByClassName("update");
     for(let i = 0; i < buttons.length; i ++) {
@@ -48,6 +57,16 @@ function checkPersonal() {
 
 // load the personal data based on the uid of the page we are trying to get
 function loadData() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log(user.uid == uid);
+      if(user.uid == uid) {
+        // this is actually their own page
+        personal = true;
+        checkPersonal()
+      }
+    }
+  })
   let userRef = db.collection("user-info").doc(uid);
   userRef.get().then(function(userinfo) {
     username = userinfo.data().username;
@@ -505,8 +524,8 @@ function makeMentorCard(id, store) {
   let mentor = db.collection("user-info").doc(id);
   let name;
   mentor.get().then(function(userinfo) {
-    name = userinfo.data().name;
-    clone.children[1].children[0].children[0].innerText = name;
+    clone.querySelector(".mentorlink").innerText = userinfo.data().name;
+    clone.querySelector(".mentorlink").setAttribute('href', 'profile.html?user=' + id);
   });
   let cont = document.getElementById(store);
   cont.appendChild(clone);
@@ -599,27 +618,46 @@ function deleteGoal(li) {
   });
 }
 
-//  // Create a "close" button and append it to each list item
-//   const myNodelist = document.getElementsByClassName("goal");
-//   console.log(myNodelist);
-//   console.log(myNodelist.length);
-//   for (let i = 0; i < myNodelist.length; i++) {
-//     console.log(myNodelist[i]);
-//     let span = document.createElement("SPAN");
-//     let txt = document.createTextNode("\u00D7");
-//     span.className = "close";
-//     span.appendChild(txt);
-//     console.log("Adding" + span);
-//     myNodelist[i].appendChild(span);
-//   }
+// send a request to the profile that you are currently looking at to see if they want to be your mentor
+function sendMentorRequest() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    let pendingRequests;
+    let notifRef = db.collection("notifications").doc(uid);
+    notifRef.get().then(function(notif) {
+      pendingRequests = notif.data().mentorRequests;
+    }).then(function() {
+      // check if the user logged in is already a mentor of the page we are on
+      if(mentors.includes(user.uid)){
+        alert("You are already a mentor of this person");
+      } else if(pendingRequests.includes(user.uid)) {
+        alert("You already submitted a request to be this persons mentor");
+      } else {
+        firebase.firestore().collection('notifications').doc(uid).update({ 
+          mentorRequests: firebase.firestore.FieldValue.arrayUnion(user.uid)
+        });
+      }
+    });
+  });
+}
 
-//   // Click on a close button to hide the current list item
-//   let close = document.getElementsByClassName("close");
-//   // console.log(close);
-//   let i;
-//   for (i = 0; i < close.length; i++) {
-//     close[i].onclick = function() {
-//       let div = this.parentElement;
-//       div.style.display = "none";
-//     }
-//   }
+// send a request to the profile that you are currently looking at to see if they want to be your mentee
+function sendMenteeRequest() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    let pendingRequests;
+    let notifRef = db.collection("notifications").doc(uid);
+    notifRef.get().then(function(notif) {
+      pendingRequests = notif.data().menteeRequests;
+    }).then(function(){
+      // check if the user logged in is already a mentee of the page we are on
+      if(mentees.includes(user.uid)){
+        alert("You are already a mentee of this person");
+      } else if(pendingRequests.includes(user.uid)) {
+        alert("You already submitted a request to be this persons mentee");
+      } else {
+        firebase.firestore().collection('notifications').doc(uid).update({ 
+          menteeRequests: firebase.firestore.FieldValue.arrayUnion(user.uid)
+        });
+      }
+    })
+  });
+}

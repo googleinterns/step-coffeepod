@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/notif.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/navbar_style.css">
     <!-- if you have a style sheet for your page put it here -->
@@ -14,9 +15,29 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+    <script>
+      const firebaseConfig = {
+          apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
+          authDomain: "team-hi-five-step.firebaseapp.com",
+          databaseURL: "https://team-hi-five-step.firebaseio.com",
+          projectId: "team-hi-five-step",
+          storageBucket: "team-hi-five-step.appspot.com",
+          messagingSenderId: "296440646158",
+          appId: "1:296440646158:web:d06db7292a4cc92d714a5f",
+          measurementId: "G-SV4KD1V658"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+    </script>
     <script src="js/script.js"></script>
+    <script src="js/notif.js"></script>
     <script>
       $(document).ready(load('notifications'));
+      $(document).ready(getNotif());
     </script>
   </head>
   <body onload="load('notifications')">
@@ -31,28 +52,42 @@
           <div class="row justify-content-center">
             <!-- this is the main row -->
             <div id="profileHeader" class="col-lg-8">
-              <!-- every section of the page will have its own cont do give it a look of different sections -->
               <div class="cont shadow-sm">
-                <!-- you put whatever contect here -->
+                <p class="weight600 poppins line45 font30 lowercase">mentor and mentee requests</p>
+                <div id="mentorRequest" class="mentor border paddedBorder hidden">
+                  <div class="row">
+                    <div class="col-xl-3 my-auto">
+                      <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
+                    </div>
+                    <div class="col-xl-9 text-center text-xl-left my-auto">
+                      <p class="font25 poppins line37 padName"><a href="" class="weight500 orangeTextLight mentorName">pancake</a><span class="spaceLetters blackText"> wants to be your mentor</span></p>
+                      <p class="padNormal line21 capitalize roboto font20 spaceLetters mentorTitle">Software Engineer | Mentor</p></br>
+                      <button onClick="approve(this, '.mentor')" class="btn setButtonWidth orangeButton whiteText poppins weight500 font17 text-center line25">accept</button>
+                      <button onClick="deny(this, '.mentor')" class="btn setButtonWidth orangeDarkButton whiteText poppins weight500 font17 text-center line25">remove</button>
+                    </div>
+                  </div>
+                </div>
+                <div id="menteeRequest" class="mentee border paddedBorder hidden">
+                  <div class="row">
+                    <div class="col-xl-3 my-auto">
+                      <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
+                    </div>
+                    <div class="col-xl-9 text-center text-xl-left my-auto">
+                      <p class="font25 poppins line37 padName"><a href="" class="weight500 orangeTextLight mentorName"></a><span class="spaceLetters blackText"> wants to be your mentee</span></p>
+                      <p class="padNormal line21 capitalize roboto font20 spaceLetters mentorTitle"></p></br>
+                      <button onClick="approve(this, '.mentee')" class="btn setButtonWidth orangeButton whiteText poppins weight500 font17 text-center line25">accept</button>
+                      <button onClick="deny(this, '.mentee')" class="btn setButtonWidth orangeDarkButton whiteText poppins weight500 font17 text-center line25">remove</button>
+                    </div>
+                  </div>
+                </div>
+                <div id="mentorStore"></div>
               </div>
               <div class="cont shadow-sm">
+                <p class="weight600 poppins line45 font30 lowercase">post notifications</p>
                 <!-- more content -->
               </div>
-              <div class="cont shadow-sm">
+              <!-- <div class="cont shadow-sm">
                 <!-- more content -->
-              </div>
-            </div>
-            <!-- this is the side col -->
-            <div class="col-lg-4 d-none d-lg-block">
-              <!-- the side col is sticky -->
-              <div class="make-me-sticky">
-                <!-- put all the info in their own cont again -->
-                <div class="cont shadow-sm">
-                  <!-- whatever you put in the first section on the side -->
-                </div>
-                <div class="cont shadow-sm">
-                  <!-- whatever you put in the next section on the side -->
-                </div>
               </div>
             </div>
           </div>
