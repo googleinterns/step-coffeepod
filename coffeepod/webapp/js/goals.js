@@ -169,14 +169,39 @@ function createGoalCard() {
 	
 }
 
-
+// Get selected text 
+function getSelectedText() {
+    var text = "";
+    if (window.getSelection) {
+        text = window.getSelection().toString();
+    } else if (document.selection && document.selection.type != "Control") {
+        text = document.selection.createRange().text;
+    }
+    return text;
+}
 
 // Enter and leave the contenteditable area which works for dynamically added elements
 $(document).on("keypress", '.enter-leave', function(e) {
     var keyC = e.keyCode;
+
     if (keyC == 13) {
-         $(this).blur().next().focus();
+        $(this).blur().next().focus();
+        const goalCardId = getGoalCardId(this.parentNode.id);
+        const goalId = this.id;
+        const oldContent =  document.getElementById(goalId).getAttribute("data-init");
+        
+        // set new attribute to make sure nothing is confused
+        document.getElementById(goalId).setAttribute("data-init", this.innerText);
+        let goalCardRef = db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId);
+        goalCardRef.update({ 
+            unchecked: firebase.firestore.FieldValue.arrayUnion(this.innerText)
+        });
+        goalCardRef.update({ 
+            unchecked: firebase.firestore.FieldValue.arrayRemove(oldContent)
+        });
+         
         return false;
+
     }
 });
 
@@ -228,6 +253,8 @@ function deleteGoal(goalId) {
 function deleteGoalCard(goalCardId) {
     const goalCard = document.getElementById(goalCardId);
     goalCard.remove();
+
+
 }
 
 // add a button to some parent with some classes and some onclick function
@@ -257,8 +284,10 @@ function addCheckBox(goal, content, checked) {
 
     if (!checked) {
         label.classList.add("enter-leave");
+        label.setAttribute("id", "content-" + goal.id);
         label.setAttribute("onclick", "selectText()");
         label.setAttribute("contenteditable", "true");
+        label.setAttribute("data-init", content);
     } else {
         checkBox.checked = true;
     }
@@ -273,12 +302,20 @@ function createNewGoal(goalUncheckedListId) {
     const goalList = document.getElementById(goalUncheckedListId);
     const numUncheckedGoals = goalList.getElementsByTagName("li").length;
     const goalId = "goal-unchecked-" +  goalUncheckedListId.substring(goalUncheckedListId.lastIndexOf("-")) + "-" +  numUncheckedGoals;
+    const goalCardId = getGoalCardId(goalId);
     const goal = document.createElement('li');
+
     goal.setAttribute("id", goalId);
     addCheckBox(goal, "New Goal", false);
     addButton(goal, ["btn", "btn-goal",  "delete-goal"], ["fa", "fa-times"], 'deleteGoal(' + "'"+goalId+"'" + ')');
 
     goalList.appendChild(goal);
+
+    // Update in firestore
+
+    db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId).update({ 
+        unchecked: firebase.firestore.FieldValue.arrayUnion(goal.innerText)
+    });
 }
 
 // when the user clicks on text, it selects all
