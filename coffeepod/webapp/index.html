@@ -41,7 +41,7 @@
     <script src="js/index-main.js"></script>
     <script>
         $(document).ready(getProfile());
-        $(document).ready(loadQuestions());
+        $(document).ready(filterQuestions("none"));
         $(document).ready(load('cafe'));
     </script>
   </head>
@@ -64,20 +64,20 @@
                   <p class="font17 roboto line15 padNormal text-center spaceLetters title"></p>
                   <br>
                   <a href = "profile.html"><p class="font15 roboto line15 weight300 padNormal text-center orangeTextDark mb-2"> Update your profile</p></a>
-                  <p class="font15 roboto line15 weight300 padNormal text-center orangeTextDark"> Ask a question</p>
+                  <p class="font15 roboto line15 weight300 padNormal text-center orangeTextDark" id = "askQuestion"> Ask a question</p>
                 </div>
                 <div class="cont shadow-sm">
                   <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> topics </p>
                   <ul class = "menu poppins weight300 font17 line21 text-center orangeTextLight">
-                    <li class="menuli">career</li>
-                    <li class="menuli">academics</li>
-                    <li class="menuli">hobbies</li>
+                    <li class="menuli" id = "career" onclick = "filterQuestions(this.id);">career</li>
+                    <li class="menuli" id = "academics" onclick = "filterQuestions(this.id);">academics</li>
+                    <li class="menuli" id = "hobbies" onclick = "filterQuestions(this.id);">hobbies</li>
                   </ul>  
                   <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> filter </p>
                   <ul class = "menu poppins weight300 font17 line21 text-center orangeTextLight">
-                    <li class="menuli">newest</li>
-                    <li class="menuli">oldest</li>
-                    <li class="menuli">unanswered</li>
+                    <li class="menuli" id = "newest" onclick = "filterQuestions(this.id);">newest</li>
+                    <li class="menuli" id = "oldest" onclick = "filterQuestions(this.id);">oldest</li>
+                    <li class="menuli" id = "unanswered" onclick = "filterQuestions(this.id);">unanswered</li>
                   </ul>  
                 </div>
               </div>
@@ -85,6 +85,7 @@
 
             <!-- main section -->
             <div id="profileHeader" class="col-lg-9">
+               <button type="button" class="btn btn-outline-dark" id = "sortType" style = "display:none" onclick = "filterQuestions('all')"></button>
               <!-- first main content section -->
               <div class="cont shadow-sm" id = "post">
                 <div class = "row newPostContainer" style = "opacity: 0.5">

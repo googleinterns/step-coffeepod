@@ -19,15 +19,18 @@
 
 .btn-primary,
 .btn-primary:disabled,
-.btn-primary:hover,
 .btn-primary:active,
 .btn-primary:visited,
 .btn-primary:focus {
     background-color: #EFE1CE;
     border: none;
-    padding: 0rem 3.5rem;
+    padding: 0rem 3rem;
     margin-right:0.2 em;
     color: black;
+}
+
+.btn-primary:hover {
+    background-color: #AA6231;
 }
 
 textarea, 
@@ -56,13 +59,30 @@ footer .dimmed {
     opacity: 0.5;
 }
 
+li, p #askQuestion{
+    cursor:pointer !important;
+}
 
-a: hover {
-    color: #EFE1CE;
+a:hover, li:hover {
+    color: grey;
 }
 
 #commentsTemp {
     outline: 0;
     border-width: 0 0 1px !important;
     border-color: black !important;
+}
+
+.btn-outline-dark {
+    margin-bottom: 1rem;
+    color: black;
+}
+
+.btn-outline-dark:hover,
+.btn-outline-dark:focus,
+.btn-outline-dark:active,
+.btn-outline-dark:visited {
+    background-color: rgba(0,0,0,0) !important;
+    color: #AA6231;
+    border-color: #AA6231 !important;
 }
