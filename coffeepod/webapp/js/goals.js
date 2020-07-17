@@ -11,6 +11,8 @@ function getGoalCards() {
         const goalCardsIds = []
         snapshot.docs.forEach(goalDocument => { // There should be just one goal document
             allGoalCards.push(goalDocument.data());
+
+            // Get the ids to make sure the ids and the goal cards sync after deletion
             goalCardsIds.push(goalDocument.id);
         });
         console.log(allGoalCards);
@@ -195,14 +197,31 @@ function holder() {
 }
 
 
+function getGoalCardId(goalId) {
+    const endIdx = goalId.lastIndexOf("-");
+    const containsGoalCardNum = goalId.substring(0, endIdx);
+    const startIdx = containsGoalCardNum.lastIndexOf("-");
+    const goalCardId = "goal-card-" + containsGoalCardNum.substring(startIdx + 1);
+    return goalCardId;
+}
 // call a function to delete a goal
-function deleteGoal(id) {
-    const goalToDelete = document.getElementById(id);
-    const startIdx = id.lastIndexOf("-");
-    const goalCardNum = id.substring(startIdx+1);
+function deleteGoal(goalId) {
+    //Delete from DOM
+    const goalToDelete = document.getElementById(goalId);
+    const goalCardId = getGoalCardId(goalId)
 
     goalToDelete.remove();
-    //db.collection('mentorship').doc(mentorshipID).
+
+    //Delete from database
+    if (goalId.includes('unchecked')) {
+         db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId).update({ 
+        unchecked: firebase.firestore.FieldValue.arrayRemove(goalToDelete.innerText)
+        });
+    } else {
+        db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId).update({ 
+        checked: firebase.firestore.FieldValue.arrayRemove(goalToDelete.innerText)
+        });
+    }
 }
 
 // delete a goal card
