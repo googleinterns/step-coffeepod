@@ -42,7 +42,7 @@
     <script>
         $(document).ready(getProfile());
         $(document).ready(postQuestion());
-        $(document).ready(displayComments());
+        $(document).ready(displayComments(null));
         $(document).ready(load('cafe'));
     </script>
   </head>
@@ -60,8 +60,8 @@
                 <div class="cont shadow-sm"> 
                   <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> filter comments</p>
                   <ul class = "menu poppins weight300 font17 line21 text-center orangeTextLight">
-                    <li class="menuli">newest</li>
-                    <li class="menuli">oldest</li>
+                    <li class="menuli" id = "newest" onclick = "filterComments(this.id)">newest</li>
+                    <li class="menuli" id = "oldest" onclick = "filterComments(this.id)">oldest</li>
                   </ul>  
                 </div>
               </div>
@@ -69,6 +69,7 @@
 
             <!-- main section -->
             <div id="profileHeader" class="col-lg-9">
+                <button type="button" class="btn btn-outline-dark" id = "sortType" style = "display:none" onclick = "displayComments('all')"></button>
               <!-- first main content section -->
                 <div class="cont shadow-sm" id = "mainPost">
                     <div class = "row mb-2">

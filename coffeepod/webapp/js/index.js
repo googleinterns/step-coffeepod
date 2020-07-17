@@ -42,4 +42,3 @@ function getCurrentDate(){
     let day = date.getDate();
     return (month + " " + day + ", " + year);
 }
-
