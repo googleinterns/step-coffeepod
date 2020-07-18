@@ -4,7 +4,7 @@ const mentorshipID = "302vr6Tmw8t96kO5Ccof";
 // asynchronous work
 
 function getGoalCards() {
-    db.collection('mentorship').doc(mentorshipID).collection("goals").get().then((snapshot) => {
+    db.collection('mentorship').doc(mentorshipID).collection("goals").orderBy("timestamp", "desc").get().then((snapshot) => {
         // allGoalCards is an array of goalCards
         const allGoalCards = [];
         const goalCardsIds = [];
@@ -33,7 +33,9 @@ function addComponentsGoalCard (title, checkedGoals,uncheckedGoals, goalCardId) 
 }
 
 function putGoalCardsOnPage(allGoalCards, goalCardsIds) {
-    for (i = 0; i < allGoalCards.length; i++) {
+    // Retrieve element in reverse chronological order 
+    // (most updated element show up first because they are added to the back of an array)
+    for (i = 0; i  < allGoalCards.length; i++) {
         const title = allGoalCards[i].title;
         const checkedGoals = allGoalCards[i].checked;
         const uncheckedGoals = allGoalCards[i].unchecked;
