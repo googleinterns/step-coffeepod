@@ -105,9 +105,10 @@ function addGoalCardContent(title, checkedGoals, uncheckedGoals, goalCardId) {
 
     const lineBreak = document.createElement('hr');
     goalListDiv.appendChild(goalUncheckedList);
+    goalListDiv.appendChild(lineBreak);
 
-    if (goalCheckedList.hasChildNodes()) {
-        goalListDiv.appendChild(lineBreak);
+    if (!goalCheckedList.hasChildNodes()) {
+        lineBreak.style.display = "none";
     }
     
     goalListDiv.appendChild(goalCheckedList);
@@ -339,25 +340,52 @@ function selectText() {
   document.execCommand('selectAll', false, null);
 };
 
+// find out whether current id indicates checked or unchecked goals/ goal lists
+function getOtherListId(currentListId) {
 
-function getCheckedListId(uncheckedListId) {
-    const checkedListId = "goal-checked-" + uncheckedListId.substring(uncheckedListId.lastIndexOf("-")+1);
-    return checkedListId;
+    const firstDash = currentListId.indexOf("-");
+    const lastDash = currentListId.lastIndexOf("-");
+
+    const checkedOrUnchecked = currentListId.substring(firstDash + 1, lastDash);
+
+
+    // check what current list id is
+    const checked = !checkedOrUnchecked.includes("unchecked")
+
+    let adding;
+
+    if (checked) {
+        adding = 'unchecked';
+    } else {
+        adding = 'checked';
+    }
+    const otherListId = "goal-" + adding + "-" + currentListId.substring(lastDash+1);
+    return otherListId;
 }
+
+// get goal count by checking the last goal id of the destination list and add 1 to that
+function getGoalCount(destinationElementId){
+    const lastElement = document.getElementById(destinationElementId).lastElementChild;
+    console.log("last element is: " + lastElement.id);
+    console.log("the id number of the last goal of the destination section is");
+    console.log(lastElement.id.substring(lastElement.id.lastIndexOf("-") + 1));
+    const newGoalCount = parseInt(lastElement.id.substring(lastElement.id.lastIndexOf("-") + 1)) + 1;
+    return newGoalCount;
+}
+
 // move goal to check or unchecked list depending on whether the checkbox is checked or not 
 function moveGoal(goalId){
-    console.log(goalId);
-    console.log(document.getElementById(goalId).children[0]);
-    console.log(document.getElementById(goalId).children[0].checked);
-    console.log(document.getElementById(goalId).children[1]);
 
     const liGoalElement = document.getElementById(goalId);
-    const checked = liGoalElement.children[0].checked;
+    const checkBox = liGoalElement.children[0];
+    const checked = checkBox.checked;
     const label = liGoalElement.children[1];
-    const uncheckedListId = goalId.substring(0, goalId.lastIndexOf("-"));
-    const checkedListId = getCheckedListId(uncheckedListId);
+    const currentListId = goalId.substring(0, goalId.lastIndexOf("-"));
+    const otherListId = getOtherListId(currentListId);
+    const newGoalId = otherListId + "-" + getGoalCount(otherListId);
 
-    console.log(uncheckedListId);
+    console.log('Considering element: ' + liGoalElement.id);
+    console.log('New element id is:' + newGoalId);
 
     if (checked) {
         // no longer allow editable content
@@ -366,14 +394,25 @@ function moveGoal(goalId){
 
         // move the element to a new div in HTML dom
 
-        document.getElementById(uncheckedListId).removeChild(liGoalElement);
-        document.getElementById(checkedListId).appendChild(liGoalElement);
+        document.getElementById(currentListId).removeChild(liGoalElement);
+        document.getElementById(otherListId).appendChild(liGoalElement);
 
+        //set new id after moving 
+
+        liGoalElement.setAttribute("id", newGoalId);
+        checkBox.setAttribute('onclick', 'moveGoal(' + "'" + newGoalId + "'" + ")");
+
+        
 
     } else {
+        console.log("the goal is no longer checked");
         label.setAttribute('contenteditable', 'true');
         label.setAttribute('onclick', 'selectText()');
-        document.getElementById(checkedListId).removeChild(liGoalElement);
-        document.getElementById(uncheckedListId).appendChild(liGoalElement);
+
+        document.getElementById(currentListId).removeChild(liGoalElement);
+        document.getElementById(otherListId).appendChild(liGoalElement);
+
+        liGoalElement.setAttribute("id", newGoalId);
+        checkBox.setAttribute('onclick', 'moveGoal(' + "'" + newGoalId + "'" + ")");
     }
 }
