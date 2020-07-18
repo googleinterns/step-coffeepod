@@ -169,19 +169,18 @@ function getSelectedText() {
     return text;
 }
 
-// Enter and leave the contenteditable area which works for dynamically added elements
-$(document).on("keypress", '.enter-leave', function(e) {
-    var keyC = e.keyCode;
+/*$(".enter-leave").click(function(){
+    $(this).data('clicked', true);
+});*/
 
-    if (keyC == 13) {
-        $(this).blur().next().focus();
-        const goalId = this.id;
-        let goalCardId
+function addCurrentElementToFirestore(element) {
+    const goalId = element.id;
+    let goalCardId
 
         if (goalId.includes("checked")) {
-            goalCardId = getGoalCardId(this.parentNode.id);
+            goalCardId = getGoalCardId(element.parentNode.id);
         } else {
-            goalCardId = this.parentNode.id.substring(this.parentNode.id.indexOf("-")+1);
+            goalCardId = element.parentNode.id.substring(element.parentNode.id.indexOf("-")+1);
         }
         
         
@@ -196,7 +195,7 @@ $(document).on("keypress", '.enter-leave', function(e) {
         if (goalId.includes("checked")) {
 
             goalCardRef.update({ 
-                unchecked: firebase.firestore.FieldValue.arrayUnion(this.innerText)
+                unchecked: firebase.firestore.FieldValue.arrayUnion(element.innerText)
             });
             goalCardRef.update({ 
                 unchecked: firebase.firestore.FieldValue.arrayRemove(oldContent)
@@ -204,10 +203,30 @@ $(document).on("keypress", '.enter-leave', function(e) {
         } else { // for title
 
             goalCardRef.update({ 
-                "title": this.innerText
+                "title": element.innerText
             });
         }
-       
+}
+
+$(document).on("click", '.enter-leave', function(event) {
+    const currentElement = this;
+
+    window.addEventListener('click', function(e){   
+    if (!currentElement.contains(e.target)){
+        addCurrentElementToFirestore(currentElement);
+
+        }
+    });
+});
+
+
+// Enter and leave the contenteditable area which works for dynamically added elements
+$(document).on("keypress", '.enter-leave', function(e) {
+    var keyC = e.keyCode;
+
+    if (keyC == 13) {
+        $(this).blur().next().focus();
+        addCurrentElementToFirestore(this);
         return false;
 
     }
