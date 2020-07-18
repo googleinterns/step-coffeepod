@@ -5,7 +5,7 @@ const mentorshipID = "302vr6Tmw8t96kO5Ccof";
 // asynchronous work
 
 function getGoalCards() {
-    db.collection('mentorship').doc(mentorshipID).collection("goals").get().then((snapshot) => {
+    db.collection('mentorship').doc(mentorshipID).collection("goals").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
         // allGoalCards is an array of goalCards
         const allGoalCards = [];
         const goalCardsIds = [];
@@ -142,21 +142,20 @@ function addGoals(goals, goalList, checked) {
 // UPDATE CONTENT IN FIRESTORE
 // create a whole new goal card with data already stored in firestore
 
-function moveCheckedGoal(goalId) {  
+function moveCheckedGoal(goalId) { 
+     
 }
 
 
 function createNewGoalCard() {
     db.collection('mentorship').doc(mentorshipID).collection("goals").get().then((snapshot) => {
 
-       
-
         // push goal card into firestore
         db.collection('mentorship').doc(mentorshipID).collection("goals").add({
             checked: [],
             unchecked: [],
             title: "New Title",
-            timestamp: Date.now()
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }).then (function(newDocRef) {
              // Put this on the page
             const goalCardId = newDocRef.id;
@@ -177,6 +176,15 @@ function getSelectedText() {
     }
     return text;
 }
+
+window.addEventListener('click', function(e){   
+  if (document.getElementById('post').contains(e.target)){
+      newPost();
+  } else {
+      // Clicked outside form div
+      blurPost();
+  }
+});
 
 // Enter and leave the contenteditable area which works for dynamically added elements
 $(document).on("keypress", '.enter-leave', function(e) {
