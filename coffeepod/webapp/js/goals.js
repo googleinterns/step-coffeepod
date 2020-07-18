@@ -104,6 +104,9 @@ function addGoalCardContent(title, checkedGoals, uncheckedGoals, goalCardId) {
     addGoals(checkedGoals, goalCheckedList, true);
 
     const lineBreak = document.createElement('hr');
+    lineBreak.setAttribute("id", "line-break-" + goalCardId);
+    console.log(lineBreak.id);
+
     goalListDiv.appendChild(goalUncheckedList);
     goalListDiv.appendChild(lineBreak);
 
@@ -365,12 +368,18 @@ function getOtherListId(currentListId) {
 
 // get goal count by checking the last goal id of the destination list and add 1 to that
 function getGoalCount(destinationElementId){
-    const lastElement = document.getElementById(destinationElementId).lastElementChild;
-    console.log("last element is: " + lastElement.id);
-    console.log("the id number of the last goal of the destination section is");
-    console.log(lastElement.id.substring(lastElement.id.lastIndexOf("-") + 1));
-    const newGoalCount = parseInt(lastElement.id.substring(lastElement.id.lastIndexOf("-") + 1)) + 1;
-    return newGoalCount;
+    const goalList = document.getElementById(destinationElementId);
+    if (goalList.hasChildNodes()) {
+        const lastElement = goalList.lastElementChild;
+        console.log("last element is: " + lastElement.id);
+        console.log("the id number of the last goal of the destination section is");
+        console.log(lastElement.id.substring(lastElement.id.lastIndexOf("-") + 1));
+        const newGoalCount = parseInt(lastElement.id.substring(lastElement.id.lastIndexOf("-") + 1)) + 1;
+        return newGoalCount;
+    }
+
+    return 0;
+    
 }
 
 // move goal to check or unchecked list depending on whether the checkbox is checked or not 
@@ -381,13 +390,22 @@ function moveGoal(goalId){
     const checked = checkBox.checked;
     const label = liGoalElement.children[1];
     const currentListId = goalId.substring(0, goalId.lastIndexOf("-"));
+    const goalCardId = getGoalCardId(goalId);
     const otherListId = getOtherListId(currentListId);
     const newGoalId = otherListId + "-" + getGoalCount(otherListId);
+    const lineBreak = document.getElementById('line-break-' + goalCardId);
 
     console.log('Considering element: ' + liGoalElement.id);
     console.log('New element id is:' + newGoalId);
+    console.log('Line break id is: ' + lineBreak)
 
-    if (checked) {
+    if (checked) {// move to checked list
+        
+        // there are currently no elements in unchecked list
+        if (!document.getElementById(otherListId).hasChildNodes()) {
+            lineBreak.style.display = "block";
+        }
+
         // no longer allow editable content
         label.removeAttribute('onclick');
         label.setAttribute('contenteditable', 'false');
@@ -409,7 +427,13 @@ function moveGoal(goalId){
         label.setAttribute('contenteditable', 'true');
         label.setAttribute('onclick', 'selectText()');
 
+        // the current element to be moved to unchecked is the only element in checked
         document.getElementById(currentListId).removeChild(liGoalElement);
+        if (!document.getElementById(currentListId).hasChildNodes()) {
+            const lineBreak = document.getElementById('line-break-' + goalCardId);
+            lineBreak.style.display = "none";
+        }
+
         document.getElementById(otherListId).appendChild(liGoalElement);
 
         liGoalElement.setAttribute("id", newGoalId);
