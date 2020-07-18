@@ -193,6 +193,7 @@ function addCurrentElementToFirestore(element) {
         
         const oldContent =  document.getElementById(goalId).getAttribute("data-init");
         console.log("old content is: " + oldContent);
+        console.log("content to be added is: " + element.innerText);
 
         // set new attribute to make sure nothing is confused
         document.getElementById(goalId).setAttribute("data-init", element.innerText);
@@ -201,13 +202,14 @@ function addCurrentElementToFirestore(element) {
 
         // for individual goals
         if (goalId.includes("checked")) {
-
-            goalCardRef.update({ 
-                unchecked: firebase.firestore.FieldValue.arrayUnion(element.innerText)
-            });
             goalCardRef.update({ 
                 unchecked: firebase.firestore.FieldValue.arrayRemove(oldContent)
             });
+            
+            goalCardRef.update({ 
+                unchecked: firebase.firestore.FieldValue.arrayUnion(element.innerText)
+            });
+            
         } else { // for title
 
             goalCardRef.update({ 
