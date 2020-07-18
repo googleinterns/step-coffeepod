@@ -1,11 +1,10 @@
-
 // REPLACE WITH CURRENT USER'S ID
 const mentorshipID = "302vr6Tmw8t96kO5Ccof";
 
 // asynchronous work
 
 function getGoalCards() {
-    db.collection('mentorship').doc(mentorshipID).collection("goals").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+    db.collection('mentorship').doc(mentorshipID).collection("goals").get().then((snapshot) => {
         // allGoalCards is an array of goalCards
         const allGoalCards = [];
         const goalCardsIds = [];
@@ -145,22 +144,18 @@ function addGoals(goals, goalList, checked) {
 
 
 function createNewGoalCard() {
-    db.collection('mentorship').doc(mentorshipID).collection("goals").get().then((snapshot) => {
-
         // push goal card into firestore
         db.collection('mentorship').doc(mentorshipID).collection("goals").add({
             checked: [],
             unchecked: [],
             title: "New Title",
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            timestamp: Date.now()
         }).then (function(newDocRef) {
              // Put this on the page
             const goalCardId = newDocRef.id;
             addComponentsGoalCard ("New Title", [], [], goalCardId);
 
-        })
-
-    });
+        });
 }
 
 // Get selected text 
@@ -174,9 +169,6 @@ function getSelectedText() {
     return text;
 }
 
-
-
-
 // Enter and leave the contenteditable area which works for dynamically added elements
 $(document).on("keypress", '.enter-leave', function(e) {
     var keyC = e.keyCode;
@@ -186,7 +178,6 @@ $(document).on("keypress", '.enter-leave', function(e) {
         const goalId = this.id;
         let goalCardId
 
-        // goal Id is either goal card id or title id
         if (goalId.includes("checked")) {
             goalCardId = getGoalCardId(this.parentNode.id);
         } else {
@@ -324,14 +315,10 @@ function selectText() {
   document.execCommand('selectAll', false, null);
 };
 
+// move goal to check or unchecked list depending on whether the checkbox is checked or not 
 function moveGoal(goalId){
     console.log(goalId);
     console.log(document.getElementById(goalId).children[0]);
     console.log(document.getElementById(goalId).children[0].checked);
 }
 
-
-
-/*function onDblClick(event){
-	document.getElementById(event.target.id).remove();
-}*/
