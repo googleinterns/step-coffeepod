@@ -64,14 +64,27 @@ function genComments(){
     return clone;
 }
 
-function displayComments(){
+function filterComments(sort){
+    document.getElementById("commentsCont").innerHTML = "";
+    let button = document.getElementById("sortType");
+    button.style.display = 'block';
+    button.innerHTML = sort+"&nbsp;&nbsp;&nbsp;&nbsp;&times;";
+    displayComments(sort);
+}
+
+function displayComments(sort){
     const postID = getPostID();
     let userID = "";
     db.collection("forum").where(firebase.firestore.FieldPath.documentId(), '==', postID).get().then(snapshot => {
         snapshot.forEach(question => {;
         const questionInfo = question.data();
-        const replies = questionInfo.replies;
+        let replies = questionInfo.replies;
         // display each comment
+        if (sort != "oldest") replies = replies.reverse();
+        if (sort == 'all'){
+            document.getElementById("commentsCont").innerHTML = "";
+            document.getElementById("sortType").style.display = 'none';
+        }
         replies.forEach(comntID => {
             console.log(comntID);
             let comnt = genComments();
@@ -81,6 +94,7 @@ function displayComments(){
                         userID = comntInfo.data().userID;
                         comnt.querySelector("#date").innerText = comntInfo.data().date;
                         comnt.querySelector("#comment").innerText = comntInfo.data().content;
+                        comnt.id = comntID;
                     })
                 }
             }).then(() => {

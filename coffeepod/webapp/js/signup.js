@@ -84,12 +84,20 @@ function signup(e) {
                 title: "",
                 location: "",
                 goals: ["Ask a question", "Find a mentor or mentee"],
-                finished: ["Join coffepod!"]
+                finished: ["Join coffepod!"],
+                tags: []
             });
             db.collection('profile').doc(cred.user.uid).collection('experience').add ({
                 filled: false
             });
             db.collection('profile').doc(cred.user.uid).collection('education').add ({
+                filled: false
+            });
+            db.collection('notifications').doc(cred.user.uid).set ({
+                menteeRequests: [],
+                mentorRequests: []
+            });
+            db.collection('notifications').doc(cred.user.uid).collection('postNotifications').add ({
                 filled: false
             });
             return db.collection('user-info').doc(cred.user.uid).set({
@@ -99,7 +107,8 @@ function signup(e) {
                 dob: month+" "+day+", "+year,
                 // store the ids for the mentors and mentees user info so we can find it
                 mentors: [],
-                mentees: []
+                mentees: [],
+                tagSize: 0
             }).then(() => {
                 window.location.replace("index.html");
             })

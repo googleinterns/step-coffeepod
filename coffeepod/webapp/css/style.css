@@ -13,6 +13,10 @@ html, body {
   width: 100%;
 }
 
+a {
+    cursor: pointer;
+}
+
 #page-container {
   min-height: 100%;
   position: relative;
@@ -49,6 +53,14 @@ html, body {
 	top: 165px;
 }
 
+.subpage-title{
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 45px;
+    line-height: 60px;
+    color: #AA6231;
+}
 .center-cropped {
   object-fit: cover;
   object-position: center;
@@ -64,11 +76,11 @@ html, body {
 }
 
 .orangeTextLight {
-  color: #AA6231;
+  color: #AA6231 !important;
 }
 
 .orangeTextDark {
-  color: #5C2C0C;
+  color: #5C2C0C !important;
 }
 
 .blackText {
@@ -106,6 +118,9 @@ html, body {
   margin: 0;
 }
 
+.hidden {
+  display: none;
+}
 .spaceLetters {
   letter-spacing: 0.05em;
 }
@@ -210,6 +225,10 @@ html, body {
 
 .orangeButton {
   background: #DDA35D;
+}
+
+.orangeDarkButton {
+  background: #a87e4c;
 }
 
 @media (max-width: 978px) {

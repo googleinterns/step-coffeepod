@@ -42,7 +42,7 @@
     <script>
         $(document).ready(getProfile());
         $(document).ready(postQuestion());
-        $(document).ready(displayComments());
+        $(document).ready(displayComments(null));
         $(document).ready(load('cafe'));
     </script>
   </head>
@@ -58,11 +58,10 @@
             <!-- first side col sticky -->
               <div class="make-me-sticky">
                 <div class="cont shadow-sm"> 
-                  <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> filter </p>
+                  <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> filter comments</p>
                   <ul class = "menu poppins weight300 font17 line21 text-center orangeTextLight">
-                    <li class="menuli">newest</li>
-                    <li class="menuli">oldest</li>
-                    <li class="menuli">unanswered</li>
+                    <li class="menuli" id = "newest" onclick = "filterComments(this.id)">newest</li>
+                    <li class="menuli" id = "oldest" onclick = "filterComments(this.id)">oldest</li>
                   </ul>  
                 </div>
               </div>
@@ -70,6 +69,7 @@
 
             <!-- main section -->
             <div id="profileHeader" class="col-lg-9">
+                <button type="button" class="btn btn-outline-dark" id = "sortType" style = "display:none" onclick = "displayComments('all')"></button>
               <!-- first main content section -->
                 <div class="cont shadow-sm" id = "mainPost">
                     <div class = "row mb-2">
@@ -84,8 +84,8 @@
                         <p class = "roboto font15 line15 padNormal spaceLetters orangeTextLight" style = "text-align: right">Follow</p>
                     </div>
                     </div>
-                    <p class = "poppins weight600 font17 line21 padNormal" id = "postQuestion"></p>
-                    <p class = "roboto weight300 font15 line21 padNormal" id = "postContent"></p>
+                    <p class = "poppins weight600 font17 line21 padNormal my-2" id = "postQuestion"></p>
+                    <p class = "roboto weight300 font15 line21 padNormal my-2" id = "postContent"></p>
                 </div>
                 <div class="cont shadow-sm" id = "post">
                     <div class = "row newComment" style = "opacity: 0.5">
@@ -103,8 +103,8 @@
                             <textarea required oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
                                 class = "roboto weight300 font17 line21 padNormal form-control"  id = "new-comment" style = "background-color: white;" placeholder = "What are your thoughts?"></textarea>
                             <div class = "row">
-                                <div class="col-9">&nbsp;</div>
-                                <div class="col-2">
+                                <div class="col-lg-9">&nbsp;</div>
+                                <div class="col-lg-2">
                                     <button type = "submit" style = "display: none" class="btn btn-primary poppins font17 spaceLetters" id = "commentButton">comment!</button>
                                 </div>
                             </div>

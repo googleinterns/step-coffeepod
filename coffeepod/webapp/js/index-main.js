@@ -81,7 +81,7 @@ function blurPost(){
 }
 
 window.addEventListener('click', function(e){   
-  if (document.getElementById('post').contains(e.target)){
+  if (document.getElementById('post').contains(e.target) || document.getElementById('askQuestion').contains(e.target)){
       newPost();
   } else {
       // Clicked outside form div
@@ -98,33 +98,81 @@ function genQuestions() {
   return clone;
 }
 
-function loadQuestions() {
-  db.collection("forum").get().then(snapshot => {
-    snapshot.forEach(question => {
-      const questionInfo = question.data();
-      const userID = questionInfo.userID;
-      let quest = genQuestions();
+function sortButton(sortType){
+    let button = document.getElementById("sortType");
+    button.style.display = 'block';
+    button.innerHTML = sortType+"&nbsp;&nbsp;&nbsp;&nbsp;&times;";
+}
 
-      db.collection('profile').where(firebase.firestore.FieldPath.documentId(), '==', userID).get().then(snapshot => {
-        if(!snapshot.empty){
-            snapshot.forEach(user => {
-               quest.querySelector("#name").innerText = user.data().name;
-               quest.querySelector("#title").innerText = user.data().title;
+function filterQuestions(type){
+ //   let res;
+    if ((type == "career" || type == "academics") || type == "hobbies"){
+        db.collection("forum").where("topic", '==', type).get().then(snapshot => {
+            document.getElementById("questionsCont").innerHTML = "";
+            sortButton(type);
+            return loadQuestions(snapshot);
+        })
+    } else if (type == "newest" || type == "oldest"){
+        sortButton(type);
+        document.getElementById("questionsCont").innerHTML = "";
+        if (type == "newest"){
+            db.collection("forum").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+                return loadQuestions(snapshot);
+            })
+        } else {
+            db.collection("forum").orderBy("timestamp", "asc").onSnapshot(snapshot => {
+                console.log(snapshot);
+                return loadQuestions(snapshot);
             })
         }
-      }).then(() => {
-         quest.querySelector("#date").innerText = questionInfo.date;
-         quest.querySelector("#question").innerText = questionInfo.title;
-         quest.querySelector("#content").innerText = questionInfo.content;
-         quest.querySelector('#seeMore').id = question.id;
-         quest.id = question.id;
+    } else if (type == "unanswered"){
+        const emptyArr = [];
+        sortButton(type);
+        db.collection("forum").where("replies", '==', emptyArr).get().then(snapshot => {
+            document.getElementById("questionsCont").innerHTML = "";
+            return loadQuestions(snapshot);
+        })
+    } else if (type == "all"){
+        document.getElementById("sortType").style.display = 'none';
+        console.log("all");
+        document.getElementById("questionsCont").innerHTML = "";
+        db.collection("forum").get().then(snapshot => {
+            return loadQuestions(snapshot);
+        })
+    } else {
+        db.collection("forum").get().then(snapshot => {
+            return loadQuestions(snapshot);
+        })
+    }
+}
+
+function loadQuestions(snapshot) {
+  if (snapshot != null){
+    snapshot.forEach(question => {
+    const questionInfo = question.data();
+    const userID = questionInfo.userID;
+    let quest = genQuestions();
+
+    db.collection('profile').where(firebase.firestore.FieldPath.documentId(), '==', userID).get().then(snapshot => {
+        if(!snapshot.empty){
+            snapshot.forEach(user => {
+            quest.querySelector("#name").innerText = user.data().name;
+            quest.querySelector("#title").innerText = user.data().title;
+            })
+        }
+    }).then(() => {
+        quest.querySelector("#date").innerText = questionInfo.date;
+        quest.querySelector("#question").innerText = questionInfo.title;
+        quest.querySelector("#content").innerText = questionInfo.content;
+        quest.querySelector('#seeMore').id = question.id;
+        quest.id = question.id;
         })
     });
-  });  
+  }
+  console.log("finished");
 }
 
 function passId(postId) {
-    console.log(postId);
     window.location.href = "index-ind.html?id="+postId;
 
 }
