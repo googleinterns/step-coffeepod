@@ -125,7 +125,9 @@ function addGoalCardContent(title, checkedGoals, uncheckedGoals, goalCardId) {
 // create a new goal with checkbox and delete button
 function addGoals(goals, goalList, checked) {
     const startIdx = goalList.id.lastIndexOf("-");
+
     const numCard = goalList.id.substring(startIdx + 1);
+    console.log("num card is: " + numCard);
     for(j = 0; j < goals.length; j++) {
         let goalId = 'goal-';
         if (checked) {
@@ -324,7 +326,7 @@ function addCheckBox(goal, content, checked) {
 function createNewGoal(goalUncheckedListId) {
     const goalList = document.getElementById(goalUncheckedListId);
     const numUncheckedGoals = goalList.getElementsByTagName("li").length;
-    const goalId = "goal-unchecked-" +  goalUncheckedListId.substring(goalUncheckedListId.lastIndexOf("-")) + "-" +  numUncheckedGoals;
+    const goalId = "goal-unchecked-" +  goalUncheckedListId.substring(goalUncheckedListId.lastIndexOf("-") + 1) + "-" +  numUncheckedGoals;
     const goalCardId = getGoalCardId(goalId);
     const goal = document.createElement('li');
 
@@ -391,6 +393,7 @@ function moveGoal(goalId){
     const checkBox = liGoalElement.children[0];
     const checked = checkBox.checked;
     const label = liGoalElement.children[1];
+    const deleteButton = liGoalElement.children[2].children[0];
     const currentListId = goalId.substring(0, goalId.lastIndexOf("-"));
     const goalCardId = getGoalCardId(goalId);
     const otherListId = getOtherListId(currentListId);
@@ -399,7 +402,8 @@ function moveGoal(goalId){
 
     console.log('Considering element: ' + liGoalElement.id);
     console.log('New element id is:' + newGoalId);
-    console.log('Line break id is: ' + lineBreak)
+    console.log('Line break id is: ' + lineBreak);
+
 
     if (checked) {// move from unchecked to checked list
         
@@ -422,7 +426,10 @@ function moveGoal(goalId){
         liGoalElement.setAttribute("id", newGoalId);
         checkBox.setAttribute('onclick', 'moveGoal(' + "'" + newGoalId + "'" + ")");
 
-        //reflect the change in firebase
+        // also need to set new id for the delete button
+        deleteButton.setAttribute('onclick', 'deleteGoal(' + "'" + newGoalId + "'" + ')');
+
+        // REFLECT THE CHANGE IN FIREBASE
 
         const goalCardRef = db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId);
 
@@ -452,8 +459,9 @@ function moveGoal(goalId){
 
         liGoalElement.setAttribute("id", newGoalId);
         checkBox.setAttribute('onclick', 'moveGoal(' + "'" + newGoalId + "'" + ")");
+        deleteButton.setAttribute('onclick', 'deleteGoal(' + "'" + newGoalId + "'" + ')');
 
-                const goalCardRef = db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId);
+        const goalCardRef = db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId);
 
         // move from checked to unchecked
         goalCardRef.update({ 
