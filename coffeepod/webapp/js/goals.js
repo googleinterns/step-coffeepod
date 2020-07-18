@@ -142,9 +142,6 @@ function addGoals(goals, goalList, checked) {
 // UPDATE CONTENT IN FIRESTORE
 // create a whole new goal card with data already stored in firestore
 
-function moveCheckedGoal(goalId) { 
-     
-}
 
 
 function createNewGoalCard() {
@@ -177,14 +174,8 @@ function getSelectedText() {
     return text;
 }
 
-window.addEventListener('click', function(e){   
-  if (document.getElementById('post').contains(e.target)){
-      newPost();
-  } else {
-      // Clicked outside form div
-      blurPost();
-  }
-});
+
+
 
 // Enter and leave the contenteditable area which works for dynamically added elements
 $(document).on("keypress", '.enter-leave', function(e) {
@@ -195,6 +186,7 @@ $(document).on("keypress", '.enter-leave', function(e) {
         const goalId = this.id;
         let goalCardId
 
+        // goal Id is either goal card id or title id
         if (goalId.includes("checked")) {
             goalCardId = getGoalCardId(this.parentNode.id);
         } else {
@@ -331,6 +323,12 @@ function createNewGoal(goalUncheckedListId) {
 function selectText() {
   document.execCommand('selectAll', false, null);
 };
+
+function moveGoal(goalId){
+    console.log(goalId);
+    console.log(document.getElementById(goalId).children[0]);
+    console.log(document.getElementById(goalId).children[0].checked);
+}
 
 
 
