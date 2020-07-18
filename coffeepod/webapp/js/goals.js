@@ -176,6 +176,7 @@ function getSelectedText() {
 });*/
 
 function addCurrentElementToFirestore(element) {
+    console.log("I need to add this current element to firestore");
     const goalId = element.id;
     let goalCardId
 
@@ -187,9 +188,10 @@ function addCurrentElementToFirestore(element) {
         
         
         const oldContent =  document.getElementById(goalId).getAttribute("data-init");
-        
+        console.log("old content is: " + oldContent);
+
         // set new attribute to make sure nothing is confused
-        document.getElementById(goalId).setAttribute("data-init", this.innerText);
+        document.getElementById(goalId).setAttribute("data-init", element.innerText);
         const goalCardRef = db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId);
 
 
@@ -210,8 +212,8 @@ function addCurrentElementToFirestore(element) {
         }
 }
 
-$(document).on("click", '.enter-leave', function(event) {
-    const currentElement = this;
+/*$(document).on("click", '.enter-leave', function(event) {
+    const currentElement = event.target;
 
     window.addEventListener('click', function(e){   
     if (!currentElement.contains(e.target)){
@@ -219,7 +221,7 @@ $(document).on("click", '.enter-leave', function(event) {
 
         }
     });
-});
+});*/
 
 
 // Enter and leave the contenteditable area which works for dynamically added elements
@@ -342,4 +344,3 @@ function moveGoal(goalId){
     console.log(document.getElementById(goalId).children[0]);
     console.log(document.getElementById(goalId).children[0].checked);
 }
-
