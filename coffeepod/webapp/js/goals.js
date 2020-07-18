@@ -4,7 +4,7 @@ const mentorshipID = "302vr6Tmw8t96kO5Ccof";
 // asynchronous work
 
 function getGoalCards() {
-    db.collection('mentorship').doc(mentorshipID).collection("goals").orderBy("timestamp", "desc").get().then((snapshot) => {
+    db.collection('mentorship').doc(mentorshipID).collection("goals").orderBy("timestamp", "asc").get().then((snapshot) => {
         // allGoalCards is an array of goalCards
         const allGoalCards = [];
         const goalCardsIds = [];
@@ -49,7 +49,7 @@ function addOutlineGoalCard(goalCardId) {
     const goalCard = document.createElement('div');
 	goalCard.classList.add("col-auto", "mb-3");
     goalCard.setAttribute("id", goalCardId);
-    goalBoard.appendChild(goalCard);
+    goalBoard.prepend(goalCard);
     return goalCard;
 }
 
