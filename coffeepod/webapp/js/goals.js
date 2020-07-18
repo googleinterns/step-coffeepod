@@ -85,8 +85,8 @@ function createElement(tag, classList, id, withId) {
 }
 
 function addGoalCardContent(title, checkedGoals, uncheckedGoals, goalCardId) {
-    const goalCheckedListId = "goal-checked-list-" + goalCardId;
-    const goalUncheckedListId = "goal-unchecked-list-" + goalCardId;
+    const goalCheckedListId = "goal-checked-" + goalCardId;
+    const goalUncheckedListId = "goal-unchecked-" + goalCardId;
     const goalTitleId = "goal-title-" + goalCardId;
 
     const goalContent = createElement('div',["card", "goal-card"], "", false);
@@ -295,6 +295,7 @@ function addButton(parent, buttonClasses, iconClasses, onclickFunc) {
 function addCheckBox(goal, content, checked) {
     const checkBox = document.createElement('input');
     checkBox.setAttribute('type', 'checkbox');
+    checkBox.setAttribute('onclick', 'moveGoal(' + "'" + goal.id + "'" + ')');
 
     const label = document.createElement('label');
 
@@ -338,9 +339,41 @@ function selectText() {
   document.execCommand('selectAll', false, null);
 };
 
+
+function getCheckedListId(uncheckedListId) {
+    const checkedListId = "goal-checked-" + uncheckedListId.substring(uncheckedListId.lastIndexOf("-")+1);
+    return checkedListId;
+}
 // move goal to check or unchecked list depending on whether the checkbox is checked or not 
 function moveGoal(goalId){
     console.log(goalId);
     console.log(document.getElementById(goalId).children[0]);
     console.log(document.getElementById(goalId).children[0].checked);
+    console.log(document.getElementById(goalId).children[1]);
+
+    const liGoalElement = document.getElementById(goalId);
+    const checked = liGoalElement.children[0].checked;
+    const label = liGoalElement.children[1];
+    const uncheckedListId = goalId.substring(0, goalId.lastIndexOf("-"));
+    const checkedListId = getCheckedListId(uncheckedListId);
+
+    console.log(uncheckedListId);
+
+    if (checked) {
+        // no longer allow editable content
+        label.removeAttribute('onclick');
+        label.setAttribute('contenteditable', 'false');
+
+        // move the element to a new div in HTML dom
+
+        document.getElementById(uncheckedListId).removeChild(liGoalElement);
+        document.getElementById(checkedListId).appendChild(liGoalElement);
+
+
+    } else {
+        label.setAttribute('contenteditable', 'true');
+        label.setAttribute('onclick', 'selectText()');
+        document.getElementById(checkedListId).removeChild(liGoalElement);
+        document.getElementById(uncheckedListId).appendChild(liGoalElement);
+    }
 }
