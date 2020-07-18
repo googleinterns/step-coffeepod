@@ -205,7 +205,7 @@ function addCurrentElementToFirestore(element) {
             goalCardRef.update({ 
                 unchecked: firebase.firestore.FieldValue.arrayRemove(oldContent)
             });
-            
+
             goalCardRef.update({ 
                 unchecked: firebase.firestore.FieldValue.arrayUnion(element.innerText)
             });
@@ -401,7 +401,7 @@ function moveGoal(goalId){
     console.log('New element id is:' + newGoalId);
     console.log('Line break id is: ' + lineBreak)
 
-    if (checked) {// move to checked list
+    if (checked) {// move from unchecked to checked list
         
         // there are currently no elements in unchecked list
         if (!document.getElementById(otherListId).hasChildNodes()) {
@@ -422,7 +422,19 @@ function moveGoal(goalId){
         liGoalElement.setAttribute("id", newGoalId);
         checkBox.setAttribute('onclick', 'moveGoal(' + "'" + newGoalId + "'" + ")");
 
-        
+        //reflect the change in firebase
+
+        const goalCardRef = db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId);
+
+        // for individual goals
+        goalCardRef.update({ 
+            unchecked: firebase.firestore.FieldValue.arrayRemove(label.innerText)
+        });
+
+        goalCardRef.update({ 
+            checked: firebase.firestore.FieldValue.arrayUnion(label.innerText)
+        });
+            
 
     } else {
         console.log("the goal is no longer checked");
@@ -440,5 +452,17 @@ function moveGoal(goalId){
 
         liGoalElement.setAttribute("id", newGoalId);
         checkBox.setAttribute('onclick', 'moveGoal(' + "'" + newGoalId + "'" + ")");
+
+                const goalCardRef = db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId);
+
+        // move from checked to unchecked
+        goalCardRef.update({ 
+            checked: firebase.firestore.FieldValue.arrayRemove(label.innerText)
+        });
+
+        goalCardRef.update({ 
+            unchecked: firebase.firestore.FieldValue.arrayUnion(label.innerText)
+        });
+            
     }
 }
