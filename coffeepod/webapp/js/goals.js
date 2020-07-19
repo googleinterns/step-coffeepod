@@ -252,9 +252,19 @@ function getGoalCardId(goalId) {
 function deleteGoal(goalId) {
     //Delete from DOM
     const goalToDelete = document.getElementById(goalId);
-    const goalCardId = getGoalCardId(goalId)
+    const goalCardId = getGoalCardId(goalId);
 
     goalToDelete.remove();
+
+    const currentListId = goalId.substring(0, goalId.lastIndexOf("-"));
+    const otherListId = getOtherListId(currentListId);
+    const lineBreak = document.getElementById('line-break-' + goalCardId);
+
+
+    // Adjust showing linebreak or not based on whether the two lists are empty or not
+    if (!document.getElementById(currentListId).hasChildNodes() && !document.getElementById(otherListId).hasChildNodes()) {
+        lineBreak.style.display = "none";
+    }
 
     //Delete from database
     if (goalId.includes('unchecked')) {
