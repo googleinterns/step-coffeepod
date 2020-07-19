@@ -360,7 +360,6 @@ function getOtherListId(currentListId) {
 
     const checkedOrUnchecked = currentListId.substring(firstDash + 1, lastDash);
 
-
     // check what current list id is
     const checked = !checkedOrUnchecked.includes("unchecked")
 
@@ -402,46 +401,40 @@ function moveGoal(goalId){
     const newGoalId = otherListId + "-" + getGoalCount(otherListId);
     const lineBreak = document.getElementById('line-break-' + goalCardId);
 
-    if (checked) {// move from unchecked to checked list
-        
-        // there are currently no elements in destination list
-        if (!document.getElementById(otherListId).hasChildNodes()) {
-            lineBreak.style.display = "block";
-        }
+    // there are currently no elements in destination list
+    if (!document.getElementById(otherListId).hasChildNodes()) {
+        lineBreak.style.display = "block";
+    }
 
-        // no longer allow editable content
-        label.removeAttribute('onclick');
-        label.setAttribute('contenteditable', 'false');
+    // move the element to a new div in HTML dom
+    document.getElementById(currentListId).removeChild(liGoalElement);
 
-        // move the element to a new div in HTML dom
-
-        document.getElementById(currentListId).removeChild(liGoalElement);
-
-         if (!document.getElementById(currentListId).hasChildNodes()) {
+    if (!document.getElementById(currentListId).hasChildNodes()) {
             console.log("old list has no elements after moving from checked to unchecked");
             const lineBreak = document.getElementById('line-break-' + goalCardId);
             console.log("line break element is: "); 
             console.log(lineBreak);
             lineBreak.style.display = 'none';
-        }
+    }
 
-        if (!document.getElementById(otherListId).hasChildNodes()) {
-            lineBreak.style.display = "block";
-        }
-        document.getElementById(otherListId).appendChild(liGoalElement);
+    document.getElementById(otherListId).appendChild(liGoalElement);
+    
+    //set new id after moving 
+    liGoalElement.setAttribute("id", newGoalId);
+    checkBox.setAttribute('onclick', 'moveGoal(' + "'" + newGoalId + "'" + ")");
 
-        //set new id after moving 
+    // also need to set new id for the delete button
+    deleteButton.setAttribute('onclick', 'deleteGoal(' + "'" + newGoalId + "'" + ')');
+    
+    // access firebase
+    const goalCardRef = db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId);
 
-        liGoalElement.setAttribute("id", newGoalId);
-        checkBox.setAttribute('onclick', 'moveGoal(' + "'" + newGoalId + "'" + ")");
-
-        // also need to set new id for the delete button
-        deleteButton.setAttribute('onclick', 'deleteGoal(' + "'" + newGoalId + "'" + ')');
+    if (checked) {// move from unchecked to checked lis
+        // no longer allow editable content
+        label.removeAttribute('onclick');
+        label.setAttribute('contenteditable', 'false');
 
         // REFLECT THE CHANGE IN FIREBASE
-
-        const goalCardRef = db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId);
-
         // for individual goals
         goalCardRef.update({ 
             unchecked: firebase.firestore.FieldValue.arrayRemove(label.innerText)
@@ -453,33 +446,9 @@ function moveGoal(goalId){
             
 
     } else {
+        // make the content editable again
         label.setAttribute('contenteditable', 'true');
         label.setAttribute('onclick', 'selectText()');
-
-        // the current element to be moved to unchecked is the only element in checked
-        document.getElementById(currentListId).removeChild(liGoalElement);
-        console.log(document.getElementById(currentListId));
-
-        if (!document.getElementById(currentListId).hasChildNodes()) {
-            console.log("old list has no elements after moving from checked to unchecked");
-            const lineBreak = document.getElementById('line-break-' + goalCardId);
-            console.log("line break element is: "); 
-            console.log(lineBreak);
-            lineBreak.style.display = 'none';
-        }
-
-       // if destination doesn't have any child nodes, then show line break
-        if (!document.getElementById(otherListId).hasChildNodes()) {
-            lineBreak.style.display = "block";
-        }
-
-        document.getElementById(otherListId).appendChild(liGoalElement);
-
-        liGoalElement.setAttribute("id", newGoalId);
-        checkBox.setAttribute('onclick', 'moveGoal(' + "'" + newGoalId + "'" + ")");
-        deleteButton.setAttribute('onclick', 'deleteGoal(' + "'" + newGoalId + "'" + ')');
-
-        const goalCardRef = db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId);
 
         // move from checked to unchecked
         goalCardRef.update({ 
