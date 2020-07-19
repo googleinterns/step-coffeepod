@@ -410,10 +410,7 @@ function moveGoal(goalId){
     document.getElementById(currentListId).removeChild(liGoalElement);
 
     if (!document.getElementById(currentListId).hasChildNodes()) {
-            console.log("old list has no elements after moving from checked to unchecked");
             const lineBreak = document.getElementById('line-break-' + goalCardId);
-            console.log("line break element is: "); 
-            console.log(lineBreak);
             lineBreak.style.display = 'none';
     }
 
