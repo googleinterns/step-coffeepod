@@ -496,7 +496,7 @@ function addEduForm() {
   }
 }
 
-// makes a new form for the experience section
+// makes a new form for the experience 
 function makeExpForm() {
   let form = document.getElementById("expFrom");
   let clone = form.cloneNode(true);

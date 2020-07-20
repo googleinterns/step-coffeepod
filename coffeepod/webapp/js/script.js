@@ -43,4 +43,5 @@ function load(fromWhere){
   $.get("footer.html", function(data){
     $("#footer-placeholder").replaceWith(data);
   });
+
 }
