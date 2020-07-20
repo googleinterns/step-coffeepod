@@ -39,6 +39,7 @@
     <script src="js/script.js"></script>
     <script src="js/index.js"></script>
     <script src="js/index-main.js"></script>
+    <script src="js/followBut.js"></script>
     <script>
         $(document).ready(getProfile());
         $(document).ready(filterQuestions("none"));
@@ -129,7 +130,8 @@
                     <p class="font12 roboto spaceLetters" id = "title"></p>
                   </div>
                   <div class="col col-md-1 mt-2">
-                    <p class = "roboto font15 line15 padNormal spaceLetters orangeTextLight" style = "text-align: right">Follow</p>
+                    <button type="button" onClick="follow(this, this.id)" class = "follow btn roboto font15 line15 padNormal spaceLetters orangeTextLight" style = "text-align: right">Follow</button>
+                    <button type="button" onClick="unfollow(this, this.id)" class = "unfollow btn roboto font15 line15 padNormal spaceLetters orangeTextLight hidden" style = "text-align: right">Unfollow</button>
                   </div>
                 </div>
                   <p class = "poppins weight600 font17 line21 padNormal my-2" id = "question"></p>

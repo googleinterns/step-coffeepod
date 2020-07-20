@@ -17,7 +17,8 @@ function saveQuestion(e){
                 title: question.value,
                 content: newpost.value,
                 timestamp: timestamp,
-                replies: replies
+                replies: replies,
+                followers: []
             }).then(() => {
                 blurPost();  
                 form.reset();
@@ -165,7 +166,9 @@ function loadQuestions(snapshot) {
         quest.querySelector("#question").innerText = questionInfo.title;
         quest.querySelector("#content").innerText = questionInfo.content;
         quest.querySelector('#seeMore').id = question.id;
+        quest.querySelector(".follow").id = question.id;
         quest.id = question.id;
+        checkFollowOne(quest.querySelector(".follow"));
         })
     });
   }

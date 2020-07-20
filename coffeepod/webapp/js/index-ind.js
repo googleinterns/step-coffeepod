@@ -142,12 +142,14 @@ function postQuestion(){
             let title = document.querySelector("#userTitle");
             let question = document.querySelector("#postQuestion");
             let content = document.querySelector("#postContent");
+            let followBut = document.querySelector(".follow");
 
             snapshot.forEach(post => {
                 const postData = post.data();
                 let userID = postData.userID;
                 date.innerText = postData.date;
                 question.innerText = postData.title;
+                followBut.id = post.id;
                 content.innerText = postData.content;
                 
                 db.collection('profile').where(firebase.firestore.FieldPath.documentId(), '==', userID).get().then(userSnapshot => {
