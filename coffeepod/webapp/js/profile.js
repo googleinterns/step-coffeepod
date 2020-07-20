@@ -2,7 +2,6 @@ let name, email, uid, user, username, mentors, mentees, personal;
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const open = urlParams.get('user');
-console.log(open);
 
 // this function loads in the profile based on the person who is logged in
 function getProfile() {
@@ -33,9 +32,7 @@ function getProfile() {
 
 // check if we should hide the goals and disable the buttons when someone is looking at another persons page
 function checkPersonal() {
-  console.log(personal);
   if(personal) {
-    console.log(document.getElementById("goalCol"));
     document.getElementById("goalCol").classList.add("d-xl-block");
     let notPersonal = document.getElementsByClassName("nonPersonal");
     for(let i = 0; i < notPersonal.length; i ++) {
@@ -43,13 +40,11 @@ function checkPersonal() {
     }
     let buttons = document.getElementsByClassName("update");
     for(let i = 0; i < buttons.length; i ++) {
-      console.log(buttons[i]);
       buttons[i].classList.remove("hidden");
     }
   } else {
     let buttons = document.getElementsByClassName("update");
     for(let i = 0; i < buttons.length; i ++) {
-      console.log(buttons[i]);
       buttons[i].classList.add("hidden");
     }
   }
@@ -59,7 +54,6 @@ function checkPersonal() {
 function loadData() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      console.log(user.uid == uid);
       if(user.uid == uid) {
         // this is actually their own page
         personal = true;
@@ -96,6 +90,8 @@ function loadData() {
       loadGoals(profile);
       loadFinished(profile);
       loadTags(profile);
+      loadAsked();
+      loadFollowing(profile.data().following);
     } else {
       // doc.data() will be undefined in this case
       console.log("No such profile!");
@@ -109,6 +105,53 @@ function loadMentors(list, store) {
   for(var i = 0; i < list.length; i++) {
     makeMentorCard(list[i], store);
   }
+}
+
+// load the asked questions to the profile
+function loadAsked() {
+  document.getElementById("askedStore").innerText = "";
+  db.collection("forum").where("userID", "==", uid).get().then(querySnapshot => {
+    querySnapshot.forEach(question => {
+      makeQuestion(question.id, "askedStore");
+    });
+  });  
+   db.collection("comments").where("userID", "==", uid).get().then(querySnapshot => {
+    querySnapshot.forEach(comment => {
+      makeQuestion(comment.data().postID, "askedStore");
+    });
+  });  
+}
+
+// load the following questsion to the profile
+function loadFollowing(following) {
+  document.getElementById("followedStore").innerText = "";
+  for(let i = 0; i < following.length; i++) {
+    makeQuestion(following[i], "followedStore");
+  }
+}
+
+// function to make the question to be filled into the profile
+function makeQuestion(postID, store) {
+  let temp = document.getElementById("questionTemplate");
+  let clone = temp.cloneNode(true);
+  clone.classList.remove("hidden");
+  console.log("id " + postID);
+  let postRef = db.collection("forum").doc(postID);
+  clone.querySelector(".follow").id = postID;
+  checkFollowOne(clone.querySelector(".follow"), true);
+  clone.querySelector(".seeMore").setAttribute('href', '/index-ind.html?id=' + postID);
+  postRef.get().then(function(postinfo) {
+    console.log(postinfo.data());
+    let userRef = db.collection("profile").doc(postinfo.data().userID);
+    clone.querySelector(".date").innerText = postinfo.data().date;
+    clone.querySelector(".question").innerText = postinfo.data().title;
+    clone.querySelector(".content").innerText = postinfo.data().content;
+    userRef.get().then(function(userinfo) {
+      clone.querySelector(".name").innerText = userinfo.data().name;
+      clone.querySelector(".title").innerText = userinfo.data().title;
+    });
+  });
+  document.getElementById(store).appendChild(clone);
 }
 
 // this puts the about section into edit mode
@@ -170,7 +213,6 @@ function saveTags() {
   while (store.firstChild) {
     store.removeChild(store.firstChild);
   }
-  console.log(store.children);
   for(let i = 0; i < tags.length; i++) {
     if(tags[i].checked == true) {
       tagList.push(tags[i].id);
@@ -289,7 +331,6 @@ function deleteExp(button) {
   let id = form.id;
   form.remove();
   db.collection("profile").doc(uid).collection("experience").doc(id).delete();
-  console.log(document.getElementById("expCont").childNodes.length);
   if(document.getElementById("expCont").childNodes.length == 0 && personal) {
     document.getElementById("promptExper").classList.remove("hidden");
   }
@@ -301,7 +342,6 @@ function deleteEdu(button) {
   let id = form.id;
   form.remove();
   db.collection("profile").doc(uid).collection("education").doc(id).delete();
-  console.log(document.getElementById("eduCont").childNodes.length);
   if(document.getElementById("eduCont").childNodes.length == 0  && personal) {
     document.getElementById("promptEdu").classList.remove("hidden");
   }

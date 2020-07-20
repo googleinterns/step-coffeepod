@@ -36,6 +36,7 @@
     </script>
     <script src="js/script.js"></script>
     <script src="js/profile.js"></script>
+    <script src="js/followBut.js"></script>
     <script>
       $(document).ready(getProfile());
       $(document).ready(load('profile'));
@@ -223,40 +224,29 @@
               </br>
             </div>
               <div class="cont shadow-sm">
-                <p class="weight600 poppins line45 font30">questions asked and answered: 1</p>
-                <div class="border">
-                  <button class="btn roboto w-100 text-right font15 line15 capitalize spaceLetters orangeTextLight">Follow</button>
-                  <div class="row">
-                    <div class="col-xl-2">
-                      <div class="text-center mb-3"><img class="center-cropped-small rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
-                    </div>
-                    <div class="col-xl-10 text-center text-xl-left">
-                      <p class="font15 poppins line15 padNormal"><span class ="weight500">Pancake  </span><span class="spaceLetters greyText">June 16, 2020</span></p>
-                      <p class="padNormal line15 capitalize roboto font12 spaceLetters">Software Engineer | Mentor</p>
-                    </div>
+                <p class="weight600 poppins line45 font30">questions asked and answered</p>
+                <div id="askedStore"></div>
+                <div id="questionTemplate" class="border hidden paddedBorder">
+                  <div class = "row mb-2">
+                  <div class="col-3 col-md-1">
+                    <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
                   </div>
-                  <p class="poppins weight600 line23 font18 padBig">What’s your favorite ice-cream flavor?</p>
-                  <p class="roboto weight300 font15 line15 padNormal">I personally love chocolate ice-cream and sea salt caramel ice-cream. How about you?</p>
-                  <button class="orangeTextLight btn btn-link roboto font15 line15 spaceLetters padBig">See Answer(s)</button>
+                  <div class="col-9 col-md-10 mt-2">
+                    <p class = "line15 padNormal"><span class="font15 poppins weight500 name"></span><span class = "font12 spaceLetters roboto ml-1 greyText date"></span></p>
+                    <p class="font12 roboto spaceLetters title"></p>
+                  </div>
+                  <div class="col col-md-1 mt-2">
+                    <button type="button" onClick="followProfile(this, this.id)" class = "follow btn roboto font15 line15 padNormal spaceLetters orangeTextLight" style = "text-align: right">Follow</button>
+                  </div>
+                </div>
+                  <p class = "poppins weight600 font17 line21 padNormal my-2 question"></p>
+                  <p class = "roboto weight300 font15 line21 padNormal my-2 content"></p>
+                  <a class = "roboto font15 line21 padNormal orangeTextLight my-2 seeMore"> See Answer(s) </a>
                 </div>
               </div>
               <div class="cont shadow-sm">
-                <p class="weight600 poppins line45 font30">questions following: 1</p>
-                <div class="border">
-                  <button class="btn roboto w-100 text-right font15 line15 capitalize spaceLetters orangeTextLight">Unfollow</button>
-                  <div class="row">
-                    <div class="col-xl-2">
-                      <div class="text-center mb-3"><img class="center-cropped-small rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
-                    </div>
-                    <div class="col-xl-10 text-center text-xl-left">
-                      <p class="font15 poppins line15 padNormal"><span class ="weight500">Pancake  </span><span class="spaceLetters greyText">June 16, 2020</span></p>
-                      <p class="padNormal line15 capitalize roboto font12 spaceLetters">Software Engineer | Mentor</p>
-                    </div>
-                  </div>
-                  <p class="poppins weight600 line23 font18 padBig">What’s your favorite ice-cream flavor?</p>
-                  <p class="roboto weight300 font15 line15 padNormal">I personally love chocolate ice-cream and sea salt caramel ice-cream. How about you?</p>
-                  <button class="orangeTextLight btn btn-link roboto font15 line15 spaceLetters padBig">See Answer(s)</button>
-                </div>
+                <p class="weight600 poppins line45 font30">questions following</p>
+                <div id="followedStore"></div>
               </div>
             </div>
             <div id="goalCol" class="col-xl-4 d-none">

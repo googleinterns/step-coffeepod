@@ -36,7 +36,8 @@ function storeComment(e){
                 date: date,
                 content: document.querySelector("#new-comment").value,
                 timestamp: timestamp,
-                replies: replies
+                replies: replies,
+                postID: getPostID()
             }).then(docRef => {
                 const postID = getPostID();
                 const commentID = docRef.id;

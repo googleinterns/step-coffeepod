@@ -168,7 +168,7 @@ function loadQuestions(snapshot) {
         quest.querySelector('#seeMore').id = question.id;
         quest.querySelector(".follow").id = question.id;
         quest.id = question.id;
-        checkFollowOne(quest.querySelector(".follow"));
+        checkFollowOne(quest.querySelector(".follow"), false);
         })
     });
   }

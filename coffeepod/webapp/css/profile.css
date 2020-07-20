@@ -21,6 +21,10 @@ a:hover{
   border: 2px solid #AA6231;
 }
 
+.paddedBorder {
+   margin-bottom: 30px;
+}
+
 .card {
   border: none;
 }
