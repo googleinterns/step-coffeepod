@@ -25,6 +25,7 @@ function getNotif() {
           loadMentor();
           loadMentee();
       })
+      loadPostNotif();
     } else {
       // not logged in do something
     }
@@ -113,4 +114,35 @@ function deny(button, type) {
     });
   }
   request.remove();
+}
+
+// load the post notifications to the page
+function loadPostNotif() {
+  db.collection("notifications").doc(uid).collection("postNotifications").where("comment", "==", true).get().then(querySnapshot => {
+    querySnapshot.forEach(commentNotif => {
+      makePostNotif('postNotif', commentNotif.data().title, commentNotif.id);
+    });
+  });
+}
+
+// function the clones the template for a notificaion
+function makePostNotif(temp, title, postID) {
+  console.log(title);
+  let template = document.getElementById(temp);
+  let clone = template.cloneNode(true);
+  let cont = document.getElementById("postStore");
+  cont.appendChild(clone);
+  clone.querySelector(".questionTitle").innerText = title;
+  clone.classList.remove("hidden");
+  clone.id = postID;
+  clone.querySelector(".questionLink").setAttribute('href', '/index-ind.html?id=' + postID);
+}
+
+// function to get rid of a post notification
+function removeNotif(button) {
+  let notification = button.closest('.postNotific');
+  let id = notification.id;
+  console.log(id);
+  db.collection("notifications").doc(uid).collection("postNotifications").doc(id).delete();
+  notification.remove();
 }

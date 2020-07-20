@@ -44,9 +44,22 @@ function storeComment(e){
                 db.collection('forum').doc(postID).update({
                     replies: firebase.firestore.FieldValue.arrayUnion(commentID)
                 })
-                offComment(); 
-                form.reset();
-                location.reload();
+                let postPersonId;
+                let postRef = db.collection('forum').doc(postID);
+                console.log(postRef);
+                postRef.get().then(function(postinfo) {
+                  console.log("hello there");
+                  db.collection('notifications').doc(postinfo.data().userID).collection('postNotifications').add ({
+                    filled: true,
+                    comment: true,
+                    postID: postID,
+                    title: postinfo.data().title
+                  });
+                }).then(function() {
+                  offComment(); 
+                  form.reset();
+                  location.reload();
+                })
             })
         }
         else {
