@@ -108,7 +108,8 @@ function signup(e) {
                 // store the ids for the mentors and mentees user info so we can find it
                 mentors: [],
                 mentees: [],
-                tagSize: 0
+                tagSize: 0,
+                following: []
             }).then(() => {
                 window.location.replace("index.html");
             })
