@@ -1,5 +1,7 @@
 // REPLACE WITH CURRENT USER'S ID
-const mentorshipID = "302vr6Tmw8t96kO5Ccof";
+const mentorshipID = getMentorshipId(); // get the user id from the query string in the URL
+console.log("mentorshipID is");
+console.log(mentorshipId);
 
 // asynchronous work
 
