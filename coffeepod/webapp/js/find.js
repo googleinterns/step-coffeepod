@@ -43,7 +43,6 @@ function getPeople() {
         let overlap = tags.filter(value => profile.data().tags.includes(value));
         peopleList.push({similarity: overlap.length, id: profile.id, data: profile.data(), overlapTags: overlap});
         // doc.data() is never undefined for query doc snapshots
-        console.log(overlap);
       }
     });
     peopleList.sort((a, b) => (a.similarity > b.similarity) ? -1:1);

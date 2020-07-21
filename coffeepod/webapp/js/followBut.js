@@ -66,7 +66,7 @@ function checkFollowing(profile) {
           } else {
             button.setAttribute("onClick", "unfollow(this, this.id)");
           }
-          button.setAttribute("onClick", "unfollow(this, this.id)");
+          button.innerText = "Unfollow";
         }
       }  
     })

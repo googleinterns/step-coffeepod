@@ -135,13 +135,11 @@ function makeQuestion(postID, store) {
   let temp = document.getElementById("questionTemplate");
   let clone = temp.cloneNode(true);
   clone.classList.remove("hidden");
-  console.log("id " + postID);
   let postRef = db.collection("forum").doc(postID);
   clone.querySelector(".follow").id = postID;
   checkFollowOne(clone.querySelector(".follow"), true);
   clone.querySelector(".seeMore").setAttribute('href', '/index-ind.html?id=' + postID);
   postRef.get().then(function(postinfo) {
-    console.log(postinfo.data());
     let userRef = db.collection("profile").doc(postinfo.data().userID);
     clone.querySelector(".date").innerText = postinfo.data().date;
     clone.querySelector(".question").innerText = postinfo.data().title;
@@ -176,7 +174,7 @@ function updateTags() {
 function updateUsername() {
   let usernameSlots = document.getElementsByClassName("username");
   for (let i = 0, len = usernameSlots.length; i < len; i++) {
-    usernameSlots[i].innerText = username;
+    usernameSlots[i].innerText = name;
   }
 
 }

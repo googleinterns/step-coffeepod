@@ -41,15 +41,21 @@ function storeComment(e){
             }).then(docRef => {
                 const postID = getPostID();
                 const commentID = docRef.id;
-                console.log(commentID);
                 db.collection('forum').doc(postID).update({
                     replies: firebase.firestore.FieldValue.arrayUnion(commentID)
                 })
                 let postPersonId;
                 let postRef = db.collection('forum').doc(postID);
-                console.log(postRef);
                 postRef.get().then(function(postinfo) {
-                  console.log("hello there");
+                  let following = postinfo.data().followers;
+                  for(let i = 0; i < following.length; i++) {
+                    db.collection('notifications').doc(following[i]).collection('postNotifications').add ({
+                      filled: true,
+                      followed: true,
+                      postID: postID,
+                      title: postinfo.data().title
+                    });
+                  }
                   db.collection('notifications').doc(postinfo.data().userID).collection('postNotifications').add ({
                     filled: true,
                     comment: true,
@@ -100,7 +106,6 @@ function displayComments(sort){
             document.getElementById("sortType").style.display = 'none';
         }
         replies.forEach(comntID => {
-            console.log(comntID);
             let comnt = genComments();
             db.collection('comments').where(firebase.firestore.FieldPath.documentId(), '==', comntID).get().then(comntSnapshot => {
                 if(!comntSnapshot.empty){
