@@ -14,8 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
-    <script src="js/hub.js"></script>
+
 
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
@@ -34,8 +33,12 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        const database = firebase.firestore();
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
     </script>
+    <script src="js/script.js"></script>
+    <script src="js/hub.js"></script>
 
     <script>
       $(document).ready(load('hub'));
@@ -73,9 +76,9 @@
             <div class="col-lg-9">
 
               <p id = "mentors" class="subpage-title"> mentors</p>
-              <p class="subtitle-poppins"> You have 1 mentor(s). </p>
+              <p class="subtitle-poppins"> You have <span id="mentor-num"></span>mentor(s). </p>
               
-              <div class="cont shadow-sm hidden" id = "individual-card-template">
+              <div class="cont shadow-sm" id = "individual-card-template">
               <div class="row">
                 
                 <div class="col-lg-3">
@@ -83,14 +86,14 @@
                 </div>
 
                 <div class="col-lg-6 text-center text-lg-left">
-                  <p class="ind-name"><a href="hub-ind.html">Penguin</a></p>
+                  <p class="ind-name" ><a id="link-to-hub-ind" onclick="goToHubInd()">Penguin</a></p>
                   <p class="ind-title">Software Engineer @ Chocolatie | Mentor</p>
-                  <p id="ind-location">Mountain View, California</p>
+                  <p class="ind-location">Mountain View, California</p>
                 </div>
 
                 <div class="col-lg-3 text-center text-lg-right">
-                  <button class="btn label-button-text">since May 2020 </button>
-                  <button class="btn label-button-text">#professional</button>
+                  <span class="label-button-text" id = "time-start">since May 2020 </span>
+                  <span class="label-button-text hidden" id = "topic">#professional</span>
                 </div>
               </div>
               </div>
@@ -99,9 +102,9 @@
               
             <p id="mentees" class="subpage-title subpage-title-under"> mentees </p>
 
-            <div class="cont shadow-sm hidden" id="no-one-template">
+            <div class="cont shadow-sm" id="no-one-template">
               <div class = "no-content">
-                <p>currently, you have no mentees</p>
+                <p>currently, you have no <span id="target"> mentees </p>
               </div>
             </div>
 
