@@ -1,6 +1,6 @@
 // This file is to pull mentors/ mentees information onto current user's hub page
 
-let myCurrentMentees, myCurrentMentors, myPastMentees, myPastMentors
+let myCurrentMentees, myCurrentMentors, myPastMentees, myPastMentors, mentorMentorships, menteeMentorships
 class Person {
   constructor(id, name, title, location, timeStart) {
     this.id = id;
@@ -32,15 +32,14 @@ function getMentorship() {
         console.log(userInfo.exists);
         if (userInfo.exists) {
           // get list of mentorship ids
-          const mentorMentorships = userInfo.data().mentorOfPairs; // current user is mentor
-          const menteeMentorships = userInfo.data().menteeOfPairs; // current user is mentee
+          mentorMentorships = userInfo.data().mentorOfPairs; // current user is mentor
+          menteeMentorships = userInfo.data().menteeOfPairs; // current user is mentee
         
           //myCurrentMentees = getPersonInfoList(mentorMentorships, false);
-          myCurrentMentors = getPersonInfoList(menteeMentorships, true);
+          
           
           //updateSection("mentors", myCurrentMentors, "mentors");
           //updateSection("mentees", myCurrentMentees, "mentees");
-          
           /*
           const myPastMentees = userInfo.data().pastMentorPairs;
           const myPastMentors = userInfo.data().pastMenteePairs;
@@ -49,6 +48,12 @@ function getMentorship() {
         return myCurrentMentors;
         }
       }).then (function(myCurrentMentors) {
+        console.log(menteeMentorships);
+        myCurrentMentors = getPersonInfoList(menteeMentorships, true);
+          
+        console.log(myCurrentMentors);
+        console.log("see previous line");
+
         console.log(myCurrentMentors);
         console.log(myCurrentMentors.length);
 
@@ -109,13 +114,8 @@ function getPersonInfoFromMentorshipList(mentorshipOtherIdList) {
     let peopleIdList = [];
 
     console.log("This is right before for each");
-    mentorshipOtherIdList.forEach(function(mentorship) {
-        console.log("the mentorship being considered is: ");
-        console.log(mentorship);
-        peopleIdList.push(getPersonInfo(mentorship));
-    });
 
-    for (var mentorship in mentorshipOtherIdList) {
+    for (let i = 0; i < mentorshipOtherIdList.length; i++) {
         console.log("the mentorship being considered is: ");
         console.log(mentorship);
         peopleIdList.push(getPersonInfo(mentorship));
