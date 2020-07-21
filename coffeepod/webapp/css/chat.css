@@ -1,0 +1,53 @@
+#textMessage {
+    position: absolute;
+    bottom: 5%;
+    width: 94%;
+}
+
+#messagesBox {
+    height: 100%;
+}
+
+.hand {
+    cursor: pointer;
+}
+
+#messages{
+  overflow: auto;
+}
+
+.left-align{
+    align-content: flex-start;
+}
+
+.right-align{
+    align-content: flex-end;
+}
+
+.otherUserMsg {
+    background-color: #EFE1CE;
+    text-align: left;
+    border-radius: 30px;
+    padding: 5px 15px;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.textMsg {
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    
+}
+
+.ownMsg {
+    background-color: #EAD5B8;
+    text-align: right;
+    border-radius: 30px;
+    padding: 5px 15px;
+    overflow-y: auto;
+    width: 100%;
+    word-wrap: break-word;
+}
