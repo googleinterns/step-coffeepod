@@ -84,16 +84,22 @@
               </div>
               <div class="cont shadow-sm">
                 <p class="weight600 poppins line45 font30 lowercase">post notifications</p>
-                <!-- more content -->
+                <div id="postNotif" class="postNotific border paddedBorder hidden">
+                  <p class="font25 poppins line37 padName"><span class="spaceLetters blackText">Someone commented on your question: "<span class="questionTitle"></span>"</span><a href="" class="weight500 orangeTextLight questionLink"> Click here</a><span class="spaceLetters blackText"> to see the comment.</span></p></br> 
+                  <button onClick="removeNotif(this, '.postNotific')" class="btn orangeButton whiteText poppins weight500 font17 text-center line25">remove notification</button>
+                </div>
+                <div id="followNotif" class="followNotific border paddedBorder hidden">
+                  <p class="font25 poppins line37 padName"><span class="spaceLetters blackText">Someone commented on a question you follow: "<span class="questionTitle"></span>"</span><a href="" class="weight500 orangeTextLight questionLink"> Click here</a><span class="spaceLetters blackText"> to see the comment.</span></p></br> 
+                  <button onClick="removeNotif(this, '.followNotific')" class="btn orangeButton whiteText poppins weight500 font17 text-center line25">remove notification</button>
+                </div>
+                <div id="postStore"></div>
               </div>
-              <!-- <div class="cont shadow-sm">
-                <!-- more content -->
               </div>
             </div>
           </div>
         </div>
-      </div>
       <div id="footer-placeholder"></div>
+      </div>
     </div>
   </body>
 </html>
