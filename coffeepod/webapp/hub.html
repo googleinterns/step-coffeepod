@@ -14,12 +14,37 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
+            authDomain: "team-hi-five-step.firebaseapp.com",
+            databaseURL: "https://team-hi-five-step.firebaseio.com",
+            projectId: "team-hi-five-step",
+            storageBucket: "team-hi-five-step.appspot.com",
+            messagingSenderId: "296440646158",
+            appId: "1:296440646158:web:d06db7292a4cc92d714a5f",
+            measurementId: "G-SV4KD1V658"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+    </script>
     <script src="js/script.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/hub.js"></script>
     <script>
       $(document).ready(load('hub'));
     </script>
   </head>
+
   <body>
     <div id="page-container">
       <div id="nav-placeholder"></div>
@@ -49,49 +74,58 @@
             </div>
 
             <div class="col-lg-9">
-
-              <p id = "mentors" class="subpage-title"> mentors</p>
-              <p class="subtitle-poppins"> You have 1 mentor(s). </p>
+              <div id = "mentors" >
+              <p class="subpage-title"> mentors</p>
+              <div class="hidden" id="you-have-template"> <p class="subtitle-poppins"> You have <span id="people-num"></span></p></div>
               
-              <div class="cont shadow-sm">
+              <div class="cont shadow-sm hidden" id = "individual-card-template">
               <div class="row">
-
                 
                 <div class="col-lg-3">
                   <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/penguin.jpg" alt="pancake" width=50% height=50%></div>
                 </div>
+
                 <div class="col-lg-6 text-center text-lg-left">
-                  <p class="padName"><a href="hub-ind.html" class="line37 weight500 poppins font25">Penguin</a></p>
-                  <p class="padNormal line23 capitalize roboto font20 spaceLetters">Software Engineer @ Chocolatie | Mentor</p>
-                  <p id="line21 capitalize roboto font17">Mountain View, California</p>
+                  <p class="ind-name" ><a id="link-to-hub-ind" onclick="goToHubInd()">Penguin</a></p>
+                  <p class="ind-title">Software Engineer @ Chocolatie | Mentor</p>
+                  <p class="ind-location">Mountain View, California</p>
                 </div>
+
                 <div class="col-lg-3 text-center text-lg-right">
-                  <button class="btn poppins weight500 font17 text-center line25 padName orangeTextLight">since May 2020 </button>
-                  <button class="btn poppins weight500 font17 text-center line25 padName orangeTextLight">#professional</button>
+                  <span class="label-button-text" id = "time-start">since May 2020 </span>
+                  <span class="label-button-text hidden" id = "topic">#professional</span>
                 </div>
               </div>
-              </div>
-              </a>
-              
-            <p id="mentees" class="subpage-title subpage-title-under"> mentees </p>
-            <div class="cont shadow-sm">
-              <div class = "no-content">
-                <p>currently, you have no mentees</p>
               </div>
             </div>
 
-            <p id="past-mentors" class="subpage-title subpage-title-under"> past mentors </p>
+            <div id="mentees">
+            <p  class="subpage-title subpage-title-under"> mentees </p>
+
+            <div class="cont shadow-sm hidden" id="no-one-template">
+              <div class = "no-content">
+                <p>currently, you have no <span id="target"></p>
+              </div>
+            </div>
+
+            </div>
+
+            <div id="past-mentors">
+            <p class="subpage-title subpage-title-under"> past mentors </p>
             <div class="cont shadow-sm">
               <div class = "no-content">
                 <p>currently, you have no past mentors</p>
               </div>
             </div>
+            </div>
 
+            <div id="past-mentees">
             <p id="past-mentees" class="subpage-title subpage-title-under"> past mentees </p>
             <div class="cont shadow-sm">
               <div class = "no-content">
                 <p>currently, you have no past mentees</p>
               </div>
+            </div>
             </div>
 
             </div> <!-- Closing tag of col-md-12-->  
