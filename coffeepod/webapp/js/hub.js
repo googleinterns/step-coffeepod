@@ -1,6 +1,7 @@
 // This file is to pull mentors/ mentees information onto current user's hub page
 
 let myCurrentMentees, myCurrentMentors, myPastMentees, myPastMentors, mentorMentorships, menteeMentorships
+
 class Person {
   constructor(id, name, title, location, timeStart) {
     this.id = id;
@@ -49,13 +50,15 @@ function updatePage(userInfo) {
 
 function putMentorsOnPage(userInfo) {
     const menteeOfMentorships = userInfo.data().menteeOfPairs;
-    const myCurrentMentors = addPeopleInfo(menteeOfMentorships, true, false);
+    const currentUserName = userInfo.data().name;
+    const myCurrentMentors = addPeopleInfo(currentUserName, menteeOfMentorships, true, false);
     return myCurrentMentors;
 }
 
 function putMenteesOnPage(userInfo) {
     const mentorOfMentorships = userInfo.data().mentorOfPairs;
-    const myCurrentMentees = addPeopleInfo(mentorOfMentorships, false, false);
+    const currentUserName = userInfo.data().name;
+    const myCurrentMentees = addPeopleInfo(currentUserName, mentorOfMentorships, false, false);
     return myCurrentMentees;
 }
 
@@ -74,10 +77,8 @@ function getSectionId(isMentorList, isPast) {
     return sectionId;
 }
 
-function addPeopleInfo(mentorshipList, isMentorList, isPast) {
-    
+function addPeopleInfo(currentUserName, mentorshipList, isMentorList, isPast) { 
     const sectionId = getSectionId(isMentorList, isPast);
-
 
     if (mentorshipList.length == 0) {
         addNoPersonCard(sectionId)
@@ -106,14 +107,24 @@ function addPeopleInfo(mentorshipList, isMentorList, isPast) {
                 title = otherUserInfo.data().title;
                 location = otherUserInfo.data().location;
 
-                const person = new Person(otherUserId, name, title, location, timeStart);
-                addPersonCard(sectionId, person);
+                if (isMentorList) {
+                    mentorName = name; // mentor is the other user
+                    menteeName = currentUserName; // mentee is the current user
+
+                } else {
+                    mentorName = currentUserName;
+                    menteeName = name;
+                }
+
+                person = new Person(otherUserId, name, title, location, timeStart);
+                addPersonCard(sectionId, person, mentorshipId, mentorName, menteeName);
             });
            
         });
         
     }
 }
+
 
 function addCountToSection(sectionId, count) {
     const section = document.getElementById(sectionId);
@@ -143,14 +154,16 @@ function addNoPersonCard(sectionId) {
     parent.appendChild(clonedEmptySection);
 }
 
-function addPersonCard(sectionId, personInfo) {
+function addPersonCard(sectionId, personInfo, mentorshipId, mentorName, menteeName) {
     const parent = document.getElementById(sectionId);
     const infoCard = document.getElementById("individual-card-template");
     const clonedInfoCard = infoCard.cloneNode(true);
 
     clonedInfoCard.classList.remove("hidden");
     clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").innerText = personInfo.name;
-    clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").setAttribute('onclick', 'goToHubInd(' + "'" + personInfo.id + "'" +")");
+
+    const onclickFunction = 'goToHubInd(' + "'" + mentorshipId + "'" + "," + "'" + mentorName + "'" + "," + "'" + menteeName + "'" + ")";
+    clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").setAttribute('onclick', onclickFunction);
     clonedInfoCard.querySelector(".ind-title").innerText = personInfo.title;
     clonedInfoCard.querySelector(".ind-location").innerText = personInfo.location
     clonedInfoCard.querySelector("span#time-start").innerText = "since " + personInfo.timeStart;
@@ -160,4 +173,8 @@ function addPersonCard(sectionId, personInfo) {
 
 function convertDateToMonthYear(date) {
     return date.toLocaleString('default', { month: 'short'}) + " " + date.getFullYear();
+}
+
+function goToHubInd(mentorshipId, mentorName, menteeName) {
+    window.location.href = "hub-ind.html?mentorshipId=" + mentorshipId + "&mentorName=" + mentorName + "&menteeName=" + menteeName;
 }

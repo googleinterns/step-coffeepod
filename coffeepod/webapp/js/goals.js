@@ -1,9 +1,8 @@
 // REPLACE WITH CURRENT USER'S ID
-const mentorshipID = getMentorshipId(); // get the user id from the query string in the URL
-console.log("mentorshipID is");
-console.log(mentorshipId);
-
+// get the user id from the query string in the URL
 // asynchronous work
+// PUT THINGS FROM FIRESTORE ONTO PAGE
+
 
 function getGoalCards() {
     db.collection('mentorship').doc(mentorshipID).collection("goals").orderBy("timestamp", "asc").get().then((snapshot) => {
@@ -21,10 +20,7 @@ function getGoalCards() {
 }
 
 
-// PUT THINGS FROM FIRESTORE ONTO PAGE
-function loadData() {
-    getGoalCards();
-}
+
 
 // add goalCardOutline, goalCardContent to a one full GoalCard and add it to the board of cards
 
