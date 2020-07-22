@@ -33,15 +33,23 @@ function logOut(e){
 }
 
 function load(fromWhere){
-  console.log(fromWhere);
   $.get("navbar.html", function(data){
     $("#nav-placeholder").replaceWith(data).promise().done(function() {
-      document.getElementById(fromWhere).classList.add('active');
+      if(fromWhere != "none") {
+        document.getElementById(fromWhere).classList.add('active');
+      }
+      var input = document.getElementById("searchbar");
+      console.log(input);
+      input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          document.getElementById("myBtn").click();
+        }
+      });
     });
   });
 
   $.get("footer.html", function(data){
     $("#footer-placeholder").replaceWith(data);
   });
-
 }
