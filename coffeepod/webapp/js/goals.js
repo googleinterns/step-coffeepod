@@ -1,25 +1,25 @@
-// REPLACE WITH CURRENT USER'S ID
-// get the user id from the query string in the URL
-// asynchronous work
-// PUT THINGS FROM FIRESTORE ONTO PAGE
-
+//hub-ind.js is run before goals.js
 
 function getGoalCards() {
     db.collection('mentorship').doc(mentorshipID).collection("goals").orderBy("timestamp", "asc").get().then((snapshot) => {
         // allGoalCards is an array of goalCards
         const allGoalCards = [];
         const goalCardsIds = [];
-        snapshot.docs.forEach(goalDocument => { // There should be just one goal document
+        snapshot.docs.forEach(goalDocument => { // each goal document is a goal card
             allGoalCards.push(goalDocument.data());
 
             // Get the ids to make sure the ids and the goal cards sync after deletion
             goalCardsIds.push(goalDocument.id);
         });
+        const numGoalCards = allGoalCards.length;
+        addNumGoalCards(numGoalCards);
         putGoalCardsOnPage(allGoalCards, goalCardsIds);
     });
 }
 
-
+function addNumGoalCards(numGoalCards) {
+    document.getElementById('num-goal-cards').innerText = numGoalCards; 
+}
 
 
 // add goalCardOutline, goalCardContent to a one full GoalCard and add it to the board of cards

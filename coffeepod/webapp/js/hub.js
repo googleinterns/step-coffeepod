@@ -2,6 +2,7 @@
 
 let myCurrentMentees, myCurrentMentors, myPastMentees, myPastMentors, mentorMentorships, menteeMentorships
 
+
 class Person {
   constructor(id, name, title, location, timeStart) {
     this.id = id;
@@ -183,7 +184,7 @@ function addPersonCard(sectionId, personInfo, mentorshipId, mentorName, menteeNa
 }
 
 function convertDateToMonthYear(date) {
-    return date.toLocaleString('default', { month: 'short'}) + " " + date.getFullYear();
+    return date.toLocaleString('default', { month: 'long'}) + " " + date.getFullYear();
 }
 
 function goToHubInd(mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle) {

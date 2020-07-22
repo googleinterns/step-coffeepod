@@ -3,6 +3,7 @@ const urlParams = new URLSearchParams(queryString);
 const mentorshipID = getMentorshipId();
 
 
+// WELCOME SECTION
 class HubName {
     constructor(mentorName, menteeName, mentorTitle, menteeTitle) {
         this.mentorName = mentorName;
@@ -45,5 +46,11 @@ function getMentorshipHubName() {
 function loadData() {
     getGoalCards();
     addOpeningContent();
-    
+    addOverview();
 }
+
+// OVERVIEW SECTION
+function addOverview() {
+    addNumGoalCards();
+}
+
