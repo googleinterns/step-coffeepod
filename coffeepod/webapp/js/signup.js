@@ -79,6 +79,8 @@ function signup(e) {
             //Create the user doc in the users collection
             db.collection('profile').doc(cred.user.uid).set({
                 username: username,
+                firstName: signupForm['firstName'].value,
+                lastName: signupForm['lastName'].value,
                 name: signupForm['firstName'].value+" "+signupForm['lastName'].value,
                 about: "",
                 title: "",

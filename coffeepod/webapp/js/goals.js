@@ -1,28 +1,26 @@
-// REPLACE WITH CURRENT USER'S ID
-const mentorshipID = "302vr6Tmw8t96kO5Ccof";
-
-// asynchronous work
+//hub-ind.js is run before goals.js
 
 function getGoalCards() {
     db.collection('mentorship').doc(mentorshipID).collection("goals").orderBy("timestamp", "asc").get().then((snapshot) => {
         // allGoalCards is an array of goalCards
         const allGoalCards = [];
         const goalCardsIds = [];
-        snapshot.docs.forEach(goalDocument => { // There should be just one goal document
+        snapshot.docs.forEach(goalDocument => { // each goal document is a goal card
             allGoalCards.push(goalDocument.data());
 
             // Get the ids to make sure the ids and the goal cards sync after deletion
             goalCardsIds.push(goalDocument.id);
         });
+        const numGoalCards = allGoalCards.length;
+        addNumGoalCards(numGoalCards);
         putGoalCardsOnPage(allGoalCards, goalCardsIds);
     });
 }
 
-
-// PUT THINGS FROM FIRESTORE ONTO PAGE
-function loadData() {
-    getGoalCards();
+function addNumGoalCards(numGoalCards) {
+    document.getElementById('num-goal-cards').innerText = numGoalCards; 
 }
+
 
 // add goalCardOutline, goalCardContent to a one full GoalCard and add it to the board of cards
 
@@ -410,10 +408,7 @@ function moveGoal(goalId){
     document.getElementById(currentListId).removeChild(liGoalElement);
 
     if (!document.getElementById(currentListId).hasChildNodes()) {
-            console.log("old list has no elements after moving from checked to unchecked");
             const lineBreak = document.getElementById('line-break-' + goalCardId);
-            console.log("line break element is: "); 
-            console.log(lineBreak);
             lineBreak.style.display = 'none';
     }
 
