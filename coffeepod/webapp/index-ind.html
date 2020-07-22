@@ -39,11 +39,13 @@
     <script src="js/script.js"></script>
     <script src="js/index.js"></script>
     <script src="js/index-ind.js"></script>
+    <script src="js/followBut.js"></script>
     <script>
         $(document).ready(getProfile());
         $(document).ready(postQuestion());
         $(document).ready(displayComments(null));
         $(document).ready(load('cafe'));
+        $(document).ready(checkFollowing(false));
     </script>
   </head>
   <body>
@@ -71,7 +73,7 @@
             <div id="profileHeader" class="col-lg-9">
                 <button type="button" class="btn btn-outline-dark" id = "sortType" style = "display:none" onclick = "displayComments('all')"></button>
               <!-- first main content section -->
-                <div class="cont shadow-sm" id = "mainPost">
+                <div class="cont shadow-sm  post" id = "mainPost">
                     <div class = "row mb-2">
                     <div class="col-3 col-md-1">
                         <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
@@ -81,7 +83,7 @@
                         <p class="font12 roboto spaceLetters" id = "userTitle"></p>
                     </div>
                     <div class="col col-md-1 mt-2">
-                        <p class = "roboto font15 line15 padNormal spaceLetters orangeTextLight" style = "text-align: right">Follow</p>
+                        <button type="button" onClick="follow(this, this.id)" class = "follow btn roboto font15 line15 padNormal spaceLetters orangeTextLight" style = "text-align: right">Follow</button>
                     </div>
                     </div>
                     <p class = "poppins weight600 font17 line21 padNormal my-2" id = "postQuestion"></p>

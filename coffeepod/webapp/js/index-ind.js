@@ -36,17 +36,37 @@ function storeComment(e){
                 date: date,
                 content: document.querySelector("#new-comment").value,
                 timestamp: timestamp,
-                replies: replies
+                replies: replies,
+                postID: getPostID()
             }).then(docRef => {
                 const postID = getPostID();
                 const commentID = docRef.id;
-                console.log(commentID);
                 db.collection('forum').doc(postID).update({
                     replies: firebase.firestore.FieldValue.arrayUnion(commentID)
                 })
-                offComment(); 
-                form.reset();
-                location.reload();
+                let postPersonId;
+                let postRef = db.collection('forum').doc(postID);
+                postRef.get().then(function(postinfo) {
+                  let following = postinfo.data().followers;
+                  for(let i = 0; i < following.length; i++) {
+                    db.collection('notifications').doc(following[i]).collection('postNotifications').add ({
+                      filled: true,
+                      followed: true,
+                      postID: postID,
+                      title: postinfo.data().title
+                    });
+                  }
+                  db.collection('notifications').doc(postinfo.data().userID).collection('postNotifications').add ({
+                    filled: true,
+                    comment: true,
+                    postID: postID,
+                    title: postinfo.data().title
+                  });
+                }).then(function() {
+                  offComment(); 
+                  form.reset();
+                  location.reload();
+                })
             })
         }
         else {
@@ -86,7 +106,6 @@ function displayComments(sort){
             document.getElementById("sortType").style.display = 'none';
         }
         replies.forEach(comntID => {
-            console.log(comntID);
             let comnt = genComments();
             db.collection('comments').where(firebase.firestore.FieldPath.documentId(), '==', comntID).get().then(comntSnapshot => {
                 if(!comntSnapshot.empty){
@@ -129,12 +148,14 @@ function postQuestion(){
             let title = document.querySelector("#userTitle");
             let question = document.querySelector("#postQuestion");
             let content = document.querySelector("#postContent");
+            let followBut = document.querySelector(".follow");
 
             snapshot.forEach(post => {
                 const postData = post.data();
                 let userID = postData.userID;
                 date.innerText = postData.date;
                 question.innerText = postData.title;
+                followBut.id = post.id;
                 content.innerText = postData.content;
                 
                 db.collection('profile').where(firebase.firestore.FieldPath.documentId(), '==', userID).get().then(userSnapshot => {
