@@ -30,8 +30,10 @@ function getMentorship() {
 
       userInfoRef.get().then(function(userInfo) {
         if (userInfo.exists) {
-          
-          updatePage(userInfo);
+          let userProfileRef = db.collection("profile").doc(uid);
+          userProfileRef.get().then(function(userProfile) {
+                updatePage(userProfile, userInfo);
+          });
 
         } 
       }).catch(function(error) {
@@ -43,22 +45,21 @@ function getMentorship() {
   });
 }
 
-function updatePage(userInfo) {
-    putMentorsOnPage(userInfo);
-    putMenteesOnPage(userInfo);  
+function updatePage(userProfile, userInfo) {
+    putMentorsOnPage(userProfile, userInfo);
+    putMenteesOnPage(userProfile, userInfo);  
 }
 
-function putMentorsOnPage(userInfo) {
+function putMentorsOnPage(userProfile, userInfo) {
     const menteeOfMentorships = userInfo.data().menteeOfPairs;
-    const currentUserName = userInfo.data().name;
-    const myCurrentMentors = addPeopleInfo(currentUserName, menteeOfMentorships, true, false);
+    const myCurrentMentors = addPeopleInfo(userProfile, menteeOfMentorships, true, false);
     return myCurrentMentors;
 }
 
-function putMenteesOnPage(userInfo) {
+function putMenteesOnPage(userProfile, userInfo) {
     const mentorOfMentorships = userInfo.data().mentorOfPairs;
     const currentUserName = userInfo.data().name;
-    const myCurrentMentees = addPeopleInfo(currentUserName, mentorOfMentorships, false, false);
+    const myCurrentMentees = addPeopleInfo(userProfile, mentorOfMentorships, false, false);
     return myCurrentMentees;
 }
 
@@ -77,14 +78,18 @@ function getSectionId(isMentorList, isPast) {
     return sectionId;
 }
 
-function addPeopleInfo(currentUserName, mentorshipList, isMentorList, isPast) { 
+function addPeopleInfo(userProfile, mentorshipList, isMentorList, isPast) { 
     const sectionId = getSectionId(isMentorList, isPast);
+    const currentUserName = userProfile.data().name;
+    const currentUserTitle = userProfile.data().title;
 
     if (mentorshipList.length == 0) {
         addNoPersonCard(sectionId)
     } else {
         addCountToSection(sectionId, mentorshipList.length);
     }
+
+    let mentorName, menteeName, mentorTitle, menteeTitle;
 
     for (mentorshipId of mentorshipList) {
         let mentorshipRef = db.collection('mentorship').doc(mentorshipId);
@@ -111,13 +116,19 @@ function addPeopleInfo(currentUserName, mentorshipList, isMentorList, isPast) {
                     mentorName = name; // mentor is the other user
                     menteeName = currentUserName; // mentee is the current user
 
+                    mentorTitle = title;
+                    menteeTitle = currentUserTitle;
+
                 } else {
                     mentorName = currentUserName;
                     menteeName = name;
+
+                    menteeTitle = title;
+                    mentorTitle = currentUserTitle;
                 }
 
                 person = new Person(otherUserId, name, title, location, timeStart);
-                addPersonCard(sectionId, person, mentorshipId, mentorName, menteeName);
+                addPersonCard(sectionId, person, mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle);
             });
            
         });
@@ -154,7 +165,7 @@ function addNoPersonCard(sectionId) {
     parent.appendChild(clonedEmptySection);
 }
 
-function addPersonCard(sectionId, personInfo, mentorshipId, mentorName, menteeName) {
+function addPersonCard(sectionId, personInfo, mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle) {
     const parent = document.getElementById(sectionId);
     const infoCard = document.getElementById("individual-card-template");
     const clonedInfoCard = infoCard.cloneNode(true);
@@ -162,7 +173,7 @@ function addPersonCard(sectionId, personInfo, mentorshipId, mentorName, menteeNa
     clonedInfoCard.classList.remove("hidden");
     clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").innerText = personInfo.name;
 
-    const onclickFunction = 'goToHubInd(' + "'" + mentorshipId + "'" + "," + "'" + mentorName + "'" + "," + "'" + menteeName + "'" + ")";
+    const onclickFunction = 'goToHubInd(' + "'" + mentorshipId + "'" + "," + "'" + mentorName + "'" + "," + "'" + menteeName + "'" + "," + "'" + mentorTitle + "'" + "," +"'" + menteeTitle + "'" + ")";
     clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").setAttribute('onclick', onclickFunction);
     clonedInfoCard.querySelector(".ind-title").innerText = personInfo.title;
     clonedInfoCard.querySelector(".ind-location").innerText = personInfo.location
@@ -175,6 +186,6 @@ function convertDateToMonthYear(date) {
     return date.toLocaleString('default', { month: 'short'}) + " " + date.getFullYear();
 }
 
-function goToHubInd(mentorshipId, mentorName, menteeName) {
-    window.location.href = "hub-ind.html?mentorshipId=" + mentorshipId + "&mentorName=" + mentorName + "&menteeName=" + menteeName;
+function goToHubInd(mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle) {
+    window.location.href = "hub-ind.html?mentorshipId=" + mentorshipId + "&mentorName=" + mentorName + "&menteeName=" + menteeName + "&mentorTitle=" + mentorTitle + "&menteeTitle=" + menteeTitle;
 }
