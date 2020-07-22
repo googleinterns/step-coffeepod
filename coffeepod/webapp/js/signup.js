@@ -110,6 +110,8 @@ function signup(e) {
                 // store the ids for the mentors and mentees user info so we can find it
                 mentors: [],
                 mentees: [],
+                mentorOfPairs: [],
+                menteeOfPairs: [],
                 chats: [],
                 tagSize: 0,
                 following: []
