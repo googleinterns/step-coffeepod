@@ -300,3 +300,44 @@ li {
   text-align: center;
 }
 
+.ind-name{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 37px;
+  padding: 0;
+  padding-bottom: 2px;
+  margin: 0;
+}
+
+.label-button-text{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  text-align: center;
+  padding: 0;
+  padding-bottom: 2px;
+  margin: 0;
+  color: #AA6231 !important;
+}
+
+.ind-title{
+    letter-spacing: 0.05em;
+    font-size: 20px;
+    line-height: 23px;
+    text-transform: capitalize;
+    font-family: Roboto;
+    padding: 0;
+    padding-bottom: 5px;
+    margin: 0;
+}
+
+.ind-location{
+     line-height: 21px;
+    text-transform: capitalize;
+    font-family: Roboto;
+    font-size: 17px;
+}
+
