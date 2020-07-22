@@ -70,6 +70,22 @@ function makeRequest(requestId, type) {
 // function to approve someones mentee or mentor request
 function approve(button, type) {
   let request = button.closest(type);
+
+  // add new document to chats and update chat fields for both users
+  db.collection('chats').add({
+      user1: uid,
+      user2: request.id,
+      messages: [],
+      latestMessage: ""
+  }).then(docRef => {
+      db.collection('user-info').doc(uid).update({
+          chats: firebase.firestore.FieldValue.arrayUnion(docRef.id)
+      })
+      db.collection('user-info').doc(request.id).update({
+          chats: firebase.firestore.FieldValue.arrayUnion(docRef.id)
+      })
+  })
+  
   if(type == ".mentor") {
     // this person wants the current user to be their mentor, so in relation to the current user, we will add them to the mentees list
     firebase.firestore().collection('user-info').doc(uid).update({ 
