@@ -24,160 +24,125 @@ getMentorship();
 function getMentorship() {
     auth.onAuthStateChanged(function(user) {
     if (user) {
-      userId = user.uid;
-      const userInfoRef = db.collection("user-info").doc(userId);
+      uid = user.uid;
+      let userInfoRef = db.collection("user-info").doc(uid);
 
       userInfoRef.get().then(function(userInfo) {
-        console.log(userInfo.data().menteeOfPairs);
-        console.log(userInfo.exists);
         if (userInfo.exists) {
-          // get list of mentorship ids
-          mentorMentorships = userInfo.data().mentorOfPairs; // current user is mentor
-          menteeMentorships = userInfo.data().menteeOfPairs; // current user is mentee
-        
-          //myCurrentMentees = getPersonInfoList(mentorMentorships, false);
           
-          
-          //updateSection("mentors", myCurrentMentors, "mentors");
-          //updateSection("mentees", myCurrentMentees, "mentees");
-          /*
-          const myPastMentees = userInfo.data().pastMentorPairs;
-          const myPastMentors = userInfo.data().pastMenteePairs;
-          */
-          //updatePage(myCurrentMentors, myCurrentMentees);
-        return myCurrentMentors;
-        }
-      }).then (function(myCurrentMentors) {
-        console.log(menteeMentorships);
-        myCurrentMentors = getPersonInfoList(menteeMentorships, true);
-          
-        console.log(myCurrentMentors);
-        console.log("see previous line");
+          updatePage(userInfo);
 
-        console.log(myCurrentMentors);
-        console.log(myCurrentMentors.length);
-
-        const section = document.getElementById("mentors");
-        if (myCurrentMentors.length > 0) {// undefined or empty array
-            console.log("i'm supposed to print something");
-        } else {
-            addNoPeopleCard(section, "mentors");
-        }
+        } 
+      }).catch(function(error) {
+        console.log("Error getting profile:", error);
       });
-
     } else {
-      console.log("not logged in");
+        window.location.replace("signup.html");
     }
   });
 }
 
-// personInfo is a person object
-function addInfoCard(parent, personInfo) {
-    const infoCard = document.getElementById("individual-card-template");
-    const clonedInfoCard = infoCard.cloneNode(true);
-    clonedInfoCard.classList.remove("hidden");
-    clonedInfoCard.querySelector(".ind-name").innerText = personInfo.name;
-    clonedInfoCard.querySelector(".ind-title").innerText = personInfo.title;
-    clonedInfoCard.querySelector(".ind-location").innerText = personInfo.location
-    clonedInfoCard.querySelector("#time-start").innerText = personInfo.time-start;
-    clonedInfoCard.querySelector("#link-to-hub-ind").setAttribute('onclick', 'goToHubInd(' + "'" + personInfo.id + "'" +")");
-    parent.appendChild(personInfo);
-
+function updatePage(userInfo) {
+    putMentorsOnPage(userInfo);
+    putMenteesOnPage(userInfo);  
 }
-// Put the card that there are no targets on page
-function addNoPeopleCard(parent, target) {
+
+function putMentorsOnPage(userInfo) {
+    const menteeOfMentorships = userInfo.data().menteeOfPairs;
+    const myCurrentMentors = addPeopleInfo(menteeOfMentorships, true, false);
+    return myCurrentMentors;
+}
+
+function putMenteesOnPage(userInfo) {
+    const mentorOfMentorships = userInfo.data().mentorOfPairs;
+    const myCurrentMentees = addPeopleInfo(mentorOfMentorships, false, false);
+    return myCurrentMentees;
+}
+
+
+function getSectionId(isMentorList, isPast) {
+    let sectionId;
+    if (isMentorList && isPast) {
+        sectionId = "past-mentors";
+    } else if (!isMentorList && isPast) {
+        sectionId = "past-mentees";
+    } else if (isMentorList && !isPast) {
+        sectionId = "mentors"
+    } else {
+        sectionId = "mentees";
+    }
+    return sectionId;
+}
+
+function addPeopleInfo(mentorshipList, isMentorList, isPast) {
+    let peopleList = [];
+    const sectionId = getSectionId(isMentorList, isPast);
+
+    if (mentorshipList.length == 0) {
+        addNoPersonCard(sectionId)
+    }
+
+    for (mentorshipId of mentorshipList) {
+        let mentorshipRef = db.collection('mentorship').doc(mentorshipId);
+
+        mentorshipRef.get().then(function(mentorship) {
+
+            let person, otherUserId, name, title, timeStart, location;
+            timeStart = convertDateToMonthYear(mentorship.data().timestamp.toDate());
+
+            if (isMentorList) {
+                otherUserId = mentorship.data().mentorId;
+            } else {
+                otherUserId = mentorship.data().menteeId;
+            }
+            
+
+            let otherUserProfileRef = db.collection('profile').doc(otherUserId);
+            otherUserProfileRef.get().then(function(otherUserInfo) {
+                name = otherUserInfo.data().name;
+                title = otherUserInfo.data().title;
+                location = otherUserInfo.data().location;
+
+                const person = new Person(otherUserId, name, title, location, timeStart);
+                addPersonCard(sectionId, person);
+            });
+           
+        });
+
+        return peopleList;
+    }
+}
+
+function getPersonRole(sectionId) {
+    return sectionId.replace(/-/g,' ');
+}
+
+// add no person card to the correct section of id sectionId
+function addNoPersonCard(sectionId) {
+    const target = getPersonRole(sectionId);
+    const parent = document.getElementById(sectionId);
     const emptySection = document.getElementById("no-one-template");
     const clonedEmptySection = emptySection.cloneNode(true);
+    clonedEmptySection.classList.remove('hidden');
     clonedEmptySection.querySelector("#target").innerText = target;
     parent.appendChild(clonedEmptySection);
 }
 
-function updateSection(parentSectionId, myPeopleList, target) {
-    const parentSection = document.getElementById(parentSectionId);
-    console.log(myPeopleList.length);
-    if (myPeopleList.length > 0) {// undefined or empty array
-        console.log("i'm supposed to print something");
-        for (person of myPeopleList) {
-            addInfoCard(parentSection,person);
-        }
-    } else {
-        addNoPeopleCard(section, target);
-    }
-}
+function addPersonCard(sectionId, personInfo) {
+    const parent = document.getElementById(sectionId);
+    const infoCard = document.getElementById("individual-card-template");
+    const clonedInfoCard = infoCard.cloneNode(true);
 
-function getPersonInfoList(mentorshipList, isMentorList) {
-    return getPersonInfoFromMentorshipList(convertFromMentorship(mentorshipList, isMentorList));
-} 
-function getPersonInfoFromMentorshipList(mentorshipOtherIdList) {
-    console.log("return a list of mentorship objects of current mentor of current user");
-    console.log(mentorshipOtherIdList);
-    let peopleIdList = [];
+    clonedInfoCard.classList.remove("hidden");
+    clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").innerText = personInfo.name;
+    clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").setAttribute('onclick', 'goToHubInd(' + "'" + personInfo.id + "'" +")");
+    clonedInfoCard.querySelector(".ind-title").innerText = personInfo.title;
+    clonedInfoCard.querySelector(".ind-location").innerText = personInfo.location
+    clonedInfoCard.querySelector("span#time-start").innerText = "since " + personInfo.timeStart;
 
-    console.log("This is right before for each");
-
-    for (let i = 0; i < mentorshipOtherIdList.length; i++) {
-        console.log("the mentorship being considered is: ");
-        console.log(mentorship);
-        peopleIdList.push(getPersonInfo(mentorship));
-    }
-
-    console.log("the people id list should be: ");
-    console.log(peopleIdList);
-    return peopleIdList;
-}
-
-console.log("Get person info");
-console.log(getPersonInfo(new Mentorship("Wk7lrwtTP8aJA2rVy1JGXIHpQEt2", "July 2020")));
-
-function getPersonInfo(mentorship) {
-    const profileRef = db.collection("profile").doc(mentorship.otherUserId);
-    const timeStart = mentorship.timestamp;
-
-    profileRef.get().then(function (profile) {
-        const data = profile.data();
-        console.log("The mentorship is:");
-        console.log(mentorship);
-        console.log("the person is: ");
-        console.log(new Person(mentorship.otherUserId, data.name, data.title, data.location, timeStart));
-        return new Person(mentorship.otherUserId, data.name, data.title, data.location, timeStart);
-    })
-}
-
-// create mentorship objects with the ide of the other person and the timestamp at the point of creation of the
-// mentorship
-function convertFromMentorship (listMentorships, isMentorList) {
-    let mentorshipRef;
-    let mentorshipOtherIdList = [];
-
-    for (mentorshipDocId of listMentorships) {
-        mentorshipRef = db.collection('mentorship').doc(mentorshipDocId);
-        mentorshipRef.get().then(function(mentorship) {
-            if (mentorship.exists) {
-                let date = mentorship.data().timestamp.toDate();
-                date = convertDateToMonthYear(date);
-                if (isMentorList) {// if this is a mentor list (user is a mentee)
-                    mentorshipOtherIdList.push(new Mentorship(mentorship.data().mentorId, date));
-                    console.log(date);
-                } else {
-                    mentorshipOtherIdList.push(new Mentorship(mentorship.data().menteeId, date));
-                }
-
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such mentorship!");
-            }
-        });
-    }
-
-    return mentorshipOtherIdList;
+    parent.appendChild(clonedInfoCard);
 }
 
 function convertDateToMonthYear(date) {
     return date.toLocaleString('default', { month: 'short'}) + " " + date.getFullYear();
 }
-
-function goToHubInd(mentorshipId) {
-    window.location.href = "hub-ind.html?id="+mentorshipId;
-}
-
-
