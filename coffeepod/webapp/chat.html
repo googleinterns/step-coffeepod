@@ -39,6 +39,7 @@
     <script src="js/script.js"></script>
     <script src="js/index.js"></script>
     <script src="js/chat.js"></script>
+    <script src="js/search.js"></script>
     <script>
       $(document).ready(getProfile());
       $(document).ready(getUsers());
@@ -56,7 +57,6 @@
           <div class="row justify-content-center">
             <!-- this is the main row -->
             <div id="profileHeader" class="d-none d-lg-block col-lg-3">
-              <!-- every section of the page will have its own cont do give it a look of different sections -->
               <div class="cont shadow-sm mb-3">
                   <div class="text-center mb-3">
                     <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%>
@@ -65,7 +65,11 @@
                   <p class="font17 roboto line15 padNormal text-center spaceLetters title"></p>
                   <br>
               </div>
+
+              <!-- ALL USERS YOU CAN CHAT WITH -->
               <p id = "chats" class="subpage-title" style = "font-size:30px"> chats</p>
+
+              <!-- USERS CHAT TEMPLATE -->
               <div class="cont shadow-sm mb-1" id = "chatTemp" style = "display:none">
                   <div class = "row pt-0">
                     <div class="col-lg-3">
@@ -73,44 +77,51 @@
                     </div>
                     <div class="col-lg-8 mt-1">
                         <p class = "line15 padNormal"><span class="font15 poppins weight500" id = "name"></span></p>
-                        <p class = "line15 padNormal mt-1"><span class="font15 poppins weight300 greyText">Last message here</span></p>
+                        <p class = "line15 padNormal mt-1"><span class="font15 poppins weight300 greyText" id = "lastMessage">Last message here</span></p>
                     </div>
                   </div>
               </div>
+
+              <!-- ACTUAL USERS DISPLAYED HERE -->
               <div id = "chatCont"></div>
             </div>
-            <!-- this is the side col -->
+
+            <!-- MESSAGES SECTION -->
             <div class="col-lg-9 ">
-              <!-- the side col is sticky -->
               <div class="make-me-sticky" style = "height:100%">
-                <!-- put all the info in their own cont again -->
+
+                <!-- MESSAGE CONTAINER -->
                 <div class="cont shadow-sm" id = "messageBox" style = "height:100%">
-                    <div class = "mb-2" id = "messageName"></div>
-                    <div id = "messages">
-                        <div class = "row" id = "otherUser">
-                            <div class = "col-lg-1 pr-0">
-                                <img class="center-cropped rounded-circle pl-0" src="images/pancake.jpg" alt="pancake" style = "width:40px; height:40px">
-                            </div>
-                            <div class = "textMsg left-align col-lg-5 pl-0">
-                                <span class = "font15 poppins weight300 otherUserMsg">helloooohelloohelloooohelloohelloooohelloohelloooohelloohelloooohelloo<span>
-                            </div>
-                            </span>
-                        </div >
-                        <div class = "row" id = "own">
-                            <div class = "col-lg-6"></div>
-                            <div class = "textMsg right-align col-lg-5 pr-0">
-                                <span class = "font15 poppins weight300 ownMsg">helloooohelloohelloooohelloohelloooohelloohelloooohelloohelloooohelloo<span>
-                            </div>
-                            <div class = "col-lg-1">
-                                <img class="center-cropped rounded-circle pl-0" src="images/pancake.jpg" alt="pancake" style = "width:40px; height:40px">
-                            </div>
+                    <div class = "subpage-title mb-2" id = "messageName" style = "font-size:30px"></div>
+
+                    <!-- CHAT MESSAGE TEMPLATES -->
+                    <div class = "row" id = "otherUser" style = "display:none">
+                        <div class = "col-3 col-sm-1 col-lg-1 pr-0">
+                            <img class="center-cropped rounded-circle pl-0" src="images/pancake.jpg" alt="pancake" style = "width:40px; height:40px">
+                        </div>
+                        <div class = "textMsg left-align col-8 col-sm-7 col-lg-5 pl-0">
+                            <span class = "font15 poppins weight300 otherUserMsg">helloooohelloohelloooohelloohelloooohelloohelloooohelloohelloooohelloo</span>
+                        </div>
+                    </div >
+                    <div class = "row" id = "own" style = "display:none">
+                        <div class = "col-sm-3 col-lg-6"></div>
+                        <div class = "textMsg right-align col-8 col-sm-7 col-lg-5 pr-0">
+                            <span class = "font15 poppins weight300 ownMsg">hi</span>
+                        </div>
+                        <div class = "col-3 col-sm-1 col-lg-1">
+                            <img class="center-cropped rounded-circle pl-0" src="images/pancake.jpg" alt="pancake" style = "width:40px; height:40px">
                         </div>
                     </div>
-                    <form id = "textMessage">
+
+                    <!-- ACTUAL CHAT INFORMATION HERE -->
+                    <div class = "messages" id = "messages"></div>
+
+                    <!-- SENDING NEW MESSAGE -->
+                    <form onsubmit = "newMessage(event)" class = "submitMessage" id = "submitMessage">
                         <div class = "input-group">
-                            <input type = "text" class = "roboto weight300 font15 line21 form-control" placeholder = "type a message...">
+                            <input type = "text" class = "roboto weight300 font15 line21 form-control"  id = "newTxt" placeholder = "type a message...">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">Send</button>
+                                <button type = "submit" class="btn btn-primary" type="button">Send</button>
                             </div>
                         </div>
                     </form>
