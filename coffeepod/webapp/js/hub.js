@@ -75,11 +75,14 @@ function getSectionId(isMentorList, isPast) {
 }
 
 function addPeopleInfo(mentorshipList, isMentorList, isPast) {
-    let peopleList = [];
+    
     const sectionId = getSectionId(isMentorList, isPast);
+
 
     if (mentorshipList.length == 0) {
         addNoPersonCard(sectionId)
+    } else {
+        addCountToSection(sectionId, mentorshipList.length);
     }
 
     for (mentorshipId of mentorshipList) {
@@ -108,9 +111,21 @@ function addPeopleInfo(mentorshipList, isMentorList, isPast) {
             });
            
         });
-
-        return peopleList;
+        
     }
+}
+
+function addCountToSection(sectionId, count) {
+    const section = document.getElementById(sectionId);
+    let target = getPersonRole(sectionId);
+    if (count == 1) {
+        target = target.substring(0, target.length - 1);
+    }
+    const youHaveSection = document.getElementById("you-have-template");
+    const clonedYouHave = youHaveSection.cloneNode("true");
+    clonedYouHave.classList.remove("hidden");
+    clonedYouHave.querySelector("span#people-num").innerHTML = count + " " + target + ".";    
+    section.appendChild(clonedYouHave);
 }
 
 function getPersonRole(sectionId) {
