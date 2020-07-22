@@ -71,11 +71,11 @@ function makeRequest(requestId, type) {
 function approve(button, type) {
   let request = button.closest(type);
   if(type == ".mentor") {
-    // this person wants the current user to be their mentor, so in relation to the current user, we will add them to the mentees list
+    // current user is going to be the mentee, request.id is going to be the mentor
     firebase.firestore().collection('user-info').doc(uid).update({ 
       mentors: firebase.firestore.FieldValue.arrayUnion(request.id)
     });
-    // the request is from someone who wants to be mentor of the current user
+    // add the current user also to the requested's list of mentees
     firebase.firestore().collection('user-info').doc(request.id).update({ 
       mentees: firebase.firestore.FieldValue.arrayUnion(uid)
     });
@@ -84,11 +84,11 @@ function approve(button, type) {
       mentorRequests: firebase.firestore.FieldValue.arrayRemove(request.id)
     });
   } else {
-    // the request is from someone who wants to be mentor of the current user
+    // the request is the mentee, user if the mentor
     firebase.firestore().collection('user-info').doc(uid).update({ 
       mentees: firebase.firestore.FieldValue.arrayUnion(request.id)
     });
-    // the request is from someone who wants to be mentor of the current user
+    // add the current user to the requested's list of mentors
     firebase.firestore().collection('user-info').doc(request.id).update({ 
       mentors: firebase.firestore.FieldValue.arrayUnion(uid)
     });
