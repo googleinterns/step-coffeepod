@@ -70,12 +70,28 @@ function makeRequest(requestId, type) {
 // function to approve someones mentee or mentor request
 function approve(button, type) {
   let request = button.closest(type);
+
+  // add new document to chats and update chat fields for both users
+  db.collection('chats').add({
+      user1: uid,
+      user2: request.id,
+      messages: [],
+      latestMessage: ""
+  }).then(docRef => {
+      db.collection('user-info').doc(uid).update({
+          chats: firebase.firestore.FieldValue.arrayUnion(docRef.id)
+      })
+      db.collection('user-info').doc(request.id).update({
+          chats: firebase.firestore.FieldValue.arrayUnion(docRef.id)
+      })
+  })
+  
   if(type == ".mentor") {
-    // this person wants the current user to be their mentor, so in relation to the current user, we will add them to the mentees list
+    // current user is going to be the mentee, request.id is going to be the mentor
     firebase.firestore().collection('user-info').doc(uid).update({ 
       mentors: firebase.firestore.FieldValue.arrayUnion(request.id)
     });
-    // the request is from someone who wants to be mentor of the current user
+    // add the current user also to the requested's list of mentees
     firebase.firestore().collection('user-info').doc(request.id).update({ 
       mentees: firebase.firestore.FieldValue.arrayUnion(uid)
     });
@@ -84,11 +100,11 @@ function approve(button, type) {
       mentorRequests: firebase.firestore.FieldValue.arrayRemove(request.id)
     });
   } else {
-    // the request is from someone who wants to be mentor of the current user
+    // the request is the mentee, user if the mentor
     firebase.firestore().collection('user-info').doc(uid).update({ 
       mentees: firebase.firestore.FieldValue.arrayUnion(request.id)
     });
-    // the request is from someone who wants to be mentor of the current user
+    // add the current user to the requested's list of mentors
     firebase.firestore().collection('user-info').doc(request.id).update({ 
       mentors: firebase.firestore.FieldValue.arrayUnion(uid)
     });

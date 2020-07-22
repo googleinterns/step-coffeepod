@@ -15,8 +15,12 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
+    <script src="js/search.js"></script>
+    <script>
+      $(document).ready(load('none'));
+    </script>
   </head>
-  <body>
+  <body onload="loadSearch()">
     <div id="page-container">
       <!-- this is the placeholder for the nav bar -->
       <div id="nav-placeholder"></div>
@@ -26,30 +30,23 @@
         <div class="container-fluid">
           <!-- your cols will need a row -->
           <div class="row justify-content-center">
+            <!-- <div class="col-lg-4 d-none d-lg-block">
+              <div class="make-me-sticky">
+                <div class="cont shadow-sm">
+                </div>
+                <div class="cont shadow-sm">
+                </div>
+              </div>
+            </div> -->
             <!-- this is the main row -->
             <div id="profileHeader" class="col-lg-8">
+              <p class="subpage-title"> search results </p>
               <!-- every section of the page will have its own cont do give it a look of different sections -->
               <div class="cont shadow-sm">
-                <!-- you put whatever contect here -->
+                <p class="weight600 poppins line45 font30 lowercase">people</p>
               </div>
               <div class="cont shadow-sm">
-                <!-- more content -->
-              </div>
-              <div class="cont shadow-sm">
-                <!-- more content -->
-              </div>
-            </div>
-            <!-- this is the side col -->
-            <div class="col-lg-4 d-none d-lg-block">
-              <!-- the side col is sticky -->
-              <div class="make-me-sticky">
-                <!-- put all the info in their own cont again -->
-                <div class="cont shadow-sm">
-                  <!-- whatever you put in the first section on the side -->
-                </div>
-                <div class="cont shadow-sm">
-                  <!-- whatever you put in the next section on the side -->
-                </div>
+                <p class="weight600 poppins line45 font30 lowercase">questions</p>
               </div>
             </div>
           </div>

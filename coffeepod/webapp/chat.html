@@ -8,14 +8,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/chat.css">
     <link rel="stylesheet" href="css/navbar_style.css">
-    <!-- if you have a style sheet for your page put it here -->
+    <!-- SCRIPTS -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
+            authDomain: "team-hi-five-step.firebaseapp.com",
+            databaseURL: "https://team-hi-five-step.firebaseio.com",
+            projectId: "team-hi-five-step",
+            storageBucket: "team-hi-five-step.appspot.com",
+            messagingSenderId: "296440646158",
+            appId: "1:296440646158:web:d06db7292a4cc92d714a5f",
+            measurementId: "G-SV4KD1V658"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/search.js"></script>
     <script>
+      $(document).ready(getProfile());
+      $(document).ready(getUsers());
       $(document).ready(load('chat'));
     </script>
   </head>
@@ -27,31 +54,77 @@
       <div class="page">
       <!-- put it in a container -->
         <div class="container-fluid">
-          <!-- your cols will need a row -->
           <div class="row justify-content-center">
             <!-- this is the main row -->
-            <div id="profileHeader" class="col-lg-8">
-              <!-- every section of the page will have its own cont do give it a look of different sections -->
-              <div class="cont shadow-sm">
-                <!-- you put whatever contect here -->
+            <div id="profileHeader" class="d-none d-lg-block col-lg-3">
+              <div class="cont shadow-sm mb-3">
+                  <div class="text-center mb-3">
+                    <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%>
+                  </div>
+                  <p class="font20 poppins line21 weight500 padNormal text-center mb-2 name">hi,&nbsp;</p>
+                  <p class="font17 roboto line15 padNormal text-center spaceLetters title"></p>
+                  <br>
               </div>
-              <div class="cont shadow-sm">
-                <!-- more content -->
+
+              <!-- ALL USERS YOU CAN CHAT WITH -->
+              <p id = "chats" class="subpage-title" style = "font-size:30px"> chats</p>
+
+              <!-- USERS CHAT TEMPLATE -->
+              <div class="cont shadow-sm mb-1" id = "chatTemp" style = "display:none">
+                  <div class = "row pt-0">
+                    <div class="col-lg-3">
+                        <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" style = "width:50px; height:50px">
+                    </div>
+                    <div class="col-lg-8 mt-1">
+                        <p class = "line15 padNormal"><span class="font15 poppins weight500" id = "name"></span></p>
+                        <p class = "line15 padNormal mt-1"><span class="font15 poppins weight300 greyText" id = "lastMessage">Last message here</span></p>
+                    </div>
+                  </div>
               </div>
-              <div class="cont shadow-sm">
-                <!-- more content -->
-              </div>
+
+              <!-- ACTUAL USERS DISPLAYED HERE -->
+              <div id = "chatCont"></div>
             </div>
-            <!-- this is the side col -->
-            <div class="col-lg-4 d-none d-lg-block">
-              <!-- the side col is sticky -->
-              <div class="make-me-sticky">
-                <!-- put all the info in their own cont again -->
-                <div class="cont shadow-sm">
-                  <!-- whatever you put in the first section on the side -->
-                </div>
-                <div class="cont shadow-sm">
-                  <!-- whatever you put in the next section on the side -->
+
+            <!-- MESSAGES SECTION -->
+            <div class="col-lg-9 ">
+              <div class="make-me-sticky" style = "height:100%">
+
+                <!-- MESSAGE CONTAINER -->
+                <div class="cont shadow-sm" id = "messageBox" style = "height:100%">
+                    <div class = "subpage-title mb-2" id = "messageName" style = "font-size:30px"></div>
+
+                    <!-- CHAT MESSAGE TEMPLATES -->
+                    <div class = "row" id = "otherUser" style = "display:none">
+                        <div class = "col-3 col-sm-1 col-lg-1 pr-0">
+                            <img class="center-cropped rounded-circle pl-0" src="images/pancake.jpg" alt="pancake" style = "width:40px; height:40px">
+                        </div>
+                        <div class = "textMsg left-align col-8 col-sm-7 col-lg-5 pl-0">
+                            <span class = "font15 poppins weight300 otherUserMsg">helloooohelloohelloooohelloohelloooohelloohelloooohelloohelloooohelloo</span>
+                        </div>
+                    </div >
+                    <div class = "row" id = "own" style = "display:none">
+                        <div class = "col-sm-3 col-lg-6"></div>
+                        <div class = "textMsg right-align col-8 col-sm-7 col-lg-5 pr-0">
+                            <span class = "font15 poppins weight300 ownMsg">hi</span>
+                        </div>
+                        <div class = "col-3 col-sm-1 col-lg-1">
+                            <img class="center-cropped rounded-circle pl-0" src="images/pancake.jpg" alt="pancake" style = "width:40px; height:40px">
+                        </div>
+                    </div>
+
+                    <!-- ACTUAL CHAT INFORMATION HERE -->
+                    <div class = "messages" id = "messages"></div>
+
+                    <!-- SENDING NEW MESSAGE -->
+                    <form onsubmit = "newMessage(event)" class = "submitMessage" id = "submitMessage">
+                        <div class = "input-group">
+                            <input type = "text" class = "roboto weight300 font15 line21 form-control"  id = "newTxt" placeholder = "type a message...">
+                            <div class="input-group-append">
+                                <button type = "submit" class="btn btn-primary" type="button">Send</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
               </div>
             </div>
