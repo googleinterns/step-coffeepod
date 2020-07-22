@@ -1,5 +1,5 @@
 /***********************ADD USERS TO CHAT BAR************************* */
-let currUser, unsubscribe;
+let currUser, unsubscribe, messageDiv;
 let lastMsg = true;
 
 function getUsers(){
@@ -37,11 +37,12 @@ function genUsers(chatID, name) {
   return clone;
 }
 
+//create sidebar users of current mentors/mentees
 function updateUsers(chatArr){
     chatArr.forEach(chatID => {
         let userChat;
         let userID;
-        lastMessage(chatID);
+        
 
         db.collection("chats").doc(chatID).get().then(snapshot => {
             if(snapshot.exists){
@@ -56,21 +57,32 @@ function updateUsers(chatArr){
                     }
                 })
             }
+        }).then(()=> {
+            lastMessage(chatID);
         })
     })
 }
 
+function getMostRecent(userID, chatID, text){
+    let userChat = document.getElementById(chatID);
+    if(userID == currUser) {
+        userChat.querySelector('#lastMessage').innerText = "You: "+text;
+    } else {
+        userChat.querySelector('#lastMessage').innerText = text;
+    }
+}
+
 function lastMessage(chatID){
-    console.log("updating last message");
     db.collection('chats').doc(chatID).onSnapshot(doc => {
+        console.log("updating last message");
         if(doc.exists){
             const msgID = doc.data().latestMessage;
             db.collection('chats').doc(chatID).collection('messages').doc(msgID).get().then(msgInfo => {
                 if(msgInfo.exists){
                     const messageInfo = msgInfo.data();
                     // determine if own or other user's message
-                    document.querySelector('#lastMessage').innerText = messageInfo.content;
-                }
+                    getMostRecent(messageInfo.userID, chatID, messageInfo.content)
+                                    }
             })
         }
     })
@@ -84,13 +96,18 @@ function openChat(chatID, name){
     messages = messageBox.querySelector('.messages');
     messageName = document.querySelector('#messageName')
     messageName.innerText = name;
+
     if(lastMsg == false) unsubscribe();
     lastMsg = true;
-    
 
     messages.id = chatID;
     updateChat(chatID);
-    console.log(lastMsg);
+}
+
+//scrolls messages to the bottom
+function scrollBottom(){
+    messageDiv = document.querySelector(".messages");
+    messageDiv.scrollTop = messageDiv.scrollHeight;
 }
 
 //update chat based on most recent messages
@@ -108,6 +125,8 @@ function updateChat(id){
                 else genMessage("otherUser", ".otherUserMsg", messageInfo.content);
             })
         }
+    }).then(() => {
+        scrollBottom();
     })
 }
 
@@ -149,9 +168,11 @@ function newMessage(e){
                             const messageInfo = msgInfo.data();
                             console.log(messageInfo.content);
                             // determine if own or other user's message
-                            document.querySelector('#lastMessage').innerText = messageInfo.content;
                             if (messageInfo.userID == currUser) genMessage("own", ".ownMsg", messageInfo.content);
                             else genMessage("otherUser", ".otherUserMsg", messageInfo.content);
+                            
+                            //scroll down to reveal new message
+                            scrollBottom();
                         }
                     })
                 }
@@ -159,7 +180,6 @@ function newMessage(e){
             lastMsg = false;
         }
     })
-
     msgForm.reset();
 
 }
