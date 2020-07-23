@@ -1,5 +1,5 @@
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
+const queryStringHubInd = window.location.search;
+const urlParamsHubInd = new URLSearchParams(queryStringHubInd);
 const mentorshipID = getMentorshipId();
 
 
@@ -14,7 +14,7 @@ class HubName {
 }
 
 function getMentorshipId(){
-    return urlParams.get('mentorshipId');
+    return urlParamsHubInd.get('mentorshipId');
 }
 
 function addOpeningContent() {
@@ -52,5 +52,18 @@ function loadData() {
 // OVERVIEW SECTION
 function addOverview() {
     addNumGoalCards();
+    addTimeStart();
+}
+
+function addTimeStart() {
+    const timeStart = urlParamsHubInd.get('timeMilli');
+    console.log(timeStart);
+    document.getElementById("start-time").innerText = fromMillisecondsToMonthAndYear(timeStart);
+}
+
+
+function fromMillisecondsToMonthAndYear(milliseconds) {
+    const date = new Date(parseInt(milliseconds));
+    return date.toLocaleString('default', { month: 'long'}) + " " + date.getFullYear();
 }
 
