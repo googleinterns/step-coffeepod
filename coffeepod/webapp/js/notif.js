@@ -71,7 +71,8 @@ function makeRequest(requestId, type) {
 function addNewMentorshipCollection(mentorId, menteeId) {
     db.collection('mentorship').add({
         mentorId: mentorId,
-        menteeId: menteeId
+        menteeId: menteeId,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then(function(mentorshipRef) {
         const mentorshipId = mentorshipRef.id;
 
@@ -90,7 +91,7 @@ function addNewMentorshipCollection(mentorId, menteeId) {
             unchecked: ["First meeting!", "Say hi!"],
             checked: [],
             title: "Introduction: Meet my new mentor/mentee",
-            timestamp: Date.now()
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
 
         db.collection('mentorship').doc(mentorshipId).collection('meetings').add({});
