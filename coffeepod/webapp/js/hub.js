@@ -98,6 +98,7 @@ function addPeopleInfo(userProfile, mentorshipList, isMentorList, isPast) {
         mentorshipRef.get().then(function(mentorship) {
 
             let person, otherUserId, name, title, timeStart, location;
+            const timeMilli = mentorship.data().timestamp.toMillis();
             timeStart = convertDateToMonthYear(mentorship.data().timestamp.toDate());
 
             if (isMentorList) {
@@ -129,7 +130,7 @@ function addPeopleInfo(userProfile, mentorshipList, isMentorList, isPast) {
                 }
 
                 person = new Person(otherUserId, name, title, location, timeStart);
-                addPersonCard(sectionId, person, mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle);
+                addPersonCard(sectionId, person, mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle, timeMilli);
             });
            
         });
@@ -166,7 +167,7 @@ function addNoPersonCard(sectionId) {
     parent.appendChild(clonedEmptySection);
 }
 
-function addPersonCard(sectionId, personInfo, mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle) {
+function addPersonCard(sectionId, personInfo, mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle, timeMilli) {
     const parent = document.getElementById(sectionId);
     const infoCard = document.getElementById("individual-card-template");
     const clonedInfoCard = infoCard.cloneNode(true);
@@ -174,7 +175,7 @@ function addPersonCard(sectionId, personInfo, mentorshipId, mentorName, menteeNa
     clonedInfoCard.classList.remove("hidden");
     clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").innerText = personInfo.name;
 
-    const onclickFunction = 'goToHubInd(' + "'" + mentorshipId + "'" + "," + "'" + mentorName + "'" + "," + "'" + menteeName + "'" + "," + "'" + mentorTitle + "'" + "," +"'" + menteeTitle + "'" + ")";
+    const onclickFunction = 'goToHubInd(' + "'" + mentorshipId + "'" + "," + "'" + mentorName + "'" + "," + "'" + menteeName + "'" + "," + "'" + mentorTitle + "'" + "," +"'" + menteeTitle + "'" +  "," +"'" + timeMilli + "'" +")";
     clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").setAttribute('onclick', onclickFunction);
     clonedInfoCard.querySelector(".ind-title").innerText = personInfo.title;
     clonedInfoCard.querySelector(".ind-location").innerText = personInfo.location
@@ -187,6 +188,6 @@ function convertDateToMonthYear(date) {
     return date.toLocaleString('default', { month: 'long'}) + " " + date.getFullYear();
 }
 
-function goToHubInd(mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle) {
-    window.location.href = "hub-ind.html?mentorshipId=" + mentorshipId + "&mentorName=" + mentorName + "&menteeName=" + menteeName + "&mentorTitle=" + mentorTitle + "&menteeTitle=" + menteeTitle;
+function goToHubInd(mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle, timeMilli) {
+    window.location.href = "hub-ind.html?mentorshipId=" + mentorshipId + "&mentorName=" + mentorName + "&menteeName=" + menteeName + "&mentorTitle=" + mentorTitle + "&menteeTitle=" + menteeTitle + "&timeMilli=" + timeMilli;
 }
