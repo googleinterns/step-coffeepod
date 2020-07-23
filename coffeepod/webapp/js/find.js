@@ -46,6 +46,7 @@ function getPeople() {
       }
     });
     peopleList.sort((a, b) => (a.similarity > b.similarity) ? -1:1);
+    console.log(peopleList);
     loadMatches(peopleList);
   });
 }

@@ -57,3 +57,7 @@ font-family: 'Roboto', sans-serif;
 html {
   scroll-padding-top: 150px; /* height of sticky header */
 }
+
+.search {
+  width: 85% !important;
+}
