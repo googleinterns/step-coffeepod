@@ -1,7 +1,7 @@
 let name, email, uid, user, username, mentors, mentees, personal;
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const open = urlParams.get('user');
+let queryString = window.location.search;
+let urlParams = new URLSearchParams(queryString);
+let open = urlParams.get('user');
 
 // this function loads in the profile based on the person who is logged in
 function getProfile() {

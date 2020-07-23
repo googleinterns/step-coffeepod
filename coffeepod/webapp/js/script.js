@@ -12,19 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-// $(document).ready(function() {
-//   $.get("navbar.html", function(data){
-//     $("#nav-placeholder").replaceWith(data).promise().done(function() {
-//       document.getElementById(fromWhere).classList.add('active');
-//     });
-//   });
-
-//   $.get("footer.html", function(data){
-//     $("#footer-placeholder").replaceWith(data);
-//   });
-// });
-
 function logOut(e){
     e.preventDefault();
     firebase.auth().signOut().then(() => {
@@ -35,17 +22,15 @@ function logOut(e){
 function load(fromWhere){
   $.get("navbar.html", function(data){
     $("#nav-placeholder").replaceWith(data).promise().done(function() {
-      if(fromWhere != "none") {
-        document.getElementById(fromWhere).classList.add('active');
-      }
-      var input = document.getElementById("searchbar");
-      console.log(input);
-      input.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          document.getElementById("myBtn").click();
-        }
-      });
+      document.getElementById(fromWhere).classList.add('active');
+      // var input = document.getElementById("searchbar");
+      // console.log(input);
+      // input.addEventListener("keyup", function(event) {
+      //   if (event.keyCode === 13) {
+      //     event.preventDefault();
+      //     document.getElementById("myBtn").click();
+      //   }
+      // });
     });
   });
 
