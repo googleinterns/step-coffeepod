@@ -132,8 +132,8 @@ function displayComments(sort){
 }
 
 function getPostID(){
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
+    let queryString = window.location.search;
+    let urlParams = new URLSearchParams(queryString);
     return urlParams.get('id');
 }
 

@@ -1,6 +1,6 @@
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const mentorshipID = getMentorshipId();
+let queryString = window.location.search;
+let urlParams = new URLSearchParams(queryString);
+let mentorshipID = getMentorshipId();
 
 
 // WELCOME SECTION
