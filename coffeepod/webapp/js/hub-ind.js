@@ -2,6 +2,7 @@ const queryStringHubInd = window.location.search;
 const urlParamsHubInd = new URLSearchParams(queryStringHubInd);
 const mentorshipID = getMentorshipId();
 
+
 // WELCOME SECTION
 class HubName {
     constructor(mentorName, menteeName, mentorTitle, menteeTitle) {
