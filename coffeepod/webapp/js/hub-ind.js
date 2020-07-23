@@ -1,6 +1,6 @@
-let queryString = window.location.search;
-let urlParams = new URLSearchParams(queryString);
-let mentorshipID = getMentorshipId();
+const queryStringHubInd = window.location.search;
+const urlParamsHubInd = new URLSearchParams(queryStringHubInd);
+const mentorshipID = getMentorshipId();
 
 
 // WELCOME SECTION
@@ -14,7 +14,7 @@ class HubName {
 }
 
 function getMentorshipId(){
-    return urlParams.get('mentorshipId');
+    return urlParamsHubInd.get('mentorshipId');
 }
 
 function addOpeningContent() {
@@ -40,7 +40,7 @@ function addMentorshipHubName() {
 }
 
 function getMentorshipHubName() {
-    return new HubName(urlParams.get('mentorName'), urlParams.get('menteeName'), urlParams.get('mentorTitle'), urlParams.get('menteeTitle'));
+    return new HubName(urlParamsHubInd.get('mentorName'), urlParamsHubInd.get('menteeName'), urlParamsHubInd.get('mentorTitle'), urlParamsHubInd.get('menteeTitle'));
 } 
 
 function loadData() {
@@ -52,5 +52,18 @@ function loadData() {
 // OVERVIEW SECTION
 function addOverview() {
     addNumGoalCards();
+    addTimeStart();
+}
+
+function addTimeStart() {
+    const timeStart = urlParamsHubInd.get('timeMilli');
+    console.log(timeStart);
+    document.getElementById("start-time").innerText = fromMillisecondsToMonthAndYear(timeStart);
+}
+
+
+function fromMillisecondsToMonthAndYear(milliseconds) {
+    const date = new Date(parseInt(milliseconds));
+    return date.toLocaleString('default', { month: 'long'}) + " " + date.getFullYear();
 }
 

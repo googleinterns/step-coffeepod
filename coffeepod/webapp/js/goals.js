@@ -260,9 +260,10 @@ function deleteGoal(goalId) {
 
 
     // Adjust showing linebreak or not based on whether the two lists are empty or not
-    if (!document.getElementById(currentListId).hasChildNodes() && !document.getElementById(otherListId).hasChildNodes()) {
+    if (!document.getElementById(currentListId).hasChildNodes() || !document.getElementById(otherListId).hasChildNodes()) {
         lineBreak.style.display = "none";
     }
+
 
     //Delete from database
     if (goalId.includes('unchecked')) {
@@ -327,17 +328,27 @@ function addCheckBox(goal, content, checked) {
 
 // create a new goal with checkbox and delete button
 function createNewGoal(goalUncheckedListId) {
+    const goalCheckedListId = getOtherListId(goalUncheckedListId);
+    const goalCheckedList = document.getElementById(goalCheckedListId);
     const goalList = document.getElementById(goalUncheckedListId);
+
     const numUncheckedGoals = goalList.getElementsByTagName("li").length;
     const goalId = "goal-unchecked-" +  goalUncheckedListId.substring(goalUncheckedListId.lastIndexOf("-") + 1) + "-" +  numUncheckedGoals;
     const goalCardId = getGoalCardId(goalId);
+    const lineBreak = document.getElementById('line-break-' + goalCardId);
     const goal = document.createElement('li');
+
 
     goal.setAttribute("id", goalId);
     addCheckBox(goal, "New Goal", false);
     addButton(goal, ["btn", "btn-goal",  "delete-goal"], ["fa", "fa-times"], 'deleteGoal(' + "'"+goalId+"'" + ')');
 
     goalList.appendChild(goal);
+
+    if (goalCheckedList.hasChildNodes() && goalList.childNodes.length == 1) {
+        lineBreak.style.display = "block";
+    }
+
 
     // Update in firestore
     db.collection('mentorship').doc(mentorshipID).collection("goals").doc(goalCardId).update({ 

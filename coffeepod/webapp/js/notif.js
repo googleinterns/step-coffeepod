@@ -67,8 +67,42 @@ function makeRequest(requestId, type) {
   });
 }
 
+// add a new mentorship when a mentorship is formed
+function addNewMentorshipCollection(mentorId, menteeId) {
+    db.collection('mentorship').add({
+        mentorId: mentorId,
+        menteeId: menteeId,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function(mentorshipRef) {
+        const mentorshipId = mentorshipRef.id;
+
+        // add mentorship id to menteeOfPairs for mentee
+        firebase.firestore().collection('user-info').doc(menteeId).update({ 
+            menteeOfPairs: firebase.firestore.FieldValue.arrayUnion(mentorshipId)
+        });
+
+        // add mentorship id to mentorOfPairs for request.id
+        firebase.firestore().collection('user-info').doc(mentorId).update({ 
+            mentorOfPairs: firebase.firestore.FieldValue.arrayUnion(mentorshipId)
+        });
+
+        // add a preset goal (firestore doesn't allow empty subcollections)
+        db.collection('mentorship').doc(mentorshipId).collection('goals').add({
+            unchecked: ["First meeting!", "Say hi!"],
+            checked: [],
+            title: "Introduction: Meet my new mentor/mentee",
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        db.collection('mentorship').doc(mentorshipId).collection('meetings').add({});
+    }).catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+}
+
 // function to approve someones mentee or mentor request
 function approve(button, type) {
+    console.log("Im approving");
   let request = button.closest(type);
 
   // add new document to chats and update chat fields for both users
@@ -87,19 +121,24 @@ function approve(button, type) {
   })
   
   if(type == ".mentor") {
+    addNewMentorshipCollection(request.id, uid);
     // current user is going to be the mentee, request.id is going to be the mentor
     firebase.firestore().collection('user-info').doc(uid).update({ 
       mentors: firebase.firestore.FieldValue.arrayUnion(request.id)
     });
+
     // add the current user also to the requested's list of mentees
     firebase.firestore().collection('user-info').doc(request.id).update({ 
       mentees: firebase.firestore.FieldValue.arrayUnion(uid)
     });
+
+
     // remove the request
     firebase.firestore().collection('notifications').doc(uid).update({ 
       mentorRequests: firebase.firestore.FieldValue.arrayRemove(request.id)
     });
   } else {
+    addNewMentorshipCollection(uid, request.id);
     // the request is the mentee, user if the mentor
     firebase.firestore().collection('user-info').doc(uid).update({ 
       mentees: firebase.firestore.FieldValue.arrayUnion(request.id)
@@ -108,6 +147,8 @@ function approve(button, type) {
     firebase.firestore().collection('user-info').doc(request.id).update({ 
       mentors: firebase.firestore.FieldValue.arrayUnion(uid)
     });
+
+
     // remove the request
     firebase.firestore().collection('notifications').doc(uid).update({ 
       menteeRequests: firebase.firestore.FieldValue.arrayRemove(request.id)

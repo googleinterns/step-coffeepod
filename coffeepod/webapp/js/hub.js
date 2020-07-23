@@ -46,9 +46,10 @@ function getMentorship() {
   });
 }
 
+
 function updatePage(userProfile, userInfo) {
     putMentorsOnPage(userProfile, userInfo);
-    putMenteesOnPage(userProfile, userInfo);  
+    putMenteesOnPage(userProfile, userInfo);
 }
 
 function putMentorsOnPage(userProfile, userInfo) {
@@ -59,7 +60,6 @@ function putMentorsOnPage(userProfile, userInfo) {
 
 function putMenteesOnPage(userProfile, userInfo) {
     const mentorOfMentorships = userInfo.data().mentorOfPairs;
-    const currentUserName = userInfo.data().name;
     const myCurrentMentees = addPeopleInfo(userProfile, mentorOfMentorships, false, false);
     return myCurrentMentees;
 }
@@ -80,6 +80,7 @@ function getSectionId(isMentorList, isPast) {
 }
 
 function addPeopleInfo(userProfile, mentorshipList, isMentorList, isPast) { 
+    console.log("I'm current in addPeopleInfo");
     const sectionId = getSectionId(isMentorList, isPast);
     const currentUserName = userProfile.data().name;
     const currentUserTitle = userProfile.data().title;
@@ -94,10 +95,11 @@ function addPeopleInfo(userProfile, mentorshipList, isMentorList, isPast) {
 
     for (mentorshipId of mentorshipList) {
         let mentorshipRef = db.collection('mentorship').doc(mentorshipId);
-
+        let mentorshipPassedIn = mentorshipId;
         mentorshipRef.get().then(function(mentorship) {
-
+            
             let person, otherUserId, name, title, timeStart, location;
+            const timeMilli = mentorship.data().timestamp.toMillis();
             timeStart = convertDateToMonthYear(mentorship.data().timestamp.toDate());
 
             if (isMentorList) {
@@ -127,9 +129,10 @@ function addPeopleInfo(userProfile, mentorshipList, isMentorList, isPast) {
                     menteeTitle = title;
                     mentorTitle = currentUserTitle;
                 }
-
+                
                 person = new Person(otherUserId, name, title, location, timeStart);
-                addPersonCard(sectionId, person, mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle);
+                
+                addPersonCard(sectionId, person, mentorshipPassedIn, mentorName, menteeName, mentorTitle, menteeTitle, timeMilli);
             });
            
         });
@@ -166,15 +169,16 @@ function addNoPersonCard(sectionId) {
     parent.appendChild(clonedEmptySection);
 }
 
-function addPersonCard(sectionId, personInfo, mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle) {
+function addPersonCard(sectionId, personInfo, mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle, timeMilli) {
     const parent = document.getElementById(sectionId);
     const infoCard = document.getElementById("individual-card-template");
     const clonedInfoCard = infoCard.cloneNode(true);
 
     clonedInfoCard.classList.remove("hidden");
     clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").innerText = personInfo.name;
+    console.log("mentorshipId added in the gotoHubInd function is: " + mentorshipId);
 
-    const onclickFunction = 'goToHubInd(' + "'" + mentorshipId + "'" + "," + "'" + mentorName + "'" + "," + "'" + menteeName + "'" + "," + "'" + mentorTitle + "'" + "," +"'" + menteeTitle + "'" + ")";
+    const onclickFunction = 'goToHubInd(' + "'" + mentorshipId + "'" + "," + "'" + mentorName + "'" + "," + "'" + menteeName + "'" + "," + "'" + mentorTitle + "'" + "," +"'" + menteeTitle + "'" +  "," +"'" + timeMilli + "'" +")";
     clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").setAttribute('onclick', onclickFunction);
     clonedInfoCard.querySelector(".ind-title").innerText = personInfo.title;
     clonedInfoCard.querySelector(".ind-location").innerText = personInfo.location
@@ -187,6 +191,6 @@ function convertDateToMonthYear(date) {
     return date.toLocaleString('default', { month: 'long'}) + " " + date.getFullYear();
 }
 
-function goToHubInd(mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle) {
-    window.location.href = "hub-ind.html?mentorshipId=" + mentorshipId + "&mentorName=" + mentorName + "&menteeName=" + menteeName + "&mentorTitle=" + mentorTitle + "&menteeTitle=" + menteeTitle;
+function goToHubInd(mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle, timeMilli) {
+    window.location.href = "hub-ind.html?mentorshipId=" + mentorshipId + "&mentorName=" + mentorName + "&menteeName=" + menteeName + "&mentorTitle=" + mentorTitle + "&menteeTitle=" + menteeTitle + "&timeMilli=" + timeMilli;
 }
