@@ -63,7 +63,7 @@ function sendNotification(meeting) {
 
 function addNotification(personId, meeting) {
     db.collection('notifications').doc(personId).update({
-        meetingRequest: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id})
+        meetingRequests: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id})
     });
 }
 
@@ -71,10 +71,9 @@ function showMeetingsOnPage() {
     // only show meetings that are accepted 
 }
 
-/*
+
  
- testFirebase();
- testDeleteFirebase();
+ /*testFieldExists();
  // add to a field that has not been instantiated
 function testFirebase() {
     console.log(mentorshipID);
@@ -88,4 +87,12 @@ function testDeleteFirebase(){
         request: firebase.firestore.FieldValue.arrayRemove({mentorshipId: mentorshipID, meetingId: 'a4KWy8d3pjbJMMsP5NBt'})
     })
 }
-*/
+
+function testFieldExists() {
+    console.log("testing field");
+    db.collection('mentorship').doc(mentorshipID).collection('meetings').doc('a4KWy8d3pjbJMMsP5NBt').get().then(function(meetingDoc) {
+        if (meetingDoc.get('accepted') == null) {
+            console.log("accepted does not exist");
+        }
+    })
+}*/

@@ -21,6 +21,11 @@ function getNotif() {
       notifRef.get().then(function(notif) {
         mentorRequests = notif.data().mentorRequests;
         menteeRequests = notif.data().menteeRequests;
+
+        if(notif.data().meetingRequests != null) {
+            loadMeetingRequests();
+        }
+
       }).then(function(){
           loadMentor();
           loadMentee();
@@ -31,6 +36,16 @@ function getNotif() {
       // not logged in do something
     }
   });
+}
+
+function loeadMeetingRequests() {
+    const notifRef = db.collection('notifications').doc(uid);
+    notifRef.get().then(function(notifDoc) {
+        if (notifDoc.data().meetingRequests != null) {
+            // this means meetingRequests exist
+            // put meetingRequests up on the site
+        }
+    })
 }
 
 // load the requests of people that want this user too be their mentor
