@@ -1,5 +1,6 @@
 const queryStringHubInd = window.location.search;
 const urlParamsHubInd = new URLSearchParams(queryStringHubInd);
+const currentUserIsMentor = urlParamsHubInd.get('currentIsMentor');
 const mentorshipID = getMentorshipId();
 
 
@@ -47,6 +48,7 @@ function loadData() {
     getGoalCards();
     addOpeningContent();
     addOverview();
+    console.log("Current user is mentor: " + currentUserIsMentor);
 }
 
 // OVERVIEW SECTION
@@ -57,7 +59,6 @@ function addOverview() {
 
 function addTimeStart() {
     const timeStart = urlParamsHubInd.get('timeMilli');
-    console.log(timeStart);
     document.getElementById("start-time").innerText = fromMillisecondsToMonthAndYear(timeStart);
 }
 
