@@ -217,17 +217,17 @@
                         <div  class="roboto line21 font17">
                             <p>You have <span class="orangeTextLight"> one upcoming meeting</span>, on <span class="orangeTextLight"> Monday, 6 July, 2020</span>.</p>
                             <br>
-                            <p> <span class="orangeTextLight"> Add a meeting.</span></p>
+                            <p> <span id="add-confirm-meeting" class="orangeTextLight"> Add a meeting:</span></p>
                         </div>
                         </div>
 
-                        <form onsubmit = "sendMeetingRequest(event)" method="POST" role="form" class="form-horizontal"> 
+                        <form id="meeting-form" onsubmit = "sendMeetingRequest(event)" method="POST" role="form" class="form-horizontal"> 
                         <div class="form-group poppins container meeting-form">
                             
                              
                             <div class = "row">
                                 <div class = "col-md-12">
-                                    <input type="text" class="form-control shadow-none" name = "title" placeholder="title">
+                                    <input type="text" class="form-control shadow-none" name = "title" placeholder="title" required>
                                 </div>
                             </div>
                         </div>
@@ -237,7 +237,7 @@
                                     <div class = "col-md-12">
                                         <div class="form-group">
                                             <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="when"/>
+                                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="when" placeholder="when" required/>
                                                 <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -257,7 +257,7 @@
                             <div class="form-group poppins container mb-0 meeting-form">
                                 <div class = "row">
                                     <div class = "col-md-12">
-                                        <input type="text" class="form-control shadow-none" name="where" placeholder="where">
+                                        <input type="text" class="form-control shadow-none" name="where" placeholder="where" required>
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +265,7 @@
                             <div class="form-group poppins container  meeting-form">
                                 <div class = "row">
                                     <div class = "col-md-12">
-                                        <textarea type="text" class="form-control shadow-none" name = "description" placeholder="description" rows="5"></textarea>
+                                        <textarea type="text" class="form-control shadow-none" name = "description" placeholder="description" rows="5" required></textarea>
                                     </div>
                                 </div>
                             </div>
