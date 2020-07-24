@@ -4,12 +4,13 @@ let myCurrentMentees, myCurrentMentors, myPastMentees, myPastMentors, mentorMent
 
 
 class Person {
-  constructor(id, name, title, location, timeStart) {
+  constructor(id, name, title, location, timeStart, isMentor) {
     this.id = id;
     this.name = name;
     this.title = title;
     this.location = location;
     this.timeStart = timeStart;
+    this.isMentor = isMentor;
   }
 }
 
@@ -80,7 +81,6 @@ function getSectionId(isMentorList, isPast) {
 }
 
 function addPeopleInfo(userProfile, mentorshipList, isMentorList, isPast) { 
-    console.log("I'm current in addPeopleInfo");
     const sectionId = getSectionId(isMentorList, isPast);
     const currentUserName = userProfile.data().name;
     const currentUserTitle = userProfile.data().title;
@@ -110,6 +110,7 @@ function addPeopleInfo(userProfile, mentorshipList, isMentorList, isPast) {
             
 
             let otherUserProfileRef = db.collection('profile').doc(otherUserId);
+            let currentUserIsMentor = !isMentorList;
             otherUserProfileRef.get().then(function(otherUserInfo) {
                 name = otherUserInfo.data().name;
                 title = otherUserInfo.data().title;
@@ -130,7 +131,7 @@ function addPeopleInfo(userProfile, mentorshipList, isMentorList, isPast) {
                     mentorTitle = currentUserTitle;
                 }
                 
-                person = new Person(otherUserId, name, title, location, timeStart);
+                person = new Person(otherUserId, name, title, location, timeStart, currentUserIsMentor);
                 
                 addPersonCard(sectionId, person, mentorshipPassedIn, mentorName, menteeName, mentorTitle, menteeTitle, timeMilli);
             });
@@ -173,12 +174,11 @@ function addPersonCard(sectionId, personInfo, mentorshipId, mentorName, menteeNa
     const parent = document.getElementById(sectionId);
     const infoCard = document.getElementById("individual-card-template");
     const clonedInfoCard = infoCard.cloneNode(true);
-
+    const currentUserIsMentor = personInfo.isMentor;
     clonedInfoCard.classList.remove("hidden");
     clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").innerText = personInfo.name;
-    console.log("mentorshipId added in the gotoHubInd function is: " + mentorshipId);
 
-    const onclickFunction = 'goToHubInd(' + "'" + mentorshipId + "'" + "," + "'" + mentorName + "'" + "," + "'" + menteeName + "'" + "," + "'" + mentorTitle + "'" + "," +"'" + menteeTitle + "'" +  "," +"'" + timeMilli + "'" +")";
+    const onclickFunction = 'goToHubInd(' + "'" + mentorshipId + "'" + "," + "'" + mentorName + "'" + "," + "'" + menteeName + "'" + "," + "'" + mentorTitle + "'" + "," +"'" + menteeTitle + "'" +  "," +"'" + timeMilli + "'" + "," +"'" + currentUserIsMentor + "'" +")";
     clonedInfoCard.querySelector(".ind-name").querySelector("#link-to-hub-ind").setAttribute('onclick', onclickFunction);
     clonedInfoCard.querySelector(".ind-title").innerText = personInfo.title;
     clonedInfoCard.querySelector(".ind-location").innerText = personInfo.location
@@ -191,6 +191,6 @@ function convertDateToMonthYear(date) {
     return date.toLocaleString('default', { month: 'long'}) + " " + date.getFullYear();
 }
 
-function goToHubInd(mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle, timeMilli) {
-    window.location.href = "hub-ind.html?mentorshipId=" + mentorshipId + "&mentorName=" + mentorName + "&menteeName=" + menteeName + "&mentorTitle=" + mentorTitle + "&menteeTitle=" + menteeTitle + "&timeMilli=" + timeMilli;
+function goToHubInd(mentorshipId, mentorName, menteeName, mentorTitle, menteeTitle, timeMilli, isMentor) {
+    window.location.href = "hub-ind.html?mentorshipId=" + mentorshipId + "&mentorName=" + mentorName + "&menteeName=" + menteeName + "&mentorTitle=" + mentorTitle + "&menteeTitle=" + menteeTitle + "&timeMilli=" + timeMilli + "&currentIsMentor=" + isMentor;
 }
