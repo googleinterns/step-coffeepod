@@ -57,7 +57,6 @@ function addOverview() {
 
 function addTimeStart() {
     const timeStart = urlParamsHubInd.get('timeMilli');
-    console.log(timeStart);
     document.getElementById("start-time").innerText = fromMillisecondsToMonthAndYear(timeStart);
 }
 
