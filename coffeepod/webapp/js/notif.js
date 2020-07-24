@@ -94,7 +94,9 @@ function addNewMentorshipCollection(mentorId, menteeId) {
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        db.collection('mentorship').doc(mentorshipId).collection('meetings').add({});
+        db.collection('mentorship').doc(mentorshipId).collection('meetings').add({
+            filled: false
+        });
     }).catch(function(error) {
         console.error("Error adding document: ", error);
     });
