@@ -105,7 +105,7 @@ a:hover{
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 15px;
   line-height: 22px;
   letter-spacing: 0.05em;
   color: #000000;
@@ -114,5 +114,10 @@ a:hover{
 
 .person-name{
     color: #AA6231  !important;
+}
+
+.check-icon {
+    padding: 20px;
+    color: #DDA35D; !important;
 }
 
