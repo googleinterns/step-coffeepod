@@ -9,8 +9,6 @@ function getProfile() {
     personal = true;
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        name = user.displayName;
-        email = user.email;
         uid = user.uid;
         loadData();
       } else {
@@ -21,11 +19,7 @@ function getProfile() {
     // load someone elses page
     uid = open;
     personal = false;
-    let userRef = db.collection("user-info").doc(uid);
-    userRef.get().then(function(userinfo) {
-      name = userinfo.data().name;
-      email = userinfo.data().email;
-    }).then(loadData());
+    loadData();
   }
   resizeAllTextarea();
 }
@@ -63,6 +57,7 @@ function loadData() {
   })
   let userRef = db.collection("user-info").doc(uid);
   userRef.get().then(function(userinfo) {
+    name = userinfo.data().name;
     username = userinfo.data().username;
     mentors = userinfo.data().mentors;
     mentees = userinfo.data().mentees;
@@ -173,8 +168,10 @@ function updateTags() {
 // load in the username on the page
 function updateUsername() {
   let usernameSlots = document.getElementsByClassName("username");
+  console.log(usernameSlots);
   for (let i = 0, len = usernameSlots.length; i < len; i++) {
     usernameSlots[i].innerText = name;
+    console.log(name);
   }
 
 }

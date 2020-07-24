@@ -44,18 +44,26 @@
                   <div class = "row align-items-start pt-5 bold">
                     <div class = "col-1"></div>
                     <div class = "col-3 col-sm-2">
-                        <a href="#" class = "underline poppins sm drkbrown"> about </a>
+                        <a onClick="showAbout()" class = "btn bold underline poppins sm drkbrown"> about </a>
                     </div>
                     <div class = "col-4">
-                        <a href="#" class = "underline poppins sm drkbrown">why us?</a>
+                        <a onClick="showUs()" class = "btn bold underline poppins sm drkbrown"> why us? </a>
                     </div>
                   </div>
-                  <div class = "row vertical-center">
+                  <div id="intro" class = "row vertical-center">
                       <div class = "col-1"></div>
                       <div class = "col-10">
                          <p class = "poppins lg bold"> FIND A MENTOR AND/OR MENTEE </p>
                         <br>
                         <p class = "roboto md light"> In our uniquely designed, coffee chat themed environment. </p>
+                      </div>
+                      <div class = "col-1"></div>
+                  </div>
+                   <div id = "aboutCoffee" class = "row vertical-center hidden">
+                      <div class = "col-1"></div>
+                      <div class = "col-10">
+                        <p class = "roboto md light"> Our platform aims to connect students with potential mentors and mentees who can learn from each other. We created a place where people feel encouraged to reach out to others to ask for
+                           questions and guidance from more experienced people.</p>
                       </div>
                       <div class = "col-1"></div>
                   </div>
