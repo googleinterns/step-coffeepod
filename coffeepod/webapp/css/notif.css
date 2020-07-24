@@ -118,6 +118,7 @@ a:hover{
 
 .check-icon {
     padding: 20px;
+    padding-left: 0px;
     color: #DDA35D; !important;
 }
 
