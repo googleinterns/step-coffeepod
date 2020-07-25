@@ -1,4 +1,5 @@
 let name, uid, user, username, mentors, mentees, mentorRequests, menteeRequests;
+//uid stores the current user's id
 
 // mentorRequests are people who want this user person to be their mentor
 // menteeRequests are people who want this user to be their mentee
@@ -38,15 +39,160 @@ function getNotif() {
   });
 }
 
+function testClickMe() {
+    console.log(this);
+}
 function loeadMeetingRequests() {
     const notifRef = db.collection('notifications').doc(uid);
     notifRef.get().then(function(notifDoc) {
-        if (notifDoc.data().meetingRequests != null) {
-            // this means meetingRequests exist
-            // put meetingRequests up on the site
-        }
+        // this means meetingRequests exist
+        // put meetingRequests up on the site
+        putAllMeetingRequestsOnPage(notifDoc.data().meetingRequests);
     })
 }
+
+function putAllMeetingRequestsOnPage(meetingRequests) {
+    if (meetingRequests != null) {
+        for (let i = 0; i < meetingRequests.length; i++) {
+            const meetingId = meetingRequests[i].meetingId;
+            const mentorshipId = meetingRequests[i].mentorshipId;
+            putOneMeetingRequestOnPage(meetingId, mentorshipId);
+        }
+    }
+}
+
+function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
+    let senderId;
+    const mentorshipRef = db.collection('mentorship').doc(mentorshipId);
+    // (0) Clone the meeting request element and access necessary children nodes
+    const meetingRequestElement = document.getElementById("meeting-request-board");
+    const meetingRequestElementCloned = meetingRequestElement.cloneNode(true);
+    
+    const titleElement = meetingRequestElementCloned.getElementById("title");
+    const whenElement = meetingRequestElementCloned.getElementById("when");
+    const whereElement = meetingRequestElementCloned.getElementById("where");
+    const descriptionElement = meetingRequestElementCloned.getElementById("description");
+
+    /* Show, hide buttons for meeting details
+    const seeMoreElement = meetingRequestElementCloned.getElementById("see-more");
+    seeMoreElement.setAttribute('onclick', 'showMeetingDetails(this)');
+    const hideElement = meetingRequestElementCloned.getElementById("hide-details");
+    hideElement.setAttribute('onclick', 'hideMeetingDetails(this)');*/
+
+    // Change all elements of this name
+    const senderNameElements = meetingRequestElementCloned.querySelectorAll(".request-sender-name");
+    const senderRoleElement = meetingRequestElementCloned.getElementById("request-sender-role");
+
+    // Add action functions for the approve and remove button
+    meetingRequestElementCloned.getElementById("approve-meeting").setAttribute("onclick", "approveMeeting(this," + "'"  + mentorshipId + "'," + "'"  + meetingId + "'" + ")");
+    meetingRequestElementCloned.getElementById("remove-meeting").setAttribute("onclick", "removeMeeting(this," + "'"  + mentorshipId + "'," + "'"  + meetingId + "'" + ")");
+
+    // (1) Update sender's information 
+    mentorshipRef.collection('mentorship').then(function (mentorshipDoc) {
+        if (senderIsMentor == true) {
+            senderId = mentorshipDoc.data().mentorId;
+            senderRoleElement.innerText = "mentor";
+        } else {
+            senderId = mentorshipDoc.data().menteeId;
+            senderRoleElement.innerText = "mentee";
+        }
+
+        db.collection('profile').doc(senderId).get().then(function(profileDoc) {
+            senderNameElements.innerText = profileDoc.data().name;
+        });
+
+    });
+
+    // (2) Update details of the meeting
+    mentorshipRef.collection('meetings').doc(meetingId).get().then(function(meetingDoc) {
+        // (1) Update sender's information 
+        mentorshipRef.collection('mentorship').then(function (mentorshipDoc) {
+            if (meetingDoc.data().setByMentor == true) {
+                senderId = mentorshipDoc.data().mentorId;
+                senderRoleElement.innerText = "mentor";
+            } else {
+                senderId = mentorshipDoc.data().menteeId;
+                senderRoleElement.innerText = "mentee";
+            }
+        });
+
+        db.collection('profile').doc(senderId).get().then(function(profileDoc) {
+            senderNameElements.innerText = profileDoc.data().name;
+        });
+
+        titleElement.innerText = meetingDoc.data().title;
+        whenElement.innerText = meetingDoc.data().when;
+        whereElement.innerText = meetingDoc.data().where;
+        descriptionElement.innerText = meetingDoc.data().description;
+    });
+
+    // (3) Unhide all of this information
+    meetingRequestElementCloned.classList.remove("hidden");
+
+}
+
+
+/*
+function showMeetingDetails(showMoreEle) {
+    // Show the meeting details card
+    const meetingDetailsCard = showMoreEle.closest('#meeting-details-card');
+    meetingDetailsCard.style.display = 'inline-table';
+
+    // Hide the see more link
+    showMoreEle.style.display = 'none';
+
+    // Show the hide link
+    const hideEle = showMoreEle.closet('#hide-details');
+    hideEle.style.display = 'inline-block';
+}
+
+function hideMeetingDetails(hideEle) {
+    // Show the meeting details card
+    const meetingDetailsCard = hideEle.closest('#meeting-details-card');
+    meetingDetailsCard.style.display = 'none';
+
+    // Hide the hide link
+    hideEle.style.display = 'none';
+
+    // Show the hide link
+    const showMoreEle = showMoreEle.closet('#see-more');
+    showMoreEle.style.display = 'inline-block';
+}*/
+
+function approveMeeting(buttonEle, mentorshipId, meetingId) {
+    const mentorshipRef = db.collection('mentorship').doc(mentorshipId);
+
+    // Set the accepted stage of the meeting to true
+    mentorshipRef.get().then(function(mentorshipDoc) {
+        mentorshipDoc.collection('meetings').doc(meetingId).set({
+            accepted: true
+        })
+    })
+
+    // Show the result to the current user 
+    const confirmation = buttonEle.closest('approve-confirmation');
+    confirmation.classList.remove('hidden');
+
+    const actionButtons = buttonEle.closest('response-options');
+    actionButtons.classList.add('hidden');
+}
+
+function removeMeeting(buttonEle, mentorshipId, meetingId) {
+    const mentorshipRef = db.collection('mentorship').doc(mentorshipId);
+
+    // Set the accepted stage of the meeting to true
+    mentorshipRef.get().then(function(mentorshipDoc) {
+        mentorshipDoc.collection('meetings').doc(meetingId).delete();
+    })
+
+    // Show the result to the current user 
+    const confirmation = buttonEle.closest('approve-confirmation');
+    confirmation.classList.remove('hidden');
+
+    const actionButtons = buttonEle.closest('response-options');
+    actionButtons.classList.add('hidden');
+}
+
 
 // load the requests of people that want this user too be their mentor
 function loadMentor() {
