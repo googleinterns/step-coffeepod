@@ -30,7 +30,7 @@ function sendMeetingRequest(event){
     // add confirmation on the screen
 
     const addConfirm = document.getElementById("add-confirm-meeting");
-    addConfirm.innerText = "Your meeting request is sent! Add another meeting:";
+    addConfirm.innerText = "Your meeting request is sent! Request another meeting:";
     meetingForm.reset();  
 }
 

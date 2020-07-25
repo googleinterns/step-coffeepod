@@ -48,7 +48,10 @@ function getCurrentUser() {
             nameHolder.innerText = name;
 
             const titleHolder = document.getElementById("current-user-title");
-            titleHolder.innerText = profile.data().title;
+            if (titleHolder != null) {
+                titleHolder.innerText = profile.data().title;
+            }
+            
         } 
       })
     } 
