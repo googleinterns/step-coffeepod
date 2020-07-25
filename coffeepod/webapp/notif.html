@@ -36,15 +36,16 @@
       const auth = firebase.auth();
     </script>
     
-    <!--
+
     <script src="js/script.js"></script>
     <script src="js/meetings.js"></script>
+    <script src="js/notif.js"></script>
     <script src="js/search.js"></script>
     <script>
       $(document).ready(load('notifications'));
       $(document).ready(getNotif());
-      //$(document).ready(getCurrentUser());
-    </script>-->
+      $(document).ready(getCurrentUser());
+    </script>
   </head>
   <body onload="load('notifications')">
     <div id="page-container">
@@ -106,9 +107,9 @@
                 <div id="mentorStore"></div>
               </div>
 
-              <div class="cont shadow-sm">
+              <div class="cont shadow-sm" id="meeting-request-section">
                 <p class="section-title">meeting requests</p>
-                <div id="meeting-request-board" class="border paddedBorder">
+                <div id="meeting-request-board" class="border paddedBorder hidden">
                   <div class="row">
                     <div id="meeting-request" class="col-xl-3 my-auto">
                       <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
@@ -131,7 +132,7 @@
                         <button id = "remove-meeting" class="btn remove-button">remove</button>
                       </div>
                       <p id="approve-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Awesome! <a class="request-sender-name">Pancake</a> has been notified :)</p>
-                      <p id="remove-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"><a class="request-sender-name">Pancake</a> has been notified.</p>
+                      <p id="remove-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i><a class="request-sender-name">Pancake</a> has been notified.</p>
                     </div>
                   </div>
                   </div>
