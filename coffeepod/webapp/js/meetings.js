@@ -28,9 +28,20 @@ function sendMeetingRequest(event){
     recordMeetingInfoAndSendNotification(meeting);
 
     // add confirmation on the screen
+    // confirm on the page for current user
+    
+    let personToNotifyRole, personToNotifyName;
+    if (currentUserIsMentor) {
+        personToNotifyRole = "mentee";
+        personToNotifyName = menteeName;
+    } else {
+        personToNotifyRole = "mentor";
+        personToNotifyName = mentorName;
+    }
 
     const addConfirm = document.getElementById("add-confirm-meeting");
-    addConfirm.innerText = "Your meeting request is sent! Request another meeting:";
+    const addConfirmName = "<span class='orangeTextLight'>" + personToNotifyName + "</span>";
+    addConfirm.innerHTML = "Your meeting request is sent to your " + personToNotifyRole + " " + addConfirmName + "!" + " Request another meeting:";
     meetingForm.reset();  
 }
 
@@ -54,7 +65,7 @@ function recordMeetingInfoAndSendNotification(meeting) {
 
 function sendNotification(meeting) {
     db.collection('mentorship').doc(mentorshipID).get().then(function(mentorship) {
-        let personToNotifyId;
+        let personToNotifyId, personToNotifyRole, personToNotifyName;
         if (Boolean(currentUserIsMentor) == true) {
             console.log("the person to be notified is a mentee");
             personToNotifyId = mentorship.data().menteeId;
@@ -62,6 +73,7 @@ function sendNotification(meeting) {
             console.log("the person to be notified is a mentor");
             personToNotifyId = mentorship.data().mentorId;
         }
+
         addNotification(personToNotifyId, meeting);
     });
     
@@ -71,7 +83,7 @@ function sendNotification(meeting) {
 
 function addNotification(personId, meeting) {
     db.collection('notifications').doc(personId).update({
-        meetingRequests: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id})
+        meetingNotifs: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id})
     });
 }
 
