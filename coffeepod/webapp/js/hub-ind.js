@@ -2,6 +2,8 @@ const queryStringHubInd = window.location.search;
 const urlParamsHubInd = new URLSearchParams(queryStringHubInd);
 const currentUserIsMentor = urlParamsHubInd.get('currentIsMentor');
 const mentorshipID = getMentorshipId();
+const mentorName = urlParamsHubInd.get('mentorName');
+const menteeName = urlParamsHubInd.get('menteeName')
 
 
 // WELCOME SECTION
@@ -41,7 +43,7 @@ function addMentorshipHubName() {
 }
 
 function getMentorshipHubName() {
-    return new HubName(urlParamsHubInd.get('mentorName'), urlParamsHubInd.get('menteeName'), urlParamsHubInd.get('mentorTitle'), urlParamsHubInd.get('menteeTitle'));
+    return new HubName(mentorName, menteeName, urlParamsHubInd.get('mentorTitle'), urlParamsHubInd.get('menteeTitle'));
 } 
 
 function loadData() {
