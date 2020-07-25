@@ -141,30 +141,36 @@
               <!-- MEETING REQUESTS SECTION -->
               <div class="cont shadow-sm" id="meeting-request-section">
                 <p class="section-title">meeting requests</p>
-                <div id="meeting-request-board" class="border paddedBorder">
+                <div id="meeting-request-board" class="border paddedBorder hidden">
                   <div class="row">
                     <div id="meeting-request" class="col-xl-3 my-auto">
                       <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
                     </div>
                     <div class="col-xl-9 text-center text-xl-left my-auto">
                       <p class="request-content">Your <span id="request-sender-role"></span> <a href="" class="request-sender-name"></a><span> wants to set a meeting with you</span></p>
-                      <p class="show-hide"> Meeting details </p>
-                      <!--<a class="hidden show-hide" id="see-more">See details of meeting</a>
-                      <a class="hidden show-hide" id="hide-details">Hide details of meeting</a>-->
-                      <div id="meeting-details">
-                        <ul  class="meeting-details-card" id="meeting-details-card">
-                          <li> <span class="weight400">Title:</span> <span id="title"> Ice-cream meeting</span></li>
-                          <li> <span class="weight400">When: </span> <span id="when"> This Wednesday</span></li>
-                          <li> <span class="weight400">Where: </span><span id="where">Cafe</span></li>
-                          <li> <span class="weight400">Description: </span><span id="description"> Let's get ice-cream and chat more :) </span></li>
-                        </ul>
+                      <div id="meeting-details-head">
+                        <a class="show-hide" data-toggle="collapse" data-target="#collapseDetails" aria-expanded="true" aria-controls="collapseDetails"> 
+                            Show | Hide meeting details 
+                        </a>
                       </div>
-                      <div id="response-options">
+                      <!--<a class="show-hide" id="see-more">See details of meeting</a>
+                      <a class="hidden show-hide" id="hide-details">Hide details of meeting</a>-->
+                      <div id="collapseDetails" class="collapse hide" aria-labelledby="meeting-details-head">
+                        <div id="meeting-details">
+                            <ul  class="meeting-details-card" id="meeting-details-card">
+                            <li> <span class="weight400">Title:</span> <span id="title"> Ice-cream meeting</span></li>
+                            <li> <span class="weight400">When: </span> <span id="when"> This Wednesday</span></li>
+                            <li> <span class="weight400">Where: </span><span id="where">Cafe</span></li>
+                            <li> <span class="weight400">Description: </span><span id="description"> Let's get ice-cream and chat more :) </span></li>
+                            </ul>
+                        </div>
+                      </div>
+                      <div class="response-options" id="response-options">
                         <button id="approve-meeting" class="btn accept-button">accept</button>
                         <button id="remove-meeting" class="btn remove-button">remove</button>
                       </div>
-                      <p id="approve-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Awesome! <a class="request-sender-name"></a> has been notified that you accepted the meeting:)</p>
-                      <p id="remove-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i><a class="request-sender-name"></a> has been notified that you removed the meeting.</p>
+                      <p id="approve-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Awesome! <a class="request-sender-name"></a> is notified that you accepted the meeting :)</p>
+                      <p id="remove-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i><a class="request-sender-name"></a> is notified that you removed the meeting.</p>
                     </div>
                   </div>
                 </div>
@@ -173,7 +179,7 @@
             <!-- MEETING RESPONSE SECTION -->
              <div class="cont shadow-sm" id="meeting-response-section">
                 <p class="section-title">meeting responses</p>
-                <div id="meeting-response-board" class="border paddedBorder">
+                <div id="meeting-response-board" class="border paddedBorder hidden">
                   <div class="row">
                     <div id="meeting-response" class="col-xl-3 my-auto">
                       <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
@@ -181,7 +187,7 @@
                     <div class="col-xl-9 text-center text-xl-left my-auto">
                       <p class="request-content">Your <span id="response-sender-role"></span> <a href="" class="response-sender-name"></a><span> wants to set a meeting with you</span></p>
                       <p class="show-hide"> Meeting details </p>
-                      <!--<a class="hidden show-hide" id="see-more">See details of meeting</a>
+                      <a class="hidden show-hide" id="see-more">See details of meeting</a>
                       <a class="hidden show-hide" id="hide-details">Hide details of meeting</a>-->
                       <div id="meeting-details-request">
                         <ul class="meeting-details-card" id="meeting-details-card-request">
@@ -191,9 +197,11 @@
                           <li> <span class="weight400">Description: </span><span id="meeting-description"> Let's get ice-cream and chat more :) </span></li>
                         </ul>
                       </div>
-                    <button id="i-am-aware" class="btn accept-button">Got it!</button>
-  
-                    <p id="delete-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Confirmed! <a class="request-sender-name"></a> The meeting is deleted.</p>
+                    <div class="response-options">
+                    <button id="i-am-aware" class="btn accept-button">got it!</button>
+                    </div> 
+
+                    <p id="delete-confirmation" class="system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Confirmed! <a class="request-sender-name"></a> The meeting is deleted.</p>
                       
                     </div>
                   </div>

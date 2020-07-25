@@ -76,10 +76,10 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
     const whereElement = meetingRequestElementCloned.querySelector("#where");
     const descriptionElement = meetingRequestElementCloned.querySelector("#description");
 
-    /* Show, hide buttons for meeting details
-    const seeMoreElement = meetingRequestElementCloned.getElementById("see-more");
+    /*//Show, hide buttons for meeting details
+    const seeMoreElement = meetingRequestElementCloned.querySelector("#see-more");
     seeMoreElement.setAttribute('onclick', 'showMeetingDetails(this)');
-    const hideElement = meetingRequestElementCloned.getElementById("hide-details");
+    const hideElement = meetingRequestElementCloned.querySelector("#hide-details");
     hideElement.setAttribute('onclick', 'hideMeetingDetails(this)');*/
 
     // Change all elements of this name
@@ -136,39 +136,39 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
 
 
 
-/*
-function showMeetingDetails(showMoreEle) {
+
+/*function showMeetingDetails(showMoreEle) {
     // Show the meeting details card
-    const meetingDetailsCard = showMoreEle.closest('#meeting-details-card');
+    const meetingDetailsCard = $(showMoreEle).closest(':has(.meeting-details-card)').children('.meeting-details-card').get(0);
     meetingDetailsCard.style.display = 'inline-table';
 
     // Hide the see more link
     showMoreEle.style.display = 'none';
 
     // Show the hide link
-    const hideEle = showMoreEle.closet('#hide-details');
+    const hideEle = showMoreEle.nextSibling('#hide-details');
     hideEle.style.display = 'inline-block';
 }
 
 function hideMeetingDetails(hideEle) {
     // Show the meeting details card
-    const meetingDetailsCard = hideEle.closest('#meeting-details-card');
+    const meetingDetailsCard = $(hideEle).closest(':has(.meeting-details-card)').children('.meeting-details-card').get(0);
     meetingDetailsCard.style.display = 'none';
 
     // Hide the hide link
     hideEle.style.display = 'none';
 
     // Show the hide link
-    const showMoreEle = showMoreEle.closet('#see-more');
+    const showMoreEle = hideEle.previousSibling('#see-more');
     showMoreEle.style.display = 'inline-block';
 }*/
 
 function approveMeeting(buttonEle, mentorshipId, meetingId) {
     // Set the accepted stage of the meeting to true
-    db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
+    /*db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
             accepted: true,
             pending: false
-    });
+    });*/
 
     // Show the result to the current user 
     const confirmation = $(buttonEle).closest(':has(#approve-confirmation)').children('#approve-confirmation').get(0);
@@ -177,15 +177,15 @@ function approveMeeting(buttonEle, mentorshipId, meetingId) {
     const actionButtons = buttonEle.closest('#response-options');
     actionButtons.classList.add('hidden');
 
-    removeMeetingRequest(mentorshipId, meetingId);
+    //removeMeetingRequest(mentorshipId, meetingId);
 }
 
 function removeMeeting(buttonEle, mentorshipId, meetingId) {
     // Set the accepted stage of the meeting to false
-    db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
+    /*db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
             accepted: false,
             pending: false
-    });
+    });*/
 
     // Show the result to the current user 
     const confirmation = $(buttonEle).closest(':has(#remove-confirmation)').children('#remove-confirmation').get(0);
@@ -194,7 +194,7 @@ function removeMeeting(buttonEle, mentorshipId, meetingId) {
     const actionButtons = buttonEle.closest('#response-options');
     actionButtons.classList.add('hidden');
 
-    removeMeetingRequest(mentorshipId, meetingId);
+    //removeMeetingRequest(mentorshipId, meetingId);
 }
 
 // This removes the meeting request from the meetingRequest list in notifications
