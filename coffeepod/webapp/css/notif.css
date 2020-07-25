@@ -38,8 +38,8 @@ a:hover{
 
 .request-content{
   font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-size: 25px;
+  font-weight: 600;
+  font-size: 20px;
   line-height: 37px;
   padding: 0;
   padding-bottom: 2px;
@@ -96,6 +96,7 @@ a:hover{
   border: 2px solid #AA6231;
   display: inline-table;
   margin-bottom: 20px;
+  font-weight: 300;
 }
 
 .bold-text{
