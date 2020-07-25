@@ -24,7 +24,7 @@ function getNotif() {
         menteeRequests = notif.data().menteeRequests;
 
         if(notif.data().meetingRequests != null) {
-            loadMeetingRequests();
+            //loadMeetingRequests();
         }
 
       }).then(function(){
@@ -39,10 +39,8 @@ function getNotif() {
   });
 }
 
-function testClickMe() {
-    console.log(this);
-}
-function loeadMeetingRequests() {
+
+function loadMeetingRequests() {
     const notifRef = db.collection('notifications').doc(uid);
     notifRef.get().then(function(notifDoc) {
         // this means meetingRequests exist
@@ -86,22 +84,6 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
     // Add action functions for the approve and remove button
     meetingRequestElementCloned.getElementById("approve-meeting").setAttribute("onclick", "approveMeeting(this," + "'"  + mentorshipId + "'," + "'"  + meetingId + "'" + ")");
     meetingRequestElementCloned.getElementById("remove-meeting").setAttribute("onclick", "removeMeeting(this," + "'"  + mentorshipId + "'," + "'"  + meetingId + "'" + ")");
-
-    // (1) Update sender's information 
-    mentorshipRef.collection('mentorship').then(function (mentorshipDoc) {
-        if (senderIsMentor == true) {
-            senderId = mentorshipDoc.data().mentorId;
-            senderRoleElement.innerText = "mentor";
-        } else {
-            senderId = mentorshipDoc.data().menteeId;
-            senderRoleElement.innerText = "mentee";
-        }
-
-        db.collection('profile').doc(senderId).get().then(function(profileDoc) {
-            senderNameElements.innerText = profileDoc.data().name;
-        });
-
-    });
 
     // (2) Update details of the meeting
     mentorshipRef.collection('meetings').doc(meetingId).get().then(function(meetingDoc) {
@@ -165,7 +147,8 @@ function approveMeeting(buttonEle, mentorshipId, meetingId) {
     // Set the accepted stage of the meeting to true
     mentorshipRef.get().then(function(mentorshipDoc) {
         mentorshipDoc.collection('meetings').doc(meetingId).set({
-            accepted: true
+            accepted: true,
+            pending: false
         })
     })
 
@@ -182,11 +165,14 @@ function removeMeeting(buttonEle, mentorshipId, meetingId) {
 
     // Set the accepted stage of the meeting to true
     mentorshipRef.get().then(function(mentorshipDoc) {
-        mentorshipDoc.collection('meetings').doc(meetingId).delete();
+        mentorshipDoc.collection('meetings').doc(meetingId).set({
+            accepted: false,
+            pending: false
+        })
     })
 
     // Show the result to the current user 
-    const confirmation = buttonEle.closest('approve-confirmation');
+    const confirmation = buttonEle.closest('remove-confirmation');
     confirmation.classList.remove('hidden');
 
     const actionButtons = buttonEle.closest('response-options');

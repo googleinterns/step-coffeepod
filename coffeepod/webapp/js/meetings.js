@@ -1,12 +1,17 @@
+// When pending is false and accepted is false, then the meeting has been declined by the other user
+// When accepted = false and pending = true, then we are waiting for the other person's response
+// When accepted = true and pending = false, the meeting has been accepted and should be added to the schedule
+
+
 class Meeting {
-     constructor(id, title, when, where, description, accepted, filled) {
+     constructor(id, title, when, where, description, pending, accepted, filled) {
         this.id = id;
         this.title = title;
         this.when = when;
         this.where = where;
         this.description = description;
-        this.accepted = accepted;
-        this.filled = filled;
+        this.pending = pending; // default value is true
+        this.accepted = accepted; // default value is false
     }
 }
 
@@ -19,7 +24,7 @@ function sendMeetingRequest(event){
     const where = meetingForm['where'].value;
     const description = meetingForm['description'].value;
 
-    const meeting = new Meeting("", title, when, where, description, false, true);
+    const meeting = new Meeting("", title, when, where, description, true, false);
     recordMeetingInfoAndSendNotification(meeting);
 
     // add confirmation on the screen
@@ -38,7 +43,8 @@ function recordMeetingInfoAndSendNotification(meeting) {
         where: meeting.where,
         description: meeting.description,
         accepted: false,
-        filled: true
+        pending: true,
+        setByMentor: currentUserIsMentor
     }).then(function(newMeetingRef) {
         const meetingId = newMeetingRef.id;
         meeting.id = meetingId;
@@ -63,12 +69,12 @@ function sendNotification(meeting) {
 
 function addNotification(personId, meeting) {
     db.collection('notifications').doc(personId).update({
-        meetingRequests: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id, senderIsMentor: currentUserIsMentor})
+        meetingRequests: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id})
     });
 }
 
 function showMeetingsOnPage() {
-    // only show meetings that are accepted 
+    // only show meetings that are accepted and are pending
 }
 
 
