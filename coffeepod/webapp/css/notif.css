@@ -46,7 +46,7 @@ a:hover{
   margin: 0;
 }
 
-.request-sender-name{
+#request-sender-name{
     color: #AA6231 !important;
     font-weight: 500;
 }
@@ -77,7 +77,7 @@ a:hover{
     text-align: center;
 }
 
-.see-more{
+#see-more{
     font-family: Roboto;
     line-height: 21px;
     font-size: 17px;
@@ -116,9 +116,8 @@ a:hover{
     color: #AA6231  !important;
 }
 
-.check-icon {
+.check-icon{
     padding: 20px;
+    color: #DDA35D !important;
     padding-left: 0px;
-    color: #DDA35D; !important;
 }
-

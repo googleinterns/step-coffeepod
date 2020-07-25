@@ -33,8 +33,10 @@
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
+      const auth = firebase.auth();
     </script>
     <script src="js/script.js"></script>
+    <script src="js/meetings.js"></script>
     <script src="js/notif.js"></script>
     <script src="js/search.js"></script>
     <script>
@@ -52,8 +54,25 @@
         <div class="container-fluid">
           <!-- your cols will need a row -->
           <div class="row justify-content-center">
+               <div class="col-lg-3 d-none d-lg-block">
+            <!-- first side col sticky -->
+              <div class="make-me-sticky">
+                <div class="cont shadow-sm">
+                  <div class="text-center mb-3">
+                    <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%>
+                  </div>
+                  <p class="font20 poppins line21 weight500 padNormal text-center mb-2 name">hi, <span id="current-user-name"></span></p>
+                  <p class="font17 roboto line15 padNormal text-center spaceLetters title"></p>
+                  <br>
+                  <a href = "profile.html"><p class="font15 roboto line15 weight300 padNormal text-center orangeTextDark mb-2"> Update your profile</p></a>
+                  <a href = "index.html"> <p class="font15 roboto line15 weight300 padNormal text-center orangeTextDark" id = "askQuestion"> Ask a question</p></a>
+                </div>
+                
+              </div>
+            </div>
+
             <!-- this is the main row -->
-            <div id="profileHeader" class="col-lg-8">
+            <div id="profileHeader" class="col-lg-9">
               <div class="cont shadow-sm">
                 <p class="weight600 poppins line45 font30 lowercase">mentor and mentee requests</p>
                 <div id="mentorRequest" class="mentor border paddedBorder hidden">
@@ -87,59 +106,31 @@
 
               <div class="cont shadow-sm">
                 <p class="section-title">meeting requests</p>
-                <div id="meetingRequest" class="border paddedBorder">
+                <div id="meeting-request-board" class="border paddedBorder">
                   <div class="row">
-                    <div class="col-xl-3 my-auto">
+                    <div id="meeting-request" class="col-xl-3 my-auto">
                       <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
                     </div>
                     <div class="col-xl-9 text-center text-xl-left my-auto">
-                      <p class="request-content"><a href="" class="request-sender-name">Pancake</a><span> wants to set a meeting with you</span></p>
-                      <a class="see-more">See details of meeting:</a>
+                      <p class="request-content">Your <span id="request-sender-role"></span> <a href="" id="request-sender-name">Pancake</a><span> wants to set a meeting with you</span></p>
+                      <a id="see-more">See details of meeting:</a>
                           <div id="meeting-details">
                               <ul class="meeting-details-card">
-                                  <li id="title"> <span class="bold-text">Title:</span> Ice-cream meeting</li>
-                                  <li id="when"> <span class="bold-text">When: </span>This Wednesday</li>
-                                  <li id="where"> <span class="bold-text">Where: </span>Cafe</li>
-                                  <li id="description"> <span class="bold-text">Description: </span>Let's get ice-cream and chat more :) </li>
+                                  <li> <span class="bold-text">Title:</span> <span id="title"> Ice-cream meeting</span></li>
+                                  <li> <span class="bold-text">When: </span> <span id="when"> This Wednesday</span></li>
+                                  <li> <span class="bold-text">Where: </span><span id="where">Cafe</span></li>
+                                  <li> <span class="bold-text">Description: </span><span id="description"> Let's get ice-cream and chat more :) </span></li>
                               <ul>
                           </div>
-                      <button onClick="approve(this, '.mentee')" class="btn accept-button">accept</button>
-                      <button onClick="deny(this, '.mentee')" class="btn remove-button">remove</button>
+                      <div id="response-options">
+                        <button onClick="approve(this, '.mentee')" class="btn accept-button">accept</button>
+                        <button onClick="deny(this, '.mentee')" class="btn remove-button">remove</button>
+                      </div>
+                      <p id="response-confirmation" class="system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Awesome! <a class="person-name">Pancake</a> is notified :)</p>
                     </div>
                   </div>
                   </div>
-
-                    <div class="cont shadow-sm">
-                <p class="section-title">meeting requests</p>
-                <div id="meetingRequest" class="border paddedBorder">
-                  <div class="row">
-                    <div class="col-xl-3 my-auto">
-                      <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
-                    </div>
-                    <div class="col-xl-9 text-center text-xl-left my-auto">
-                      <p class="request-content"><a href="" class="request-sender-name">Pancake</a><span> wants to set a meeting with you</span></p>
-                      <a class="see-more">See details of meeting:</a>
-                          <div id="meeting-details">
-                              <ul class="meeting-details-card">
-                                  <li id="title"> <span class="bold-text">Title:</span> Ice-cream meeting</li>
-                                  <li id="when"> <span class="bold-text">When: </span>This Wednesday</li>
-                                  <li id="where"> <span class="bold-text">Where: </span>Cafe</li>
-                                  <li id="description"> <span class="bold-text">Description: </span>Let's get ice-cream and chat more :) </li>
-                              <ul>
-                          </div>
-                      <p class="system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Awesome! <a class="person-name">Pancake</a> is notified :)</p>
-                    </div>
-                  </div>
-                  </div>
-
-                  <div class="border paddedBorder">
-                  <div class="row">
-                      <p class="system-response">Awesome! <a class="person-name">Pancake</a> is notified :)</p>.
-                  </div>
-                  </div>
-
-                
-              </div>
+                </div>
 
               <div class="cont shadow-sm">
                 <p class="weight600 poppins line45 font30 lowercase">post notifications</p>
