@@ -236,3 +236,7 @@ a {
       padding-bottom: 250px;
     }
 }
+
+#current-user-name{
+ color: #AA6231 !important;
+}

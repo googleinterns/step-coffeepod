@@ -38,3 +38,19 @@ function load(fromWhere){
     $("#footer-placeholder").replaceWith(data);
   });
 }
+
+function getCurrentUser() {
+    auth.onAuthStateChanged(function(user) {
+    if (user) {
+      uid = user.uid;
+      let profileRef = db.collection("profile").doc(uid);
+      profileRef.get().then(function(profile) {
+        if (profile.exists) {
+            const name = profile.data().name;
+            const nameHolder = document.getElementById("current-user-name");
+            nameHolder.innerText = name;
+        } 
+      })
+    } 
+  });
+}
