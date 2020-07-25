@@ -44,7 +44,7 @@ function recordMeetingInfoAndSendNotification(meeting) {
         description: meeting.description,
         accepted: false,
         pending: true,
-        setByMentor: currentUserIsMentor
+        setByMentor: Boolean(currentUserIsMentor)
     }).then(function(newMeetingRef) {
         const meetingId = newMeetingRef.id;
         meeting.id = meetingId;
@@ -55,9 +55,11 @@ function recordMeetingInfoAndSendNotification(meeting) {
 function sendNotification(meeting) {
     db.collection('mentorship').doc(mentorshipID).get().then(function(mentorship) {
         let personToNotifyId;
-        if (currentUserIsMentor == true) {
+        if (Boolean(currentUserIsMentor) == true) {
+            console.log("the person to be notified is a mentee");
             personToNotifyId = mentorship.data().menteeId;
         } else {
+            console.log("the person to be notified is a mentor");
             personToNotifyId = mentorship.data().mentorId;
         }
         addNotification(personToNotifyId, meeting);
