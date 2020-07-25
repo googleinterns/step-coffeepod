@@ -63,7 +63,7 @@ function sendNotification(meeting) {
 
 function addNotification(personId, meeting) {
     db.collection('notifications').doc(personId).update({
-        meetingRequests: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id})
+        meetingRequests: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id, senderIsMentor: currentUserIsMentor})
     });
 }
 
