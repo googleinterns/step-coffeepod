@@ -89,7 +89,7 @@ a:hover{
     display: inline-block;
 }
 
-#meeting-details-card {
+.meeting-details-card {
   font-family: Roboto;
   list-style-type: none;
   padding: 10px;

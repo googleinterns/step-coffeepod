@@ -248,3 +248,9 @@ a {
 .no-border {
     border: none;
 }
+
+.expand-icon{
+    float: right !important;
+    color: #c7c7c7;
+
+}
