@@ -114,7 +114,7 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
                     senderRoleElement.innerText = "mentee";
                 }
                 db.collection('profile').doc(senderId).get().then(function(profileDoc) {
-                    senderNameElements.innerText = profileDoc.data().name;
+                    senderNameElements.forEach(name => name.innerText = profileDoc.data().name);
                 });
 
             });
@@ -134,6 +134,7 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
     });
 
 }
+
 
 
 /*

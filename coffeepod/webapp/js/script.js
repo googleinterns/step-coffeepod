@@ -46,6 +46,9 @@ function getCurrentUser() {
             const name = profile.data().name;
             const nameHolder = document.getElementById("current-user-name");
             nameHolder.innerText = name;
+
+            const titleHolder = document.getElementById("current-user-title");
+            titleHolder.innerText = profile.data().title;
         } 
       })
     } 
