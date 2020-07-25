@@ -25,6 +25,7 @@ function getNotif() {
 
         if(notif.data().meetingRequests != null) {
             loadMeetingRequests();
+            loadMeetingResponses();
         }
 
       }).then(function(){
@@ -47,6 +48,11 @@ function loadMeetingRequests() {
         // put meetingRequests up on the site
         putAllMeetingRequestsOnPage(notifDoc.data().meetingRequests);
     })
+}
+
+// load the meeting responses if current user has made any request
+function loadMeetingResponses() {
+
 }
 
 function putAllMeetingRequestsOnPage(meetingRequests) {
@@ -75,12 +81,6 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
     const whenElement = meetingRequestElementCloned.querySelector("#when");
     const whereElement = meetingRequestElementCloned.querySelector("#where");
     const descriptionElement = meetingRequestElementCloned.querySelector("#description");
-
-    /*//Show, hide buttons for meeting details
-    const seeMoreElement = meetingRequestElementCloned.querySelector("#see-more");
-    seeMoreElement.setAttribute('onclick', 'showMeetingDetails(this)');
-    const hideElement = meetingRequestElementCloned.querySelector("#hide-details");
-    hideElement.setAttribute('onclick', 'hideMeetingDetails(this)');*/
 
     // Change all elements of this name
     const senderNameElements = meetingRequestElementCloned.querySelectorAll(".request-sender-name");
@@ -114,12 +114,15 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
                     senderRoleElement.innerText = "mentee";
                 }
                 db.collection('profile').doc(senderId).get().then(function(profileDoc) {
-                    senderNameElements.forEach(name => name.innerText = profileDoc.data().name);
+                    senderNameElements.forEach(name => {
+                        name.innerText = profileDoc.data().name
+                        name.setAttribute('href', 'profile.html?user=' + senderId);
+                    });
+                    
                 });
 
             });
 
-            
             titleElement.innerText = meetingDoc.data().title;
             whenElement.innerText = meetingDoc.data().when.toDate();
 
@@ -134,34 +137,6 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
 
 }
 
-
-
-
-/*function showMeetingDetails(showMoreEle) {
-    // Show the meeting details card
-    const meetingDetailsCard = $(showMoreEle).closest(':has(.meeting-details-card)').children('.meeting-details-card').get(0);
-    meetingDetailsCard.style.display = 'inline-table';
-
-    // Hide the see more link
-    showMoreEle.style.display = 'none';
-
-    // Show the hide link
-    const hideEle = showMoreEle.nextSibling('#hide-details');
-    hideEle.style.display = 'inline-block';
-}
-
-function hideMeetingDetails(hideEle) {
-    // Show the meeting details card
-    const meetingDetailsCard = $(hideEle).closest(':has(.meeting-details-card)').children('.meeting-details-card').get(0);
-    meetingDetailsCard.style.display = 'none';
-
-    // Hide the hide link
-    hideEle.style.display = 'none';
-
-    // Show the hide link
-    const showMoreEle = hideEle.previousSibling('#see-more');
-    showMoreEle.style.display = 'inline-block';
-}*/
 
 function approveMeeting(buttonEle, mentorshipId, meetingId) {
     // Set the accepted stage of the meeting to true
