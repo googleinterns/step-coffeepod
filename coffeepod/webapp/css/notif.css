@@ -114,6 +114,11 @@ a:hover{
   margin: auto;
 }
 
+#response-options{
+    margin: 0px;
+    height: 54.4px;
+}
+
 .person-name{
     color: #AA6231  !important;
 }

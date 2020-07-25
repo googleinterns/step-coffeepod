@@ -121,9 +121,8 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
 
             
             titleElement.innerText = meetingDoc.data().title;
-            whenElement.innerText = meetingDoc.data().when;
+            whenElement.innerText = meetingDoc.data().when.toDate();
 
-            console.log("when is: " + meetingDoc.data().when);
             whereElement.innerText = meetingDoc.data().where;
             descriptionElement.innerText = meetingDoc.data().description;
             // (3) Unhide all of this information
@@ -172,11 +171,13 @@ function approveMeeting(buttonEle, mentorshipId, meetingId) {
     });
 
     // Show the result to the current user 
-    const confirmation = buttonEle.closest('approve-confirmation');
+    const confirmation = $(buttonEle).closest(':has(#approve-confirmation)').children('#approve-confirmation').get(0);
     confirmation.classList.remove('hidden');
 
-    const actionButtons = buttonEle.closest('response-options');
+    const actionButtons = buttonEle.closest('#response-options');
     actionButtons.classList.add('hidden');
+
+    removeMeetingRequest(mentorshipId, meetingId);
 }
 
 function removeMeeting(buttonEle, mentorshipId, meetingId) {
@@ -187,11 +188,21 @@ function removeMeeting(buttonEle, mentorshipId, meetingId) {
     });
 
     // Show the result to the current user 
-    const confirmation = buttonEle.closest('remove-confirmation');
+    const confirmation = $(buttonEle).closest(':has(#remove-confirmation)').children('#remove-confirmation').get(0);
     confirmation.classList.remove('hidden');
 
-    const actionButtons = buttonEle.closest('response-options');
+    const actionButtons = buttonEle.closest('#response-options');
     actionButtons.classList.add('hidden');
+
+    removeMeetingRequest(mentorshipId, meetingId);
+}
+
+// This removes the meeting request from the meetingRequest list in notifications
+function removeMeetingRequest(mentorshipId, meetingId) {
+    // Remove meeting request from firestore
+    db.collection('notifications').doc(uid).update({
+        meetingRequests: firebase.firestore.FieldValue.arrayRemove({mentorshipId: mentorshipId, meetingId: meetingId})
+    })
 }
 
 
