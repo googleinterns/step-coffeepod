@@ -35,3 +35,30 @@ function load(fromWhere){
     $("#footer-placeholder").replaceWith(data);
   });
 }
+
+function showAbout() {
+  if(document.getElementById("aboutCoffee").classList.contains("hidden")) {
+    if(!document.getElementById("whyCoffee").classList.contains("hidden")) {
+      document.getElementById("whyCoffee").classList.add("hidden");
+    }
+    document.getElementById("aboutCoffee").classList.remove("hidden");
+    document.getElementById("intro").classList.add("hidden");
+  } else {
+    document.getElementById("aboutCoffee").classList.add("hidden");
+    document.getElementById("intro").classList.remove("hidden");
+  }
+}
+
+function showUs() {
+  if(document.getElementById("whyCoffee").classList.contains("hidden")) {
+    if(!document.getElementById("aboutCoffee").classList.contains("hidden")) {
+    document.getElementById("aboutCoffee").classList.add("hidden");
+    }
+    document.getElementById("whyCoffee").classList.remove("hidden");
+    document.getElementById("intro").classList.add("hidden");
+  } else {
+
+    document.getElementById("whyCoffee").classList.add("hidden");
+    document.getElementById("intro").classList.remove("hidden");
+  }
+}
