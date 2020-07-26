@@ -286,15 +286,6 @@ label {
   text-align: center;
 }
 
-.orangeBox {
-  height: 200px;
-  width: 250px;
-  background-color: white;
-  padding: 20px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
 
 .margin-auto{
   margin: auto;
@@ -389,6 +380,20 @@ input:focus, textarea:focus {
   line-height: 22px;
   color: #000000;
 
+}
+
+.tab-pane {
+    height: 200px;
+    overflow-y:scroll;
+}
+
+.orangeBox {
+  height: 250px;
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 

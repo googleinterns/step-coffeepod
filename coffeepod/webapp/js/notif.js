@@ -9,12 +9,10 @@ let name, uid, user, username, mentors, mentees, mentorRequests, menteeRequests;
 /* // TEST FIRESTORE FOR SOME UNDEFINED FIELDS IN AN ARRAY OF MAPS
 db.collection('notifications').doc('Wk7lrwtTP8aJA2rVy1JGXIHpQEt2').get().then(function(notif) {
     const meetingRequests = notif.data().meetingRequests;
-
     if (meetingRequests != null) {
         console.log("there are some meeting requests");
         console.log(meetingRequests);
     } 
-
     console.log(meetingRequests[0].updated);
     console.log(meetingRequests[0].updated == undefined);
 });*/
@@ -343,6 +341,7 @@ function addMeetingResponseToSender(mentorshipId, meetingId, senderId) {
         meetingResponses: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipId, meetingId: meetingId})
     });
 }
+
 
 // ----------------------------- MENTOR-MENTEE NOTIFICATIONS ------------------------------------------------------
 
