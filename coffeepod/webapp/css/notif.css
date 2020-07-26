@@ -129,3 +129,11 @@ a:hover{
     padding-left: 0px;
 }
 
+#additional-message{
+  font-family: Roboto;
+  list-style-type: none;
+  display: inline-table;
+  font-weight: 300;
+  margin-bottom: 0px;
+}
+
