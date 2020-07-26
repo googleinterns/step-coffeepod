@@ -80,7 +80,7 @@ a:hover{
 .show-hide{
     font-family: Roboto;
     line-height: 21px;
-    font-size: 17px;
+    font-size: 16px;
     color: #AA6231 !important;
     padding: 0;
     padding-bottom: 5px;
@@ -129,7 +129,7 @@ a:hover{
     padding-left: 0px;
 }
 
-#additional-message{
+.body-text{
   font-family: Roboto;
   list-style-type: none;
   display: inline-table;

@@ -5,6 +5,20 @@ let name, uid, user, username, mentors, mentees, mentorRequests, menteeRequests;
 // menteeRequests are people who want this user to be their mentee
 
 // function to load the notifications into the page
+
+/* // TEST FIRESTORE FOR SOME UNDEFINED FIELDS IN AN ARRAY OF MAPS
+db.collection('notifications').doc('Wk7lrwtTP8aJA2rVy1JGXIHpQEt2').get().then(function(notif) {
+    const meetingRequests = notif.data().meetingRequests;
+
+    if (meetingRequests != null) {
+        console.log("there are some meeting requests");
+        console.log(meetingRequests);
+    } 
+
+    console.log(meetingRequests[0].updated);
+    console.log(meetingRequests[0].updated == undefined);
+});*/
+
 function getNotif() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -71,6 +85,19 @@ function putAllMeetingResponsesOnPage(meetingResponses) {
     }
 }
 
+function updateToggleForMeetingDetails(clonedMeetingNotifEle, meetingId) {
+    const toggleHead = clonedMeetingNotifEle.querySelector('#meeting-details-head');
+    toggleHead.setAttribute('id', 'meeting-details-head' + meetingId);
+
+    const toggleBody = clonedMeetingNotifEle.querySelector('#collapseDetails');
+    toggleBody.setAttribute('id', 'collapseDetails' + meetingId);
+    toggleBody.setAttribute('aria-labelledby',  'meeting-details-head' + meetingId);
+
+    const toggleLink = clonedMeetingNotifEle.querySelector('#toggle-link');
+    toggleLink.setAttribute('data-target', '#collapseDetails' + meetingId);
+    toggleLink.setAttribute('aria-controls', 'collapseDetails' + meetingId);
+}
+
 function putOneMeetingResponseOnPage(meetingId, mentorshipId) {
     let respondentId;
 
@@ -80,6 +107,9 @@ function putOneMeetingResponseOnPage(meetingId, mentorshipId) {
     const meetingResponseElement = document.getElementById("meeting-notif-board");
     const meetingResponseElementCloned = meetingResponseElement.cloneNode(true);
     
+    // Update toggle 
+    updateToggleForMeetingDetails(meetingResponseElementCloned, meetingId);
+
     const titleElement = meetingResponseElementCloned.querySelector("#title");
     const whenElement = meetingResponseElementCloned.querySelector("#when");
     const whereElement = meetingResponseElementCloned.querySelector("#where");
@@ -120,8 +150,6 @@ function putOneMeetingResponseOnPage(meetingId, mentorshipId) {
                     respondentId = mentorshipDoc.data().mentorId;
                     respondentRoleElement.innerText = "mentor";
                 }
-
-                
                 
                 db.collection('profile').doc(respondentId).get().then(function(profileDoc) {
                     respondentNameElements.forEach(name => {
@@ -179,9 +207,11 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
     // (0) Clone the meeting request element and access necessary children nodes
     const meetingRequestSection = document.getElementById("meeting-request-section");
 
-
     const meetingRequestElement = document.getElementById("meeting-notif-board");
     const meetingRequestElementCloned = meetingRequestElement.cloneNode(true);
+
+     // Update toggle 
+    updateToggleForMeetingDetails(meetingRequestElementCloned, meetingId);
     
     const titleElement = meetingRequestElementCloned.querySelector("#title");
     const whenElement = meetingRequestElementCloned.querySelector("#when");
