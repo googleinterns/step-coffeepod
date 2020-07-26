@@ -1,7 +1,7 @@
 const queryStringHubInd = window.location.search;
 const urlParamsHubInd = new URLSearchParams(queryStringHubInd);
 const currentUserIsMentor = urlParamsHubInd.get('currentIsMentor');
-const mentorshipID = getMentorshipId();
+const mentorshipID = urlParamsHubInd.get('mentorshipId');
 
 let mentorId, menteeId, mentorName, menteeName, mentorTitle, menteeTitle;
 
@@ -13,17 +13,18 @@ function loadData() {
     addOverview();
 }
 
-function getMentorshipId(){
-    return urlParamsHubInd.get('mentorshipId');
-}
-
 function addOpeningContent() {
     const hubTitle = document.getElementById("subpage-title");
 
     db.collection('mentorship').doc(mentorshipID).get().then(function (mentorshipDoc) {
         mentorId = mentorshipDoc.data().mentorId;
         menteeId = mentorshipDoc.data().menteeId;
-        
+
+
+        // Add starting time in overview section
+        timeStart = mentorshipDoc.data().timestamp.toMillis();
+        document.getElementById("start-time").innerText = fromMillisecondsToMonthAndYear(timeStart);
+
         // Get name and title of mentors and mentees
         db.collection('profile').doc(mentorId).get().then(function (profileDoc) {
             mentorName = profileDoc.data().name;
@@ -64,12 +65,6 @@ function addOpeningContent() {
 // OVERVIEW SECTION
 function addOverview() {
     addNumGoalCards();
-    addTimeStart();
-}
-
-function addTimeStart() {
-    const timeStart = urlParamsHubInd.get('timeMilli');
-    document.getElementById("start-time").innerText = fromMillisecondsToMonthAndYear(timeStart);
 }
 
 
