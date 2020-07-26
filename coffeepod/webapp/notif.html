@@ -147,7 +147,8 @@
                       <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
                     </div>
                     <div class="col-xl-9 text-center text-xl-left my-auto">
-                      <p id="notif-content">Your <span id="sender-role"></span> <a href="" class="sender-name"></a> <span> wants to set a meeting with you</span></p>
+                      <p id="notif-content">Your <span id="sender-role"></span> <a href="" class="sender-name"></a> <span> wants to schedule a meeting with you</span></p>
+                     <p id="time-stamp"> Monday, July 20, 2020<p>
                       <!--<p class="body-text" id="additional-message"> <span class="sender-name orangeTextLight weight400">Penguin says:</span> I need to cancel the meeting because I had a prior comment. Please set up another meeting some other time :)</p>-->
                       <div id="meeting-details-head">
                         <a class="show-hide" id="toggle-link" data-toggle="collapse" data-target="#collapseDetails" aria-expanded="true" aria-controls="collapseDetails">
@@ -171,10 +172,15 @@
                         <button id="remove-meeting" class=" hidden btn remove-button">remove</button>
                         <button id="i-am-aware" class="hidden btn accept-button">got it!</button>
                       </div>
-                      <p id="approve-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Awesome! <a class="sender-name"></a> is notified that you accepted the meeting :)</p>
-                      <p id="remove-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i><a class="sender-name"></a> is notified that you removed the meeting.</p>
+                      <p id="approve-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Awesome! <a class="sender-name"></a> is notified that you accepted the meeting :)
+                      <a class="hub-ind"> See all of your meetings</a> with <a class="orangeTextLight sender-name"></a>.</p>
 
-                      <p id="delete-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Confirmed! Your meeting request with <a class="sender-name"> </a> is resolved.</p>
+                      <p id="remove-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i><a class="sender-name"></a> is notified that you removed the meeting.
+                      <a class="hub-ind"> See all of your meetings</a> with <a class="orangeTextLight sender-name"></a>.</p>
+
+                      <p id="delete-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Confirmed! Your meeting request with <a class="sender-name"> </a> is resolved.
+                      <a class="hub-ind"> See all of your meetings</a> with <a class="orangeTextLight sender-name"></a>.
+                      </p>
                       <!--<a class="body-text" id = "add-a-note"> Add a note to Pancake </a>-->
 
                     </div>

@@ -99,7 +99,7 @@ function updateToggleForMeetingDetails(clonedMeetingNotifEle, meetingId) {
 }
 
 function putOneMeetingResponseOnPage(meetingId, mentorshipId) {
-    let respondentId;
+    let respondentId, currentUserIsMentor;
 
     const mentorshipRef = db.collection('mentorship').doc(mentorshipId);
     const meetingResponseSection = document.getElementById("meeting-response-section");
@@ -141,16 +141,19 @@ function putOneMeetingResponseOnPage(meetingId, mentorshipId) {
 
                 const respondentRoleElement = meetingResponseElementCloned.querySelector("#sender-role");
 
-                // Change all elements of this name
-                const respondentNameElements = meetingResponseElementCloned.querySelectorAll(".sender-name");
+                
                 if (meetingDoc.data().setByMentor == true) { // Current user is the sender of the request, so the other person must respponse
+                    currentUserIsMentor = true;
                     respondentId = mentorshipDoc.data().menteeId;
                     respondentRoleElement.innerText = "mentee";
                 } else {
+                    currentUserIsMentor = true;
                     respondentId = mentorshipDoc.data().mentorId;
                     respondentRoleElement.innerText = "mentor";
                 }
                 
+                // Change all elements of this name
+                const respondentNameElements = meetingResponseElementCloned.querySelectorAll(".sender-name");
                 db.collection('profile').doc(respondentId).get().then(function(profileDoc) {
                     respondentNameElements.forEach(name => {
                         name.innerText = profileDoc.data().name
@@ -158,6 +161,13 @@ function putOneMeetingResponseOnPage(meetingId, mentorshipId) {
                     });
                     
                 });
+
+                // Create a hub-ind link for the see all of current meetings 
+                const queryStringForHubInd = "?mentorshipId=" + mentorshipId + "&currentIsMentor=" + currentUserIsMentor;
+                const hubIndLinks = meetingResponseElementCloned.querySelectorAll('.hub-ind');
+                hubIndLinks.forEach(hubIndLink => {
+                    hubIndLink.setAttribute('href','hub-ind.html' + queryStringForHubInd);
+                })
 
             });
 
@@ -230,10 +240,12 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
             // (1) Update sender's information 
             mentorshipRef.get().then(function (mentorshipDoc) {
 
-                if (meetingDoc.data().setByMentor == true) {
+                if (meetingDoc.data().setByMentor == true) { // Request meaning it is set by the other person
+                 currentUserIsMentor = false;
                     senderId = mentorshipDoc.data().mentorId;
                     senderRoleElement.innerText = "mentor";
                 } else {
+                    currentUserIsMentor = true;
                     senderId = mentorshipDoc.data().menteeId;
                     senderRoleElement.innerText = "mentee";
                 }
@@ -255,6 +267,13 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
                     });
                     
                 });
+
+                // Create a hub-ind link for the see all of current meetings 
+                const queryStringForHubInd = "?mentorshipId=" + mentorshipId + "&currentIsMentor=" + currentUserIsMentor;
+                const hubIndLinks = meetingRequestElementCloned.querySelectorAll('.hub-ind');
+                hubIndLinks.forEach(hubIndLink => {
+                    hubIndLink.setAttribute('href','hub-ind.html' + queryStringForHubInd);
+                })
 
             });
 
