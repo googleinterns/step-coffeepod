@@ -1,4 +1,4 @@
-let name, uid, user, username, mentors, mentees, mentorRequests, menteeRequests, meetingNotifs;
+let name, uid, user, username, mentors, mentees, mentorRequests, menteeRequests;
 //uid stores the current user's id
 
 // mentorRequests are people who want this user person to be their mentor
@@ -23,12 +23,12 @@ function getNotif() {
         mentorRequests = notif.data().mentorRequests;
         menteeRequests = notif.data().menteeRequests;
 
-        meetingNotifs= notif.data().meetingNotifs;
+        if(notif.data().meetingRequests != null) {
+            loadMeetingRequests();
+            loadMeetingResponses();
+        }
 
       }).then(function(){
-          loadMeetingNotifs();
-          //loadMeetingResponses();
-
           loadMentor();
           loadMentee();
       })
@@ -40,38 +40,35 @@ function getNotif() {
   });
 }
 
-// ----------------------------- MEETING NOTIFICATIONS ------------------------------------------------------
 
-
-// load the meeting responses if current user has made any request
-function loadMeetingResponses() {
-    // if accepted is true, then the meeting is accepted
-    // else, the meeting is not accepted and should be deleted from the meetings subcollection in mentorship
-    // then, delete the meeting response from meetingResponses in notifications
+function loadMeetingRequests() {
     const notifRef = db.collection('notifications').doc(uid);
     notifRef.get().then(function(notifDoc) {
         // this means meetingRequests exist
         // put meetingRequests up on the site
-        putAllMeetingResponsesOnPage(notifDoc.data().meetingResponses);
+        putAllMeetingRequestsOnPage(notifDoc.data().meetingRequests);
     })
 }
 
+// load the meeting responses if current user has made any request
+function loadMeetingResponses() {
 
-function loadMeetingNotifs() {
-    if (meetingNotifs != null) {
-        for (let i = 0; i < meetingNotifs.length; i++) {
-            const meetingId = meetingNotifs[i].meetingId;
-            const mentorshipId = meetingNotifs[i].mentorshipId;
-            putOneMeetingNotifOnPage(meetingId, mentorshipId);
+}
+
+function putAllMeetingRequestsOnPage(meetingRequests) {
+    if (meetingRequests != null) {
+        for (let i = 0; i < meetingRequests.length; i++) {
+            const meetingId = meetingRequests[i].meetingId;
+            const mentorshipId = meetingRequests[i].mentorshipId;
+            putOneMeetingRequestOnPage(meetingId, mentorshipId);
         }
     }
 }
 
-
-
-function putOneMeetingNotifOnPage(meetingId, mentorshipId) {
+function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
     let senderId;
 
+    
     const mentorshipRef = db.collection('mentorship').doc(mentorshipId);
     // (0) Clone the meeting request element and access necessary children nodes
     const meetingRequestSection = document.getElementById("meeting-request-section");
@@ -87,14 +84,18 @@ function putOneMeetingNotifOnPage(meetingId, mentorshipId) {
     const senderNameElements = meetingRequestElementCloned.querySelectorAll(".request-sender-name");
     const senderRoleElement = meetingRequestElementCloned.querySelector("#request-sender-role");
 
+    // Add action functions for the approve and remove button
+    meetingRequestElementCloned.querySelector("#approve-meeting").setAttribute("onclick", "approveMeeting(this," + "'"  + mentorshipId + "'," + "'"  + meetingId + "'" + ")");
+    meetingRequestElementCloned.querySelector("#remove-meeting").setAttribute("onclick", "removeMeeting(this," + "'"  + mentorshipId + "'," + "'"  + meetingId + "'" + ")");
+
+
     // (2) Update details of the meeting
     mentorshipRef.collection('meetings').doc(meetingId).get().then(function(meetingDoc) {
         if (meetingDoc.exists) { // Check for actual meeting's existence before doing anything
-            console.log(meetingDoc === undefined);
-            console.log("meetingDoc is: " + meetingDoc.data());
+
             // (1) Update sender's information 
             mentorshipRef.get().then(function (mentorshipDoc) {
-                console.log("Mentorshipdoc is: " + mentorshipDoc.data());
+
                 if (meetingDoc.data().setByMentor == true) {
                     senderId = mentorshipDoc.data().mentorId;
                     senderRoleElement.innerText = "mentor";
@@ -102,12 +103,6 @@ function putOneMeetingNotifOnPage(meetingId, mentorshipId) {
                     senderId = mentorshipDoc.data().menteeId;
                     senderRoleElement.innerText = "mentee";
                 }
-
-                 // Add action functions for the approve and remove button
-                const btnOnClickParams = "'"  + mentorshipId + "'," + "'"  + meetingId + "'" + "'," + "'"  + senderId + "'" +")"
-                meetingRequestElementCloned.querySelector("#approve-meeting").setAttribute("onclick", "approveMeeting(this," + btnOnClickParams);
-                meetingRequestElementCloned.querySelector("#remove-meeting").setAttribute("onclick", "removeMeeting(this," + btnOnClickParams);
-                
                 db.collection('profile').doc(senderId).get().then(function(profileDoc) {
                     senderNameElements.forEach(name => {
                         name.innerText = profileDoc.data().name
@@ -131,12 +126,13 @@ function putOneMeetingNotifOnPage(meetingId, mentorshipId) {
 
 }
 
-function approveMeeting(buttonEle, mentorshipId, meetingId, senderId) {
+
+function approveMeeting(buttonEle, mentorshipId, meetingId) {
     // Set the accepted stage of the meeting to true
-    /*db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
+    db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
             accepted: true,
             pending: false
-    });*/
+    });
 
     // Show the result to the current user 
     const confirmation = $(buttonEle).closest(':has(#approve-confirmation)').children('#approve-confirmation').get(0);
@@ -145,16 +141,15 @@ function approveMeeting(buttonEle, mentorshipId, meetingId, senderId) {
     const actionButtons = buttonEle.closest('#response-options');
     actionButtons.classList.add('hidden');
 
-    //notifySenderOfDecision(mentorhshipId, meetingId, senderId);
-    //removeMeetingRequest(mentorshipId, meetingId);
+    removeMeetingRequest(mentorshipId, meetingId);
 }
 
 function removeMeeting(buttonEle, mentorshipId, meetingId) {
     // Set the accepted stage of the meeting to false
-    /*db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
+    db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
             accepted: false,
             pending: false
-    });*/
+    });
 
     // Show the result to the current user 
     const confirmation = $(buttonEle).closest(':has(#remove-confirmation)').children('#remove-confirmation').get(0);
@@ -163,22 +158,14 @@ function removeMeeting(buttonEle, mentorshipId, meetingId) {
     const actionButtons = buttonEle.closest('#response-options');
     actionButtons.classList.add('hidden');
 
-    //notifySenderOfDecision(mentorhshipId, meetingId, senderId);
-    //removeMeetingRequest(mentorshipId, meetingId);
+    removeMeetingRequest(mentorshipId, meetingId);
 }
 
 // This removes the meeting request from the meetingRequest list in notifications
-function removeMeetingNotif(mentorshipId, meetingId) {
+function removeMeetingRequest(mentorshipId, meetingId) {
     // Remove meeting request from firestore
     db.collection('notifications').doc(uid).update({
-        meetingNotifs: firebase.firestore.FieldValue.arrayRemove({mentorshipId: mentorshipId, meetingId: meetingId})
-    })
-}
-
-function notifySenderOfDecision(mentorshipId, meetingId, senderId) {
-    // Add this to meetingResponses field in notifications for the sender
-    db.collection('notifications').doc(senderId).update({
-        meetingNotifs: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipId, meetingId: meetingId})
+        meetingRequests: firebase.firestore.FieldValue.arrayRemove({mentorshipId: mentorshipId, meetingId: meetingId})
     })
 }
 
