@@ -3,7 +3,7 @@ const urlParamsHubInd = new URLSearchParams(queryStringHubInd);
 const currentUserIsMentor = urlParamsHubInd.get('currentIsMentor');
 const mentorshipID = getMentorshipId();
 
-
+let mentorId, menteeId, mentorName, menteeName, mentorTitle, menteeTitle;
 
 // WELCOME SECTION
 
@@ -11,7 +11,6 @@ function loadData() {
     getGoalCards();
     addOpeningContent();
     addOverview();
-    console.log("Current user is mentor: " + currentUserIsMentor);
 }
 
 function getMentorshipId(){
@@ -22,8 +21,8 @@ function addOpeningContent() {
     const hubTitle = document.getElementById("subpage-title");
 
     db.collection('mentorship').doc(mentorshipID).get().then(function (mentorshipDoc) {
-        const mentorId = mentorshipDoc.data().mentorId;
-        const menteeId = mentorshipDoc.data().menteeId;
+        mentorId = mentorshipDoc.data().mentorId;
+        menteeId = mentorshipDoc.data().menteeId;
         
         // Get name and title of mentors and mentees
         db.collection('profile').doc(mentorId).get().then(function (profileDoc) {
@@ -34,6 +33,12 @@ function addOpeningContent() {
             hubTitle.querySelector("#mentor-name").innerText = mentorName;
             document.getElementById("mentor-card-name").innerText = mentorName;
             document.getElementById("mentor-card-title").innerText= mentorTitle;
+
+            // Add meeting content 
+            if (!(currentUserIsMentor == "true")) {
+                document.getElementById("add-role").innerText = "mentor";
+                document.getElementById("add-confirm-name").innerText = mentorName;
+            }
         });
 
         db.collection('profile').doc(menteeId).get().then(function (profileDoc) {
@@ -44,6 +49,11 @@ function addOpeningContent() {
             hubTitle.querySelector("#mentee-name").innerText = menteeName;
             document.getElementById("mentee-card-name").innerText = menteeName;
             document.getElementById("mentee-card-title").innerText = menteeTitle;
+
+            if (currentUserIsMentor == "true") {
+                document.getElementById("add-role").innerText = "mentee";
+                document.getElementById("add-confirm-name").innerText = menteeName;
+            }
         });
 
     });

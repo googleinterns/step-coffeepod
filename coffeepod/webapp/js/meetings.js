@@ -2,10 +2,6 @@
 // When accepted = false and pending = true, then we are waiting for the other person's response
 // When accepted = true and pending = false, the meeting has been accepted and should be added to the schedule
 
-console.log("current user is mentor: " + currentUserIsMentor);
-console.log(currentUserIsMentor == "true");
-console.log(Boolean(currentUserIsMentor) == true);
-console.log(typeof currentUserIsMentor);
 
 class Meeting {
      constructor(id, title, when, where, description, pending, accepted, filled) {
