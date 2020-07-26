@@ -2,6 +2,10 @@
 // When accepted = false and pending = true, then we are waiting for the other person's response
 // When accepted = true and pending = false, the meeting has been accepted and should be added to the schedule
 
+console.log("current user is mentor: " + currentUserIsMentor);
+console.log(currentUserIsMentor == "true");
+console.log(Boolean(currentUserIsMentor) == true);
+console.log(typeof currentUserIsMentor);
 
 class Meeting {
      constructor(id, title, when, where, description, pending, accepted, filled) {
@@ -31,7 +35,7 @@ function sendMeetingRequest(event){
     // confirm on the page for current user
     
     let personToNotifyRole, personToNotifyName;
-    if (Boolean(currentUserIsMentor) == true) {
+    if (currentUserIsMentor == "true") {
         personToNotifyRole = "mentee";
         personToNotifyName = menteeName;
     } else {
@@ -55,7 +59,7 @@ function recordMeetingInfoAndSendNotification(meeting) {
         description: meeting.description,
         accepted: false,
         pending: true,
-        setByMentor: Boolean(currentUserIsMentor)
+        setByMentor: (currentUserIsMentor == "true")
     }).then(function(newMeetingRef) {
         const meetingId = newMeetingRef.id;
         meeting.id = meetingId;
@@ -65,12 +69,10 @@ function recordMeetingInfoAndSendNotification(meeting) {
 
 function sendNotification(meeting) {
     db.collection('mentorship').doc(mentorshipID).get().then(function(mentorship) {
-        let personToNotifyId, personToNotifyRole, personToNotifyName;
-        if (Boolean(currentUserIsMentor) == true) {
-            console.log("the person to be notified is a mentee");
+        let personToNotifyId;
+        if (currentUserIsMentor == "true") {
             personToNotifyId = mentorship.data().menteeId;
         } else {
-            console.log("the person to be notified is a mentor");
             personToNotifyId = mentorship.data().mentorId;
         }
 
@@ -83,7 +85,7 @@ function sendNotification(meeting) {
 
 function addNotification(personId, meeting) {
     db.collection('notifications').doc(personId).update({
-        meetingNotifs: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id})
+        meetingRequests: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id})
     });
 }
 

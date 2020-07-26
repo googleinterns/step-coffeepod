@@ -1,6 +1,6 @@
 const queryStringHubInd = window.location.search;
 const urlParamsHubInd = new URLSearchParams(queryStringHubInd);
-const currentUserIsMentor = Boolean(urlParamsHubInd.get('currentIsMentor'));
+const currentUserIsMentor = urlParamsHubInd.get('currentIsMentor');
 const mentorshipID = getMentorshipId();
 
 
