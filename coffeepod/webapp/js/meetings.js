@@ -55,7 +55,7 @@ function recordMeetingInfoAndSendNotification(meeting) {
         description: meeting.description,
         accepted: false,
         pending: true,
-        setByMentor: (currentUserIsMentor == "true")
+        setByMentor: (currentUserIsMentor == "true") // set by mentor can either be intially set by or updated by mentor
     }).then(function(newMeetingRef) {
         const meetingId = newMeetingRef.id;
         meeting.id = meetingId;
