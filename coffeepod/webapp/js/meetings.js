@@ -31,7 +31,7 @@ function sendMeetingRequest(event){
     // confirm on the page for current user
     
     let personToNotifyRole, personToNotifyName;
-    if (currentUserIsMentor) {
+    if (Boolean(currentUserIsMentor) == true) {
         personToNotifyRole = "mentee";
         personToNotifyName = menteeName;
     } else {

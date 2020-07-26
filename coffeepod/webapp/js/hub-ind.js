@@ -1,50 +1,11 @@
 const queryStringHubInd = window.location.search;
 const urlParamsHubInd = new URLSearchParams(queryStringHubInd);
-const currentUserIsMentor = urlParamsHubInd.get('currentIsMentor');
+const currentUserIsMentor = Boolean(urlParamsHubInd.get('currentIsMentor'));
 const mentorshipID = getMentorshipId();
-const mentorName = urlParamsHubInd.get('mentorName');
-const menteeName = urlParamsHubInd.get('menteeName')
+
 
 
 // WELCOME SECTION
-class HubName {
-    constructor(mentorName, menteeName, mentorTitle, menteeTitle) {
-        this.mentorName = mentorName;
-        this.menteeName = menteeName;
-        this.mentorTitle = mentorTitle;
-        this.menteeTitle = menteeTitle;
-    }
-}
-
-function getMentorshipId(){
-    return urlParamsHubInd.get('mentorshipId');
-}
-
-function addOpeningContent() {
-    addMentorshipHubName();
-    addContentMentorshipCard();
-}
-
-function addContentMentorshipCard() {
-    const hubName = getMentorshipHubName();
-
-    document.getElementById("mentor-card-name").innerText = hubName.mentorName;
-    document.getElementById("mentee-card-name").innerText = hubName.menteeName;
-    document.getElementById("mentor-card-title").innerText= hubName.mentorTitle;
-    document.getElementById("mentee-card-title").innerText = hubName.menteeTitle;
-}
-
-function addMentorshipHubName() {
-    const hubName = getMentorshipHubName();
-
-    const hubTitle = document.getElementById("subpage-title");
-    hubTitle.querySelector("span#mentor-name").innerText = hubName.mentorName;
-    hubTitle.querySelector("span#mentee-name").innerText = hubName.menteeName;
-}
-
-function getMentorshipHubName() {
-    return new HubName(mentorName, menteeName, urlParamsHubInd.get('mentorTitle'), urlParamsHubInd.get('menteeTitle'));
-} 
 
 function loadData() {
     getGoalCards();
@@ -52,6 +13,43 @@ function loadData() {
     addOverview();
     console.log("Current user is mentor: " + currentUserIsMentor);
 }
+
+function getMentorshipId(){
+    return urlParamsHubInd.get('mentorshipId');
+}
+
+function addOpeningContent() {
+    const hubTitle = document.getElementById("subpage-title");
+
+    db.collection('mentorship').doc(mentorshipID).get().then(function (mentorshipDoc) {
+        const mentorId = mentorshipDoc.data().mentorId;
+        const menteeId = mentorshipDoc.data().menteeId;
+        
+        // Get name and title of mentors and mentees
+        db.collection('profile').doc(mentorId).get().then(function (profileDoc) {
+            mentorName = profileDoc.data().name;
+            mentorTitle = profileDoc.data().title;
+
+            // Fill in the mentor's information
+            hubTitle.querySelector("#mentor-name").innerText = mentorName;
+            document.getElementById("mentor-card-name").innerText = mentorName;
+            document.getElementById("mentor-card-title").innerText= mentorTitle;
+        });
+
+        db.collection('profile').doc(menteeId).get().then(function (profileDoc) {
+            menteeName = profileDoc.data().name;
+            menteeTitle = profileDoc.data().title;
+
+            // Fill in the mentee's information
+            hubTitle.querySelector("#mentee-name").innerText = menteeName;
+            document.getElementById("mentee-card-name").innerText = menteeName;
+            document.getElementById("mentee-card-title").innerText = menteeTitle;
+        });
+
+    });
+
+}
+
 
 // OVERVIEW SECTION
 function addOverview() {
