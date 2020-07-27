@@ -406,7 +406,7 @@ input:focus, textarea:focus {
   margin-bottom: 5px;
 }
 
-#meetings-list{
+.meeting-list{
   font-family: Roboto;
   padding: 10px;
   display: inline-table;
