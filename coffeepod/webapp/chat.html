@@ -128,6 +128,11 @@
                         <div id = "file" style = "display:none">
                             <span onclick = "deleteFile();" id = "delete" style = "cursor:pointer">&times;&nbsp;&nbsp;&nbsp;</span>
                             <span id = "showFile"></span>
+                            <span class="progress" id = "progressBar" style = "width:50%; display:none">
+                                <div class="progress-bar bg-info" id = "progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                                    0%
+                                </div>
+                            </span>
                         </div>
                         <div class = "input-group">
                             <div class = "input-group-prepend" style = "cursor:pointer">
