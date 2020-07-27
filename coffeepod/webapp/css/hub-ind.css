@@ -396,4 +396,23 @@ input:focus, textarea:focus {
   margin-bottom: 15px;
 }
 
+.tab-title{
+    font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: normal;
+  color: #AA6231;
+  margin-bottom: 5px;
+}
+
+#meetings-list{
+  font-family: Roboto;
+  padding: 10px;
+  display: inline-table;
+  margin-bottom: 20px;
+  font-weight: 300;
+  padding-left: 20px;
+}
+
 

@@ -219,9 +219,9 @@
                   <div class="row">
                     <div class="col-lg-6 image-container">
                       <div>
-                        <p class="padName line37 weight500 poppins font25">new meeting</p>
+                        <p class="padName line37 weight500 poppins font25">new meeting</p><br>
                         <div class="roboto line21 font17">
-                          <p>You have <span class="orangeTextLight"> one upcoming meeting</span>, on <span class="orangeTextLight"> Monday, 6 July, 2020</span>.</p>
+                          <!--<p >You have <span class="orangeTextLight"> one upcoming meeting</span>, on <span class="orangeTextLight"> Monday, 6 July, 2020</span>.</p>-->
 
                           <p id="add-confirm-meeting"> Schedule a meeting with your <span id="add-role"></span> <span id="add-confirm-name" class="orangeTextLight"></span>:</p>
                         </div>
@@ -283,42 +283,41 @@
                         </div>
                       </form>
 
+                    <!-- CALENDAR SECTION -->
                     </div>
                     <div class="col-lg-6">
 
-                      <p class="padName line37 weight500 poppins font25">calendar</p>
+                      <p class="padName line37 weight500 poppins font25">scheduled meetings</p>
 
                       <div class="container orangeBox goal-card">
 
                         <ul class="nav nav-tabs" role="tablist">
                           <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
+                            <a class="nav-link active" data-toggle="tab" href="#upcoming-meetings">Upcoming </a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#menu1">Menu 1</a>
+                            <a class="nav-link" data-toggle="tab" href="#pending-meetings">Pending</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
+                            <a class="nav-link" data-toggle="tab" href="#past-meetings">Past</a>
                           </li>
                         </ul>
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                          <div id="home" class="container tab-pane active"><br>
-                            <h3>HOME</h3>
-                            <p>Lorem ipsum dolor si
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                              L Lorem ipsum dolor sit amet,
-                              consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                              Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                              nascetur ridiculus mus. Donec quam felis, ultricies net amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                          <div id="upcoming-meetings" class="container tab-pane active"><br>
+                            <p class="tab-title">Upcoming meetings</p>
+                           <ol id="meetings-list">
+                               <li> <a>Tuesday, July 18, 2020</a></li>
+                               <li> <a>Thursday, July 20, 2020</a></li>
+                            </ol>
                           </div>
-                          <div id="menu1" class="container tab-pane fade"><br>
-                            <h3>Menu 1</h3>
+                          <div id="pending-meetings" class="container tab-pane fade"><br>
+                            <p class="tab-title">Pending meetings</p>
                             <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                           </div>
-                          <div id="menu2" class="container tab-pane fade"><br>
-                            <h3>Menu 2</h3>
+                          <div id="past-meetings" class="container tab-pane fade"><br>
+                            <p class="tab-title">Past meetings</p>
                             <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
                           </div>
                         </div>
