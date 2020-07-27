@@ -302,8 +302,9 @@ label {
 
 .no-bullet {
   list-style-type: none;
-  padding: 0px;
+  padding: 5px;
   padding-left: 10px;
+  margin-bottom: 5px;
 }
 
 
@@ -311,7 +312,7 @@ label {
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 30px;
   color: #AA6231;
   padding-left: 10px;
@@ -383,7 +384,7 @@ input:focus, textarea:focus {
 }
 
 .tab-pane {
-    height: 200px;
+    height: 400px;
     overflow-y:scroll;
 }
 
@@ -415,4 +416,20 @@ input:focus, textarea:focus {
   padding-left: 20px;
 }
 
+#meeting-update-btn{
+    padding:10px;
+}
 
+.meeting-details{
+  font-family: Roboto;
+  font-weight: 300;
+}
+
+.paddingRightZero{
+    padding-right: 0px;
+}
+
+
+#meetings-box{
+    height: 500px;
+}
