@@ -186,8 +186,11 @@ function iAmAware(buttonEle, mentorshipId, meetingId, meetingAccepted) {
 
     // If meeting is not accepted, then remove the meeting from meetings list
     // Else, do nothing 
-    if (meetingAccepted == false) {
-        db.collection('mentorship').doc('mentorshipId').collection('meetings').doc(meetingId).delete();
+
+    console.log(meetingAccepted);
+    if (meetingAccepted == "false") {
+        console.log("the meeting is removed");
+        db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).delete();
     }
 
     // Show the result to the current user 

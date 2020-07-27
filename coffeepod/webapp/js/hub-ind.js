@@ -73,3 +73,12 @@ function fromMillisecondsToMonthAndYear(milliseconds) {
     return date.toLocaleString('default', { month: 'long'}) + " " + date.getFullYear();
 }
 
+// MEETING SECTION
+
+/*function getAcceptedMeetings() {
+    const meetingsRef = db.collection('mentorship').doc(mentorshipID).collection('meetings');
+    meetingsRef.where('when', '>', Date.now()).where('accepted', '==', true).get().then(function (meetingRef{
+        console.log()
+    })
+}*/
+
