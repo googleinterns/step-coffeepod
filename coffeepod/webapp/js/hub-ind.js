@@ -160,6 +160,8 @@ function showMeetingDetails(meetingId) {
         }
     })
 
+    // Add delete meeting button
+
     const detailSection = document.getElementById("meeting-details-expand");
 
     // Show the details section
