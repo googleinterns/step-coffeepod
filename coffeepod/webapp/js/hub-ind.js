@@ -128,6 +128,8 @@ function addMeetingToList(listId, meetingId, meetingWhen){
 
     const meetingLiEle = document.getElementById("meeting-ele")
     const meetingLiEleCloned = meetingLiEle.cloneNode(true);
+
+    meetingLiEleCloned.setAttribute('id', meetingId);
     meetingLiEleCloned.classList.remove('hidden');
 
     const meetingDate = meetingLiEleCloned.querySelector("#meeting-date");
@@ -158,9 +160,11 @@ function showMeetingDetails(meetingId) {
         } else {
             setByExpand.innerText = document.getElementById("mentee-name").innerText;
         }
-    })
+    });
 
-    // Add delete meeting button
+    // Set attribute for delete meeting button so that the meeting can be deleted
+    const deleteMeetingBtn = document.getElementById("delete-meeting-button");
+    deleteMeetingBtn.setAttribute('onclick', 'deleteMeeting(' + "'" + meetingId + "'" + ")");
 
     const detailSection = document.getElementById("meeting-details-expand");
 
@@ -183,4 +187,27 @@ function hideDetails(){
     document.querySelectorAll('.tab-pane').forEach(tabPane =>
             tabPane.style.height = '400px');
     document.getElementById('meetings-box').style.height = '500px';
+}
+
+function deleteMeeting(meetingId) {
+    // If meeting is still pending, then can delete without sending any notification
+    const meetingRef = db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId);
+    meetingRef.get().then(function(meeting){
+        if (meeting.data().pending == false && meeting.data().accepted == true) {
+            // If the meeting is already accepted, notify the other person
+            // When they are notified, then delete the meeting 
+
+            // notifyOtherPersonOfDeletionAndDelete(meetingId);
+        } else { // Else, go ahead and delete right here
+            deleteMeetingFromFirestore(meetingId);
+            
+            // Delete the meeting element from DOM
+            document.getElementById(meetingId).removeChild();
+        }
+
+    })
+}
+
+function deleteMeetingFromFirestore(meetingId) {
+    db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId).delete();
 }
