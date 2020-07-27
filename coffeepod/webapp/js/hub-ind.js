@@ -11,6 +11,7 @@ function loadData() {
     getGoalCards();
     addOpeningContent();
     addOverview();
+    getAllMeetings();
 }
 
 function addOpeningContent() {
@@ -74,41 +75,68 @@ function fromMillisecondsToMonthAndYear(milliseconds) {
 }
 
 // MEETING SECTION
+// need both pending and accepted because want to notify the other person of the change in status, eg false-false means it should be removed
 
-const beginningDate = Date.now() - 604800000;
-const beginningDateObject = new Date(beginningDate);
+function getAllMeetings() {
+    getAcceptedMeetings();
+    getPendingMeetings();
+    getPastMeetings();
+}
 
-getAcceptedMeetings();
 function getAcceptedMeetings() {
     const meetingsRef = db.collection('mentorship').doc(mentorshipID).collection('meetings');
     console.log("get all upcoming meetings - meetings that have been accepted");
+    let meetingCount = 0;
     meetingsRef.where('when', '>', Date.now()).where('accepted', '==', true).orderBy("when", "asc").get().then(function (meetings) {
         meetings.forEach(meeting => {
-            console.log("One meeting is: ");
-            console.log(meeting);
-            console.log(meeting.id);
-            console.log(meeting.data().when);
-            console.log(meeting.data().accepted);
-            console.log(meeting.data().accepted == true);
-            console.log(meeting.data().when > Date.now());
-            console.log(meeting.data().title);
-            //addMeetingToList(listId, meetingId, meetingTime);
+            meetingCount += 1;
+            addMeetingToList("upcoming-meeting-list", meeting.data().id, meeting.data().when);
         });
+            document.getElementById("num-upcoming").innerText = meetingCount;
+            document.getElementById("upcoming-meeting-list").classList.remove('hidden');
     });
 }
 
-function addMeetingToList(listId, meetingId, meetingTime){
+function getPendingMeetings() {
+    const meetingsRef = db.collection('mentorship').doc(mentorshipID).collection('meetings');
+    console.log("get all pending meetings - meetings that have been not been accepted but are still pending");
+    let meetingCount = 0;
+    meetingsRef.where('when', '>', Date.now()).where('pending', '==', true).orderBy("when", "asc").get().then(function (meetings) {
+        meetings.forEach(meeting => {
+            meetingCount += 1;
+            addMeetingToList("pending-meeting-list", meeting.data().id, meeting.data().when);
+        });
+            document.getElementById("num-pending").innerText = meetingCount;
+            document.getElementById("pending-meeting-list").classList.remove('hidden');
+    });
+}
+
+function getPastMeetings() {
+    const meetingsRef = db.collection('mentorship').doc(mentorshipID).collection('meetings');
+    console.log("get all pending meetings - meetings that have been not been accepted but are still pending");
+    let meetingCount = 0;
+    meetingsRef.where('when', '<=', Date.now()).where('pending', '==', false).where('accepted', '==', true).orderBy("when", "asc").get().then(function (meetings) {
+        meetings.forEach(meeting => {
+            meetingCount += 1;
+            addMeetingToList("past-meeting-list", meeting.data().id, meeting.data().when);
+        });
+        console.log("past meeting count: " + meetingCount);
+        document.getElementById("num-past").innerText = meetingCount;
+        document.getElementById("past-meeting-list").classList.remove('hidden');
+    });
+}
+
+
+function addMeetingToList(listId, meetingId, meetingWhen){
     const meetingList = document.getElementById(listId);
 
     const meetingLiEle = document.getElementById("meeting-ele")
-    const meetingLiEleCloned = meetingLiEle.clonedNode(true);
+    const meetingLiEleCloned = meetingLiEle.cloneNode(true);
     meetingLiEleCloned.classList.remove('hidden');
 
     const meetingDate = meetingLiEleCloned.querySelector("#meeting-date");
-    meetingDate.innerText = meetingTime;
+    meetingDate.innerText = new Date(meetingWhen);
     meetingDate.setAttribute('onclick', 'showMeetingDetail(' + meetingId + ')')
 
-    meetingList.appendChild(meetingEleCloned);
-
+    meetingList.appendChild(meetingLiEleCloned);
 }
-

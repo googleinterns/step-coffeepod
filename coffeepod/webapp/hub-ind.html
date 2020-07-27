@@ -307,18 +307,23 @@
                         <div class="tab-content">
                           <div id="upcoming-meetings" class="container tab-pane active"><br>
                             <p class="tab-title">Upcoming meetings</p>
-                           <ol  class="meeting-list" id="upcoming-meeting-list">
-                               <li id="meeting-ele"> <a id="meeting-date">Tuesday, July 18, 2020</a></li>
-                               <li> <a>Thursday, July 20, 2020</a></li>
+                            <p class="mb-0">You have <span id="num-upcoming"> </span> upcoming meeting(s).</p>
+                           <ol class="hidden meeting-list" id="upcoming-meeting-list">
+                               <li class="hidden" id="meeting-ele"> <a id="meeting-date">Tuesday, July 18, 2020</a></li>
                             </ol>
                           </div>
                           <div id="pending-meetings" class="container tab-pane fade"><br>
                             <p class="tab-title">Pending meetings</p>
-                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                              <p class="mb-0">You have <span id="num-pending"> </span> pending meeting(s).</p>
+                             <ol class="hidden meeting-list" id="pending-meeting-list">
+                            </ol>
+                
                           </div>
                           <div id="past-meetings" class="container tab-pane fade"><br>
                             <p class="tab-title">Past meetings</p>
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                              <p class="mb-0">You have <span id="num-past"> </span> past accepted meeting(s).</p>
+                            <ol class="hidden meeting-list" id="past-meeting-list">
+                            </ol>
                           </div>
                         </div>
                       </div>
