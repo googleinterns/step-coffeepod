@@ -1,4 +1,5 @@
 /***********************ADD USERS TO CHAT BAR************************* */
+
 let currUser, unsubscribe, messageDiv;
 let lastMsg = true;
 
@@ -42,7 +43,6 @@ function updateUsers(chatArr){
     chatArr.forEach(chatID => {
         let userChat;
         let userID;
-        
 
         db.collection("chats").doc(chatID).get().then(snapshot => {
             if(snapshot.exists){
@@ -74,7 +74,6 @@ function getMostRecent(userID, chatID, text){
 
 function lastMessage(chatID){
     db.collection('chats').doc(chatID).onSnapshot(doc => {
-        console.log("updating last message");
         if(doc.exists){
             const msgID = doc.data().latestMessage;
             db.collection('chats').doc(chatID).collection('messages').doc(msgID).get().then(msgInfo => {
@@ -104,6 +103,34 @@ function openChat(chatID, name){
     updateChat(chatID);
 }
 
+function loadFile(){
+    const fileUpload = document.querySelector('#fileUpload');
+    fileUpload.click();
+//    fileUpload.value = URL.createObjectURL(e.target.files[0]);
+}
+
+function displayFile(){
+    const fileUpload = document.querySelector('#fileUpload').files[0];
+    const file = document.querySelector('#file');
+    const showFile = document.querySelector('#showFile');
+
+    file.style.display = "block";
+    if (fileUpload){
+        showFile.innerHTML = fileUpload.name;
+    }
+
+}
+
+function deleteFile(){
+    const fileUpload = document.querySelector('#fileUpload');
+    const file = document.querySelector('#file');
+    const showFile = document.querySelector('#showFile');
+
+    fileUpload.value = '';
+    showFile.innerHTML = "";
+    file.style.display = "none";
+}
+
 //scrolls messages to the bottom
 function scrollBottom(){
     messageDiv = document.querySelector(".messages");
@@ -116,43 +143,58 @@ function updateChat(id){
     document.querySelector('.messages').innerText = "";
     //retrieve all messages for specific chat
     db.collection('chats').doc(id).collection('messages').orderBy("timestamp", "asc").get().then(messages => {
-        console.log(messages);
         if(messages){
             messages.forEach(message => {
                 const messageInfo = message.data();
-                // determine if own or other user's message
-                if (messageInfo.userID == currUser) genMessage("own", ".ownMsg", messageInfo.content);
-                else genMessage("otherUser", ".otherUserMsg", messageInfo.content);
+                let downloadURL, fileName, fileType, msgOwner;
+
+                console.log(messageInfo.fileURL);
+                if(messageInfo.fileURL){
+                    downloadURL = messageInfo.fileURL;
+                    fileName = messageInfo.fileName;
+                    fileType = messageInfo.fileType;
+                }
+                if (messageInfo.userID == currUser) msgOwner = "own";
+                else msgOwner = "otherUser";
+                genMessage(msgOwner, messageInfo.content, fileName, fileType, downloadURL);  
             })
         }
     }).then(() => {
-        scrollBottom();
+   //     scrollBottom();
     })
 }
 
-function genMessage(type, typeMsg, content){
+function genMessage(type, content, fileName, fileType, downloadURL){
     const temp = document.getElementById(type);
     let clone = temp.cloneNode(true);
     clone.style.display = "flex";
-    clone.querySelector(typeMsg).innerText = content;
+
+    if(downloadURL){
+        let link =  clone.querySelector('#'+type+'Download');
+        link.href = downloadURL;
+        link.innerText = fileName.substring(fileName.indexOf("-")+1);
+     //   clone.querySelector('.'+type+'Msg').innerHTML += "\n";
+    }
+
+    clone.querySelector('#'+type+'Text').innerHTML += content;
     let cont = document.querySelector('.messages');
     cont.appendChild(clone);
+    scrollBottom();
+    deleteFile();
     return clone;
 }
 
-// when current user types and sends a message
-function newMessage(e){
-    e.preventDefault();
+function storeMessage(downloadURL, timestamp, fileName, fileType){
     let msgForm = document.querySelector('.submitMessage');
-    let id = document.querySelector('.messages').id;
-    let newMessage = msgForm['newTxt'].value;
-    let timestamp = Date.now();
-    
-    console.log(lastMsg);
+    const id = document.querySelector('.messages').id;
+    const newMessage = msgForm['newTxt'].value;
 
     db.collection('chats').doc(id).collection('messages').add({
         userID: currUser,
         content: newMessage,
+        fileURL: downloadURL,
+        fileName: fileName,
+        fileType: fileType,
         timestamp: timestamp
     }).then(docRef => {
         db.collection('chats').doc(id).update({
@@ -166,10 +208,9 @@ function newMessage(e){
                     db.collection('chats').doc(id).collection('messages').doc(msgID).get().then(msgInfo => {
                         if(msgInfo.exists){
                             const messageInfo = msgInfo.data();
-                            console.log(messageInfo.content);
                             // determine if own or other user's message
-                            if (messageInfo.userID == currUser) genMessage("own", ".ownMsg", messageInfo.content);
-                            else genMessage("otherUser", ".otherUserMsg", messageInfo.content);
+                            if (messageInfo.userID == currUser) genMessage("own", messageInfo.content, fileName, fileType, downloadURL);
+                            else genMessage("otherUser", messageInfo.content, fileName, fileType, downloadURL);
                             
                             //scroll down to reveal new message
                             scrollBottom();
@@ -181,6 +222,35 @@ function newMessage(e){
         }
     })
     msgForm.reset();
+}
+
+
+// when current user types a new message or sends a file
+function newMessage(e){
+    e.preventDefault();
+    const id = document.querySelector('.messages').id;
+    const fileUpload = document.querySelector('#fileUpload').files[0];
+    let fileName;
+    let downloadURL;
+    const timestamp = Date.now();
+
+    if(fileUpload){
+        fileName = timestamp+'-'+fileUpload.name;
+        const ref = firebase.storage().ref(id);
+        const metadata = {
+            contentType: fileUpload.type
+        };
+        const task = ref.child(fileName).put(fileUpload, metadata);
+        task.then(snapshot => snapshot.ref.getDownloadURL()).then((url) => {
+            downloadURL = url;
+        }).then(() => {
+            storeMessage(downloadURL, timestamp, fileName, fileUpload.type);
+        }).catch(console.error);
+    } else {
+        fileName = null;
+        downloadURL = null;
+        storeMessage(downloadURL, timestamp, fileName, null);
+    }
 
 }
 

@@ -14,6 +14,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-storage.js"></script>
     <script>
         var firebaseConfig = {
             apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
@@ -30,6 +31,7 @@
 
         const auth = firebase.auth();
         const db = firebase.firestore();
+        
 
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -77,7 +79,7 @@
                     </div>
                     <div class="col-lg-8 mt-1">
                         <p class = "line15 padNormal"><span class="font15 poppins weight500" id = "name"></span></p>
-                        <p class = "line15 padNormal mt-1"><span class="font15 poppins weight300 greyText" id = "lastMessage">Last message here</span></p>
+                        <p class = "line15 padNormal mt-1"><span class="font15 poppins weight300 greyText" id = "lastMessage"></span></p>
                     </div>
                   </div>
               </div>
@@ -100,13 +102,19 @@
                             <img class="center-cropped rounded-circle pl-0" src="images/pancake.jpg" alt="pancake" style = "width:40px; height:40px">
                         </div>
                         <div class = "textMsg left-align col-8 col-sm-7 col-lg-5 pl-0">
-                            <span class = "font15 poppins weight300 otherUserMsg">helloooohelloohelloooohelloohelloooohelloohelloooohelloohelloooohelloo</span>
+                            <span class = "font15 poppins weight300 otherUserMsg">
+                                <a id = "otherUserDownload" download></a>
+                                <p class = "mb-0" id = "otherUserText"></p>
+                            </span>
                         </div>
                     </div >
                     <div class = "row" id = "own" style = "display:none">
                         <div class = "col-sm-3 col-lg-6"></div>
                         <div class = "textMsg right-align col-8 col-sm-7 col-lg-5 pr-0">
-                            <span class = "font15 poppins weight300 ownMsg">hi</span>
+                            <span class = "font15 poppins weight300 ownMsg">
+                                <a id = "ownDownload" download></a>
+                                <p class = "mb-0" id = "ownText"></p>
+                            </span>
                         </div>
                         <div class = "col-3 col-sm-1 col-lg-1">
                             <img class="center-cropped rounded-circle pl-0" src="images/pancake.jpg" alt="pancake" style = "width:40px; height:40px">
@@ -118,8 +126,16 @@
 
                     <!-- SENDING NEW MESSAGE -->
                     <form onsubmit = "newMessage(event)" class = "submitMessage" id = "submitMessage">
+                        <div id = "file" style = "display:none">
+                            <span onclick = "deleteFile();" id = "delete" style = "cursor:pointer">&times;&nbsp;&nbsp;&nbsp;</span>
+                            <span id = "showFile"></span>
+                        </div>
                         <div class = "input-group">
-                            <input type = "text" class = "roboto weight300 font15 line21 form-control"  id = "newTxt" placeholder = "type a message...">
+                            <div class = "input-group-prepend" style = "cursor:pointer">
+                                <span class="input-group-text" onclick = "loadFile()" id="addFile"><i class="fa fa-paperclip" aria-hidden="true"></i></span>
+                                <input id = "fileUpload" type='file' onchange = "displayFile()" style = "display:none">
+                            </div>
+                            <input type = "text" class = "roboto weight300 font15 line21 form-control" aria-describedby="addFile" id = "newTxt" placeholder = "type a message...">
                             <div class="input-group-append">
                                 <button type = "submit" class="btn btn-primary" type="button">Send</button>
                             </div>
