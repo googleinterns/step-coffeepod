@@ -173,7 +173,12 @@ function genMessage(type, content, fileName, fileType, downloadURL){
     if(downloadURL){
         let link =  clone.querySelector('#'+type+'Download');
         link.href = downloadURL;
-        link.innerText = fileName.substring(fileName.indexOf("-")+1);
+        if(fileType.substring(0, fileType.indexOf("/")) == "image") {
+            link.appendChild(genImage(downloadURL));
+        } else {
+            link.innerText = fileName.substring(fileName.indexOf("-")+1);
+        }
+        
     }
 
     clone.querySelector('#'+type+'Text').innerHTML += content;
@@ -182,6 +187,14 @@ function genMessage(type, content, fileName, fileType, downloadURL){
     scrollBottom();
     deleteFile();
     return clone;
+}
+
+function genImage(fileName){
+    let imgEl = document.createElement('IMG');
+    imgEl.src = fileName;
+    imgEl.style.width = "70%";
+    imgEl.style.height = "70%";
+    return imgEl;
 }
 
 function storeMessage(downloadURL, timestamp, fileName, fileType){
