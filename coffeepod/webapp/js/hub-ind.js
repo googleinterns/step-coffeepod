@@ -75,10 +75,40 @@ function fromMillisecondsToMonthAndYear(milliseconds) {
 
 // MEETING SECTION
 
-/*function getAcceptedMeetings() {
+const beginningDate = Date.now() - 604800000;
+const beginningDateObject = new Date(beginningDate);
+
+getAcceptedMeetings();
+function getAcceptedMeetings() {
     const meetingsRef = db.collection('mentorship').doc(mentorshipID).collection('meetings');
-    meetingsRef.where('when', '>', Date.now()).where('accepted', '==', true).get().then(function (meetingRef{
-        console.log()
-    })
-}*/
+    console.log("get all upcoming meetings - meetings that have been accepted");
+    meetingsRef.where('when', '>', Date.now()).where('accepted', '==', true).orderBy("when", "asc").get().then(function (meetings) {
+        meetings.forEach(meeting => {
+            console.log("One meeting is: ");
+            console.log(meeting);
+            console.log(meeting.id);
+            console.log(meeting.data().when);
+            console.log(meeting.data().accepted);
+            console.log(meeting.data().accepted == true);
+            console.log(meeting.data().when > Date.now());
+            console.log(meeting.data().title);
+            //addMeetingToList(listId, meetingId, meetingTime);
+        });
+    });
+}
+
+function addMeetingToList(listId, meetingId, meetingTime){
+    const meetingList = document.getElementById(listId);
+
+    const meetingLiEle = document.getElementById("meeting-ele")
+    const meetingLiEleCloned = meetingLiEle.clonedNode(true);
+    meetingLiEleCloned.classList.remove('hidden');
+
+    const meetingDate = meetingLiEleCloned.querySelector("#meeting-date");
+    meetingDate.innerText = meetingTime;
+    meetingDate.setAttribute('onclick', 'showMeetingDetail(' + meetingId + ')')
+
+    meetingList.appendChild(meetingEleCloned);
+
+}
 

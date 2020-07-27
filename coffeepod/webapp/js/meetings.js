@@ -4,7 +4,7 @@
 
 
 class Meeting {
-     constructor(id, title, when, where, description, pending, accepted, filled) {
+     constructor(id, title, when, where, description, pending, accepted) {
         this.id = id;
         this.title = title;
         this.when = when;
@@ -20,7 +20,7 @@ function sendMeetingRequest(event){
     // get information from the form
     const meetingForm = document.getElementById("meeting-form");
     const title = meetingForm['title'].value;
-    const when = new Date(meetingForm['when'].value);
+    const when = new Date(meetingForm['when'].value).getTime();
     const where = meetingForm['where'].value;
     const description = meetingForm['description'].value;
 

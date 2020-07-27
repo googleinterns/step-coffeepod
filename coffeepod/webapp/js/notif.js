@@ -170,7 +170,7 @@ function putOneMeetingResponseOnPage(meetingId, mentorshipId) {
             });
 
             titleElement.innerText = meetingDoc.data().title;
-            whenElement.innerText = meetingDoc.data().when.toDate();
+            whenElement.innerText = new Date(meetingDoc.data().when);
 
             whereElement.innerText = meetingDoc.data().where;
             descriptionElement.innerText = meetingDoc.data().description;
@@ -279,7 +279,7 @@ function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
             });
 
             titleElement.innerText = meetingDoc.data().title;
-            whenElement.innerText = meetingDoc.data().when.toDate();
+            whenElement.innerText = new Date(meetingDoc.data().when);
 
             whereElement.innerText = meetingDoc.data().where;
             descriptionElement.innerText = meetingDoc.data().description;
