@@ -37,6 +37,28 @@ function load(fromWhere){
   });
 }
 
+function getCurrentUser() {
+    auth.onAuthStateChanged(function(user) {
+    if (user) {
+      uid = user.uid;
+      let profileRef = db.collection("profile").doc(uid);
+      profileRef.get().then(function(profile) {
+        if (profile.exists) {
+            const name = profile.data().name;
+            const nameHolder = document.getElementById("current-user-name");
+            nameHolder.innerText = name;
+
+            const titleHolder = document.getElementById("current-user-title");
+            if (titleHolder != null) {
+                titleHolder.innerText = profile.data().title;
+            }
+            
+        } 
+      })
+    } 
+  });
+}
+
 function showAbout() {
   if(document.getElementById("aboutCoffee").classList.contains("hidden")) {
     if(!document.getElementById("whyCoffee").classList.contains("hidden")) {

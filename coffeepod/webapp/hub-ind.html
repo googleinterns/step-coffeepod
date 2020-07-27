@@ -1,314 +1,362 @@
 <html>
-     <head>
-         <meta charset="UTF-8">
-         <meta name="viewport" content="width=device-width, initial-scale=1">
-         <title>Hub</title>
-         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-         <link rel="stylesheet" href="css/hub-ind.css">
-         <link rel="stylesheet" href="css/style.css">
-         <link rel="stylesheet" href="css/footer.css">
-         <link rel="stylesheet" href="css/goals.css">
-         <link rel="stylesheet" href="css/navbar_style.css">
-         
-         
-         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-         <script src="https://kit.fontawesome.com/6593008338.js" crossorigin="anonymous"></script>
-         <script src="https://kit.fontawesome.com/6593008338.js" crossorigin="anonymous"></script>
-         
-         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hub</title>
 
-        
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-         <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+    <link rel="stylesheet" href="css/hub-ind.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/goals.css">
+    <link rel="stylesheet" href="css/navbar_style.css">
 
-        <script>
-            const firebaseConfig = {
-                apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
-                authDomain: "team-hi-five-step.firebaseapp.com",
-                databaseURL: "https://team-hi-five-step.firebaseio.com",
-                projectId: "team-hi-five-step",
-                storageBucket: "team-hi-five-step.appspot.com",
-                messagingSenderId: "296440646158",
-                appId: "1:296440646158:web:d06db7292a4cc92d714a5f",
-                measurementId: "G-SV4KD1V658"
-            };
-            // Initialize Firebase
-            firebase.initializeApp(firebaseConfig);
-            const db = firebase.firestore();
-        </script>
-        <script src="js/script.js"></script>
-        <script src="js/hub-ind.js"></script>
-        <script src="js/goals.js"></script>
-        <script src="js/search.js"></script>
-        <script src="js/meetings.js"></script>
-        <script>
-          $(document).ready(load('hub'));
-        </script>
-   </head>
 
-    <body onload = "loadData()">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/6593008338.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/6593008338.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
+        authDomain: "team-hi-five-step.firebaseapp.com",
+        databaseURL: "https://team-hi-five-step.firebaseio.com",
+        projectId: "team-hi-five-step",
+        storageBucket: "team-hi-five-step.appspot.com",
+        messagingSenderId: "296440646158",
+        appId: "1:296440646158:web:d06db7292a4cc92d714a5f",
+        measurementId: "G-SV4KD1V658"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
+    </script>
+    <script src="js/script.js"></script>
+    <script src="js/hub-ind.js"></script>
+    <script src="js/goals.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/meetings.js"></script>
+    <script>
+      $(document).ready(load('hub'));
+
+    </script>
+  </head>
+
+  <body onload="loadData()">
 
     <div id="page-container">
-    <div id="nav-placeholder"></div>
-    <div class="page">
-    
-     <div class="container-fluid">
-         <div class="row justify-content-center">
+      <div id="nav-placeholder"></div>
+      <div class="page">
 
-    
-      <div class="col-lg-12">
-         <p id="subpage-title"> <span id="mentor-name"></span> - <span id = "mentee-name"></span> mentorship hub </p>
-         <div class="cont shadow-sm">
-         <div class="card-deck deck-middle">
-         <div class="card no-border">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
 
-            <div class="pic-container-hub">
-               <img class ="profile-pic" src="images/penguin.jpg" />
-           </div>
 
-            <div class="card-body">
-               <div class="text-center">
-                   <div class="d-flex align-items-center">
-                       <h5 class="card-name-title" id="mentor-card-name"></h5>
-                   </div>
-                   <div class="text-center">
-                    <p class="card-text" id="mentor-card-title"></p>
+            <div class="col-lg-12">
+              <p id="subpage-title"> <span id="mentor-name"></span> - <span id="mentee-name"></span> mentorship hub </p>
+              <div class="cont shadow-sm">
+                <div class="card-deck deck-middle">
+                  <div class="card no-border">
+
+                    <div class="pic-container-hub">
+                      <img class="profile-pic" src="images/penguin.jpg" />
                     </div>
 
-               </div>
-           </div>
+                    <div class="card-body">
+                      <div class="text-center">
+                        <div class="d-flex align-items-center">
+                          <h5 class="card-name-title" id="mentor-card-name"></h5>
+                        </div>
+                        <div class="text-center">
+                          <p class="card-text" id="mentor-card-title"></p>
+                        </div>
 
-           <div class="card-footer text-center bg-transparent border-0">
-                <a href="#" class="badge orangeTextDark whiteBackground"> <span class="badge-text orangeTextDark"> Mentor</span></a>
-           </div>
-         </div>
+                      </div>
+                    </div>
 
-         <div class="card no-border">
+                    <div class="card-footer text-center bg-transparent border-0">
+                      <a href="#" class="badge orangeTextDark whiteBackground"> <span class="badge-text orangeTextDark"> Mentor</span></a>
+                    </div>
+                  </div>
 
-            <div class="pic-container-hub">
-               <img class ="profile-pic" src="images/pancake.jpg" />
-           </div>
+                  <div class="card no-border">
 
-            <div class="card-body">
-               <div class="text-center">
-                   <div class="d-flex align-items-center">
-                       <h5 class="card-name-title" id="mentee-card-name"></h5>
-                   </div>
-                   <div class="text-center">
-                       <p class="card-text" id ="mentee-card-title"></p>
-                   </div>
-               </div>
-           </div>
-           <div class="card-footer text-center bg-transparent border-0">
-            <a href="#" class="badge orangeTextLight whiteBackground"> <span class="badge-text orangeTextLight"> Mentee</span></a>
-    
-           </div>
-         </div>
+                    <div class="pic-container-hub">
+                      <img class="profile-pic" src="images/pancake.jpg" />
+                    </div>
 
+                    <div class="card-body">
+                      <div class="text-center">
+                        <div class="d-flex align-items-center">
+                          <h5 class="card-name-title" id="mentee-card-name"></h5>
+                        </div>
+                        <div class="text-center">
+                          <p class="card-text" id="mentee-card-title"></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer text-center bg-transparent border-0">
+                      <a href="#" class="badge orangeTextLight whiteBackground"> <span class="badge-text orangeTextLight"> Mentee</span></a>
 
-
-        </div>
-       </div>
-       </div>
-
-        </div>
+                    </div>
+                  </div>
 
 
-        <div class="row justify-content-center">
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="row justify-content-center">
 
             <!--MENU-->
             <div class="col-lg-3">
               <div class="make-me-sticky  mb-5">
-              <div class="cont shadow-sm">
-                <div id="filter-head">
-                  <p class="subtitle-poppins side-menu-header centerText" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    menu
-                  </p>
-                </div>
-  
-                <div id="collapseOne" class="collapse show page-links" aria-labelledby="filter-head">
-                  <p class="centerText"><a href="hub-ind.html#overview-section" class=" menu-choice centerText">overview</a></p>
-                  <div class="dropdown-divider"></div>
-                  <p class="centerText"><a href="hub-ind.html#goal-section" class=" menu-choice centerText">goals</a></p>
-                  <div class="dropdown-divider"></div>
-                  <p class="centerText"><a href="hub-ind.html#meeting-section" class=" menu-choice">meetings</a></p>
-                  <div class="dropdown-divider"></div>
-                  <p class="centerText"><a href="hub-ind.html#records-section" class=" menu-choice">records</a></p>
-                  <div class="dropdown-divider"></div>
-                  <p class="centerText"><a href="hub-ind.html#settings-section" class=" menu-choice">settings</a></p>
+
+                <div class="cont shadow-sm">
+                  <div id="filter-head">
+                    <p class="subtitle-poppins side-menu-header centerText" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      menu
+                    </p>
+                  </div>
+
+                  <div id="collapseOne" class="collapse show page-links" aria-labelledby="filter-head">
+                    <p class="centerText"><a href="#overview-section" class="menu-choice centerText">overview</a></p>
+                    <div class="dropdown-divider"></div>
+                    <p class="centerText"><a href="#goal-section" class="menu-choice centerText">goals</a></p>
+                    <div class="dropdown-divider"></div>
+                    <p class="centerText"><a href="#meeting-section" class="menu-choice">meetings</a></p>
+                    <div class="dropdown-divider"></div>
+                    <p class="centerText"><a href="#records-section" class="menu-choice">records</a></p>
+                    <div class="dropdown-divider"></div>
+                    <p class="centerText"><a href="#settings-section" class="menu-choice">settings</a></p>
+                  </div>
                 </div>
               </div>
             </div>
-            </div>
-            
+
             <!-- OVERVIEW-->
             <div class="col-lg-9">
- 
+
               <div id="overview-section" class="cont shadow-sm">
                 <div id="overview-head">
-                    <button data-toggle="collapse" data-target="#collapseOverview"  aria-controls="collapseOverview" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
-                        Show | Hide
-                    </button>
-                    <p class="weight600 poppins line45 font30 lowercase">
-                        overview
-                    </p>
+                  <button data-toggle="collapse" data-target="#collapseOverview" aria-controls="collapseOverview" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
+                    Show | Hide
+                  </button>
+                  <p class="weight600 poppins line45 font30 lowercase">
+                    overview
+                  </p>
                 </div>
-                
-                <div id="collapseOverview" class="collapse show" >
-                    <div  class="padNormal roboto line21 font17">
+
+                <div id="collapseOverview" class="collapse show">
+                  <div class="padNormal roboto line21 font17">
                     <p>You have been mentor-mentee<span class="orangeTextLight" id="duration"></span> since <span class="orangeTextLight" id="start-time"></span>.</p>
-                    <p>You are matched based on <span class="orangeTextLight"> professional interest.</span></p>
+                    <!--<p>You are matched based on <span class="orangeTextLight"> professional interest.</span></p>-->
                     <p>You have <span class="orangeTextLight" id="num-goal-cards"></span> goal card(s) in total.</p>
-                    </div>
+                  </div>
                 </div>
 
               </div>
-            
+
               <!--GOALS SECTION-->
               <div id="goal-section" class="cont shadow-sm">
-                
+
                 <div id="goal-head">
-                    <button style="outline:none" data-toggle="collapse" data-target="#collapseGoal" aria-expanded="true" aria-controls="collapseGoal"class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
-                        Show | Hide
-                    </button>
-                    <p class="weight600 poppins line45 font30 lowercase">
+                  <button style="outline:none" data-toggle="collapse" data-target="#collapseGoal" aria-expanded="true" aria-controls="collapseGoal" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
+                    Show | Hide
+                  </button>
+                  <p class="weight600 poppins line45 font30 lowercase">
                     goals
-                    </p>
+                  </p>
                 </div>
-                
+
                 <div id="collapseGoal" class="collapse show" aria-labelledby="goal-head">
 
-                    <div class="container-fluid mt-2">
+                  <div class="container-fluid mt-2">
 
 
-                        <button id="add-goal" class="btn roboto font15 line15 spaceLetters orangeTextLight" onclick="createNewGoalCard();"> Add a new goal card</button>
-                        <div id="goal-board" class="row justify-content-center">
+                    <button id="add-goal" class="btn roboto font15 line15 spaceLetters orangeTextLight" onclick="createNewGoalCard();"> Add a new goal card</button>
+                    <div id="goal-board" class="row justify-content-center">
 
-                        </div> <!-- Closing tag of row justify-content-center-->
-                  </div> <!-- Closing tag of container-fluid mt-5-->
+                    </div> <!-- Closing tag of row justify-content-center-->
+                  </div> <!-- Closing tag of container-fluid mt-2-->
                 </div>
               </div>
 
               <!--MEETING SECTION-->
               <div id="meeting-section" class="cont shadow-sm">
                 <div id="meeting-head">
-                    <button data-toggle="collapse" data-target="#collapseMeeting"  aria-controls="collapseMeeting" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
-                        Show | Hide
-                    </button>
-                    <p class="weight600 poppins line45 font30 lowercase">
-                        meetings
-                    </p>
+                  <button data-toggle="collapse" data-target="#collapseMeeting" aria-controls="collapseMeeting" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
+                    Show | Hide
+                  </button>
+                  <p class="weight600 poppins line45 font30 lowercase">
+                    meetings
+                  </p>
                 </div>
-                
+
                 <div id="collapseMeeting" class="collapse show" aria-labelledby="meeting-head">
-                <div class="row">
+                  <div class="row">
                     <div class="col-lg-6 image-container">
-                        <div>
-                        <p class="padName line37 weight500 poppins font25">new meeting</p>
-                        <div  class="roboto line21 font17">
-                            <p>You have <span class="orangeTextLight"> one upcoming meeting</span>, on <span class="orangeTextLight"> Monday, 6 July, 2020</span>.</p>
-                            <br>
-                            <p> <span id="add-confirm-meeting" class="orangeTextLight"> Add a meeting:</span></p>
-                        </div>
-                        </div>
+                      <div>
+                        <p class="padName line37 weight500 poppins font25">new meeting</p><br>
+                        <div class="roboto line21 font17">
+                          <!--<p >You have <span class="orangeTextLight"> one upcoming meeting</span>, on <span class="orangeTextLight"> Monday, 6 July, 2020</span>.</p>-->
 
-                        <form id="meeting-form" onsubmit = "sendMeetingRequest(event)" method="POST" role="form" class="form-horizontal"> 
+                          <p id="add-confirm-meeting"> Schedule a meeting with your <span id="add-role"></span> <span id="add-confirm-name" class="orangeTextLight"></span>:</p>
+                        </div>
+                      </div>
+
+                      <form id="meeting-form" onsubmit="sendMeetingRequest(event)" method="POST" role="form" class="form-horizontal">
                         <div class="form-group poppins container meeting-form">
-                            
-                             
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <input type="text" class="form-control shadow-none" name = "title" placeholder="title" required>
-                                </div>
+
+
+                          <div class="row">
+                            <div class="col-md-12">
+                              <input type="text" class="form-control shadow-none" name="title" placeholder="title" required>
                             </div>
+                          </div>
                         </div>
-                       
-                            <div class="form-group poppins container mb-0 meeting-form">
-                                <div class = "row">
-                                    <div class = "col-md-12">
-                                        <div class="form-group">
-                                            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                                <input type="text" class="form-control shadow-none datetimepicker-input" data-target="#datetimepicker1" name="when" placeholder="when" required/>
-                                                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                </div>
-                                            </div>
-                                            <script type="text/javascript">
-                                                $(function () {
-                                                    $('#datetimepicker1').datetimepicker({
-                                                        minDate: new Date()
-                                                    });
-                                                });
-                                            </script>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="form-group poppins container mb-0 meeting-form">
-                                <div class = "row">
-                                    <div class = "col-md-12">
-                                        <input type="text" class="form-control shadow-none" name="where" placeholder="where" required>
-                                    </div>
+                        <div class="form-group poppins container mb-0 meeting-form">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                  <input type="text" class="form-control shadow-none datetimepicker-input" data-target="#datetimepicker1" name="when" placeholder="when" required />
+                                  <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                    <div class="input-group-text no-border"><i class="fa fa-calendar"></i></div>
+                                  </div>
                                 </div>
-                            </div>
+                                <script type="text/javascript">
+                                  $(function() {
+                                    $('#datetimepicker1').datetimepicker({
+                                      minDate: new Date()
+                                    });
+                                  });
 
-                            <div class="form-group poppins container  meeting-form">
-                                <div class = "row">
-                                    <div class = "col-md-12">
-                                        <textarea type="text" class="form-control shadow-none" name = "description" placeholder="description" rows="5" required></textarea>
-                                    </div>
-                                </div>
+                                </script>
+                              </div>
                             </div>
-                            
-                            <br><br>
-                            <div class="text-center">
-                                <button type="submit" class="btn orangeButton whiteText poppins weight400 font17 centerText line25 marign-auto">send a meeting request!</button><br><br>
+                          </div>
+                        </div>
+
+                        <div class="form-group poppins container mb-0 meeting-form">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <input type="text" class="form-control shadow-none" name="where" placeholder="where" required>
                             </div>
-                        </form>
-                        
+                          </div>
+                        </div>
+
+                        <div class="form-group poppins container  meeting-form">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <textarea type="text" class="form-control shadow-none" name="description" placeholder="description" rows="5" required></textarea>
+                            </div>
+                          </div>
+                        </div>
+
+                        <br><br>
+                        <div class="text-center">
+                          <button type="submit" class="btn orangeButton whiteText poppins weight400 font17 centerText line25 marign-auto">send a meeting request!</button><br><br>
+                        </div>
+                      </form>
+
+                      <!-- CALENDAR SECTION -->
                     </div>
                     <div class="col-lg-6">
-                        
-                      <p class="padName line37 weight500 poppins font25">calendar</p>
-                        
-                      <div class = "orangeBox goal-card centerText"> </div>
-                          
-                      
-                      <p class="padName line37 weight500 poppins font25">details</p>
-                      <div  class="padNormal roboto line21 font17">
-                        <ul class="no-bullet">
-                            <li>when</li>
-                            <li>where</li>
-                            <li>doc</li>
+
+                      <p class="padName line37 weight500 poppins font25">scheduled meetings</p>
+
+                      <div id = "meetings-box" class="container orangeBox goal-card">
+
+                        <ul class="nav nav-tabs" role="tablist">
+                          <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#upcoming-meetings">Upcoming </a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#pending-meetings">Pending</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#past-meetings">Past</a>
+                          </li>
                         </ul>
-                        <p class="meeting-title mb-2">First meet!</p>
-                        <div  class="left-pad-10">
-                            <p> Excited to talk to you!</p>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                          <div id="upcoming-meetings" class="container tab-pane active"><br>
+                            <p class="tab-title">Upcoming meetings</p>
+                            <p class="mb-0">You have <span id="num-upcoming"> </span> upcoming meeting(s).</p>
+                            <ol class="hidden meeting-list" id="upcoming-meeting-list">
+                              <li class="hidden" id="meeting-ele"> <a id="meeting-date">Tuesday, July 18, 2020</a></li>
+                            </ol>
+                          </div>
+                          <div id="pending-meetings" class="container tab-pane fade"><br>
+                            <p class="tab-title">Pending meetings</p>
+                            <p class="mb-0">You have <span id="num-pending"> </span> pending meeting(s).</p>
+                            <ol class="hidden meeting-list" id="pending-meeting-list">
+                            </ol>
+
+                          </div>
+                          <div id="past-meetings" class="container tab-pane fade"><br>
+                            <p class="tab-title">Past meetings</p>
+                            <p class="mb-0">You have <span id="num-past"> </span> past accepted meeting(s).</p>
+                            <ol class="hidden meeting-list" id="past-meeting-list">
+                            </ol>
+                          </div>
+                        </div>
+                      </div>
+                    
+                    <div style="display:none" id="meeting-details-expand">
+                      <button id="meeting-update-btn" class="btn btn-goal delete-goal-card" onclick="hideDetails()"><i class="fas fa-times grayText" aria-hidden="true"></i></button>
+                      <p class="padName line37 weight500 poppins font25">details</p>
+                      <p  class="hidden" id="delete-now-confirmation"> Okay. The meeting is deleted.</p>
+                      <p class="hidden"id ="notify-delete-confirmation">We have let your <s
+                      <div class="padNormal roboto line21 font17">
+                        <ul class="no-bullet">
+                          <li>set by: <span class="meeting-details" id="expand-set-by"></span></li>
+                          <li>when: <span class="meeting-details" id="expand-when"> </span></li>
+                          <li>where: <span class="meeting-details" id="expand-where"></span></li>
+                        </ul>
+                        <p class="meeting-title mb-2" id="expand-title">Title</p>
+                        <div class="left-pad-10 meeting-details">
+                          <p id="expand-description"></p>
                         </div>
 
-                        </div>
-                        
-                        <div class="form-group poppins container">
-                            <form action = "index.html" method="POST" role="form" class="form-horizontal">
-                                <div class="text-center">
-                                    <button class="btn greyButton whiteText poppins weight400 font17 centerText line25 marign-auto floatRight">delete</button><br><br>
-                                </div>
-                            </form>
-                        </div>
-                   
+                      </div>
+
+                      <div class="form-group poppins container paddingRightZero">
+                        <form method="POST" role="form" class="form-horizontal">
+                          <div class="text-center">
+                            <button id="delete-meeting-button" class="btn greyButton whiteText poppins weight400 font17 centerText line25 marign-auto floatRight">delete</button><br><br>
+                          </div>
+                        </form>
+                      </div>
+                      </div>
+
+                    </div>
                   </div>
-                </div>
 
                 </div>
               </div>
@@ -317,21 +365,21 @@
               <!--RECORDS-->
               <div id="records-section" class="cont shadow-sm">
                 <div id="records-head">
-                    <button data-toggle="collapse" data-target="#collapseRecords"  aria-controls="collapseRecords" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
-                        Show | Hide
-                    </button>
-                    <p class="weight600 poppins line45 font30 lowercase">
-                        records
-                    </p>
+                  <button data-toggle="collapse" data-target="#collapseRecords" aria-controls="collapseRecords" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
+                    Show | Hide
+                  </button>
+                  <p class="weight600 poppins line45 font30 lowercase">
+                    records
+                  </p>
                 </div>
-                
-                <div id="collapseRecords" class="collapse show" >
-                    <div  class="padNormal roboto line21 font17">
+
+                <div id="collapseRecords" class="collapse show">
+                  <div class="padNormal roboto line21 font17">
                     <p> All meeting documents are kept here. </p>
                     <ul class="orangeTextLight no-bullet">
-                        <li><a href="#">First meeting</a></li>
+                      <li><a href="#">First meeting</a></li>
                     </ul>
-                    </div>
+                  </div>
                 </div>
 
               </div>
@@ -340,71 +388,37 @@
               <!--SETTINGS-->
               <div id="settings-section" class="cont shadow-sm">
                 <div id="settings-head">
-                    <button data-toggle="collapse" data-target="#collapseSettings"  aria-controls="collapseSettings" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
-                        Show | Hide
-                    </button>
-                    <p class="weight600 poppins line45 font30 lowercase">
-                        settings
-                    </p>
+                  <button data-toggle="collapse" data-target="#collapseSettings" aria-controls="collapseSettings" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
+                    Show | Hide
+                  </button>
+                  <p class="weight600 poppins line45 font30 lowercase">
+                    settings
+                  </p>
                 </div>
-                
-                <div id="collapseSettings" class="collapse show" >
-                    <div  class="padNormal roboto line21 font17">
+
+                <div id="collapseSettings" class="collapse show">
+                  <div class="padNormal roboto line21 font17">
                     <p> Archive this mentorship. </p>
                     <p> Update topic. </p>
                     <p> Show this on my profile.</p>
-                    </div>
+                  </div>
                 </div>
 
               </div>
               <!--END OF SETTINGS SECTION-->
 
-            </div> <!--Closing tag for content on right side-->
-        
-            </div> <!-- Closing tag of row justify-content-center-->
-        
+            </div>
+            <!--Closing tag for content on right side-->
 
-     </div>
- </div>
- <div id="footer-placeholder"></div>
-</div> <!--Closing tag of page container-->
+          </div> <!-- Closing tag of row justify-content-center-->
 
- </body>
- </html> 
 
-<!-- <div class="col-auto mb-3">
-          
-                            <div class="card goal-card" style="width: 15rem;">
-                              <div class="card-body">
-                                      <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
-                                      <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
-                              </div>
-                            </div>
-                      
-                          </div>  Closing tag of col-auto mb-3
-      
-                          <div class="col-auto mb-3">
-          
-                            <div class="card goal-card" style="width: 15rem;">
-                              <div id="goal-body" class="card-body">
-                                      <button id="add-goals" class="btn float-right grayText"><i class="fas fa-plus" aria-hidden="true" onclick="createNewGoalCard()"></i></button>
-                                      <p class="poppins weight600 font20 line25 orangeTextLight capitalize">First Goals</p>
-                              </div>
-                            </div>
-                      
-                          </div> Closing tag of col-auto mb-3
+        </div>
+      </div>
+      <div id="footer-placeholder"></div>
+    </div>
+    <!--Closing tag of page container-->
 
-                          New goal
-                          <div class="col-auto mb-3">
-          
-                            <div class="card goal-card" style="width: 15rem;">
-                              <div class="card-body">
-                                      <button class="btn float-right grayText"><i class="fas fa-pen" aria-hidden="true"></i></button>
-                                      <p class="poppins weight600 font20 line25 greyText capitalize">Place Holder<i class="fab fa-candle-holder"></i></p>
-                              </div>
-                            </div>
-                                Closing tag of col-auto mb-3
-                          </div> -->
-      
-                    <!-- Closing tags of a set of decks-->
-                      <!--Closing tag for goal cards container-->
+  </body>
+
+</html>

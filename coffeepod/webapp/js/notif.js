@@ -1,9 +1,22 @@
 let name, uid, user, username, mentors, mentees, mentorRequests, menteeRequests;
+//uid stores the current user's id
 
 // mentorRequests are people who want this user person to be their mentor
 // menteeRequests are people who want this user to be their mentee
 
 // function to load the notifications into the page
+
+/* // TEST FIRESTORE FOR SOME UNDEFINED FIELDS IN AN ARRAY OF MAPS
+db.collection('notifications').doc('Wk7lrwtTP8aJA2rVy1JGXIHpQEt2').get().then(function(notif) {
+    const meetingRequests = notif.data().meetingRequests;
+    if (meetingRequests != null) {
+        console.log("there are some meeting requests");
+        console.log(meetingRequests);
+    } 
+    console.log(meetingRequests[0].updated);
+    console.log(meetingRequests[0].updated == undefined);
+});*/
+
 function getNotif() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -21,6 +34,11 @@ function getNotif() {
       notifRef.get().then(function(notif) {
         mentorRequests = notif.data().mentorRequests;
         menteeRequests = notif.data().menteeRequests;
+
+        if(notif.data().meetingRequests != null) {
+            loadMeetingRequestsAndResponses();
+        }
+
       }).then(function(){
           loadMentor();
           loadMentee();
@@ -32,6 +50,303 @@ function getNotif() {
     }
   });
 }
+
+
+function loadMeetingRequestsAndResponses() {
+    const notifRef = db.collection('notifications').doc(uid);
+    notifRef.get().then(function(notifDoc) {
+        // this means meetingRequests exist
+        // put meetingRequests up on the site
+        putAllMeetingRequestsOnPage(notifDoc.data().meetingRequests);
+        putAllMeetingResponsesOnPage(notifDoc.data().meetingResponses);
+    })
+}
+
+
+function putAllMeetingRequestsOnPage(meetingRequests) {
+    if (meetingRequests != null) {
+        for (let i = 0; i < meetingRequests.length; i++) {
+            const meetingId = meetingRequests[i].meetingId;
+            const mentorshipId = meetingRequests[i].mentorshipId;
+            putOneMeetingRequestOnPage(meetingId, mentorshipId);
+        }
+    }
+}
+
+function putAllMeetingResponsesOnPage(meetingResponses) {
+    if (meetingResponses != null) {
+        for (let i = 0; i < meetingResponses.length; i++) {
+            const meetingId = meetingResponses[i].meetingId;
+            const mentorshipId = meetingResponses[i].mentorshipId;
+            putOneMeetingResponseOnPage(meetingId, mentorshipId);
+        }
+    }
+}
+
+function updateToggleForMeetingDetails(clonedMeetingNotifEle, meetingId) {
+    const toggleHead = clonedMeetingNotifEle.querySelector('#meeting-details-head');
+    toggleHead.setAttribute('id', 'meeting-details-head' + meetingId);
+
+    const toggleBody = clonedMeetingNotifEle.querySelector('#collapseDetails');
+    toggleBody.setAttribute('id', 'collapseDetails' + meetingId);
+    toggleBody.setAttribute('aria-labelledby',  'meeting-details-head' + meetingId);
+
+    const toggleLink = clonedMeetingNotifEle.querySelector('#toggle-link');
+    toggleLink.setAttribute('data-target', '#collapseDetails' + meetingId);
+    toggleLink.setAttribute('aria-controls', 'collapseDetails' + meetingId);
+}
+
+function putOneMeetingResponseOnPage(meetingId, mentorshipId) {
+    let respondentId, currentUserIsMentor;
+
+    const mentorshipRef = db.collection('mentorship').doc(mentorshipId);
+    const meetingResponseSection = document.getElementById("meeting-response-section");
+
+    const meetingResponseElement = document.getElementById("meeting-notif-board");
+    const meetingResponseElementCloned = meetingResponseElement.cloneNode(true);
+    
+    // Update toggle 
+    updateToggleForMeetingDetails(meetingResponseElementCloned, meetingId);
+
+    const titleElement = meetingResponseElementCloned.querySelector("#title");
+    const whenElement = meetingResponseElementCloned.querySelector("#when");
+    const whereElement = meetingResponseElementCloned.querySelector("#where");
+    const descriptionElement = meetingResponseElementCloned.querySelector("#description");
+
+
+
+    // (2) Update details of the meeting
+    mentorshipRef.collection('meetings').doc(meetingId).get().then(function(meetingDoc) {
+        if (meetingDoc.exists && meetingDoc.data().accepted != null) { 
+            // Check for actual meeting's existence and that it is not a pseudo meeting before next steps
+
+            // (1) Update sender's information 
+            mentorshipRef.get().then(function (mentorshipDoc) {
+
+                // Check if the respondent accepts or removes the meeting
+                let acceptOrRemove;
+                (meetingDoc.data().accepted) ? acceptOrRemove = "accepted" : acceptOrRemove = "removed";
+
+                // Set the meeting notification content
+                const notifContentPlace = meetingResponseElementCloned.querySelector("#notif-content");
+                const notifContent = "Your " + "<span id='sender-role'></span>" + " <a class='sender-name orangeTextLight'></a>" + " has " + acceptOrRemove + " your meeting request."
+                notifContentPlace.innerHTML = notifContent;
+
+                // Add action functions for the got it button
+                const latterPartOnClickFunc = "'"  + mentorshipId + "'," + "'"  + meetingId + "'" + "," + "'"  + meetingDoc.data().accepted + "'" + ")";
+                meetingResponseElementCloned.querySelector("#i-am-aware").setAttribute("onclick", "iAmAware(this," + latterPartOnClickFunc);
+                meetingResponseElementCloned.querySelector("#i-am-aware").classList.remove('hidden');
+
+                const respondentRoleElement = meetingResponseElementCloned.querySelector("#sender-role");
+
+                
+                if (meetingDoc.data().setByMentor == true) { // Current user is the sender of the request, so the other person must respponse
+                    currentUserIsMentor = true;
+                    respondentId = mentorshipDoc.data().menteeId;
+                    respondentRoleElement.innerText = "mentee";
+                } else {
+                    currentUserIsMentor = true;
+                    respondentId = mentorshipDoc.data().mentorId;
+                    respondentRoleElement.innerText = "mentor";
+                }
+                
+                // Change all elements of this name
+                const respondentNameElements = meetingResponseElementCloned.querySelectorAll(".sender-name");
+                db.collection('profile').doc(respondentId).get().then(function(profileDoc) {
+                    respondentNameElements.forEach(name => {
+                        name.innerText = profileDoc.data().name
+                        name.setAttribute('href', 'profile.html?user=' + respondentId);
+                    });
+                    
+                });
+
+                // Create a hub-ind link for the see all of current meetings 
+                const queryStringForHubInd = "?mentorshipId=" + mentorshipId + "&currentIsMentor=" + currentUserIsMentor;
+                const hubIndLinks = meetingResponseElementCloned.querySelectorAll('.hub-ind');
+                hubIndLinks.forEach(hubIndLink => {
+                    hubIndLink.setAttribute('href','hub-ind.html' + queryStringForHubInd);
+                })
+
+            });
+
+            titleElement.innerText = meetingDoc.data().title;
+            whenElement.innerText = new Date(meetingDoc.data().when);
+
+            whereElement.innerText = meetingDoc.data().where;
+            descriptionElement.innerText = meetingDoc.data().description;
+            // (3) Unhide all of this information
+            meetingResponseElementCloned.classList.remove("hidden");
+            meetingResponseSection.appendChild(meetingResponseElementCloned);
+        } 
+    });
+
+}
+
+function iAmAware(buttonEle, mentorshipId, meetingId, meetingAccepted) {
+
+    // If meeting is not accepted, then remove the meeting from meetings list
+    // Else, do nothing 
+
+    console.log(meetingAccepted);
+    if (meetingAccepted == "false") {
+        console.log("the meeting is removed");
+        db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).delete();
+    }
+
+    // Show the result to the current user 
+    const confirmation = $(buttonEle).closest(':has(#delete-confirmation)').children('#delete-confirmation').get(0);
+    confirmation.classList.remove('hidden');
+
+    const actionButtons = buttonEle.closest('#response-options');
+    actionButtons.classList.add('hidden');
+
+    removeMeetingResponse(mentorshipId, meetingId);
+}
+
+// Remove meeting response from current user's notifications
+function removeMeetingResponse(mentorshipId, meetingId) {
+    db.collection('notifications').doc(uid).update({
+        meetingResponses: firebase.firestore.FieldValue.arrayRemove({mentorshipId: mentorshipId, meetingId: meetingId})
+    })
+}
+
+
+function putOneMeetingRequestOnPage(meetingId, mentorshipId) {
+    let senderId; 
+
+    const mentorshipRef = db.collection('mentorship').doc(mentorshipId);
+    // (0) Clone the meeting request element and access necessary children nodes
+    const meetingRequestSection = document.getElementById("meeting-request-section");
+
+    const meetingRequestElement = document.getElementById("meeting-notif-board");
+    const meetingRequestElementCloned = meetingRequestElement.cloneNode(true);
+
+     // Update toggle 
+    updateToggleForMeetingDetails(meetingRequestElementCloned, meetingId);
+    
+    const titleElement = meetingRequestElementCloned.querySelector("#title");
+    const whenElement = meetingRequestElementCloned.querySelector("#when");
+    const whereElement = meetingRequestElementCloned.querySelector("#where");
+    const descriptionElement = meetingRequestElementCloned.querySelector("#description");
+
+    // Change all elements of this name
+    const senderNameElements = meetingRequestElementCloned.querySelectorAll(".sender-name");
+    const senderRoleElement = meetingRequestElementCloned.querySelector("#sender-role");
+    
+
+    // (2) Update details of the meeting
+    mentorshipRef.collection('meetings').doc(meetingId).get().then(function(meetingDoc) {
+        if (meetingDoc.exists) { // Check for actual meeting's existence before doing anything
+
+            // (1) Update sender's information 
+            mentorshipRef.get().then(function (mentorshipDoc) {
+
+                if (meetingDoc.data().setByMentor == true) { // Request meaning it is set by the other person
+                 currentUserIsMentor = false;
+                    senderId = mentorshipDoc.data().mentorId;
+                    senderRoleElement.innerText = "mentor";
+                } else {
+                    currentUserIsMentor = true;
+                    senderId = mentorshipDoc.data().menteeId;
+                    senderRoleElement.innerText = "mentee";
+                }
+                
+                // Add action functions for the approve and remove button
+                
+                meetingRequestElementCloned.querySelector("#approve-meeting").classList.remove('hidden');
+                meetingRequestElementCloned.querySelector("#remove-meeting").classList.remove('hidden');
+
+                const latterPartOnClickFunc = "'"  + mentorshipId + "'," + "'"  + meetingId + "'" + "," + "'"  + senderId + "'" + ")";
+                meetingRequestElementCloned.querySelector("#approve-meeting").setAttribute("onclick", "approveMeeting(this," + latterPartOnClickFunc);
+                meetingRequestElementCloned.querySelector("#remove-meeting").setAttribute("onclick", "removeMeeting(this,"  + latterPartOnClickFunc);
+
+
+                db.collection('profile').doc(senderId).get().then(function(profileDoc) {
+                    senderNameElements.forEach(name => {
+                        name.innerText = profileDoc.data().name
+                        name.setAttribute('href', 'profile.html?user=' + senderId);
+                    });
+                    
+                });
+
+                // Create a hub-ind link for the see all of current meetings 
+                const queryStringForHubInd = "?mentorshipId=" + mentorshipId + "&currentIsMentor=" + currentUserIsMentor;
+                const hubIndLinks = meetingRequestElementCloned.querySelectorAll('.hub-ind');
+                hubIndLinks.forEach(hubIndLink => {
+                    hubIndLink.setAttribute('href','hub-ind.html' + queryStringForHubInd);
+                })
+
+            });
+
+            titleElement.innerText = meetingDoc.data().title;
+            whenElement.innerText = new Date(meetingDoc.data().when);
+
+            whereElement.innerText = meetingDoc.data().where;
+            descriptionElement.innerText = meetingDoc.data().description;
+            // (3) Unhide all of this information
+            meetingRequestElementCloned.classList.remove("hidden");
+            meetingRequestSection.appendChild(meetingRequestElementCloned);
+        } 
+    });
+
+}
+
+
+function approveMeeting(buttonEle, mentorshipId, meetingId, senderId) {
+
+    // Set the accepted stage of the meeting to true
+    db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
+            accepted: true,
+            pending: false
+    });
+
+    // Show the result to the current user 
+    const confirmation = $(buttonEle).closest(':has(#approve-confirmation)').children('#approve-confirmation').get(0);
+    confirmation.classList.remove('hidden');
+
+    const actionButtons = buttonEle.closest('#response-options');
+    actionButtons.classList.add('hidden');
+
+    removeMeetingRequest(mentorshipId, meetingId);
+    addMeetingResponseToSender(mentorshipId, meetingId, senderId);
+}
+
+function removeMeeting(buttonEle, mentorshipId, meetingId, senderId) {
+    // Set the accepted stage of the meeting to false
+    db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
+            accepted: false,
+            pending: false
+    });
+
+    // Show the result to the current user 
+    const confirmation = $(buttonEle).closest(':has(#remove-confirmation)').children('#remove-confirmation').get(0);
+    confirmation.classList.remove('hidden');
+
+    const actionButtons = buttonEle.closest('#response-options');
+    actionButtons.classList.add('hidden');
+
+    removeMeetingRequest(mentorshipId, meetingId);
+    addMeetingResponseToSender(mentorshipId, meetingId, senderId);
+}
+
+// This removes the meeting request from the meetingRequest list in notifications
+function removeMeetingRequest(mentorshipId, meetingId) {
+    // Remove meeting request from firestore
+    db.collection('notifications').doc(uid).update({
+        meetingRequests: firebase.firestore.FieldValue.arrayRemove({mentorshipId: mentorshipId, meetingId: meetingId})
+    })
+}
+
+// Add meeting responses
+// The message (whether accepted or removed, is stored in the meeting itself)
+function addMeetingResponseToSender(mentorshipId, meetingId, senderId) {
+    db.collection('notifications').doc(senderId).update({
+        meetingResponses: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipId, meetingId: meetingId})
+    });
+}
+
+
+// ----------------------------- MENTOR-MENTEE NOTIFICATIONS ------------------------------------------------------
 
 // load the requests of people that want this user too be their mentor
 function loadMentor() {
@@ -175,6 +490,8 @@ function deny(button, type) {
   }
   request.remove();
 }
+
+// ----------------------------- POST AND FOLLOW NOTIFICATIONS ------------------------------------------------------
 
 // load the follow notifications to the page
 function loadFollowNotif() {

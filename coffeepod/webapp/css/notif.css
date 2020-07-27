@@ -36,11 +36,10 @@ a:hover{
   margin-bottom: 30px;
 }
 
-.request-content{
+#notif-content{
   font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-size: 25px;
-  line-height: 37px;
+  font-weight: 600;
+  font-size: 20px;
   padding: 0;
   padding-bottom: 2px;
   margin: 0;
@@ -77,24 +76,25 @@ a:hover{
     text-align: center;
 }
 
-.see-more{
+.show-hide-toggle{
     font-family: Roboto;
     line-height: 21px;
-    font-size: 17px;
+    font-size: 16px;
     color: #AA6231 !important;
     padding: 0;
     padding-bottom: 5px;
-    margin-top: 15px;
     margin-bottom: 15px;
     display: inline-block;
 }
 
 .meeting-details-card {
+  font-family: Roboto;
   list-style-type: none;
   padding: 10px;
   border: 2px solid #AA6231;
   display: inline-table;
   margin-bottom: 20px;
+  font-weight: 300;
 }
 
 .bold-text{
@@ -104,20 +104,50 @@ a:hover{
 .system-response{
   font-family: Poppins;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 15px;
-  line-height: 22px;
+  line-height: 25px;
   letter-spacing: 0.05em;
   color: #000000;
   margin: auto;
+}
+
+.response-options{
+    margin: 0px;
+    height: 64px;
 }
 
 .person-name{
     color: #AA6231  !important;
 }
 
-.check-icon {
+.check-icon{
     padding: 20px;
-    color: #DDA35D; !important;
+    padding-bottom: 0px;
+    color: #DDA35D !important;
+    padding-left: 0px;
 }
+
+.body-text{
+  font-family: Roboto;
+  list-style-type: none;
+  display: inline-table;
+  font-weight: 300;
+  margin-bottom: 0px;
+}
+
+#time-stamp{
+  font-family: Roboto;
+  list-style-type: none;
+  display: inline-table;
+  font-weight: 300;
+  margin-bottom: 0px;
+  font-size: 13px;
+}
+
+.confirmation{
+    line-height: normal;
+}
+
+
 

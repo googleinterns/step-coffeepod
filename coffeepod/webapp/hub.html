@@ -42,6 +42,7 @@
     <script src="js/hub.js"></script>
     <script>
       $(document).ready(load('hub'));
+      $(document).ready(getCurrentUser());
     </script>
   </head>
 
@@ -53,6 +54,18 @@
           <div class="row justify-content-center">
             <div class="col-lg-3">
               <div class="make-me-sticky  mb-5">
+                  <!-- Current user's information-->
+                  <div class="cont shadow-sm">
+                  <div class="text-center mb-3">
+                    <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%>
+                  </div>
+                  <p class="hi-current-user ">hi, <span id="current-user-name"></span></p>
+                  <p class="font17 roboto line15 padNormal text-center spaceLetters title"></p>
+                  <br>
+                  <!--<a href = "profile.html"><p class="font15 roboto line15 weight300 padNormal text-center orangeTextDark mb-2"> Update your profile</p></a>
+                  <a href = "index.html"> <p class="font15 roboto line15 weight300 padNormal text-center orangeTextDark" id = "askQuestion"> Ask a question</p></a>-->
+                </div>
+
                 <div class="cont shadow-sm">
                   <div id="filter-head">
                     <p class="subtitle-poppins side-menu-header centerText" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -70,6 +83,7 @@
                     <p class="centerText"><a href="#past-mentees" class=" menu-choice centerText">past mentees</a></p>
                   </div>
                 </div>
+
               </div>
             </div>
 
@@ -104,7 +118,7 @@
 
             <div class="cont shadow-sm hidden" id="no-one-template">
               <div class = "no-content">
-                <p>currently, you have no <span id="target"></p>
+              <p>currently, you have no <span id="target"></span></p>
               </div>
             </div>
 
@@ -120,7 +134,7 @@
             </div>
 
             <div id="past-mentees" class="hidden">
-            <p id="past-mentees" class="subpage-title subpage-title-under"> past mentees </p>
+            <p class="subpage-title subpage-title-under"> past mentees </p>
             <div class="cont shadow-sm">
               <div class = "no-content">
                 <p>currently, you have no past mentees</p>
@@ -134,6 +148,6 @@
         </div> <!-- page -->
         <div id="footer-placeholder"></div>
       </div> <!-- page-container -->
-    </div>
+
   </body>
 </html>
