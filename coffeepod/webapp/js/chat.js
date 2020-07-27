@@ -106,7 +106,6 @@ function openChat(chatID, name){
 function loadFile(){
     const fileUpload = document.querySelector('#fileUpload');
     fileUpload.click();
-//    fileUpload.value = URL.createObjectURL(e.target.files[0]);
 }
 
 function displayFile(){
@@ -125,10 +124,12 @@ function deleteFile(){
     const fileUpload = document.querySelector('#fileUpload');
     const file = document.querySelector('#file');
     const showFile = document.querySelector('#showFile');
+    const progressBar = document.querySelector('#progressBar');
 
     fileUpload.value = '';
     showFile.innerHTML = "";
     file.style.display = "none";
+    progressBar.style.display = 'none';
 }
 
 //scrolls messages to the bottom
@@ -173,7 +174,6 @@ function genMessage(type, content, fileName, fileType, downloadURL){
         let link =  clone.querySelector('#'+type+'Download');
         link.href = downloadURL;
         link.innerText = fileName.substring(fileName.indexOf("-")+1);
-     //   clone.querySelector('.'+type+'Msg').innerHTML += "\n";
     }
 
     clone.querySelector('#'+type+'Text').innerHTML += content;
@@ -230,9 +230,11 @@ function newMessage(e){
     e.preventDefault();
     const id = document.querySelector('.messages').id;
     const fileUpload = document.querySelector('#fileUpload').files[0];
+    const progressBar = document.querySelector('#progress-bar');
     let fileName;
     let downloadURL;
     const timestamp = Date.now();
+    document.querySelector('#progressBar').style.display = "flex";
 
     if(fileUpload){
         fileName = timestamp+'-'+fileUpload.name;
@@ -246,6 +248,15 @@ function newMessage(e){
         }).then(() => {
             storeMessage(downloadURL, timestamp, fileName, fileUpload.type);
         }).catch(console.error);
+
+        task.on('state_changed',
+            function progress(snapshot) {
+                console.log(snapshot.bytesTransferred);
+                var percentage = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
+                progressBar.style.width = percentage.toFixed(2)+"%";
+                progressBar.innerText = percentage.toFixed(2)+'%';
+            }
+        )
     } else {
         fileName = null;
         downloadURL = null;
@@ -253,4 +264,3 @@ function newMessage(e){
     }
 
 }
-
