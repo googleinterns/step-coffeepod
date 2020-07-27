@@ -4,8 +4,13 @@
     width: 94%;
 }
 
+#file {
+    padding: 10px 0px;
+    border-top: 1px solid rgb(200,200,200);
+}
+
 #messageBox {
-    max-height: 100%;
+    min-height: calc(100vh - 300px);
     overflow-y: auto;
 }
 
@@ -18,7 +23,7 @@
 }
 
 .messages{
-  max-height: calc(100vh - 400px);
+  max-height: calc(100vh);
   overflow-y: scroll;
   overflow-x: hidden;
   margin-bottom: 20px;
@@ -58,4 +63,17 @@
     overflow-y: auto;
     word-wrap: break-word !important;
     max-width: 100%;
+}
+
+.btn-primary,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+    background-color: #DDA35D;
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #AA6231
 }
