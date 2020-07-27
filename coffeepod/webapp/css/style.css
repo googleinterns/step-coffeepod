@@ -183,6 +183,10 @@ a {
   font-weight: 500;
 }
 
+.weight400 {
+  font-weight: 500;
+}
+
 .weight300 {
   font-weight: 300;
 }
@@ -235,4 +239,18 @@ a {
     .page {
       padding-bottom: 250px;
     }
+}
+
+#current-user-name{
+ color: #AA6231 !important;
+}
+
+.no-border {
+    border: none;
+}
+
+.expand-icon{
+    float: right !important;
+    color: #c7c7c7;
+
 }
