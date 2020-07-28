@@ -223,7 +223,7 @@
                         <div class="roboto line21 font17">
                           <!--<p >You have <span class="orangeTextLight"> one upcoming meeting</span>, on <span class="orangeTextLight"> Monday, 6 July, 2020</span>.</p>-->
 
-                          <p id="add-confirm-meeting"> Schedule a meeting with your <span class="add-role"></span> <span class="add-confirm-name orangeTextLight"></span>:</p>
+                          <p id="add-confirm-meeting"> Schedule a meeting with your <span class="add-role"></span> <a class="add-confirm-name orangeTextLight"></a>:</p>
                         </div>
                       </div>
 
@@ -332,8 +332,8 @@
                         <button id="meeting-update-btn" class="btn btn-goal delete-goal-card" onclick="hideDetails()"><i class="fas fa-times grayText" aria-hidden="true"></i></button>
                         <p class="padName line37 weight500 poppins font25">details</p>
                         <p class="hidden" id="delete-now-confirmation"> Okay! The meeting is deleted.</p>
-                        <p class="hidden" id="notify-delete-confirmation">We have let your <span class="add-role"></span> <span class="add-confirm-name orangeTextLight"></span> know.</p>
-                        <div class="padNormal roboto line21 font17">
+                        <p class="hidden" id="notify-delete-confirmation">Deleted! Your <span class="add-role"></span> <a class="add-confirm-name orangeTextLight"></a> is also notified of this change.</p>
+                        <div class="padNormal roboto line21 font17" id="meeting-details-under">
                           <ul class="no-bullet">
                             <li>set by: <span class="meeting-details" id="expand-set-by"></span></li>
                             <li>when: <span class="meeting-details" id="expand-when"> </span></li>
@@ -343,16 +343,18 @@
                           <div class="left-pad-10 meeting-details">
                             <p id="expand-description"></p>
                           </div>
-
-                        </div>
-
-                        <div class="poppins container paddingRightZero">
+                          
+                          <div class="poppins container paddingRightZero">
 
                           <div class="text-center">
                             <button id="delete-meeting-button" class="hidden btn greyButton whiteText poppins weight400 font17 centerText line25 marign-auto floatRight">delete</button><br><br>
                           </div>
 
                         </div>
+                        
+                        </div>
+
+                        
                       </div>
 
                     </div>

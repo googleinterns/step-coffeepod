@@ -41,7 +41,9 @@ function addOpeningContent() {
                 document.querySelectorAll(".add-role").forEach(role => {
                     role.innerText = "mentor";});
                 document.querySelectorAll(".add-confirm-name").forEach(confirmName => {
-                    confirmName.innerText = mentorName;});
+                    confirmName.innerText = mentorName;
+                    confirmName.setAttribute('href', 'profile.html?user=' + mentorId)
+                });
             }
         });
 
@@ -58,7 +60,9 @@ function addOpeningContent() {
                 document.querySelectorAll(".add-role").forEach(role => {
                     role.innerText = "mentee";});
                 document.querySelectorAll(".add-confirm-name").forEach(confirmName => {
-                    confirmName.innerText = menteeName;});
+                    confirmName.innerText = menteeName;
+                    confirmName.setAttribute('href', 'profile.html?user=' + menteeId)
+                });
             }
         });
 

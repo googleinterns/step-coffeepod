@@ -169,12 +169,17 @@ function showMeetingDetails(meetingId, isPastMeeting) {
         }
     });
 
+    // Delete confirmation from previous meeting choice
+    if (document.getElementById('notify-delete-confirmation').style.display != 'none') {
+        document.getElementById('notify-delete-confirmation').classList.add('hidden');
+    }
+
+    // Show the meetings if not yet shown
+    document.getElementById("meeting-details-under").classList.remove('hidden');
 
 
     // Set attribute for delete meeting button so that the meeting can be deleted
     // Only show delete buttons for upcoming and pending meetings
-    console.log("this is a past meeting:"+isPastMeeting);
-    console.log(isPastMeeting != "true");
 
     const deleteMeetingBtn = document.getElementById("delete-meeting-button");
     deleteMeetingBtn.setAttribute('onclick', 'deleteMeeting(' + "'" + meetingId + "'" + ")");
@@ -211,8 +216,12 @@ function hideDetails(){
 function deleteMeeting(meetingId) {
     // If meeting is still pending, then can delete without sending any notification
     const meetingRef = db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId);
-    meetingRef.get().then(function(meeting){
-
+    meetingRef.get().then(function(meeting) {
+        //deleteMeetingFromFirestore(meetingId);
+        document.getElementById("notify-delete-confirmation").classList.remove('hidden');
+        document.getElementById("meeting-details-under").classList.add('hidden');
+        // Delete the meeting element from DOM
+        //document.getElementById(meetingId).removeChild();
 
     })
 }

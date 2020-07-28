@@ -433,3 +433,8 @@ input:focus, textarea:focus {
 #meetings-box{
     height: 500px;
 }
+
+#notify-delete-confirmation{
+    text-align: center;
+    padding: 20px;
+}
