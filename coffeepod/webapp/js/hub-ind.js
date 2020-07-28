@@ -21,6 +21,8 @@ function addOpeningContent() {
         mentorId = mentorshipDoc.data().mentorId;
         menteeId = mentorshipDoc.data().menteeId;
 
+        document.getElementById("mentor-id").innerText = mentorId;
+        document.getElementById("mentee-id").innerText = menteeId;
 
         // Add starting time in overview section
         timeStart = mentorshipDoc.data().timestamp.toMillis();

@@ -311,12 +311,17 @@ function approveMeeting(buttonEle, mentorshipId, meetingId, senderId) {
     addMeetingResponseToSender(mentorshipId, meetingId, senderId);
 }
 
-function removeMeeting(buttonEle, mentorshipId, meetingId, senderId) {
+function setAcceptedToFalseInFirestore(mentorshipId, meetingId) {
     // Set the accepted stage of the meeting to false
     db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
             accepted: false,
             pending: false
     });
+}
+
+function removeMeeting(buttonEle, mentorshipId, meetingId, senderId) {
+    // Set the accepted stage of the meeting to false
+    setAcceptedToFalseInFirestore(mentorshipId, meetingId);
 
     // Show the result to the current user 
     const confirmation = $(buttonEle).closest(':has(#remove-confirmation)').children('#remove-confirmation').get(0);

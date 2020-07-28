@@ -15,6 +15,7 @@ class Meeting {
     }
 }
 
+
 function sendMeetingRequest(event){
     event.preventDefault();
     // get information from the form
@@ -204,6 +205,7 @@ function showMeetingDetails(meetingId, isPastMeeting) {
 
 }
 
+
 function hideDetails(){
     const detailSection = document.getElementById("meeting-details-expand");
     detailSection.style.display = "none";
@@ -214,20 +216,64 @@ function hideDetails(){
 }
 
 function deleteMeeting(meetingId) {
-    // If meeting is still pending, then can delete without sending any notification
+    // Send notification to meeting response either way 
+    // If the meeting is pending, remove the meeting from the other person's meeting request and delete from firestore
+    // If the meeting is accepted (if it's not then it should be deleted), then send to the person's meeting response
+
+    document.getElementById("notify-delete-confirmation").classList.remove('hidden');
+    document.getElementById("meeting-details-under").classList.add('hidden');
+    // Delete the meeting element from DOM
+    document.getElementById(meetingId).classList.add('hidden');
+
     const meetingRef = db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId);
     meetingRef.get().then(function(meeting) {
         //deleteMeetingFromFirestore(meetingId);
-        document.getElementById("notify-delete-confirmation").classList.remove('hidden');
-        document.getElementById("meeting-details-under").classList.add('hidden');
-        // Delete the meeting element from DOM
-        //document.getElementById(meetingId).removeChild();
+        db.collection('mentorship').doc(mentorshipID).get().then(function(mentorship) {
+            let otherPersonId, currentUserId;
+            if (currentUserIsMentor == "true") {
+                otherPersonId = mentorship.data().menteeId;
+                currentUserId = mentorship.data().mentorId;
 
+            } else {
+                otherPersonId = mentorship.data().mentorId;
+                currentUserId = mentorship.data().menteeId;
+            }
+                
+        if (meeting.data().pending == true) {
+            if (currentUserIsMentor == meeting.data().setByMentor.toString()) { 
+                // The current user who wants to delete the meeting is also the one who created the meeting
+                // Delete the meeting from firestore and remove the meeting request for the other user
+                //deleteMeetingFromFirestore(meetingId);
+                removeMeetingRequestForOneUser(mentorshipId, meetingId, otherPersonId);
+
+            } else { 
+                // The other user wants to delete the meeting
+                // Remove the meeting request and remove the meeting for the user
+                
+                setAcceptedToFalseInFirestore(mentorshipID, meetingId);
+                removeMeetingRequestForOneUser(mentorshipId, meetingId, currentUserId);
+                addMeetingResponseToSender(mentorshipId, meetingId, personToNotifyId);
+            }
+        } else { // If the meeting has already been accepted
+            // Either way, send a meeting response notification
+            sendDeleteMeetingNotifInResponse(meetingId, otherPersonId);
+        }
+      })
+
+    })
+
+}
+
+
+function removeMeetingRequestForOneUser(mentorshipId, meetingId, userId) {
+    db.collection('notifications').doc(userId).update({
+        meetingRequests: firebase.firestore.FieldValue.arrayRemove({mentorshipId: mentorshipId, meetingId: meetingId})
     })
 }
 
+// Deletion happens when the other person is notified of the change 
 function deleteMeetingFromFirestore(meetingId) {
-    //db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId).delete();
+    db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId).delete();
 }
 
  

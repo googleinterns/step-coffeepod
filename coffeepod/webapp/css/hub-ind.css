@@ -384,7 +384,7 @@ input:focus, textarea:focus {
 }
 
 .tab-pane {
-    height: 400px;
+    height: 380px;
     overflow-y:scroll;
 }
 
