@@ -38,8 +38,10 @@ function addOpeningContent() {
 
             // Add meeting content 
             if (!(currentUserIsMentor == "true")) {
-                document.getElementById("add-role").innerText = "mentor";
-                document.getElementById("add-confirm-name").innerText = mentorName;
+                document.querySelectorAll(".add-role").forEach(role => {
+                    role.innerText = "mentor";});
+                document.querySelectorAll(".add-confirm-name").forEach(confirmName => {
+                    confirmName.innerText = mentorName;});
             }
         });
 
@@ -53,8 +55,10 @@ function addOpeningContent() {
             document.getElementById("mentee-card-title").innerText = menteeTitle;
 
             if (currentUserIsMentor == "true") {
-                document.getElementById("add-role").innerText = "mentee";
-                document.getElementById("add-confirm-name").innerText = menteeName;
+                document.querySelectorAll(".add-role").forEach(role => {
+                    role.innerText = "mentee";});
+                document.querySelectorAll(".add-confirm-name").forEach(confirmName => {
+                    confirmName.innerText = menteeName;});
             }
         });
 
@@ -162,6 +166,8 @@ function showMeetingDetails(meetingId) {
         }
     });
 
+
+
     // Set attribute for delete meeting button so that the meeting can be deleted
     const deleteMeetingBtn = document.getElementById("delete-meeting-button");
     deleteMeetingBtn.setAttribute('onclick', 'deleteMeeting(' + "'" + meetingId + "'" + ")");
@@ -175,7 +181,7 @@ function showMeetingDetails(meetingId) {
         // Reduce the space for schedule
         document.querySelectorAll('.tab-pane').forEach(tabPane =>
             tabPane.style.height = '200px');
-        document.getElementById('meetings-box').style.height = '300px';
+        document.getElementById('meetings-box').style.height = '310px';
     };
 
 }
@@ -185,7 +191,7 @@ function hideDetails(){
     detailSection.style.display = "none";
     // Increase the space for tab-pan
     document.querySelectorAll('.tab-pane').forEach(tabPane =>
-            tabPane.style.height = '400px');
+            tabPane.style.height = '380px');
     document.getElementById('meetings-box').style.height = '500px';
 }
 
@@ -198,16 +204,18 @@ function deleteMeeting(meetingId) {
             // When they are notified, then delete the meeting 
 
             // notifyOtherPersonOfDeletionAndDelete(meetingId);
+            document.getElementById("delete-now-confirmation").classList.remove("hidden");
+            
         } else { // Else, go ahead and delete right here
             deleteMeetingFromFirestore(meetingId);
-            
+            document.getElementById("notify-delete-confirmation").classList.remove("hidden");
             // Delete the meeting element from DOM
-            document.getElementById(meetingId).removeChild();
+            //document.getElementById(meetingId).removeChild();
         }
 
     })
 }
 
 function deleteMeetingFromFirestore(meetingId) {
-    db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId).delete();
+    //db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId).delete();
 }
