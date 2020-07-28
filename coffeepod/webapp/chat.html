@@ -89,11 +89,12 @@
 
             <!-- MESSAGES SECTION -->
             <div class="col-lg-9 ">
-              <div class="make-me-sticky" style = "height:100%">
+              <div class="make-me-sticky">
 
                 <!-- MESSAGE CONTAINER -->
-                <div class="cont shadow-sm" id = "messageBox" style = "height:100%">
+                <div class="cont shadow-sm" id = "messageBox">
                     <div class = "subpage-title mb-2" id = "messageName" style = "font-size:30px"></div>
+                    <div id = "initialMsg" class = "vertical-center font40 weight500 spaceLetters poppins greyText">Click on a chat to begin!</div>
 
                     <!-- CHAT MESSAGE TEMPLATES -->
                     <div class = "row" id = "otherUser" style = "display:none">
@@ -124,7 +125,7 @@
                     <div class = "messages" id = "messages"></div>
 
                     <!-- SENDING NEW MESSAGE -->
-                    <form onsubmit = "newMessage(event)" class = "submitMessage" id = "submitMessage">
+                    <form onsubmit = "newMessage(event)" class = "submitMessage" id = "submitMessage" style = "display:none">
                         <div id = "file" style = "display:none">
                             <span onclick = "deleteFile();" id = "delete" style = "cursor:pointer">&times;&nbsp;&nbsp;&nbsp;</span>
                             <span id = "showFile"></span>
