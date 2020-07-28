@@ -89,9 +89,6 @@ function addNotification(personId, meeting) {
     });
 }
 
-function showMeetingsOnPage() {
-    // only show meetings that are accepted and are pending
-}
 
 function getAcceptedMeetings() {
     const meetingsRef = db.collection('mentorship').doc(mentorshipID).collection('meetings');
@@ -99,7 +96,7 @@ function getAcceptedMeetings() {
     meetingsRef.where('when', '>', Date.now()).where('accepted', '==', true).orderBy("when", "asc").get().then(function (meetings) {
         meetings.forEach(meeting => {
             meetingCount += 1;
-            addMeetingToList("upcoming-meeting-list", meeting.id, meeting.data().when);
+            addMeetingToList("upcoming-meeting-list", meeting.id, meeting.data().when, false);
         });
             document.getElementById("num-upcoming").innerText = meetingCount;
             document.getElementById("upcoming-meeting-list").classList.remove('hidden');
@@ -112,7 +109,7 @@ function getPendingMeetings() {
     meetingsRef.where('when', '>', Date.now()).where('pending', '==', true).orderBy("when", "asc").get().then(function (meetings) {
         meetings.forEach(meeting => {
             meetingCount += 1;
-            addMeetingToList("pending-meeting-list", meeting.id, meeting.data().when);
+            addMeetingToList("pending-meeting-list", meeting.id, meeting.data().when, false);
         });
             document.getElementById("num-pending").innerText = meetingCount;
             document.getElementById("pending-meeting-list").classList.remove('hidden');
@@ -125,7 +122,7 @@ function getPastMeetings() {
     meetingsRef.where('when', '<=', Date.now()).where('pending', '==', false).where('accepted', '==', true).orderBy("when", "asc").get().then(function (meetings) {
         meetings.forEach(meeting => {
             meetingCount += 1;
-            addMeetingToList("past-meeting-list", meeting.id, meeting.data().when);
+            addMeetingToList("past-meeting-list", meeting.id, meeting.data().when, true);
         });
         document.getElementById("num-past").innerText = meetingCount;
         document.getElementById("past-meeting-list").classList.remove('hidden');
@@ -133,7 +130,7 @@ function getPastMeetings() {
 }
 
 
-function addMeetingToList(listId, meetingId, meetingWhen){
+function addMeetingToList(listId, meetingId, meetingWhen, isPastMeeting){
     const meetingList = document.getElementById(listId);
 
     const meetingLiEle = document.getElementById("meeting-ele")
@@ -144,12 +141,12 @@ function addMeetingToList(listId, meetingId, meetingWhen){
 
     const meetingDate = meetingLiEleCloned.querySelector("#meeting-date");
     meetingDate.innerText = new Date(meetingWhen);
-    meetingDate.setAttribute('onclick', 'showMeetingDetails(' + "'" + meetingId + "'" + ')');
+    meetingDate.setAttribute('onclick', 'showMeetingDetails(' + "'" + meetingId + "'" + "," + "'" + isPastMeeting + "'" + ')');
 
     meetingList.appendChild(meetingLiEleCloned);
 }
 
-function showMeetingDetails(meetingId) {
+function showMeetingDetails(meetingId, isPastMeeting) {
     const mentorshipDoc =  db.collection('mentorship').doc(mentorshipID);
     const meetingsRef = mentorshipDoc.collection('meetings');
     const whenExpand = document.getElementById("expand-when");
@@ -175,9 +172,19 @@ function showMeetingDetails(meetingId) {
 
 
     // Set attribute for delete meeting button so that the meeting can be deleted
+    // Only show delete buttons for upcoming and pending meetings
+    console.log("this is a past meeting:"+isPastMeeting);
+    console.log(isPastMeeting != "true");
+
     const deleteMeetingBtn = document.getElementById("delete-meeting-button");
     deleteMeetingBtn.setAttribute('onclick', 'deleteMeeting(' + "'" + meetingId + "'" + ")");
 
+    if (isPastMeeting != "true") {
+        deleteMeetingBtn.classList.remove('hidden');
+    } else {
+        deleteMeetingBtn.classList.add('hidden');
+    }
+    
     const detailSection = document.getElementById("meeting-details-expand");
 
     // Show the details section
@@ -205,20 +212,7 @@ function deleteMeeting(meetingId) {
     // If meeting is still pending, then can delete without sending any notification
     const meetingRef = db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId);
     meetingRef.get().then(function(meeting){
-        /*if (meeting.data().pending == false && meeting.data().accepted == true && currentUserIsMentor == setByMentor.toString()) {
-            // If the meeting is already accepted, notify the other person
-            // When they are notified, then delete the meeting 
 
-            // notifyOtherPersonOfDeletionAndDelete(meetingId);
-            document.getElementById("delete-now-confirmation").classList.remove("hidden");
-            
-        } 
-        if () { // Else, go ahead and delete right here
-            deleteMeetingFromFirestore(meetingId);
-            document.getElementById("notify-delete-confirmation").classList.remove("hidden");
-            // Delete the meeting element from DOM
-            //document.getElementById(meetingId).removeChild();
-        }*/
 
     })
 }
