@@ -25,13 +25,13 @@ function load(fromWhere){
       window.location.replace("login.html")
     } 
   });
-  if(fromWhere != null) {
-    $.get("navbar.html", function(data){
-      $("#nav-placeholder").replaceWith(data).promise().done(function() {
-        document.getElementById(fromWhere).classList.add('active');
-      });
+  $.get("navbar.html", function(data){
+    $("#nav-placeholder").replaceWith(data).promise().done(function() {
+    if(fromWhere != null) {
+      document.getElementById(fromWhere).classList.add('active');
+    }
     });
-  }
+  });
   $.get("footer.html", function(data){
     $("#footer-placeholder").replaceWith(data);
   });
