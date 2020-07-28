@@ -1,4 +1,4 @@
-/***********************ADD USERS TO CHAT BAR************************* */
+/***********************ADD USERS TO CHAT SIDEBAR************************* */
 
 let currUser, unsubscribe, messageDiv;
 let lastMsg = true;
@@ -94,7 +94,11 @@ function openChat(chatID, name){
     messageBox = document.querySelector('#messageBox');
     messages = messageBox.querySelector('.messages');
     messageName = document.querySelector('#messageName')
+    textMessage = document.querySelector('#submitMessage');
     messageName.innerText = name;
+
+    textMessage.style.display = 'block';
+    document.querySelector('#initialMsg').style.display = 'none';
 
     if(lastMsg == false) unsubscribe();
     lastMsg = true;
@@ -103,11 +107,13 @@ function openChat(chatID, name){
     updateChat(chatID);
 }
 
+// click on file upload button
 function loadFile(){
     const fileUpload = document.querySelector('#fileUpload');
     fileUpload.click();
 }
 
+// display selected file
 function displayFile(){
     const fileUpload = document.querySelector('#fileUpload').files[0];
     const file = document.querySelector('#file');
@@ -120,6 +126,7 @@ function displayFile(){
 
 }
 
+// hide and remove selected file
 function deleteFile(){
     const fileUpload = document.querySelector('#fileUpload');
     const file = document.querySelector('#file');
@@ -165,6 +172,7 @@ function updateChat(id){
     })
 }
 
+// generate message in chat based on who sent it and if there is a file attached
 function genMessage(type, content, fileName, fileType, downloadURL){
     const temp = document.getElementById(type);
     let clone = temp.cloneNode(true);
@@ -189,6 +197,7 @@ function genMessage(type, content, fileName, fileType, downloadURL){
     return clone;
 }
 
+// generate an image if attached file is an image
 function genImage(fileName){
     let imgEl = document.createElement('IMG');
     imgEl.src = fileName;
@@ -197,6 +206,7 @@ function genImage(fileName){
     return imgEl;
 }
 
+// store message into chats collection
 function storeMessage(downloadURL, timestamp, fileName, fileType){
     let msgForm = document.querySelector('.submitMessage');
     const id = document.querySelector('.messages').id;
@@ -263,6 +273,7 @@ function newMessage(e){
         }).catch(console.error);
 
         task.on('state_changed',
+            // update progress bar of upload
             function progress(snapshot) {
                 console.log(snapshot.bytesTransferred);
                 var percentage = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
