@@ -86,7 +86,7 @@ function signup(e) {
                 title: "",
                 location: "",
                 goals: ["Ask a question", "Find a mentor or mentee"],
-                finished: ["Join coffepod!"],
+                finished: ["Join coffee pod!"],
                 tags: []
             });
             db.collection('profile').doc(cred.user.uid).collection('experience').add ({
