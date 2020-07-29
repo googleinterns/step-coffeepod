@@ -31,13 +31,19 @@ function getNotif() {
         console.log("Error getting person:", error);
       });
       let notifRef = db.collection("notifications").doc(uid);
+
+      notifRef.collection("meetingNotifs").orderBy("timestamp", "asc").get().then((snapshot) => {
+        // allGoalCards is an array of goalCards
+        const allMeetingNotifs = [];
+        snapshot.docs.forEach(meetingNotifDoc => { // each goal document is a goal card
+            allMeetingNotifs.push(meetingNotifDoc.data());
+        });
+            loadMeetingNotifs(allMeetingNotifs);
+      });
+
       notifRef.get().then(function(notif) {
         mentorRequests = notif.data().mentorRequests;
         menteeRequests = notif.data().menteeRequests;
-
-        if (notif.data().meetingNotifs != null) {
-          loadMeetingNotifs();
-        }
 
       }).then(function() {
         loadMentor();
@@ -59,26 +65,18 @@ function getDate(date){
     return (month + " " + day + ", " + year);
 }
 
-function loadMeetingNotifs() {
-  const notifRef = db.collection('notifications').doc(uid);
-  notifRef.get().then(function(notifDoc) {
-    // this means meetingNotifs exist
-    // put meetingNotifs up on the site
-    putAllMeetingNotifsOnPage(notifDoc.data().meetingNotifs);
-  })
-}
-
-function putAllMeetingNotifsOnPage(meetingNotifs) {
-  if (meetingNotifs != null) {
-    for (let i = 0; i < meetingNotifs.length; i++) {
-      const meetingId = meetingNotifs[i].meetingId;
-      const mentorshipId = meetingNotifs[i].mentorshipId;
-      const action = meetingNotifs[i].action;
-      const timestamp = meetingNotifs[i].timestamp;
+function loadMeetingNotifs(allMeetingNotifs) {
+  if (allMeetingNotifs != null) {
+    for (let i = 0; i < allMeetingNotifs.length; i++) {
+      const meetingId = allMeetingNotifs[i].meetingId;
+      const mentorshipId = allMeetingNotifs[i].mentorshipId;
+      const action = allMeetingNotifs[i].action;
+      const timestamp = allMeetingNotifs[i].timestamp;
       putOneMeetingNotifOnPage(meetingId, mentorshipId, action, timestamp);
     }
-  }
+  } 
 }
+
 
 function getNotificationContent(action) {
   let notifContent;
@@ -99,7 +97,7 @@ function getNotificationContent(action) {
     return notifContent;
 }
 
-function enableActionButtons(meetingNotifEle, mentorshipId, meetingId, senderId, action, timestamp) {
+function enableActionButtons(meetingNotifEle, mentorshipId, meetingId, senderId, action) {
     let latterPartOnClickFunc;
     if (action == "created") {
       // Add action functions for the approve button
@@ -107,7 +105,7 @@ function enableActionButtons(meetingNotifEle, mentorshipId, meetingId, senderId,
       meetingNotifEle.querySelector("#approve-meeting").classList.remove('hidden');
       meetingNotifEle.querySelector("#remove-meeting").classList.remove('hidden');
 
-      latterPartOnClickFunc = "'" + mentorshipId + "'," + "'" + meetingId + "'" + "," + "'" + senderId + "'" + "," + "'" + timestamp + "'" +")";
+      latterPartOnClickFunc = "'" + mentorshipId + "'," + "'" + meetingId + "'" + "," + "'" + senderId + "'" +")";
       meetingNotifEle.querySelector("#approve-meeting").setAttribute("onclick", "approveMeeting(this," + latterPartOnClickFunc);
       meetingNotifEle.querySelector("#remove-meeting").setAttribute("onclick", "removeMeeting(this," + latterPartOnClickFunc);
 
@@ -118,7 +116,7 @@ function enableActionButtons(meetingNotifEle, mentorshipId, meetingId, senderId,
           meetingNotifEle.querySelector("#confirm-action-message").innerText = "deleted";
           // The default case for action is "confirmed"
       }
-      latterPartOnClickFunc = "'"  + mentorshipId + "'," + "'"  + meetingId + "'" + "," + "'"  + accepted + "'" + "," + "'"  + action + "'" + "," + "'" + timestamp + "'" +")";
+      latterPartOnClickFunc = "'"  + mentorshipId + "'," + "'"  + meetingId + "'" + "," + "'"  + accepted + "'" +")";
       meetingNotifEle.querySelector("#i-am-aware").setAttribute("onclick", "iAmAware(this," + latterPartOnClickFunc);
       meetingNotifEle.querySelector("#i-am-aware").classList.remove('hidden');
     }
@@ -169,7 +167,7 @@ function putOneMeetingNotifOnPage(meetingId, mentorshipId, action, timestamp) {
           notifContentPlace.innerHTML = getNotificationContent(action);
           
           // Update the timestamp of the notification
-          meetingNotifElementCloned.querySelector("#meeting-notif-timestamp").innerHTML = getDate(new Date(timestamp));
+          meetingNotifElementCloned.querySelector("#meeting-notif-timestamp").innerHTML = getDate(new Date(timestamp)) + " " + new Date(timestamp).toLocaleTimeString();
 
           const senderRoleElement = meetingNotifElementCloned.querySelector("#sender-role");
 
@@ -184,7 +182,7 @@ function putOneMeetingNotifOnPage(meetingId, mentorshipId, action, timestamp) {
           }
 
           // Add action functions for the response section
-          enableActionButtons(meetingNotifElementCloned, mentorshipId, meetingId, senderId, action, timestamp);
+          enableActionButtons(meetingNotifElementCloned, mentorshipId, meetingId, senderId, action);
 
           // Change all elements of this name
           const senderNameElements = meetingNotifElementCloned.querySelectorAll(".sender-name");
@@ -221,7 +219,7 @@ function putOneMeetingNotifOnPage(meetingId, mentorshipId, action, timestamp) {
 
 // This function notifies the current user of the other user's deletion or removal of the meeting
 // Delete the meeting from firestore and delete the notification 
-function iAmAware(buttonEle, mentorshipId, meetingId, meetingAccepted, action, timestamp) {
+function iAmAware(buttonEle, mentorshipId, meetingId, meetingAccepted) {
 
     // If meeting is not accepted, then remove the meeting from meetings list
     // Else, do nothing 
@@ -237,10 +235,10 @@ function iAmAware(buttonEle, mentorshipId, meetingId, meetingAccepted, action, t
     const actionButtons = buttonEle.closest('#response-options');
     actionButtons.classList.add('hidden');
 
-    removeMeetingNotif(mentorshipId, meetingId, action, timestamp);
+    removeMeetingNotif(meetingId);
 }
 
-function approveMeeting(buttonEle, mentorshipId, meetingId, senderId, timestamp) {
+function approveMeeting(buttonEle, mentorshipId, meetingId, senderId) {
 
     // Set the accepted stage of the meeting to true
     db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
@@ -255,19 +253,13 @@ function approveMeeting(buttonEle, mentorshipId, meetingId, senderId, timestamp)
     const actionButtons = buttonEle.closest('#response-options');
     actionButtons.classList.add('hidden');
 
-    removeMeetingNotif(mentorshipId, meetingId, "created", timestamp);
+    removeMeetingNotif(meetingId);
     addMeetingResponseToSender(mentorshipId, meetingId, senderId, "accepted");
 }
 
 // Remove meeting notification from current user's notifications after the current user is notified that the other user either removed or deleted the meeting
-function removeMeetingNotif(mentorshipId, meetingId, action, timestamp) {
-    console.log("i'm removing meeting notif: ");
-    console.log(meetingId);
-    console.log(action);
-    console.log(timestamp);
-    db.collection('notifications').doc(uid).update({
-        meetingNotifs: firebase.firestore.FieldValue.arrayRemove({mentorshipId: mentorshipId, meetingId: meetingId, action: action, timestamp: parseInt(timestamp)})
-    })
+function removeMeetingNotif(meetingId) {
+    db.collection('notifications').doc(uid).collection('meetingNotifs').doc(meetingId).delete();
 }
 
 function setAcceptedToFalseInFirestore(mentorshipId, meetingId) {
@@ -278,7 +270,7 @@ function setAcceptedToFalseInFirestore(mentorshipId, meetingId) {
     });
 }
 
-function removeMeeting(buttonEle, mentorshipId, meetingId, senderId, timestamp) {
+function removeMeeting(buttonEle, mentorshipId, meetingId, senderId) {
     // Set the accepted stage of the meeting to false
     setAcceptedToFalseInFirestore(mentorshipId, meetingId);
 
@@ -289,7 +281,7 @@ function removeMeeting(buttonEle, mentorshipId, meetingId, senderId, timestamp) 
     const actionButtons = buttonEle.closest('#response-options');
     actionButtons.classList.add('hidden');
     
-    removeMeetingNotif(mentorshipId, meetingId, "created", timestamp);
+    removeMeetingNotif(meetingId);
     addMeetingResponseToSender(mentorshipId, meetingId, senderId, "removed");
 }
 
@@ -297,10 +289,11 @@ function removeMeeting(buttonEle, mentorshipId, meetingId, senderId, timestamp) 
 // Add meeting responses
 // The message (whether accepted or removed, is stored in the meeting itself)
 function addMeetingResponseToSender(mentorshipId, meetingId, senderId, action) {
-    console.log("i'm adding a meeting response to sender");
-    console.log("please let me know huhu:" + action);
-    db.collection('notifications').doc(senderId).update({
-        meetingNotifs: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipId, meetingId: meetingId, action: action, timestamp: Date.now()})
+    db.collection('notifications').doc(senderId).collection('meetingNotifs').doc(meetingId).set({
+       mentorshipId: mentorshipId, 
+       meetingId: meetingId, 
+       action: action, 
+       timestamp: Date.now()
     });
 }
 
@@ -367,9 +360,9 @@ function addNewMentorshipCollection(mentorId, menteeId) {
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        db.collection('mentorship').doc(mentorshipId).collection('meetings').add({
+        /*db.collection('mentorship').doc(mentorshipId).collection('meetings').add({
             filled: false
-        });
+        });*/
     }).catch(function(error) {
         console.error("Error adding document: ", error);
     });
