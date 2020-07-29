@@ -1,9 +1,12 @@
 function saveQuestion(e){
+    e.preventDefault();
     const newpost = document.getElementById("new-post");
     const topic = document.querySelector("#topic");
     const question = document.querySelector("#new-post-q");
+    let sortType = document.querySelector('#sortType').id;
     let form = document.querySelector("#postForm");
-    e.preventDefault();
+    console.log(sortType);
+    
     auth.onAuthStateChanged(function(user) {
         if (user) {
             uid = user.uid;
@@ -22,7 +25,7 @@ function saveQuestion(e){
             }).then(() => {
                 blurPost();  
                 form.reset();
-                location.reload();
+                filterQuestions(sortType);
             })
         }
         else {
@@ -90,6 +93,23 @@ window.addEventListener('click', function(e){
   }
 });
 
+function deletePrompt(postID) {
+    $(".modal").modal('toggle');
+    document.querySelector('.modal').id = postID;
+    console.log(document.querySelector('.modal').id);
+}
+
+// deletes own question from database and removes from page
+function deleteQuestion(){
+    const postID = document.querySelector('.modal').id;
+    let sortType = document.querySelector(".sortType").id;
+    $(".modal").modal('hide');
+
+    db.collection("forum").doc(postID).delete().then(() => {
+        filterQuestions(sortType);
+    })
+}
+
 function genQuestions() {
   const temp = document.getElementById("questionsTemp");
   let clone = temp.cloneNode(true);
@@ -100,21 +120,22 @@ function genQuestions() {
 }
 
 function sortButton(sortType){
-    let button = document.getElementById("sortType");
+    let button = document.querySelector(".sortType");
     button.style.display = 'block';
     button.innerHTML = sortType+"&nbsp;&nbsp;&nbsp;&nbsp;&times;";
 }
 
-function filterQuestions(type){
- //   let res;
+function filterQuestions(type){    
     if ((type == "career" || type == "academics") || type == "hobbies"){
         db.collection("forum").where("topic", '==', type).get().then(snapshot => {
             document.getElementById("questionsCont").innerHTML = "";
+            document.querySelector('.sortType').id = type;
             sortButton(type);
             return loadQuestions(snapshot);
         })
     } else if (type == "newest" || type == "oldest"){
         sortButton(type);
+        document.querySelector('.sortType').id = type;
         document.getElementById("questionsCont").innerHTML = "";
         if (type == "newest"){
             db.collection("forum").orderBy("timestamp", "desc").onSnapshot(snapshot => {
@@ -122,20 +143,20 @@ function filterQuestions(type){
             })
         } else {
             db.collection("forum").orderBy("timestamp", "asc").onSnapshot(snapshot => {
-                console.log(snapshot);
                 return loadQuestions(snapshot);
             })
         }
     } else if (type == "unanswered"){
         const emptyArr = [];
+        document.querySelector('.sortType').id = type;
         sortButton(type);
         db.collection("forum").where("replies", '==', emptyArr).get().then(snapshot => {
             document.getElementById("questionsCont").innerHTML = "";
             return loadQuestions(snapshot);
         })
-    } else if (type == "all"){
+    } else if (type == "all" || type == "sortType"){
+        document.querySelector('.sortType').id = type;
         document.getElementById("sortType").style.display = 'none';
-        console.log("all");
         document.getElementById("questionsCont").innerHTML = "";
         db.collection("forum").get().then(snapshot => {
             return loadQuestions(snapshot);
@@ -157,9 +178,13 @@ function loadQuestions(snapshot) {
     db.collection('profile').where(firebase.firestore.FieldPath.documentId(), '==', userID).get().then(snapshot => {
         if(!snapshot.empty){
             snapshot.forEach(user => {
-            quest.querySelector("#name").innerText = user.data().name;
-            quest.querySelector("#title").innerText = user.data().title;
+                quest.querySelector("#name").innerText = user.data().name;
+                quest.querySelector("#title").innerText = user.data().title;
             })
+            if(uid == userID){
+                quest.querySelector('#deletePost').style.display = "block";
+                quest.querySelector("#deletePost").id = question.id;
+            }
         }
     }).then(() => {
         quest.querySelector("#date").innerText = questionInfo.date;
