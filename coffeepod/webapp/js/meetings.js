@@ -294,25 +294,3 @@ function deleteMeetingFromFirestore(meetingId) {
     db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId).delete();
 }
 
- 
- /*testFieldExists();
- // add to a field that has not been instantiated
-function testFirebase() {
-    console.log(mentorshipID);
-    db.collection('mentorship').doc(mentorshipID).collection('meetings').doc('iWe6BVc6KtP4yj0yw1Om').update({
-        request: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: 'a4KWy8d3pjbJMMsP5NBt'})
-    })
-}
-function testDeleteFirebase(){
-    db.collection('mentorship').doc(mentorshipID).collection('meetings').doc('iWe6BVc6KtP4yj0yw1Om').update({
-        request: firebase.firestore.FieldValue.arrayRemove({mentorshipId: mentorshipID, meetingId: 'a4KWy8d3pjbJMMsP5NBt'})
-    })
-}
-function testFieldExists() {
-    console.log("testing field");
-    db.collection('mentorship').doc(mentorshipID).collection('meetings').doc('a4KWy8d3pjbJMMsP5NBt').get().then(function(meetingDoc) {
-        if (meetingDoc.get('accepted') == null) {
-            console.log("accepted does not exist");
-        }
-    })
-}*/
