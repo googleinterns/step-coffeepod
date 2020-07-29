@@ -107,6 +107,12 @@ function deleteQuestion(){
 
     db.collection("forum").doc(postID).get().then(snapshot => {
         const info = snapshot.data();
+        // delete all the follwers
+        for(let i = 0; i < info.followers.length; i++) {
+          firebase.firestore().collection('profile').doc(info.followers[i]).update({ 
+            following: firebase.firestore.FieldValue.arrayRemove(postID)
+          });
+        }
         //delete all comments before deleting post from database
         (info.replies).forEach(reply => {
             db.collection("comments").doc(reply).delete().then(() => {
@@ -119,6 +125,16 @@ function deleteQuestion(){
             filterQuestions(sortType);
         })
     })
+    // check if there are any notifications about this post
+    db.collection("notifications").get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(notif) {
+        db.collection("notifications").doc(notif.id).collection("postNotifications").where("postID", "==", postID).get().then(function(snapshot) {
+          snapshot.forEach(function(postNotif) {
+            db.collection("notifications").doc(notif.id).collection("postNotifications").doc(postNotif.id).delete()
+          })
+        });
+      });
+    });
 }
 
 function genQuestions() {
