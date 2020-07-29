@@ -1,3 +1,5 @@
+let unsubscribe;
+
 function saveQuestion(e){
     e.preventDefault();
     const newpost = document.getElementById("new-post");
@@ -136,9 +138,11 @@ function sortButton(sortType){
     button.innerHTML = sortType+"&nbsp;&nbsp;&nbsp;&nbsp;&times;";
 }
 
-function filterQuestions(type){    
+function filterQuestions(type){   
+    if(unsubscribe) unsubscribe();
+
     if ((type == "career" || type == "academics") || type == "hobbies"){
-        db.collection("forum").where("topic", '==', type).get().then(snapshot => {
+        unsubscribe = db.collection("forum").where("topic", '==', type).onSnapshot(snapshot => {
             document.getElementById("questionsCont").innerHTML = "";
             document.querySelector('.sortType').id = type;
             sortButton(type);
@@ -147,13 +151,14 @@ function filterQuestions(type){
     } else if (type == "newest" || type == "oldest"){
         sortButton(type);
         document.querySelector('.sortType').id = type;
-        document.getElementById("questionsCont").innerHTML = "";
         if (type == "newest"){
-            db.collection("forum").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+            unsubscribe = db.collection("forum").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+                document.getElementById("questionsCont").innerHTML = "";
                 return loadQuestions(snapshot);
             })
         } else {
-            db.collection("forum").orderBy("timestamp", "asc").onSnapshot(snapshot => {
+            unsubscribe = db.collection("forum").orderBy("timestamp", "asc").onSnapshot(snapshot => {
+                document.getElementById("questionsCont").innerHTML = "";
                 return loadQuestions(snapshot);
             })
         }
@@ -161,18 +166,19 @@ function filterQuestions(type){
         const emptyArr = [];
         document.querySelector('.sortType').id = type;
         sortButton(type);
-        db.collection("forum").where("replies", '==', emptyArr).get().then(snapshot => {
+        unsubscribe = db.collection("forum").where("replies", '==', emptyArr).onSnapshot(snapshot => {
             document.getElementById("questionsCont").innerHTML = "";
             return loadQuestions(snapshot);
         })
     } else if (type == "all" || type == "sortType"){
         document.querySelector('.sortType').id = type;
         document.querySelector(".sortType").style.display = 'none';
-        document.getElementById("questionsCont").innerHTML = "";
-        db.collection("forum").get().then(snapshot => {
+        unsubscribe = db.collection("forum").onSnapshot(snapshot => {
+            document.getElementById("questionsCont").innerHTML = "";
             return loadQuestions(snapshot);
         })
     } else {
+        //should only appear here on initial loading of cafe
         db.collection("forum").get().then(snapshot => {
             return loadQuestions(snapshot);
         })
@@ -182,33 +188,31 @@ function filterQuestions(type){
 function loadQuestions(snapshot) {
   if (snapshot != null){
     snapshot.forEach(question => {
-    const questionInfo = question.data();
-    const userID = questionInfo.userID;
-    let quest = genQuestions();
+        const questionInfo = question.data();
+        const userID = questionInfo.userID;
+        let quest = genQuestions();
 
-    db.collection('profile').where(firebase.firestore.FieldPath.documentId(), '==', userID).get().then(snapshot => {
-        if(!snapshot.empty){
-            snapshot.forEach(user => {
+        db.collection('profile').doc(userID).get().then(user => {
+            if(user){
                 quest.querySelector("#name").innerText = user.data().name;
                 quest.querySelector("#title").innerText = user.data().title;
-            })
-            if(uid == userID){
-                quest.querySelector('#deletePost').style.display = "block";
-                quest.querySelector("#deletePost").id = question.id;
+                if(uid == userID){
+                    quest.querySelector('#deletePost').style.display = "block";
+                    quest.querySelector("#deletePost").id = question.id;
+                }
             }
-        }
-    }).then(() => {
-        quest.querySelector("#date").innerText = questionInfo.date;
-        quest.querySelector("#question").innerText = questionInfo.title;
-        quest.querySelector("#content").innerText = questionInfo.content;
-        quest.querySelector('#seeMore').id = question.id;
-        quest.querySelector(".follow").id = question.id;
-        quest.id = question.id;
-        checkFollowOne(quest.querySelector(".follow"), false);
-        })
-    });
-  }
-  console.log("finished");
+        }).then(() => {
+            quest.querySelector("#date").innerText = questionInfo.date;
+            quest.querySelector("#question").innerText = questionInfo.title;
+            quest.querySelector("#content").innerText = questionInfo.content;
+            quest.querySelector('#seeMore').id = question.id;
+            quest.querySelector(".follow").id = question.id;
+            quest.id = question.id;
+            checkFollowOne(quest.querySelector(".follow"), false);
+            })
+        });
+    }
+    console.log("finished");
 }
 
 function passId(postId) {
