@@ -32,7 +32,7 @@ function getNotif() {
       });
       let notifRef = db.collection("notifications").doc(uid);
 
-      notifRef.collection("meetingNotifs").orderBy("timestamp", "asc").get().then((snapshot) => {
+      notifRef.collection("meetingNotifs").orderBy("timestamp", "desc").get().then((snapshot) => {
         // allGoalCards is an array of goalCards
         const allMeetingNotifs = [];
         snapshot.docs.forEach(meetingNotifDoc => { // each goal document is a goal card
@@ -262,13 +262,6 @@ function removeMeetingNotif(meetingId) {
     db.collection('notifications').doc(uid).collection('meetingNotifs').doc(meetingId).delete();
 }
 
-function setAcceptedToFalseInFirestore(mentorshipId, meetingId) {
-    // Set the accepted stage of the meeting to false
-    db.collection('mentorship').doc(mentorshipId).collection('meetings').doc(meetingId).update({
-            accepted: false,
-            pending: false
-    });
-}
 
 function removeMeeting(buttonEle, mentorshipId, meetingId, senderId) {
     // Set the accepted stage of the meeting to false
