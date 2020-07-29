@@ -77,7 +77,7 @@
                       <img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%>
                     </div>
                     <p class="font20 poppins line21 weight500 padNormal text-center mb-2 name">hi, <a href="profile.html" id="current-user-name"></a></p>
-                    <!--<p class="font17 roboto padNormal text-center spaceLetters" id="current-user-title"></p>-->
+                    <p class="font17 roboto padNormal text-center spaceLetters" id="current-user-title"></p>
                   </div>
 
                 </div>
@@ -92,9 +92,7 @@
                   <div id="collapseOne" class="collapse show" aria-labelledby="filter-head">
                     <p class="centerText"><a href="#mentor-mentee-requests-section" class="menu-choice centerText">mentorship requests</a></p>
                     <div class="dropdown-divider"></div>
-                    <p class="centerText"><a href="#meeting-request-section" class=" menu-choice centerText">meeting requests</a></p>
-                    <div class="dropdown-divider"></div>
-                    <p class="centerText"><a href="#meeting-response-section" class=" menu-choice centerText">meeting responses</a></p>
+                    <p class="centerText"><a href="#meeting-notif-section" class=" menu-choice centerText">meeting requests</a></p>
                     <div class="dropdown-divider"></div>
                     <p class="centerText"><a href="#post-notifications-section" class=" menu-choice centerText">post notifications</a></p>
                   </div>
@@ -138,17 +136,17 @@
                 <div id="mentorStore"></div>
               </div>
 
-              <!-- MEETING REQUESTS SECTION -->
-              <div class="cont shadow-sm" id="meeting-request-section">
-                <p class="section-title">meeting requests</p>
+              <!-- MEETING NOTIFICATIONS SECTION -->
+              <div class="cont shadow-sm" id="meeting-notif-section">
+                <p class="section-title">meeting notifications</p>
                 <div id="meeting-notif-board" class="border paddedBorder hidden">
                   <div class="row">
                     <div id="meeting-notif" class="col-xl-3 my-auto">
                       <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
                     </div>
                     <div class="col-xl-9 text-center text-xl-left my-auto">
-                      <p id="notif-content">Your <span id="sender-role"></span> <a href="" class="sender-name"></a> <span> wants to schedule a meeting with you</span></p>
-                     <!--<p id="time-stamp"> Monday, July 20, 2020<p>-->
+                      <p id="notif-content">Your <span id="sender-role"></span> <a href="" class="sender-name"></a> <span id="meeting-notif-action"></span></p>
+                      <p id="meeting-notif-timestamp"> Monday, July 20, 2020<p>
                       <!--<p class="body-text" id="additional-message"> <span class="sender-name orangeTextLight weight400">Penguin says:</span> I need to cancel the meeting because I had a prior comment. Please set up another meeting some other time :)</p>-->
                       <div id="meeting-details-head">
                         <a class="show-hide-toggle" id="toggle-link" data-toggle="collapse" data-target="#collapseDetails" aria-expanded="true" aria-controls="collapseDetails">
@@ -172,26 +170,18 @@
                         <button id="remove-meeting" class=" hidden btn remove-button">remove</button>
                         <button id="i-am-aware" class="hidden btn accept-button">got it!</button>
                       </div>
-                      <p id="approve-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Awesome! <a class="sender-name"></a> is notified that you accepted the meeting :)
-                      <a class="hub-ind"> See all of your meetings</a> with <a class="orangeTextLight sender-name"></a>.</p>
+                      <p id="approve-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Awesome! <a class="sender-name"></a> is notified that you accepted the meeting :)</p>
 
-                      <p id="remove-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i><a class="sender-name"></a> is notified that you removed the meeting.
-                      <a class="hub-ind"> See all of your meetings</a> with <a class="orangeTextLight sender-name"></a>.</p>
+                      <p id="remove-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i><a class="sender-name"></a> is notified that you removed the meeting.</p>
 
-                      <p id="delete-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Confirmed! Your meeting request with <a class="sender-name"> </a> is resolved.
-                      <a class="hub-ind"> See all of your meetings</a> with <a class="orangeTextLight sender-name"></a>.
+                      <p id="delete-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Confirmed! Your meeting with <a class="sender-name"> </a> is <span id="confirm-action-message">confirmed</span>.</p>
+                      <span class="system-response"> <a class="hub-ind"> See all of your meetings</a> with <a class="orangeTextLight sender-name"></a>.</span>
                       </p>
                       <!--<a class="body-text" id = "add-a-note"> Add a note to Pancake </a>-->
 
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- MEETING RESPONSE SECTION -->
-              <div class="cont shadow-sm" id="meeting-response-section">
-                <p class="section-title">meeting responses</p>
-
               </div>
 
 

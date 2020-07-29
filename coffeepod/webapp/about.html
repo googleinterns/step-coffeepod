@@ -20,6 +20,8 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA&callback=createMap"
+  type="text/javascript"></script>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCMwJGcLe1xL9TB46KTDQPTjoXvVgnjgeA",
@@ -38,11 +40,12 @@
     </script>
     <script src="js/script.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/about-map.js"></script>
     <script>
       $(document).ready(load());
     </script>
   </head>
-  <body>
+  <body onload="createMap()">
     <div id="page-container">
       <!-- this is the placeholder for the nav bar -->
       <div id="nav-placeholder"></div>
@@ -64,6 +67,14 @@
                     where people seeking guidance could easily make new connections whether they want to give or receive advice.
                 </p>
               </div>
+
+              <div class="cont shadow-sm">
+                <p class="weight600 poppins line45 font30 lowercase">Where our mentors and mentees are</p>
+                <p class="padNormal roboto line21 font17 blackText">Check this map to see where our mentors and mentees are!
+                    <section id="map"> </section>
+                </p>
+              </div>
+
               <div class="cont shadow-sm">
                 <p class="weight600 poppins line45 font30 lowercase">our founders</p>
                 <div class="founder">

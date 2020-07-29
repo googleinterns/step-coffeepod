@@ -384,7 +384,7 @@ input:focus, textarea:focus {
 }
 
 .tab-pane {
-    height: 400px;
+    height: 380px;
     overflow-y:scroll;
 }
 
@@ -432,4 +432,16 @@ input:focus, textarea:focus {
 
 #meetings-box{
     height: 500px;
+}
+
+#notify-delete-confirmation{
+    text-align: center;
+    padding: 20px;
+}
+
+#meeting-notif-timestamp {
+    font-family: Roboto;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: #696969;
 }
