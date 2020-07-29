@@ -5,18 +5,6 @@ let name, uid, user, username, mentors, mentees, mentorRequests, menteeRequests;
 // menteeRequests are people who want this user to be their mentee
 
 // function to load the notifications into the page
-
-/* // TEST FIRESTORE FOR SOME UNDEFINED FIELDS IN AN ARRAY OF MAPS
-db.collection('notifications').doc('Wk7lrwtTP8aJA2rVy1JGXIHpQEt2').get().then(function(notif) {
-    const meetingRequests = notif.data().meetingRequests;
-    if (meetingRequests != null) {
-        console.log("there are some meeting requests");
-        console.log(meetingRequests);
-    } 
-    console.log(meetingRequests[0].updated);
-    console.log(meetingRequests[0].updated == undefined);
-});*/
-
 function getNotif() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {

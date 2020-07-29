@@ -240,12 +240,10 @@ function deleteMeeting(meetingId, listId) {
                 currentUserId = mentorship.data().menteeId;
             }
         
-        console.log("meeting is pending: " + meeting.data().pending);
         
         if (meeting.data().pending == true) {
-            console.log("in the conditional loop for pending meeting");
             if (currentUserIsMentor == meeting.data().setByMentor.toString()) { 
-                console.log("request to set and delete are from one person")
+
                 // The current user who wants to delete the meeting is also the one who created the meeting
                 // Delete the meeting from firestore and remove the meeting request for the other user
                 deleteMeetingFromFirestore(meetingId);
@@ -256,7 +254,7 @@ function deleteMeeting(meetingId, listId) {
                 
                 setAcceptedToFalseInFirestore(mentorshipID, meetingId);
                 removeMeetingRequestForOneUser(meetingId, currentUserId);
-                 sendNotification(otherPersonId, meetingId, "removed"); // once sent and the other person is notified (click got it), the meeting will be deleted!
+                sendNotification(otherPersonId, meetingId, "removed"); // once sent and the other person is notified (click got it), the meeting will be deleted!
             }
         } else { // If the meeting has already been accepted
             // Either way, send a meeting response notification
