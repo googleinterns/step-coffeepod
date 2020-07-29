@@ -3,7 +3,7 @@ function saveQuestion(e){
     const newpost = document.getElementById("new-post");
     const topic = document.querySelector("#topic");
     const question = document.querySelector("#new-post-q");
-    let sortType = document.querySelector('#sortType').id;
+    let sortType = document.querySelector('.sortType').id;
     let form = document.querySelector("#postForm");
     console.log(sortType);
     
@@ -105,8 +105,15 @@ function deleteQuestion(){
     let sortType = document.querySelector(".sortType").id;
     $(".modal").modal('hide');
 
-    db.collection("forum").doc(postID).delete().then(() => {
-        filterQuestions(sortType);
+    db.collection("forum").doc(postID).get().then(snapshot => {
+        const info = snapshot.data();
+        info.replies.forEach(reply => {
+            db.collection("comments").doc(reply).delete().then(() => {
+                db.collection("forum").doc(postID).delete().then(() => {
+                    filterQuestions(sortType);
+                })
+            })
+        })
     })
 }
 
@@ -156,7 +163,7 @@ function filterQuestions(type){
         })
     } else if (type == "all" || type == "sortType"){
         document.querySelector('.sortType').id = type;
-        document.getElementById("sortType").style.display = 'none';
+        document.querySelector(".sortType").style.display = 'none';
         document.getElementById("questionsCont").innerHTML = "";
         db.collection("forum").get().then(snapshot => {
             return loadQuestions(snapshot);
