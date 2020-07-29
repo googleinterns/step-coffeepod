@@ -261,6 +261,10 @@ function approveMeeting(buttonEle, mentorshipId, meetingId, senderId, timestamp)
 
 // Remove meeting notification from current user's notifications after the current user is notified that the other user either removed or deleted the meeting
 function removeMeetingNotif(mentorshipId, meetingId, action, timestamp) {
+    console.log("i'm removing meeting notif: ");
+    console.log(meetingId);
+    console.log(action);
+    console.log(timestamp);
     db.collection('notifications').doc(uid).update({
         meetingNotifs: firebase.firestore.FieldValue.arrayRemove({mentorshipId: mentorshipId, meetingId: meetingId, action: action, timestamp: parseInt(timestamp)})
     })
@@ -274,7 +278,7 @@ function setAcceptedToFalseInFirestore(mentorshipId, meetingId) {
     });
 }
 
-function removeMeeting(buttonEle, mentorshipId, meetingId, senderId) {
+function removeMeeting(buttonEle, mentorshipId, meetingId, senderId, timestamp) {
     // Set the accepted stage of the meeting to false
     setAcceptedToFalseInFirestore(mentorshipId, meetingId);
 
@@ -284,7 +288,7 @@ function removeMeeting(buttonEle, mentorshipId, meetingId, senderId) {
 
     const actionButtons = buttonEle.closest('#response-options');
     actionButtons.classList.add('hidden');
-
+    
     removeMeetingNotif(mentorshipId, meetingId, "created", timestamp);
     addMeetingResponseToSender(mentorshipId, meetingId, senderId, "removed");
 }
@@ -293,6 +297,8 @@ function removeMeeting(buttonEle, mentorshipId, meetingId, senderId) {
 // Add meeting responses
 // The message (whether accepted or removed, is stored in the meeting itself)
 function addMeetingResponseToSender(mentorshipId, meetingId, senderId, action) {
+    console.log("i'm adding a meeting response to sender");
+    console.log("please let me know huhu:" + action);
     db.collection('notifications').doc(senderId).update({
         meetingNotifs: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipId, meetingId: meetingId, action: action, timestamp: Date.now()})
     });
