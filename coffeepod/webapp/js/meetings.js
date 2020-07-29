@@ -82,11 +82,14 @@ function sendNotification(meeting) {
     
 }
 
-// in notification, store meeting id and mentorship id
+// in notification, store meeting id, mentorship id, action, and timestamp. Meeting notif id is the same as meeting id
 
 function addNotification(personId, meeting) {
-    db.collection('notifications').doc(personId).update({
-        meetingNotifs: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id, action: "created", timestamp: Date.now()})
+    db.collection('notifications').doc(personId).collection('meetingNotifs').doc(meeting.id).set({
+        mentorshipId: mentorshipID, 
+        meetingId: meeting.id, 
+        action: "created", 
+        timestamp: Date.now()
     });
 }
 
@@ -142,12 +145,12 @@ function addMeetingToList(listId, meetingId, meetingWhen, isPastMeeting){
 
     const meetingDate = meetingLiEleCloned.querySelector("#meeting-date");
     meetingDate.innerText = new Date(meetingWhen);
-    meetingDate.setAttribute('onclick', 'showMeetingDetails(' + "'" + meetingId + "'" + "," + "'" + isPastMeeting + "'" + ')');
+    meetingDate.setAttribute('onclick', 'showMeetingDetails(' + "'" + meetingId + "'" + "," + "'" + isPastMeeting + "'" + "," + "'" + listId + "'" + ')');
 
     meetingList.appendChild(meetingLiEleCloned);
 }
 
-function showMeetingDetails(meetingId, isPastMeeting) {
+function showMeetingDetails(meetingId, isPastMeeting, listId) {
     const mentorshipDoc =  db.collection('mentorship').doc(mentorshipID);
     const meetingsRef = mentorshipDoc.collection('meetings');
     const whenExpand = document.getElementById("expand-when");
@@ -183,7 +186,7 @@ function showMeetingDetails(meetingId, isPastMeeting) {
     // Only show delete buttons for upcoming and pending meetings
 
     const deleteMeetingBtn = document.getElementById("delete-meeting-button");
-    deleteMeetingBtn.setAttribute('onclick', 'deleteMeeting(' + "'" + meetingId + "'" + ")");
+    deleteMeetingBtn.setAttribute('onclick', 'deleteMeeting(' + "'" + meetingId + "'" + ",'" + listId + "'" +")");
 
     if (isPastMeeting != "true") {
         deleteMeetingBtn.classList.remove('hidden');
@@ -215,17 +218,26 @@ function hideDetails(){
     document.getElementById('meetings-box').style.height = '500px';
 }
 
-function deleteMeeting(meetingId) {
+function updateNumberOfMeetingsInSection(listId) {
+    if (listId.includes("upcoming")) {
+        document.getElementById("num-upcoming").innerText = parseInt(document.getElementById("num-upcoming").innerText) - 1;
+    } else if (listId.includes("pending")) {
+        document.getElementById("num-pending").innerText = parseInt(document.getElementById("num-pending").innerText) - 1;
+    }
+}
+function deleteMeeting(meetingId, listId) {
     // Send notification to meeting response either way 
     // If the meeting is pending, remove the meeting from the other person's meeting request and delete from firestore
     // If the meeting is accepted (if it's not then it should be deleted), then send to the person's meeting response
 
     document.getElementById("notify-delete-confirmation").classList.remove('hidden');
     document.getElementById("meeting-details-under").classList.add('hidden');
+
     // Delete the meeting element from DOM
     document.getElementById(meetingId).classList.add('hidden');
+    updateNumberOfMeetingsInSection(listId);
 
-    const meetingRef = db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId);
+    /*const meetingRef = db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId);
     meetingRef.get().then(function(meeting) {
         //deleteMeetingFromFirestore(meetingId);
         db.collection('mentorship').doc(mentorshipID).get().then(function(mentorship) {
@@ -248,7 +260,7 @@ function deleteMeeting(meetingId) {
                 // The current user who wants to delete the meeting is also the one who created the meeting
                 // Delete the meeting from firestore and remove the meeting request for the other user
                 // deleteMeetingFromFirestore(meetingId);
-                removeMeetingRequestForOneUser(mentorshipId, meetingId, otherPersonId);
+                removeMeetingRequestForOneUser(meetingId, otherPersonId);
 
             } /*else { 
                 // The other user wants to delete the meeting
@@ -257,27 +269,28 @@ function deleteMeeting(meetingId) {
                 setAcceptedToFalseInFirestore(mentorshipID, meetingId);
                 removeMeetingRequestForOneUser(mentorshipId, meetingId, currentUserId);
                 addMeetingResponseToSender(mentorshipId, meetingId, personToNotifyId);
-            }*/
+            }
         } else { // If the meeting has already been accepted
             // Either way, send a meeting response notification
             //sendDeleteMeetingNotifInResponse(meetingId, otherPersonId, currentUserId, "deleted");
         }
       })
 
-    })
+    })*/
 
 }
 
+// Meeting id is the same as meetingNotif id
 function sendDeleteMeetingNotif(meetingId, otherPersonId, action) {
-    db.collection('notifications').doc(otherPersonId).update({
-        meetingNotifs: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id, action: action})
+    db.collection('notifications').doc(otherPersonId).collection('meetingNotifs').doc(meetingId).set({
+        mentorshipId: mentorshipID, 
+        meetingId: meeting.id, 
+        action: action
     });
 }
 
-function removeMeetingRequestForOneUser(mentorshipId, meetingId, userId) {
-    db.collection('notifications').doc(userId).update({
-        meetingRequests: firebase.firestore.FieldValue.arrayRemove({mentorshipId: mentorshipId, meetingId: meetingId})
-    })
+function removeMeetingRequestForOneUser(meetingId, userId) {
+    db.collection('notifications').doc(userId).collection('meetingNotifs').doc(meetingId).delete();
 }
 
 // Deletion happens when the other person is notified of the change 
