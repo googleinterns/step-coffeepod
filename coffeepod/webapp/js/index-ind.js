@@ -1,5 +1,5 @@
 window.addEventListener('click', function(e){   
-  if (document.getElementById('post').contains(e.target)){
+  if (document.getElementById('commentForm').contains(e.target)){
       onComment();
   } else {
       offComment();
@@ -25,6 +25,7 @@ function offComment(){
 function storeComment(e){
     e.preventDefault();
     const form = document.querySelector("#commentForm");
+    const sortType = document.querySelector('.sortType').id;
     auth.onAuthStateChanged(function(user) {
         if (user) {
             uid = user.uid;
@@ -65,7 +66,7 @@ function storeComment(e){
                 }).then(function() {
                   offComment(); 
                   form.reset();
-                  location.reload();
+                  filterComments(sortType);
                 })
             })
         }
@@ -86,48 +87,77 @@ function genComments(){
 
 function filterComments(sort){
     document.getElementById("commentsCont").innerHTML = "";
-    let button = document.getElementById("sortType");
-    button.style.display = 'block';
-    button.innerHTML = sort+"&nbsp;&nbsp;&nbsp;&nbsp;&times;";
+    let button = document.querySelector('.sortType');
+    if(sort == "newest" || sort == "oldest"){
+        button.style.display = 'block';
+        button.id = sort;
+        button.innerHTML = sort+"&nbsp;&nbsp;&nbsp;&nbsp;&times;";
+    }
+
     displayComments(sort);
 }
 
 function displayComments(sort){
     const postID = getPostID();
     let userID = "";
-    db.collection("forum").where(firebase.firestore.FieldPath.documentId(), '==', postID).get().then(snapshot => {
-        snapshot.forEach(question => {;
-        const questionInfo = question.data();
+
+    db.collection("forum").doc(postID).get().then(snapshot => {
+        const questionInfo = snapshot.data();
         let replies = questionInfo.replies;
         // display each comment
         if (sort != "oldest") replies = replies.reverse();
-        if (sort == 'all'){
+        if (sort == 'all' || sort == 'sortType'){
             document.getElementById("commentsCont").innerHTML = "";
-            document.getElementById("sortType").style.display = 'none';
+            document.querySelector(".sortType").style.display = 'none';
         }
+        
         replies.forEach(comntID => {
             let comnt = genComments();
-            db.collection('comments').where(firebase.firestore.FieldPath.documentId(), '==', comntID).get().then(comntSnapshot => {
-                if(!comntSnapshot.empty){
-                    comntSnapshot.forEach(comntInfo => {
-                        userID = comntInfo.data().userID;
-                        comnt.querySelector("#date").innerText = comntInfo.data().date;
-                        comnt.querySelector("#comment").innerText = comntInfo.data().content;
-                        comnt.id = comntID;
-                    })
+            db.collection('comments').doc(comntID).get().then(comntSnapshot => {
+                if(comntSnapshot){
+                    userID = comntSnapshot.data().userID;
+                    comnt.querySelector("#date").innerText = comntSnapshot.data().date;
+                    comnt.querySelector("#comment").innerText = comntSnapshot.data().content;
+                    comnt.id = comntID;
+                    if(userID == uid) {
+                        console.log('here');
+                        comnt.querySelector('#deleteComment').style.display = 'block';
+                        comnt.querySelector('#deleteComment').id = comntID;
+                    }
+                    
                 }
             }).then(() => {
-                    db.collection('profile').where(firebase.firestore.FieldPath.documentId(), '==', userID).get().then(userSnapshot => {
-                        if(!userSnapshot.empty){
-                            userSnapshot.forEach(userInfo => {
-                                comnt.querySelector("#name").innerText = userInfo.data().name;
-                                comnt.querySelector("#title").innerText = userInfo.data().title;
-                            })
-                        }
-                    })
+                db.collection('profile').doc(userID).get().then(userSnapshot => {
+                    if(userSnapshot) {
+                        comnt.querySelector("#name").innerText = userSnapshot.data().name;
+                        comnt.querySelector("#title").innerText = userSnapshot.data().title;
+                    }
                 })
             })
         })
+    })
+}
+
+function deletePrompt(commentID) {
+    $(".modal").modal('toggle');
+    document.querySelector('.modal').id = commentID;
+    console.log(document.querySelector('.modal').id);
+}
+
+// deletes own question from database and removes from page
+function deleteComment(){
+    const commentID = document.querySelector('.modal').id;
+    let sortType = document.querySelector(".sortType").id;
+    const postID = getPostID();
+    console.log(commentID);
+    console.log(sortType);
+    $(".modal").modal('hide');
+
+    db.collection("forum").doc(postID).update({
+        replies: firebase.firestore.FieldValue.arrayRemove(commentID)
+    })
+    db.collection("comments").doc(commentID).delete().then(() => {
+        filterComments(sortType);
     })
 }
 
