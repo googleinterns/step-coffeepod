@@ -87,7 +87,9 @@ function signup(e) {
                 location: "",
                 goals: ["Ask a question", "Find a mentor or mentee"],
                 finished: ["Join coffee pod!"],
-                tags: []
+                tags: [],
+                tagSize: 0,
+                following: []
             });
             db.collection('profile').doc(cred.user.uid).collection('experience').add ({
                 filled: false
@@ -112,9 +114,7 @@ function signup(e) {
                 mentees: [],
                 mentorOfPairs: [],
                 menteeOfPairs: [],
-                chats: [],
-                tagSize: 0,
-                following: []
+                chats: []
             }).then(() => {
                 window.location.replace("index.html");
             })
