@@ -300,7 +300,6 @@ function makeRequest(requestId, type) {
   let profileRef = db.collection("profile").doc(requestId);
   profileRef.get().then(function(profile) {
     requestName = profile.data().name;
-    requestTitle = profile.data().title;
   }).then(function() {
     let request = document.getElementById(type);
     let clone = request.cloneNode(true);
@@ -308,7 +307,6 @@ function makeRequest(requestId, type) {
     let cont = document.getElementById("mentorStore");
     cont.appendChild(clone);
     clone.querySelector(".mentorName").innerText = requestName;
-    clone.querySelector(".mentorTitle").innerText = requestTitle;
     clone.id = requestId;
     clone.querySelector(".mentorName").setAttribute('href', 'profile.html?user=' + requestId);
   });
