@@ -1,3 +1,5 @@
+let unsubscribe;
+
 window.addEventListener('click', function(e){   
   if (document.getElementById('commentForm').contains(e.target)){
       onComment();
@@ -86,6 +88,7 @@ function genComments(){
 }
 
 function filterComments(sort){
+    if (unsubscribe) unsubscribe();
     document.getElementById("commentsCont").innerHTML = "";
     let button = document.querySelector('.sortType');
     if(sort == "newest" || sort == "oldest"){
@@ -101,7 +104,7 @@ function displayComments(sort){
     const postID = getPostID();
     let userID = "";
 
-    db.collection("forum").doc(postID).get().then(snapshot => {
+    unsubscribe = db.collection("forum").doc(postID).onSnapshot(snapshot => {
         const questionInfo = snapshot.data();
         let replies = questionInfo.replies;
         // display each comment
@@ -124,7 +127,6 @@ function displayComments(sort){
                         comnt.querySelector('#deleteComment').style.display = 'block';
                         comnt.querySelector('#deleteComment').id = comntID;
                     }
-                    
                 }
             }).then(() => {
                 db.collection('profile').doc(userID).get().then(userSnapshot => {
