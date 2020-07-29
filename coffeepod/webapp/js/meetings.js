@@ -86,7 +86,7 @@ function sendNotification(meeting) {
 
 function addNotification(personId, meeting) {
     db.collection('notifications').doc(personId).update({
-        meetingRequests: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id})
+        meetingNotifs: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id, action: "created", timestamp: Date.now()})
     });
 }
 
@@ -238,25 +238,29 @@ function deleteMeeting(meetingId) {
                 otherPersonId = mentorship.data().mentorId;
                 currentUserId = mentorship.data().menteeId;
             }
-                
+        
+        console.log("meeting is pending: " + meeting.data().pending);
+        
         if (meeting.data().pending == true) {
+            console.log("in the conditional loop for pending meeting");
             if (currentUserIsMentor == meeting.data().setByMentor.toString()) { 
+                console.log("request to set and delete are from one person")
                 // The current user who wants to delete the meeting is also the one who created the meeting
                 // Delete the meeting from firestore and remove the meeting request for the other user
-                //deleteMeetingFromFirestore(meetingId);
+                // deleteMeetingFromFirestore(meetingId);
                 removeMeetingRequestForOneUser(mentorshipId, meetingId, otherPersonId);
 
-            } else { 
+            } /*else { 
                 // The other user wants to delete the meeting
                 // Remove the meeting request and remove the meeting for the user
                 
                 setAcceptedToFalseInFirestore(mentorshipID, meetingId);
                 removeMeetingRequestForOneUser(mentorshipId, meetingId, currentUserId);
                 addMeetingResponseToSender(mentorshipId, meetingId, personToNotifyId);
-            }
+            }*/
         } else { // If the meeting has already been accepted
             // Either way, send a meeting response notification
-            sendDeleteMeetingNotifInResponse(meetingId, otherPersonId);
+            //sendDeleteMeetingNotifInResponse(meetingId, otherPersonId, currentUserId, "deleted");
         }
       })
 
@@ -264,6 +268,11 @@ function deleteMeeting(meetingId) {
 
 }
 
+function sendDeleteMeetingNotif(meetingId, otherPersonId, action) {
+    db.collection('notifications').doc(otherPersonId).update({
+        meetingNotifs: firebase.firestore.FieldValue.arrayUnion({mentorshipId: mentorshipID, meetingId: meeting.id, action: action})
+    });
+}
 
 function removeMeetingRequestForOneUser(mentorshipId, meetingId, userId) {
     db.collection('notifications').doc(userId).update({

@@ -438,3 +438,10 @@ input:focus, textarea:focus {
     text-align: center;
     padding: 20px;
 }
+
+#meeting-notif-timestamp {
+    font-family: Roboto;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: #696969;
+}
