@@ -107,12 +107,16 @@ function deleteQuestion(){
 
     db.collection("forum").doc(postID).get().then(snapshot => {
         const info = snapshot.data();
-        info.replies.forEach(reply => {
+        //delete all comments before deleting post from database
+        (info.replies).forEach(reply => {
             db.collection("comments").doc(reply).delete().then(() => {
-                db.collection("forum").doc(postID).delete().then(() => {
-                    filterQuestions(sortType);
-                })
+                console.log("deleted comments");
             })
+        })
+    }).then(() => {
+        db.collection("forum").doc(postID).delete().then(() => {
+            console.log("delete");
+            filterQuestions(sortType);
         })
     })
 }
