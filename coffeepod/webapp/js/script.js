@@ -18,6 +18,44 @@ function logOut(e){
     })
 }
 
+// red dot appears next to notification when user has new notifications
+function getNotif(){
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            const currUser = user.uid;
+            const notif = document.querySelector("#notifications");
+            const notifBell = notifications.querySelector('.dot');
+
+            firebase.firestore().collection("notifications").doc(currUser).onSnapshot(snapshot => {
+                const notifInfo = snapshot.data();
+                if (notifInfo.menteeRequests.length > 0 || notifInfo.mentorRequests.length > 0){
+                    console.log("mentee/mentor notif");
+                    return notifBell.style.visibility = "visible";
+                }
+            })
+                firebase.firestore().collection("notifications").doc(currUser).collection("postNotifications").onSnapshot(snapshot => {
+                    if(snapshot.size > 0){
+                        console.log(snapshot.size);
+                        console.log("postnotif");
+                        return notifBell.style.visibility = "visible";
+                    }
+                })
+                firebase.firestore().collection("notifications").doc(currUser).collection("meetingNotifs").onSnapshot(snapshot => {
+                    if(snapshot.size > 0){
+                        console.log("meetingnotif");
+                        return notifBell.style.visibility = "visible";
+                    }
+                })
+            
+            
+            console.log("no notif");
+            notifBell.style.visibility = "hidden";
+        }
+    })
+}
+
+
+
 function load(fromWhere){
    firebase.auth().onAuthStateChanged(function(user) {
     if (!user) {

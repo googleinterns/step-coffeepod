@@ -44,6 +44,7 @@
     <script src="js/search.js"></script>
     <script>
         $(document).ready(getProfile());
+        $(document).ready(getNotif());
         $(document).ready(filterQuestions("none"));
         $(document).ready(load('cafe'));
     </script>
@@ -70,13 +71,13 @@
                   <p class="font15 roboto line15 weight300 padNormal text-center orangeTextDark" id = "askQuestion"> Ask a question</p>
                 </div>
                 <div class="cont shadow-sm">
-                  <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> topics </p>
+                  <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> filter </p>
                   <ul class = "menu poppins weight300 font17 line21 text-center orangeTextLight">
                     <li class="menuli" id = "career" onclick = "filterQuestions(this.id);">career</li>
                     <li class="menuli" id = "academics" onclick = "filterQuestions(this.id);">academics</li>
                     <li class="menuli" id = "hobbies" onclick = "filterQuestions(this.id);">hobbies</li>
                   </ul>  
-                  <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> filter </p>
+                  <p class = "font17 poppins line21 weight600 padNormal pl-2" style = "background-color:#EFE1CE;"> sort </p>
                   <ul class = "menu poppins weight300 font17 line21 text-center orangeTextLight">
                     <li class="menuli" id = "newest" onclick = "filterQuestions(this.id);">newest</li>
                     <li class="menuli" id = "oldest" onclick = "filterQuestions(this.id);">oldest</li>
