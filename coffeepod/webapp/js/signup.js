@@ -90,18 +90,9 @@ function signup(e) {
                 tagSize: 0,
                 following: []
             });
-            db.collection('profile').doc(cred.user.uid).collection('experience').add ({
-                filled: false
-            });
-            db.collection('profile').doc(cred.user.uid).collection('education').add ({
-                filled: false
-            });
             db.collection('notifications').doc(cred.user.uid).set ({
                 menteeRequests: [],
                 mentorRequests: []
-            });
-            db.collection('notifications').doc(cred.user.uid).collection('postNotifications').add ({
-                filled: false
             });
             return db.collection('user-info').doc(cred.user.uid).set({
                 username: username,

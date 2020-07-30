@@ -22,7 +22,7 @@ function loadFind() {
           console.log("No such profile!");
         }
       }).then(function() {
-        if(tags === undefined) {
+        if(tags.length == 0) {
             document.getElementById("noTags").classList.remove("hidden");
           } else {
             getPeople();
