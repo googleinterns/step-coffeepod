@@ -445,3 +445,9 @@ input:focus, textarea:focus {
     letter-spacing: 0.05em;
     color: #696969;
 }
+
+#goal-tip{
+    font-size: 14px;
+    font-style: italic;
+    padding-left: 14px;
+}
