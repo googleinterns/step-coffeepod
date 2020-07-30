@@ -13,9 +13,8 @@ function login(e) {
     }).catch(() => {
         // check if user used username to login
         return db.collection('user-info').get().then(snapshot => {
-            (snapshot).forEach(doc => {
+            snapshot.forEach(doc => {
                 const userInfo = doc.data();
-                console.log(userInfo.username);
                 if (userInfo.username == user) {
                     valid = true;
                     auth.signInWithEmailAndPassword(userInfo.email, password).then(() => {
@@ -118,8 +117,8 @@ function signup(e) {
             }).then(() => {
                 window.location.replace("index.html");
             })
-        }).catch(() => {
-            signupForm.querySelector("#email-error").innerHTML = "This email is already in use."
+        }).catch(err => {
+            signupForm.querySelector("#system-error").innerHTML = err;
             valid = false;
         });
     }
