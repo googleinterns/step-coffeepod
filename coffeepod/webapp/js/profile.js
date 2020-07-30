@@ -21,7 +21,6 @@ function getProfile() {
     personal = false;
     loadData();
   }
-  resizeAllTextarea();
 }
 
 // check if we should hide the goals and disable the buttons when someone is looking at another persons page
@@ -42,6 +41,7 @@ function checkPersonal() {
       buttons[i].classList.add("hidden");
     }
   }
+  resizeAllTextarea();
 }
 
 // load the personal data based on the uid of the page we are trying to get
@@ -91,10 +91,9 @@ function loadData() {
       // doc.data() will be undefined in this case
       console.log("No such profile!");
     }
-  }).catch(function(error) {
-    console.log("Error getting profile:", error);
-  });
+  })
 }
+
 // load mentors to the page
 function loadMentors(list, store) {
   for(var i = 0; i < list.length; i++) {
@@ -392,6 +391,7 @@ function updatePage(profile) {
   document.getElementById("name").innerText = profile.data().name;
   document.getElementById("title").innerText = profile.data().title;
   document.getElementById("location").innerText = profile.data().location;
+  resizeAllTextarea();
 }
 
 // add in all the experience from firebase
@@ -406,11 +406,13 @@ function loadExperience() {
       form.querySelector(".title").innerText = experience.data().title;
       form.querySelector(".about").innerText = experience.data().about;
       form.id = experience.id;
-    });
+    })
     if(count == 0 && personal) {
       document.getElementById("promptExper").classList.remove("hidden");
     }
-  });  
+  }).then(function() {
+      resizeAllTextarea();
+  });
 }
 
 // add in all the education from firebase
@@ -424,11 +426,13 @@ function loadEducation() {
       form.querySelector(".date").innerText = education.data().date;
       form.querySelector(".degree").innerText = education.data().degree;
       form.id = education.id;
-    });
+    })
     if(count == 0  && personal) {
       document.getElementById("promptEdu").classList.remove("hidden");
     }
-  });  
+  }).then(function() {
+      resizeAllTextarea();
+  }); 
 }
 
 // save all the experience to firebase
@@ -464,6 +468,7 @@ function loadGoals(profile) {
   for(let i = 0, len = goals.length; i < len; i++) {
     loadGoal(goals[i], "myUL", "updateGoal");
   }
+  resizeAllTextarea();
 }
 
 //function to load the finished goals from firebase
@@ -472,6 +477,7 @@ function loadFinished(profile) {
   for(let i = 0, len = goals.length; i < len; i++) {
     loadGoal(goals[i], "finishedUL", "updateFinished");
   }
+  resizeAllTextarea();
 }
 
 // function to load the tags from firebase that the use has picked
@@ -569,8 +575,10 @@ function makeMentorCard(id, store) {
 
 // makes all textareas fit the content they hold
 function resizeAllTextarea() {
+  console.log("call me")
   $("textarea").each(function () {
-    this.style.height = (this.scrollHeight+10)+'px';
+    console.log(this, this.scrollHeight)
+    this.style.height = (this.scrollHeight)+'px';
   });
 }
 
@@ -696,3 +704,15 @@ function sendMenteeRequest() {
     })
   });
 }
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $("textarea").keydown(function(e){
+    if (e.keyCode == 13 )
+    {
+      console.log("AAAAAAAAAAA")
+        // prevent default behavior
+        e.preventDefault();
+    }
+  });
+});
