@@ -86,6 +86,7 @@ function loadData() {
       loadFinished(profile);
       loadTags(profile);
       loadAsked();
+      console.log(profile.data())
       loadFollowing(profile.data().following);
     } else {
       // doc.data() will be undefined in this case
@@ -103,17 +104,25 @@ function loadMentors(list, store) {
 
 // load the asked questions to the profile
 function loadAsked() {
+  let id = [];
   document.getElementById("askedStore").innerText = "";
   db.collection("forum").where("userID", "==", uid).get().then(querySnapshot => {
     querySnapshot.forEach(question => {
-      makeQuestion(question.id, "askedStore");
+      if(!id.includes(question.id)) {
+        id.push(question.id);
+        makeQuestion(question.id, "askedStore");
+      }
     });
-  });  
-   db.collection("comments").where("userID", "==", uid).get().then(querySnapshot => {
-    querySnapshot.forEach(comment => {
-      makeQuestion(comment.data().postID, "askedStore");
-    });
-  });  
+  }).then(function() {
+    db.collection("comments").where("userID", "==", uid).get().then(querySnapshot => {
+      querySnapshot.forEach(comment => {
+        if(!id.includes(comment.data().postID)) {
+          id.push(comment.data().postID);
+          makeQuestion(comment.data().postID, "askedStore");
+        }
+      });
+    });  
+  })
 }
 
 // load the following questsion to the profile
@@ -167,10 +176,8 @@ function updateTags() {
 // load in the username on the page
 function updateUsername() {
   let usernameSlots = document.getElementsByClassName("username");
-  console.log(usernameSlots);
   for (let i = 0, len = usernameSlots.length; i < len; i++) {
     usernameSlots[i].innerText = name;
-    console.log(name);
   }
 
 }
@@ -575,9 +582,7 @@ function makeMentorCard(id, store) {
 
 // makes all textareas fit the content they hold
 function resizeAllTextarea() {
-  console.log("call me")
   $("textarea").each(function () {
-    console.log(this, this.scrollHeight)
     this.style.height = (this.scrollHeight)+'px';
   });
 }
@@ -706,11 +711,9 @@ function sendMenteeRequest() {
 }
 
 $( document ).ready(function() {
-    console.log( "ready!" );
     $("textarea").keydown(function(e){
     if (e.keyCode == 13 )
     {
-      console.log("AAAAAAAAAAA")
         // prevent default behavior
         e.preventDefault();
     }
