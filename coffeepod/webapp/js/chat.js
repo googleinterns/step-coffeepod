@@ -211,6 +211,7 @@ function storeMessage(downloadURL, timestamp, fileName, fileType){
     let msgForm = document.querySelector('.submitMessage');
     const id = document.querySelector('.messages').id;
     const newMessage = msgForm['newTxt'].value;
+    console.log(downloadURL);
 
     db.collection('chats').doc(id).collection('messages').add({
         userID: currUser,
@@ -231,12 +232,13 @@ function storeMessage(downloadURL, timestamp, fileName, fileType){
                     db.collection('chats').doc(id).collection('messages').doc(msgID).get().then(msgInfo => {
                         if(msgInfo.exists){
                             const messageInfo = msgInfo.data();
-                            // determine if own or other user's message
-                            if (messageInfo.userID == currUser) genMessage("own", messageInfo.content, fileName, fileType, downloadURL);
-                            else genMessage("otherUser", messageInfo.content, fileName, fileType, downloadURL);
+                            console.log("sending message: "+messageInfo.fileURL);
+                            genMessage("own", messageInfo.content, fileName, fileType, messageInfo.fileURL);
                             
                             //scroll down to reveal new message
                             scrollBottom();
+                            msgForm.reset();
+                            
                         }
                     })
                 }
@@ -244,7 +246,6 @@ function storeMessage(downloadURL, timestamp, fileName, fileType){
             lastMsg = false;
         }
     })
-    msgForm.reset();
 }
 
 
@@ -260,6 +261,7 @@ function newMessage(e){
     document.querySelector('#progressBar').style.display = "flex";
 
     if(fileUpload){
+        console.log("detect file");
         fileName = timestamp+'-'+fileUpload.name;
         const ref = firebase.storage().ref(id);
         const metadata = {
@@ -275,7 +277,6 @@ function newMessage(e){
         task.on('state_changed',
             // update progress bar of upload
             function progress(snapshot) {
-                console.log(snapshot.bytesTransferred);
                 var percentage = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
                 progressBar.style.width = percentage.toFixed(2)+"%";
                 progressBar.innerText = percentage.toFixed(2)+'%';
@@ -284,7 +285,7 @@ function newMessage(e){
     } else {
         fileName = null;
         downloadURL = null;
-        storeMessage(downloadURL, timestamp, fileName, null);
+        storeMessage(null, timestamp, null, null);
     }
 
 }
