@@ -2,6 +2,7 @@
 // When accepted = false and pending = true, then we are waiting for the other person's response
 // When accepted = true and pending = false, the meeting has been accepted and should be added to the schedule
 
+const pendingMeetings = [];
 
 class Meeting {
      constructor(id, title, when, where, description, pending, accepted) {
@@ -60,12 +61,69 @@ function recordMeetingInfoAndSendNotification(meeting) {
         setByMentor: (currentUserIsMentor == "true") // set by mentor can either be intially set by or updated by mentor
     }).then(function(newMeetingRef) {
         meeting.id = newMeetingRef.id;;
-        sendMeetingNotification(meeting);
+        //sendMeetingNotification(meeting);
 
+        
         // Reflect the change in the dom (add the meeting to pending section without refreshing)
-        addMeetingToList("pending-meeting-list", meeting.id, new Date(meeting.when));
+        // There are currently no pending meetings, so just need to add it directly to list
         document.getElementById("num-pending").innerText = parseInt(document.getElementById("num-pending").innerText) + 1;
+        if (pendingMeetings.length == 0) {
+            addMeetingToList("pending-meeting-list", meeting.id, new Date(meeting.when));
+        } else { 
+            insertNewPendingMeeting(meeting);
+        }
+
+        
     })
+}
+
+function insertNewPendingMeeting(newPendingMeeting) {
+    const priorElementId = getPriorElementId(newPendingMeeting);
+
+   /*// Insertion part
+    const priorElement = document.getElementById(priorElementId);
+    
+    // Create a new li element
+    const newPendingMeetingEle = document.getElementById("meeting-ele").cloneNode("true");
+    newPendingMeetingEle.innerText = "(NEW!) " + new Date(newPendingMeeting.when);
+
+    // Add it to its correct position
+    priorElement.parentNode.insertBefore(newPendingMeetingEle, priorElement.nextSibling);
+
+    // Show it to the user 
+    newPendingMeetingEle.classList.remove("hidden");*/
+}
+
+// Return prior element id rather than the index in pendingMeetings that the element needs to be placed
+// This is because the prior element id is needed for insertion later into the DOM 
+// newPending meeting is a meeting object, and pendingMeetings is an array of meeting objects
+
+function getPriorElementId (newPendingMeeting) {
+    let low = 0, high = pendingMeetings.length;
+    let mid = parseInt((low+high)/2);
+
+    while (low <= high) {
+        if (parseInt(newPendingMeeting.when) < parseInt(pendingMeetings[mid].when)) {
+            console.log("should not enter here");
+            high = mid - 1;
+        } else if (parseInt(newPendingMeeting.when) > parseInt(pendingMeetings[mid].when)) {
+            console.log("should enter here lol");
+            low = mid + 1;
+        } else { //If there is a time exactly like the new pending meeting
+            return pendingMeetings[mid].id;
+        }
+    }
+    // Exit the loop when low == high
+    // Add the pending meeting into pending meetings as the user maybe adding many meetings at the same time (edge case)
+    
+    pendingMeetings.splice(low, 0, newPendingMeeting);
+    return pendingMeetings[low-1].id;
+}
+
+/* -- Test --*/
+test();
+function test() {
+    getPriorElementId(new Meeting("", 1596502861, "", "", "", true, false));
 }
 
 function sendMeetingNotification(meeting) {
@@ -102,12 +160,19 @@ function getPendingMeetings() {
     meetingsRef.where('when', '>', Date.now()).where('pending', '==', true).orderBy("when", "asc").get().then(function (meetings) {
         meetings.forEach(meeting => {
             meetingCount += 1;
+
+            // add meeting objects to pending meeting
+            const data = meeting.data();
+            let meetingJS = new Meeting(data.id, data.title, data.when, data.where, data.description, data.pending, data.accepted);
+
+            pendingMeetings.push(meetingJS);
             addMeetingToList("pending-meeting-list", meeting.id, meeting.data().when, false);
         });
             document.getElementById("num-pending").innerText = meetingCount;
             document.getElementById("pending-meeting-list").classList.remove('hidden');
     });
 }
+
 
 function getPastMeetings() {
     const meetingsRef = db.collection('mentorship').doc(mentorshipID).collection('meetings');
@@ -293,4 +358,5 @@ function removeMeetingRequestForOneUser(meetingId, userId) {
 function deleteMeetingFromFirestore(meetingId) {
     db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId).delete();
 }
+
 
