@@ -55,18 +55,14 @@ function updatePage(userProfile, userInfo) {
 
 function putMentorsOnPage(userProfile, userInfo) {
     const menteeOfMentorships = userInfo.data().menteeOfPairs;
-    if (menteeOfMentorships != undefined) {
-        const myCurrentMentors = addPeopleInfo(userProfile, menteeOfMentorships, true, false);
-        return myCurrentMentors;
-    }
+    const myCurrentMentors = addPeopleInfo(userProfile, menteeOfMentorships, true, false);
+    return myCurrentMentors;
 }
 
 function putMenteesOnPage(userProfile, userInfo) {
     const mentorOfMentorships = userInfo.data().mentorOfPairs;
-    if (mentorOfMentorships != undefined) {
-        const myCurrentMentees = addPeopleInfo(userProfile, mentorOfMentorships, false, false);
-        return myCurrentMentees;
-    }
+    const myCurrentMentees = addPeopleInfo(userProfile, mentorOfMentorships, false, false);
+    return myCurrentMentees;
 }
 
 
