@@ -1,7 +1,7 @@
 //hub-ind.js is run before goals.js
 
 function getGoalCards() {
-    db.collection('mentorship').doc(mentorshipID).collection("goals").orderBy("timestamp", "asc").get().then((snapshot) => {
+    db.collection('mentorship').doc(mentorshipID).collection("goals").orderBy("timestamp", "desc").get().then((snapshot) => {
         // allGoalCards is an array of goalCards
         const allGoalCards = [];
         const goalCardsIds = [];
