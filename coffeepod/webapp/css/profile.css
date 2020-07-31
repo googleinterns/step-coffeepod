@@ -29,6 +29,10 @@ a:hover{
   border: none;
 }
 
+.card-body {
+    padding: 0rem 0.3rem !important;
+}
+
 .border {
   border: 5px solid #000000;
   padding: 30px;
