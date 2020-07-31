@@ -2,6 +2,7 @@
 // When accepted = false and pending = true, then we are waiting for the other person's response
 // When accepted = true and pending = false, the meeting has been accepted and should be added to the schedule
 
+let pendingMeetings = [];
 
 class Meeting {
      constructor(id, title, when, where, description, pending, accepted) {
@@ -63,10 +64,77 @@ function recordMeetingInfoAndSendNotification(meeting) {
         sendMeetingNotification(meeting);
 
         // Reflect the change in the dom (add the meeting to pending section without refreshing)
-        addMeetingToList("pending-meeting-list", meeting.id, new Date(meeting.when));
+        insertNewPendingMeeting(meeting);
+
+        // After adding new meeting, push this meeting to pendingMeetings 
+        // Should already push in get prior index element
         document.getElementById("num-pending").innerText = parseInt(document.getElementById("num-pending").innerText) + 1;
     })
 }
+
+function insertNewPendingMeeting(newPendingMeeting) {
+    
+    const priorElementIndex = getPriorElementIndex(newPendingMeeting);
+
+    if (priorElementIndex == -1) {
+        addMeetingToList("pending-meeting-list", newPendingMeeting.id, new Date(newPendingMeeting.when), false, true);
+        return;
+    } 
+
+    const priorElementId = pendingMeetings[priorElementIndex].id;
+
+   // Insertion part
+    const priorElement = document.getElementById(priorElementId);
+    
+    // Create a new li element
+    const newPendingMeetingEle = document.getElementById("meeting-ele").cloneNode("true");
+    newPendingMeetingEle.setAttribute('id', newPendingMeeting.id);
+
+    // Set the content of the new li element
+    const meetingDate = newPendingMeetingEle.querySelector("#meeting-date");
+    meetingDate.innerText = new Date(newPendingMeeting.when);
+    const isPastMeeting = false;
+    meetingDate.setAttribute('onclick', 'showMeetingDetails(' + "'" + newPendingMeeting.id + "'" + "," + "'" + isPastMeeting + "'" + "," + "'" + "pending-meeting-list" + "'" + ')');
+
+    newPendingMeetingEle.querySelector("#meeting-new-entry").classList.remove('hidden');
+
+    // Add it to its correct position
+    priorElement.parentNode.insertBefore(newPendingMeetingEle, priorElement.nextSibling);
+    // Show it to the user 
+    newPendingMeetingEle.classList.remove("hidden");
+}
+
+// Return prior element id rather than the index in pendingMeetings that the element needs to be placed
+// This is because the prior element id is needed for insertion later into the DOM 
+// newPending meeting is a meeting object, and pendingMeetings is an array of meeting objects
+
+// The reason to get the prior index element is because adding the new pending meeting to the meeting list here is convenient
+// The index is readily available for slice method
+
+function getPriorElementIndex (newPendingMeeting) {
+    let low = 0, high = pendingMeetings.length - 1;
+    let mid = parseInt((low+high)/2);
+
+    while (low <= high) {
+        if (newPendingMeeting.when < pendingMeetings[mid].when) {
+            high = mid - 1;
+        } else if (newPendingMeeting.when > pendingMeetings[mid].when) {
+            low = mid + 1;
+        } else { //If there is a time exactly like the new pending meeting
+            pendingMeetings.splice(mid, 0, newPendingMeeting);
+            return mid - 1;
+        }
+        mid = parseInt((low + high)/2);
+    }
+    // Exit the loop when low == high
+    // Add the pending meeting into pending meetings as the user maybe adding many meetings at the same time (edge case)
+    
+
+    pendingMeetings.splice(low, 0, newPendingMeeting);
+
+    return low - 1;
+}
+
 
 function sendMeetingNotification(meeting) {
     db.collection('mentorship').doc(mentorshipID).get().then(function(mentorship) {
@@ -89,7 +157,7 @@ function getAcceptedMeetings() {
     meetingsRef.where('when', '>', Date.now()).where('accepted', '==', true).orderBy("when", "asc").get().then(function (meetings) {
         meetings.forEach(meeting => {
             meetingCount += 1;
-            addMeetingToList("upcoming-meeting-list", meeting.id, meeting.data().when, false);
+            addMeetingToList("upcoming-meeting-list", meeting.id, meeting.data().when, false, false);
         });
             document.getElementById("num-upcoming").innerText = meetingCount;
             document.getElementById("upcoming-meeting-list").classList.remove('hidden');
@@ -102,7 +170,13 @@ function getPendingMeetings() {
     meetingsRef.where('when', '>', Date.now()).where('pending', '==', true).orderBy("when", "asc").get().then(function (meetings) {
         meetings.forEach(meeting => {
             meetingCount += 1;
-            addMeetingToList("pending-meeting-list", meeting.id, meeting.data().when, false);
+
+            // add meeting objects to pending meeting
+            const data = meeting.data();
+            let meetingJS = new Meeting(meeting.id, data.title, data.when, data.where, data.description, data.pending, data.accepted);
+            pendingMeetings.push(meetingJS);
+
+            addMeetingToList("pending-meeting-list", meeting.id, meeting.data().when, false, false);
         });
             document.getElementById("num-pending").innerText = meetingCount;
             document.getElementById("pending-meeting-list").classList.remove('hidden');
@@ -115,7 +189,7 @@ function getPastMeetings() {
     meetingsRef.where('when', '<=', Date.now()).where('pending', '==', false).where('accepted', '==', true).orderBy("when", "asc").get().then(function (meetings) {
         meetings.forEach(meeting => {
             meetingCount += 1;
-            addMeetingToList("past-meeting-list", meeting.id, meeting.data().when, true);
+            addMeetingToList("past-meeting-list", meeting.id, meeting.data().when, true, false);
         });
         document.getElementById("num-past").innerText = meetingCount;
         document.getElementById("past-meeting-list").classList.remove('hidden');
@@ -123,11 +197,19 @@ function getPastMeetings() {
 }
 
 
-function addMeetingToList(listId, meetingId, meetingWhen, isPastMeeting){
+// first child is only used for pending meeting elements that needed to be added to the front of a list
+function addMeetingToList(listId, meetingId, meetingWhen, isPastMeeting, firstChild){
     const meetingList = document.getElementById(listId);
 
     const meetingLiEle = document.getElementById("meeting-ele")
     const meetingLiEleCloned = meetingLiEle.cloneNode(true);
+
+    if (firstChild == true) {
+        meetingList.insertBefore(meetingLiEleCloned, meetingList.childNodes[0]);
+        meetingLiEleCloned.querySelector("#meeting-new-entry").classList.remove('hidden');
+    } else {
+        meetingList.appendChild(meetingLiEleCloned);
+    }
 
     meetingLiEleCloned.setAttribute('id', meetingId);
     meetingLiEleCloned.classList.remove('hidden');
@@ -135,8 +217,6 @@ function addMeetingToList(listId, meetingId, meetingWhen, isPastMeeting){
     const meetingDate = meetingLiEleCloned.querySelector("#meeting-date");
     meetingDate.innerText = new Date(meetingWhen);
     meetingDate.setAttribute('onclick', 'showMeetingDetails(' + "'" + meetingId + "'" + "," + "'" + isPastMeeting + "'" + "," + "'" + listId + "'" + ')');
-
-    meetingList.appendChild(meetingLiEleCloned);
 }
 
 function showMeetingDetails(meetingId, isPastMeeting, listId) {
@@ -227,6 +307,12 @@ function deleteMeeting(meetingId, listId) {
     document.getElementById(meetingId).classList.add('hidden');
     updateNumberOfMeetingsInSection(listId);
 
+    // Delete meeting element from pending meetings
+    if (listId.includes("pending")) {
+        // Only keep meetings that are not deleted!
+        pendingMeetings = pendingMeetings.filter(pendingMeeting => pendingMeeting.id != meetingId);
+    }
+
     const meetingRef = db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId);
     meetingRef.get().then(function(meeting) {
         //deleteMeetingFromFirestore(meetingId);
@@ -293,4 +379,3 @@ function removeMeetingRequestForOneUser(meetingId, userId) {
 function deleteMeetingFromFirestore(meetingId) {
     db.collection('mentorship').doc(mentorshipID).collection('meetings').doc(meetingId).delete();
 }
-
