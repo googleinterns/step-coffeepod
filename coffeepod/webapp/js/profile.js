@@ -683,6 +683,7 @@ function sendMentorRequest() {
         firebase.firestore().collection('notifications').doc(uid).update({ 
           mentorRequests: firebase.firestore.FieldValue.arrayUnion(user.uid)
         });
+        alert("Your request has been sent");
       }
     });
   });
@@ -705,6 +706,7 @@ function sendMenteeRequest() {
         firebase.firestore().collection('notifications').doc(uid).update({ 
           menteeRequests: firebase.firestore.FieldValue.arrayUnion(user.uid)
         });
+        alert("Your request has been sent");
       }
     })
   });
