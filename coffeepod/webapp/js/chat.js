@@ -234,9 +234,8 @@ function storeMessage(downloadURL, timestamp, fileName, fileType){
                             const messageInfo = msgInfo.data();
                             let msgOwner;
                             console.log("sending message: "+messageInfo.fileURL);
-                            if (messageInfo.userID == currUser) msgOwner = "own";
-                            else msgOwner = "otherUser";
-                            genMessage(msgOwner, messageInfo.content, fileName, fileType, downloadURL);  
+                            if (messageInfo.userID == currUser) genMessage("own", messageInfo.content, fileName, fileType, downloadURL);  
+                            else genMessage("otherUser", messageInfo.content, fileName, fileType, downloadURL);  
                             
                             //scroll down to reveal new message
                             scrollBottom();
