@@ -63,16 +63,8 @@ function recordMeetingInfoAndSendNotification(meeting) {
         meeting.id = newMeetingRef.id;;
         sendMeetingNotification(meeting);
 
-        console.log("the current pending meetings are: " + pendingMeetings);
         // Reflect the change in the dom (add the meeting to pending section without refreshing)
         insertNewPendingMeeting(meeting);
-        /*
-        if (pendingMeetings.length == 0) {
-            addMeetingToList("pending-meeting-list", meeting.id, new Date(meeting.when), false, true);
-        } else { 
-            console.log("more than 0 pending meetings so far!");
-            insertNewPendingMeeting(meeting);
-        }*/
 
         // After adding new meeting, push this meeting to pendingMeetings 
         // Should already push in get prior index element
@@ -89,10 +81,8 @@ function insertNewPendingMeeting(newPendingMeeting) {
         return;
     } 
 
-    console.log("a prior element exists");
     const priorElementId = pendingMeetings[priorElementIndex].id;
 
-    console.log("priorElementId is: " + priorElementId);
    // Insertion part
     const priorElement = document.getElementById(priorElementId);
     
@@ -104,7 +94,6 @@ function insertNewPendingMeeting(newPendingMeeting) {
     const meetingDate = newPendingMeetingEle.querySelector("#meeting-date");
     meetingDate.innerText = new Date(newPendingMeeting.when);
     const isPastMeeting = false;
-    console.log("isPastMeeting is: " + isPastMeeting);
     meetingDate.setAttribute('onclick', 'showMeetingDetails(' + "'" + newPendingMeeting.id + "'" + "," + "'" + isPastMeeting + "'" + "," + "'" + "pending-meeting-list" + "'" + ')');
 
     newPendingMeetingEle.querySelector("#meeting-new-entry").classList.remove('hidden');
@@ -213,8 +202,6 @@ function addMeetingToList(listId, meetingId, meetingWhen, isPastMeeting, firstCh
     const meetingLiEleCloned = meetingLiEle.cloneNode(true);
 
     if (firstChild == true) {
-        console.log(meetingList.innerHTML);
-        console.log("i'm in the firstChild part");
         meetingList.insertBefore(meetingLiEleCloned, meetingList.childNodes[0]);
         meetingLiEleCloned.querySelector("#meeting-new-entry").classList.remove('hidden');
     } else {
