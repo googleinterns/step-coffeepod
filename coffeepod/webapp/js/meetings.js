@@ -108,6 +108,9 @@ function insertNewPendingMeeting(newPendingMeeting) {
 // This is because the prior element id is needed for insertion later into the DOM 
 // newPending meeting is a meeting object, and pendingMeetings is an array of meeting objects
 
+// The reason to get the prior index element is because adding the new pending meeting to the meeting list here is convenient
+// The index is readily available for slice method
+
 function getPriorElementIndex (newPendingMeeting) {
     let low = 0, high = pendingMeetings.length - 1;
     let mid = parseInt((low+high)/2);
