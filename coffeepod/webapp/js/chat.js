@@ -232,8 +232,11 @@ function storeMessage(downloadURL, timestamp, fileName, fileType){
                     db.collection('chats').doc(id).collection('messages').doc(msgID).get().then(msgInfo => {
                         if(msgInfo.exists){
                             const messageInfo = msgInfo.data();
+                            let msgOwner;
                             console.log("sending message: "+messageInfo.fileURL);
-                            genMessage("own", messageInfo.content, fileName, fileType, messageInfo.fileURL);
+                            if (messageInfo.userID == currUser) msgOwner = "own";
+                            else msgOwner = "otherUser";
+                            genMessage(msgOwner, messageInfo.content, fileName, fileType, downloadURL);  
                             
                             //scroll down to reveal new message
                             scrollBottom();
