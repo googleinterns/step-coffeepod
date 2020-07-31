@@ -356,7 +356,6 @@ function approve(button, type) {
   db.collection('chats').add({
       user1: uid,
       user2: request.id,
-      messages: [],
       latestMessage: ""
   }).then(docRef => {
       db.collection('user-info').doc(uid).update({
