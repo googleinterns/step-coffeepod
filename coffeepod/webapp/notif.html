@@ -140,52 +140,54 @@
               </div>
 
               <!-- MEETING NOTIFICATIONS SECTION -->
-              <div class="cont shadow-sm" id="meeting-notif-section">
-                <button style="outline:none" data-toggle="collapse" data-target="#collapseMeeting" aria-expanded="true" aria-controls="collapseMeeting" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
+              <div class="cont shadow-sm">
+                <button style="outline:none" data-toggle="collapse" data-target="#collapseMeet" aria-expanded="true" aria-controls="collapseMeet" class="btn roboto float-right font15 line15 capitalize spaceLetters orangeTextLight">
                     Show | Hide
                   </button>
                 <p class="section-title">meeting notifications</p>
-                <div id="collapseMeeting" class="collapse show" aria-labelledby="goal-head">
-                  <div id="meeting-notif-board" class="border paddedBorder hidden">
-                    <div class="row">
-                      <div id="meeting-notif" class="col-xl-3 my-auto">
-                        <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
-                      </div>
-                      <div class="col-xl-9 text-center text-xl-left my-auto">
-                        <p id="notif-content">Your <span id="sender-role"></span> <a href="" class="sender-name"></a> <span id="meeting-notif-action"></span></p>
-                        <p id="meeting-notif-timestamp"> Monday, July 20, 2020<p>
-                        <!--<p class="body-text" id="additional-message"> <span class="sender-name orangeTextLight weight400">Penguin says:</span> I need to cancel the meeting because I had a prior comment. Please set up another meeting some other time :)</p>-->
-                        <div id="meeting-details-head">
-                          <a class="show-hide-toggle" id="toggle-link" data-toggle="collapse" data-target="#collapseDetails" aria-expanded="true" aria-controls="collapseDetails">
-                            Show | Hide meeting details
-                          </a>
+                <div id="collapseMeet" class="collapse show" aria-labelledby="goal-head">
+                  <div id="meeting-notif-section">
+                    <div id="meeting-notif-board" class="border paddedBorder hidden">
+                      <div class="row">
+                        <div id="meeting-notif" class="col-xl-3 my-auto">
+                          <div class="text-center mb-3"><img class="center-cropped rounded-circle" src="images/pancake.jpg" alt="pancake" width=50% height=50%></div>
                         </div>
-                        <!--<a class="show-hide" id="see-more">See details of meeting</a>
-                        <a class="hidden show-hide" id="hide-details">Hide details of meeting</a>-->
-                        <div id="collapseDetails" class="collapse hide" aria-labelledby="meeting-details-head">
-                          <div id="meeting-details">
-                            <ul class="meeting-details-card" id="meeting-details-card">
-                              <li> <span class="weight400">Title:</span> <span id="title"> Ice-cream meeting</span></li>
-                              <li> <span class="weight400">When: </span> <span id="when"> This Wednesday</span></li>
-                              <li> <span class="weight400">Where: </span><span id="where">Cafe</span></li>
-                              <li> <span class="weight400">Description: </span><span id="description"> Let's get ice-cream and chat more :) </span></li>
-                            </ul>
+                        <div class="col-xl-9 text-center text-xl-left my-auto">
+                          <p id="notif-content">Your <span id="sender-role"></span> <a href="" class="sender-name"></a> <span id="meeting-notif-action"></span></p>
+                          <p id="meeting-notif-timestamp"> Monday, July 20, 2020<p>
+                          <!--<p class="body-text" id="additional-message"> <span class="sender-name orangeTextLight weight400">Penguin says:</span> I need to cancel the meeting because I had a prior comment. Please set up another meeting some other time :)</p>-->
+                          <div id="meeting-details-head">
+                            <a class="show-hide-toggle" id="toggle-link" data-toggle="collapse" data-target="#collapseDetails" aria-expanded="true" aria-controls="collapseDetails">
+                              Show | Hide meeting details
+                            </a>
                           </div>
+                          <!--<a class="show-hide" id="see-more">See details of meeting</a>
+                          <a class="hidden show-hide" id="hide-details">Hide details of meeting</a>-->
+                          <div id="collapseDetails" class="collapse hide" aria-labelledby="meeting-details-head">
+                            <div id="meeting-details">
+                              <ul class="meeting-details-card" id="meeting-details-card">
+                                <li> <span class="weight400">Title:</span> <span id="title"> Ice-cream meeting</span></li>
+                                <li> <span class="weight400">When: </span> <span id="when"> This Wednesday</span></li>
+                                <li> <span class="weight400">Where: </span><span id="where">Cafe</span></li>
+                                <li> <span class="weight400">Description: </span><span id="description"> Let's get ice-cream and chat more :) </span></li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="response-options" id="response-options">
+                            <button id="approve-meeting" class=" hidden btn accept-button">accept</button>
+                            <button id="remove-meeting" class=" hidden btn remove-button">remove</button>
+                            <button id="i-am-aware" class="hidden btn accept-button">got it!</button>
+                          </div>
+                          <p id="approve-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Awesome! <a class="sender-name"></a> is notified that you accepted the meeting :)</p>
+
+                          <p id="remove-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i><a class="sender-name"></a> is notified that you removed the meeting.</p>
+
+                          <p id="delete-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Confirmed! Your meeting with <a class="sender-name"> </a> is <span id="confirm-action-message">confirmed</span>.</p>
+                          <span class="system-response"> <a class="hub-ind"> See all of your meetings</a> with <a class="orangeTextLight sender-name"></a>.</span>
+                          </p>
+                          <!--<a class="body-text" id = "add-a-note"> Add a note to Pancake </a>-->
+
                         </div>
-                        <div class="response-options" id="response-options">
-                          <button id="approve-meeting" class=" hidden btn accept-button">accept</button>
-                          <button id="remove-meeting" class=" hidden btn remove-button">remove</button>
-                          <button id="i-am-aware" class="hidden btn accept-button">got it!</button>
-                        </div>
-                        <p id="approve-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Awesome! <a class="sender-name"></a> is notified that you accepted the meeting :)</p>
-
-                        <p id="remove-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i><a class="sender-name"></a> is notified that you removed the meeting.</p>
-
-                        <p id="delete-confirmation" class="hidden system-response"><i class="check-icon fa fa-check " aria-hidden="true"></i>Confirmed! Your meeting with <a class="sender-name"> </a> is <span id="confirm-action-message">confirmed</span>.</p>
-                        <span class="system-response"> <a class="hub-ind"> See all of your meetings</a> with <a class="orangeTextLight sender-name"></a>.</span>
-                        </p>
-                        <!--<a class="body-text" id = "add-a-note"> Add a note to Pancake </a>-->
-
                       </div>
                     </div>
                   </div>
