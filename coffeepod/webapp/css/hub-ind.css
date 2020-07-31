@@ -451,3 +451,7 @@ input:focus, textarea:focus {
     font-style: italic;
     padding-left: 14px;
 }
+
+#meeting-new-entry{
+    color: #AA6231;
+}
