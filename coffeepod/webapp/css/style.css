@@ -77,6 +77,13 @@ a {
   width: 120px;
 }
 
+.center-cropped-med {
+  object-fit: cover;
+  object-position: center;
+  height: 90px;
+  width: 90px;
+}
+
 .center-cropped-small {
   object-fit: cover;
   object-position: center;
