@@ -1,8 +1,8 @@
 function createMap() {
 
-  const austinTexas = {lat: 30.2672, lng: 97.7431};
+  const austinTexas = {lat: 30.2672, lng: -97.7431};
   const googleMTV = {lat: 37.419857, lng: -122.078827};
-  const nyc = {lat: 40.7128, lng: 74.0060};
+  const nyc = {lat: 40.7128, lng: -74.0060};
   const pomona = {lat: 34.0973, lng: -117.7131};
 
   const map = new google.maps.Map(
